@@ -1,0 +1,603 @@
+.allDivRechercheMedecin{
+    width: 100%;
+    max-height: 750px;
+    background-color: #f1f4f5;
+    overflow-y: scroll;
+}
+.divV2RecherchePrincipaleRechercheMedecin{
+    padding: 2%;
+    padding-bottom: 0%;
+}
+.ulRecherchePrincipaleRechercheMedecin{
+    display: flex;
+    list-style-type: none;
+    width: 100%;
+    padding-left: 10%;
+}
+
+.divRecherchePrincipaleRechercheMedecin{
+    background-color: #1b7895;
+    position: sticky;
+    position: -webkit-sticky;
+    top:0px;
+    display: block;
+    z-index:100;
+    box-shadow: 0px 0px 2px 2px #477991;
+}
+
+.liRecherchePrincipaleRechercheMedecin{
+    width: 40%;
+}
+.liV2RecherchePrincipaleRechercheMedecin{
+    width: 20%;
+}
+.inputRecherchePrincipaleRechercheMedecin{
+    width: 99%;
+    height: 50px;
+    padding-left: 2%;
+    border-radius: 5px;
+    border: 2px solid white;
+    color: black;
+}
+.inputRecherchePrincipaleRechercheMedecin:hover{
+    box-shadow: 7px 0px 14px 4px #00bfd8;
+    -webkit-box-shadow: 7px 0px 14px 4px #00bfd8;
+    -moz-box-shadow: 7px 0px 14px 4px #00bfd8;
+}
+.inputRecherchePrincipaleRechercheMedecin::placeholder {
+    color: black;
+}
+.divRecherchePrincipaleRechercheMedecin{
+    width: 100%;
+    padding-top: 2%;
+}
+.buttonRecherchePrincipaleRechercheMedecin{
+    width: 40%;
+    height: 50px;
+    color: white;
+    background-color: #ea526a;
+    border: 2px solid #ea526a;
+    font-size: 22px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width:100%;
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    border: 2px solid #435F71;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@media screen and (max-width: 799px) {
+    .ulMenuRechercheMedecin{
+        display: unset;
+        width: 100%;
+    }
+    .ulMenuRechercheMedecin li{
+        display: unset;
+        width: 20%;  
+    }
+}
+@media screen and (min-width: 800px) {
+    .ulMenuRechercheMedecin{
+        display: table;
+        width: 100%;
+    }
+    .ulMenuRechercheMedecin li{
+        display: table-cell;
+        width: 20%;  
+    }
+}
+.ulMenuRechercheMedecin li:hover{
+    color: white;
+}
+.allMenuRechercheMedecin{
+    padding: 1%;
+}
+.champSelectMenuRechercheMedecin{
+    width: 98%;
+    margin: 1%;
+    background-color: white;
+    height: 40px;
+    text-align: center;
+    padding-top: 7px;
+    border: 2px solid #435F71;
+    color: #435F71;
+}
+.champSelectMenuRechercheMedecin:hover{
+    background-color: #435F71;
+    border: 2px solid white;
+    color: white;
+}
+.divsonDropDownMenuRecherchMedecin{
+    width: 100%;
+    color: #435F71;
+    cursor: pointer;
+    height: 30px;
+    padding: 2%;
+}
+.divsonDropDownMenuRecherchMedecin:hover{
+    color: white;
+    background-color: #435F71;
+}
+.listeMedecinRechercheMedecin{
+    width: 100%;
+    min-height: 550px;
+    padding: 2%;
+    align-items: center;
+    justify-content: center;
+}
+.listeOneMedecinRechercheMedecin{
+    width: 100%;
+    min-height: 300px;
+    background-color: white;
+    margin-bottom: 4%;
+}
+.listeOneMedecinRechercheMedecin:hover{
+    /* border:1px inset #c5305f; */
+    box-shadow: 0px 0px 10px 1px #3b505e;
+}
+.fatherimageProfilelisteMedecinRechercheMedecin{
+    border-right: 2px solid #e9ecef;
+    width: 100%;
+    min-height: 300px;
+}
+.sonOffatherimageProfilelisteMedecinRechercheMedecin{
+    text-align: center;
+    width:100%;
+}
+.imageProfilelisteMedecinRechercheMedecin{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 2%;
+    transition: .5s;
+    /* border: 1px solid #c5305f; */
+}
+/* .imageProfilelisteMedecinRechercheMedecin:hover{ */
+    /* border:2px inset #c5305f; */
+    /* transform: rotate(-1deg); */
+/* } */
+.nameMedecinRechercheMedecin{
+    text-align: center;
+    font-weight: bold;
+    color: #ff6c0a;
+}
+.nameMedecinRechercheMedecin a{
+    text-align: center;
+    font-weight: bold;
+    color: #ff6c0a;
+}
+.specialiteMedecinRechercheMedecin{
+    color: #0e1011!important;
+    font-size: .9rem;
+    text-align: center;
+    margin-top: 5%;
+}
+.adresseMedecinRechercheMedecin{
+    margin-top: 4%;
+    color: #6c757d;
+    text-align: center;
+}
+.buttonMedecinRechercheMedecin{
+    text-align: center;
+    margin-top: 4%;
+    margin-bottom: 5%;
+}
+.buttonMedecinRechercheMedecin a{
+    text-decoration: none;
+    color:white;
+    background-color: #00bfd8;
+    font: 700 0.75rem/0 "Raleway", sans-serif;
+    font-size: 15px;
+    border-radius: 2rem;
+    display: block;
+    padding-top:10%;
+    padding-bottom:10%;
+    border: 0.125rem solid #00bfd8;
+}
+
+.buttonMedecinRechercheMedecin a:hover{
+    text-decoration: none;
+    color:#00bfd8;
+    background-color: #fff;
+    font: 700 0.75rem/0 "Raleway", sans-serif;
+    font-size: 15px;
+    border-radius: 2rem;
+    display: block;
+    padding-top:10%;
+    padding-bottom:10%;
+    border: 0.125rem solid #00bfd8;
+}
+.emploiDuTempsRechercheMedecin{
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+.themploiDuTempsRechercheMedecin{
+    font-weight: 400;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+}
+.thV2emploiDuTempsRechercheMedecin:hover{
+    border-color: #ff6c0a;
+}
+.tableEmploiDuTempsRechercheMedecin{
+    width: 100%;
+    margin-top: 1%;
+}
+.tdemploiDuTempsRechercheMedecin{
+    text-align: center;
+    min-height: 60px;
+    line-height: 60px;
+    cursor: pointer;
+}
+.tdemploiDuTempsRechercheMedecin:hover {
+    background-color: #ff6c0a;
+    color: white;
+}
+.fathertitleEmploiDuTempsRechercheMedecin{
+    display: flex;
+    padding: 2%;
+    min-height: 50px;
+    line-height: 50px;
+}
+.sontitleOneemploiDuTempsRechercheMedecin{
+    width: 20%;
+    text-align: start;
+    font-size: 30px;
+}
+.sontitleOneemploiDuTempsRechercheMedecin:hover{
+    color: #ff6c0a;
+}
+.sontitletwomploiDuTempsRechercheMedecin{
+    width: 60%;
+    text-align: center;
+}
+.sontitlethreemploiDuTempsRechercheMedecin{
+    width: 20%;
+    text-align: end;
+    font-size: 30px
+}
+.sontitlethreemploiDuTempsRechercheMedecin:hover{
+    color: #ff6c0a;
+}
+.mapsRechercheMedecin{
+    width: 100%;
+    /* margin: 2%; */
+    height: 250px;
+    border: 2px solid #c4e7f9;
+    overflow: hidden;
+    z-index: 1;
+    transition: 0.1s;
+    transition-timing-function: linear;
+    position: sticky;
+    position: -webkit-sticky;
+    top:150px;
+    display: block;
+}
+.fathermapsRechercheMedecin{
+    padding: 2%;
+    display: block;
+    position: sticky;
+    position: -webkit-sticky;
+    top:200px;
+}
+.divProfilMedecinRechercheMedecin{
+    width:100%;
+    min-height: 250px;
+    background-color:#224358;
+}
+.sondivProfilMedecinRechercheMedecin{
+    width: 100%;
+    text-align: center;
+}
+.imgProfilMedecinRechercheMedecin{
+    max-width: 200px;
+    border-radius:50%;
+}
+.namedivProfilMedecinRechercheMedecin{
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.aProposProfilMedecinRecherche{
+    width: 96%;
+    margin: 2%;
+    min-height: 200px;
+    background-color: white;
+    border-radius: 12px;
+}
+.textaProposProfilMedecinRecherche{
+    padding-left: 3%;
+    font-size: 18px;
+}
+.selectSpeciale{
+    width: 98%;
+    margin: 1%;
+    z-index: 10;
+}
+.selectSpeciale option{
+    z-index: 500;
+}
+.divlistMenuRechercheMedecin{
+    padding-bottom: 1%;
+    z-index: 500;
+    display: inline;
+}
+.divSearchBar{
+    /* display: inline; */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    /* height: 100%; */
+    /* flex-direction: column; */
+}
+.inputSearch{
+    width: 100%;
+    height:50px;
+    border: none;
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
+    margin-right: 5px;
+}
+.inputSearch:hover{
+    box-shadow: 7px 0px 14px 4px #00bfd8;
+    -webkit-box-shadow: 7px 0px 14px 4px #00bfd8;
+    -moz-box-shadow: 7px 0px 14px 4px #00bfd8;
+}
+.inputSearch::placeholder{
+    color: rgba(0, 0, 0, 0.719);
+}
+.selectSearch{
+    width: 100%;
+    height: 51px;
+    border: none;
+    margin-right: 5px;
+}
+.selectSearch:hover{
+    box-shadow: 7px 0px 14px 4px #00bfd8;
+    -webkit-box-shadow: 7px 0px 14px 4px #00bfd8;
+    -moz-box-shadow: 7px 0px 14px 4px #00bfd8;
+    cursor: pointer;
+}
+.buttonSearch{
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    border: none;
+    width: 100%;
+    height: 51px;
+    background-color: #ea526a;
+}
+.buttonSearch:hover{
+    box-shadow: 7px 0px 14px 4px #ea5269b0;
+    -webkit-box-shadow: 7px 0px 14px 4px #ea5269b0;
+    -moz-box-shadow: 7px 0px 14px 4px #ea5269b0;
+}
+@media (max-width: 767px){
+    .inputSearch{
+        border-radius: 0;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+    .selectSearch{
+        border-radius: 0;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+    .buttonSearch{
+        border-radius: 0;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+    .divSearchBar{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+.listMenuRechercheMedecins li{
+    /* float:left; */
+    display: inline-block;
+}
+.listMenuRechercheMedecins select:hover{
+    box-shadow: 7px 0px 14px 4px #00bfd8;
+    -webkit-box-shadow: 7px 0px 14px 4px #00bfd8;
+    -moz-box-shadow: 7px 0px 14px 4px #00bfd8;
+}
+.listMenuRechercheMedecins select{
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    width:100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+}
+    
+.listMenuRechercheMedecins li:after {
+    content: '<>';
+    font: 20px "Consolas", monospace;
+    color: #333;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 15px;
+    top: 15px;
+    border-bottom: 1px solid #999;
+    position: absolute;
+    pointer-events: none;
+}
+@media (max-width: 622px){
+    .listMenuRechercheMedecin{
+        display: block;
+        width: 98%;
+        margin: 1%;
+        z-index: 750;
+    }
+    .listMenuRechercheMedecin li{
+        width: 98%;
+        margin: 1%;
+        z-index: 750;
+    }
+    .listv2MenuRechercheMedecin{
+        display: none;
+        width: 98%;
+        margin: 1%;
+    }
+    .listv3MenuRechercheMedecin{
+        display: none;
+        width: 98%;
+        margin: 1%;
+    }
+}
+@media (min-width: 623px) and (max-width: 1027px){
+    .listMenuRechercheMedecin{
+        display: none;
+        width: 98%;
+        margin: 1%;
+    }
+    .listv2MenuRechercheMedecin{
+        display: flex;
+        width: 98%;
+        margin: 1%;
+    }
+    .listv2MenuRechercheMedecin li{
+        width: 33%;
+    }
+    .listv3MenuRechercheMedecin{
+        display: flex;
+        width: 98%;
+        margin: 1%;
+    }
+    .listv3MenuRechercheMedecin li{
+        width: 50%;
+    }
+}
+@media (min-width: 1028px){
+    .listMenuRechercheMedecin{
+        display: flex;
+        width: 98%;
+        margin: 1%;
+    }
+    .listMenuRechercheMedecin li{
+        width: 20%;
+    }
+    .listv2MenuRechercheMedecin{
+        display: none;
+        width: 98%;
+        margin: 1%;
+    }
+    .listv3MenuRechercheMedecin{
+        display: none;
+        width: 98%;
+        margin: 1%;
+    }
+}
+.leaflet-container{
+    width: 100%;
+    height: 800px;
+    z-index: 1;
+}
+.paginationClassFirst,.paginationClassLast{
+    /* background-color: #007bff !important; */
+    width: 50px;
+    text-align: center;
+    padding: 1%;
+    display: none;
+}
+.paginationClassNext a , .paginationClassPrev a, .paginationClassFirst a, .paginationClassLast a, .paginationClassActive a{ 
+    text-decoration: none;
+    color: #2e266d;
+    font-weight: bold;
+}
+.paginationClassActive{
+    /* background-color: #6610f2 !important; */
+    width: 50px;
+    text-align: center;
+    padding: 1%;
+    /* background-color: #00bfd8; */
+    cursor: not-allowed;
+}
+.paginationClassActive a{
+    /* background-color: #6610f2 !important; */
+    cursor: not-allowed;
+    color: black;
+}
+.paginationClassItemTmp{
+    min-width: 50px;
+    text-align: center;
+    padding: 2%;
+    font-weight: bold;
+    /* border: 1px solid #afaeae; */
+}
+.paginationClassItemTmp:hover{
+    /* background-color: #00bfd81f; */
+    text-decoration: none;
+}
+.paginationClassItemTmp a:hover{
+    text-decoration: none;
+}
+.paginationClassActive:hover{
+    /* background-color: #6610f2 !important; */
+    color: black;
+    /* background-color: #00bfd8; */
+    cursor: not-allowed;
+}
+.paginationClassActive a:hover{
+    /* background-color: #6610f2 !important; */
+    color: black;
+    cursor: not-allowed;
+}
+.paginationClassNext{
+    /* background-color: #00bfd8 !important; */
+    /* width: 50px; */
+    text-align: right;
+    padding: 1%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.paginationClassPrev{
+    /* background-color: #00bfd8 !important; */
+    /* width: 50px; */
+    text-align: left;
+    padding: 1%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.divPagination{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.thV2emploiDuTempsRechercheMedecin a{
+    text-decoration:none;
+    color: black;
+}

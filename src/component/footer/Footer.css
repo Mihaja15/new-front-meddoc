@@ -1,0 +1,178 @@
+.footer-area{
+	background-color:#1b7895;
+	background-size:cover;
+	background-repeat:no-repeat;
+	padding-bottom: 1%;
+	padding-right: 5%;
+	z-index: 999;
+	color: white;
+}
+@media (max-width: 575px){
+	.footer-area{
+		padding:1%;
+		z-index: 100;
+    }
+}
+/* .footer-area .container{
+	margin-left: 0%;
+}
+.footer-area .container .row .col{
+	margin-right: 20%;
+} */
+.lienImage{
+	color: white;
+}
+.img-logo-meddoc{
+	width: 100%;
+}
+.divAProposFooter{
+	width: 100%;
+}
+.textAproposMeddoc{
+	font-size : 2.5625rem;
+	color: white;
+}
+.divMeddocNaturel{
+	text-align: center;;
+}
+.iconColoSmFooter{
+	margin-top: 10%;
+	padding-bottom: 8%;
+}
+.titleH5Footer{
+	color: white;
+}
+.rowDivIconFooter{
+	background-color: #1b7895;
+	border-radius: 12px;
+	border: 2px solid #1b7895;
+}
+@media (max-width: 575px){
+    .fabDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #1b7895;
+		border: 1px double #fff;
+		border-radius: 25px;
+		padding-top: 2%;
+	}
+	.fabLinkDimDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #0073b1;
+		border-radius: 25px;
+		padding-top: 2%;
+	}
+	.fabYoutubeDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #e0400f;
+		border-radius: 25px;
+		padding-top: 2%;
+	}
+  }
+  @media only screen and (min-width: 576px) and (max-width: 765px){
+    .fabFacebookDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #0c88ef;
+		border-radius: 25px;
+		padding-top: 5%;
+	}
+	.fabDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #1b7895;
+		border: 1px double #fff;
+		border-radius: 25px;
+		padding-top: 5%;
+	}
+	.fabLinkDimDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #0073b1;
+		border-radius: 25px;
+		padding-top: 5%;
+	}
+	.fabYoutubeDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #e0400f;
+		border-radius: 25px;
+		padding-top: 5%;
+	}
+  }
+  @media only screen and (min-width: 770px){
+    .fabFacebookDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #0c88ef;
+		border-radius: 25px;
+		padding-top: 16%;
+	}
+	.fabDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #1b7895;
+		border: 1px double #fff;
+		border-radius: 25px;
+		padding-top: 16%;
+		color: #1b7895;
+	}
+	.fabLinkDimDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #0073b1;
+		border-radius: 25px;
+		padding-top: 16%;
+	}
+	.fabYoutubeDesignIconFooter{
+		width: 50px;
+		height: 50px;
+		background-color: #e0400f;
+		border-radius: 25px;
+		padding-top: 16%;
+	}
+  }
+
+.fabDesignIconFooter:hover , .fabLinkDimDesignIconFooter:hover, .fabYoutubeDesignIconFooter:hover, .fbiconFooter:hover {
+	transform: rotate(360deg) scale(1);
+    -webkit-transform: scale(1.5);
+}
+.imageFooter{
+	width: 230px;
+}
+.pListeFooter{
+	color: white;
+	transition: .5s;
+	cursor: pointer;
+	text-decoration: none;
+}
+.pListeFooter a:hover{
+	color: white;
+	transition: .5s;
+	cursor: pointer;
+	text-decoration: none;
+	transform: scale(1.2);
+}
+.pListeFooter a{
+	margin-top: 5px;
+	color: white;
+	text-decoration: none;
+	font-weight: 30px;
+}
+.pListeFooter:hover{
+	transform: scale(1.2);
+}
+.hrFooter{
+	background-color: white;
+    height: 0px;
+}
+.copyrightFooter{
+	/* color: #3ecf8e; */
+	color: #fff;
+	cursor: pointer;
+}
+.copyrightFooter:hover{
+	transform: scale(1.2);
+}

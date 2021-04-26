@@ -1,0 +1,309 @@
+.AllChat{
+    width: 100%;
+    min-height:800px;
+    height: auto;
+    background: white;
+    padding-top: 3%;
+}
+.titleChat{
+    text-align: center;
+}
+.champsChat{
+    width: 98%;
+    height: 730px;
+    border-radius: 12px;
+    border: 2px solid #1b7895;
+    padding: 2%;
+    margin-bottom: 5%;
+}
+.inputSearchChat{
+    border: 1px solid #1b7895;
+
+}
+.buttonSearchChat{
+    background-color: #1b7895;
+    color: white;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+.brChat{
+    background-color: #1b7895;
+}
+.imgListeChat{
+    width: 60px;
+    height: 60px;
+    border-radius:50%;
+}
+.nomListChat{
+    text-align: left;
+    font-size: 11px;
+}
+.divAllListChat{
+    background-color: #1b7895;
+    color: white;
+    padding : 1%;
+    border-radius: 12px;
+    width: 98%;
+    margin : 1%;
+    height: auto;
+}
+.newListChat{
+    display: flex;
+}
+.NewNomListChat{
+    padding-left: 5%;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+}
+.liNewNomListChat{
+    padding-left: 5%;
+    width: 80%;
+}
+.TmpRiNewNomListChat{
+    width: 20%;
+}
+.NewNombreListChat{
+    text-align: right;
+    font-size: 12px;
+}
+.allListChat{
+    width: 100%;
+    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.profilUserChat{
+    width: 98%;
+    background-color: #1b7895;
+    height: auto;
+    margin-left: 1%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.iconTitleChat{
+    text-align: center;
+}
+.NewimgListeChat{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    text-align: center;
+    transition: .5s;
+}
+.NewimgListeChat:hover{
+    border: 1px solid #0596de;
+    transform: rotate(-5deg);
+}
+.NewimgListeChat:active{
+    transform: rotate(0deg);
+    transform: scale(.9);
+}
+
+
+@media only screen and (min-width: 1017px){
+    .textNomUserProfilChat{
+        text-align: left;
+        font-size: 20px;
+        color: white;
+        height: 80px;
+        line-height: 80px;
+        font-weight: bold;
+    }
+}
+@media only screen and (max-width: 1016px){
+    .textNomUserProfilChat {
+        text-align: left;
+        font-size: 19px;
+        color: white;
+        height: 80px;
+        line-height: 29px;
+        font-weight: bold;
+        padding-left: 8%;
+    }
+}
+
+.imageProfilUserChat{
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+}
+
+.phoneBlueChat{
+    width: 28px;
+    border-radius: 50%;
+    color: white;
+    background-color: #007bff;
+    height: 28px;
+    padding: 3%;
+}
+.phoneDangerChat{
+    width: 28px;
+    border-radius: 50%;
+    color: white;
+    background-color: #d9534f;
+    height: 28px;
+    padding: 3%;
+}
+.NewchampsChat{
+    width: 98%;
+    height: auto;
+    border: 2px solid #1b7895;
+    padding: 2%;
+    margin-left: 1%;
+}
+.iconDiscusionChat{
+    width: 50%;
+    text-align: center;
+    margin-top: 5%;
+    height: 60px;
+    line-height: 60px;
+}
+.bageInformationUserChat{
+    width: 35px;
+    height: 35px;
+    line-height: 33px;
+    border-radius: 50%;
+}
+.boutoniconDiscusionChat{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+}
+.nomDansChat{
+    font-size: 11px;
+}
+.textSmsChat{
+    font-size: 12px;
+    height: auto;
+    background-color: #007bff;
+    color: white;
+    padding: 2%;
+    border-radius: 10px;
+    width: auto;
+    min-width: 100px;
+}
+.imgListeChatTwo{
+    border: 2px solid #007bff;
+}
+.liSmsChat{
+    margin-left: 4%;
+    margin-right: 8%;
+}
+.ulSmsChat{
+    width: 100%;
+}
+.ilOneSmsSizeChat{
+    width: 20%;
+}
+.ilTwoSmsSizeChat{
+    width: 80%;
+}
+.imgListeChatTwoRight{
+    border: 2px solid #ed5e74;
+}
+.textSmsChatRight{
+    font-size: 12px;
+    height: auto;
+    background-color: #ed5e74;
+    color: white;
+    padding: 2%;
+    border-radius: 10px;
+    width: auto;
+    min-width: 100px;
+}
+.letfliSmsChat{
+    text-align: start;
+}
+.rightliSmsChat{
+    text-align: end;
+}
+.allSmsChat{
+    height: 550px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 5%;
+}
+.saisiSmsChat{
+    background-color: #1b7895;
+    width: 98%;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    margin-left: 1%;
+    padding: 1%;
+    margin-bottom: 5%;
+}
+.dateSmsChatV1{
+    font-size: 11px;
+    margin-top: -4%;
+    text-align: right;
+    margin-right: 1%;
+}
+.dateSmsChatV2{
+    font-size: 11px;
+    margin-top: -4%;
+    text-align: left;
+    margin-left: 1%;
+}
+.badge-danger{
+    border: 2px solid #dc3545;
+}
+.badge-success{
+    border: 2px solid #28a745;
+}
+.newListChatv2{
+    display: flex;
+}
+@media (min-width: 1500px){
+    .dateSmsChatV1{
+        font-size: 11px;
+        margin-top: -2%;
+        text-align: right;
+        margin-right: 1%;
+    }
+    .dateSmsChatV2{
+        font-size: 11px;
+        margin-top: -2%;
+        text-align: left;
+        margin-left: 1%;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 1100px){
+    .newListChatv2{
+        display: unset;
+    }
+}
+
+.divWriterChat{
+    width: 98%;
+    height: 60px;
+    background-color: white;
+    margin: 1%;
+    border-radius: 12px;
+}
+.sendMessageInChat{
+    height: 60px !important;
+}
+
+.iconvoirMessagePlusChat{
+    width: 98%;
+    height: 30px;
+    margin-bottom: 2%;
+}
+.soniconvoirMessagePlusChat{
+    width: 30px;
+    height: 30px;
+    background-color: #007bff;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    padding-top: 2px;
+    margin: 0 auto;
+}
+.soniconvoirMessagePlusChat:hover .sonofChildiconvoirMessagePlusChat{
+    transform: rotate(360deg);
+    transition: .5s;
+}

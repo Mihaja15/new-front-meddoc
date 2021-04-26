@@ -1,0 +1,175 @@
+.logginAllMeddoc{
+	min-height: 100vh;
+	width: 100%;
+	position: relative;
+	margin: 0 auto;
+}
+.sonVlogginAllMeddoc{
+	background-color: white;
+	width: 100%;
+	min-height:100vh;	
+	text-align: center;
+	padding-top: 25vh;
+	padding-left: 5%!important;
+	padding-right: 5%!important;
+	margin: 0 auto;
+	display: block;
+}
+@keyframes levitate {
+	0%{
+		transform: translate3d(0,0,0);
+	}
+	50%{
+		transform: translate3d(0,50px,0);
+	}
+	100%{
+		transform: translate3d(0,0,0);
+	}
+}
+@keyframes levitateShadow {
+	0%{
+		transform: translate3d(0,0,0);
+	}
+	50%{
+		transform: translate3d(0,50px,0);
+	}
+	100%{
+		transform: translate3d(0,0,0);
+	}
+}
+.sonlogginAllMeddoc{
+	background-color: #f1f4f5;
+	width: 100%;
+	min-height:100vh;
+	text-align: center;
+	padding-top: 10%;
+	overflow: hidden;
+	padding: 5%;
+}
+@keyframes loader {
+	from{
+		transform: rotate(0deg);
+	}
+	to{
+		transform: rotate(360deg);
+	}
+}
+.login-loader{
+	width:25px;
+	height:25px;
+	border-radius: 50%;
+	border: 5px solid #00b6c9;
+	border-top-color: white;
+	align-items: center;
+	margin: 0 auto;
+	animation: loader 0.5s linear infinite;
+}
+.shadowImg{
+	content: '';
+  /* position: absolute; */
+  /* top: 750px;
+  left: 200px; */
+  margin-top: -10px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 650px;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 100%;
+  box-shadow: 0px 15px 5px 0px #aaaaaa;
+  /* -moz-transform: translate3d(66.66667px, 66.66667px, -10px) scale3d(1.25, 1.25, 1);
+  -ms-transform: translate3d(66.66667px, 66.66667px, -1px) scale3d(1.25, 1.25, 1);
+  -webkit-transform: translate3d(66.66667px, 66.66667px, -1px) scale3d(1.25, 1.25, 1);
+  transform: translate3d(66.66667px, 66.66667px, -01px) scale3d(1.25, 1.25, 1); */
+  animation: levitateShadow 10s cubic-bezier(1,1,1,1) infinite;
+}
+.imgSizeLoginMeddoc{
+	max-width: 650px;
+	animation: levitate 10s cubic-bezier(1,1,1,1) infinite;
+	overflow: hidden;
+}
+.titleH1Login{
+	text-align: left;
+    color: #01bbc6;
+}
+.titlePLogin{
+	text-align: left;
+	font-weight: 600;
+    color: #8895A7;
+}
+.titleALogin{
+	font-weight: bold;
+	color: #01bbc6;
+	text-decoration: none;
+}
+.titleALogin:hover{
+	text-decoration: none;
+	color: #00b6c9;
+}
+.spanSonOfChildLoggin{
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+	background-color: #f1f4f5;
+	border: 1px solid #f1f4f5;
+}
+.inputSonOfChildLoggin{
+	background-color: #f1f4f5;
+    /* border-top-right-radius: 12px !important;
+	border-bottom-right-radius: 12px !important; */
+	border: 1px solid #f1f4f5;
+}
+.descenteLogin{
+	margin-top: 8%;
+}
+.motDePasseOublieLogin{
+	text-align: center;
+    padding-top: 4%;
+    color: #8895A7;
+	font-weight: bold;
+}
+.motDePasseOublieLogin:hover{
+	text-decoration: none;
+}
+.boutonConnecterLogin{
+	margin-top: 6%;
+    width: 100%;
+}
+.boutonConnecterLogin a{
+    padding: 8px;
+    background-color: #00bfd8;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 25px;
+    border: 2px solid #00bfd8;
+}
+.boutonConnecterLogin a:hover{
+    color: #00bfd8;
+    text-decoration: none;
+    background-color: #fff;
+}
+/* #sonboutonConnecter{
+	width: 100%;
+    font-size: 19px;
+    border-radius: 12px;
+} */
+.labelErrors{
+	color: #dc3545;
+}
+.titleModalValidationLoginMeddoc{
+	width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+.titlePLoginMeddoc{
+	text-align: center;
+    font-weight: 600;
+    color: #8895A7;
+}
+.inputSonOfChildLogginV12V5{
+	background-color: #f1f4f5;
+    border: 2px solid #ffffff;
+}

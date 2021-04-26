@@ -1,0 +1,26 @@
+.allNewProfilePatient{
+    padding: 2%;
+    background-color: white;
+    width: 98%;
+    margin: 1%;
+    border-radius: 12px;
+    height: auto;
+    padding-top: 0%;
+    margin-top: 0%;
+}
+.bigTitleNewProfilPatient{
+    text-align: center;
+}
+.tabTitleContactNewProfilPatien{
+    width: 20%;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+    border-bottom: 2px dashed #c5b6d1;
+    border-top: 1px solid transparent !important;
+}
+.tabSonContactNewProfilPatien{
+    border-bottom: 2px dashed #c5b6d1;
+    border-top: 1px solid transparent !important;
+    text-align: center;
+}

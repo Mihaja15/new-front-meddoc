@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
+.textInscriptionPatient{
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+}
+.inputInscriptionPatient{
+    margin-top: 10%;
+}
+.boutonInscriptionPatient {
+    display: inline-block;
+    padding: 1.1875rem 2.125rem 1.1875rem 2.125rem;
+    border: 0.125rem solid #00bfd8;
+    background-color: #00bfd8;
+    color: #fff;
+    font: 700 0.75rem/0 "Raleway", sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 19px;
+}
+.boutonInscriptionPatient:hover {
+    border: 0.125rem solid #00bfd8;
+    color: #00bfd8;
+    background-color: white;
+}
+.boutonInscriptionPatient:disabled{
+    border: 0.125rem solid #82c0c9;
+    background-color: white;
+    color: #82c0c9;
+}
+#sonV2logginAllMeddoc{
+    background-color: white;
+	width: 100%;
+	min-height:100vh;	
+	text-align: center;
+	padding-top: 20vh;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+.errorInscriptionPatient{
+    text-align: center;
+    width: 100%;
+    font-weight: 700;
+    color: #dc3545;
+}
+.successInscriptionPatient{
+    text-align: center;
+    width: 100%;
+    font-weight: 700;
+    color: #28a745;
+}
+.boutonInscriptionPatientV2 {
+    display: inline-block;
+    padding: 1.1875rem 2.125rem 1.1875rem 2.125rem;
+    border: 0.125rem solid #28a745;
+    background-color: #28a745;
+    color: #fff;
+    font: 700 0.75rem/0 "Raleway", sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 19px;
+}
+.boutonInscriptionPatientV2:hover {
+    border: 0.125rem solid #28a745;
+    background-color: white;
+    color:  #28a745;
+}
+h1.titleH1Login{
+    font-size: 25px;
+    color: #01bbc6;
+    width: 100%;
+}
+.titleALogin{
+    color: #d1637f;
+    font-size: 17px;
+    font-weight: 600;
+}
+.titleALogin:hover{
+    text-decoration: none;
+    color: #990a73;
+}
+.progress{
+    height: 2px;
+}
+#sonboutonConnecter {
+    display: inline-block;
+    padding: 1.1875rem 2.125rem 1.1875rem 2.125rem;
+    border: 0.125rem solid #00bfd8;
+    background-color: #00bfd8;
+    color: #fff;
+    font: 700 0.75rem/0 "Raleway", sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 19px;
+}
+#sonboutonConnecter:hover {
+    border: 0.125rem solid #00bfd8;
+    color: #00bfd8;
+    background-color: white;
+}
+
+.bienvenuAfterInscription{
+    width: 100%;
+    min-height: 950px;
+    background-color: white;
+    margin-bottom: 2%;
+    padding-top: 20vh;
+}
+.sonbienvenuAfterInscription{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.sonofSondivTableInscriptionMedecin{
+    background-color: #39c3ef;
+    width: 80%;
+    min-height: 200px;
+    margin: 0 auto;
+    /* margin-top: 2%; */
+    border-radius: 12px;
+    padding: 5%;
+}
+.h1ChildsonofSondivTableInscription{
+    font-size: 23px;
+    padding-top: 7%;
+    text-align: center;
+    font-weight: 800;
+}
+.ChildsonofSondivTableInscription{
+    width: 100%;
+    min-height: 200px;
+    background-color: #c8edff;
+    border-radius: 12px;
+}
+.text1ChildsonofSondivTableInscription{
+    margin-left: 4%;
+    margin-right: 4%;
+    text-align: center;
+    margin-top: 9%;
+    font-weight: 400;
+}
+.text2ChildsonofSondivTableInscription{
+    margin-left: 4%;
+    margin-right: 4%;
+    text-align: center;
+    margin-top: 7%;
+    font-weight: 400;
+}
+.boutonBienvenue{
+    width: 100%;
+    height: 50px;
+    background-color: #00bfd8;
+    border: 2px solid #00bfd8;
+    border-radius: 12px;
+    font-weight: 700;
+}
+.divboutonBienvenue{
+    padding-left: 30%;
+    padding-right: 30%;
+    padding-bottom: 3%;
+}
+.filsfilsOfSonbienvenuAfterInscription{
+    background-color: white;
+    width: 96%;
+    margin: 2%;
+    border-radius: 12px;
+    min-height: 450px;
+}
+.divImageBienvenu{
+    width: 100%;
+}
+.imageBienvenu{
+    width: 100%;
+}
+.divTextIMMMMMboutonBienvenue{
+    text-align: center;
+    padding-top: 3%;
+    font-weight: 500;
+}
+.divTextIPPPPPboutonBienvenue{
+    text-align: center;
+    font-weight: 700;
+    margin-top: -3%;
+}

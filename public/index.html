@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/icon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#1b7895" />
     <meta
       name="description"
       content="Web site created using create-react-app"
@@ -24,11 +24,110 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>MEDDoC: Prenez un rendez-vous avec un professionnel de santé le plus tôt et le plus près de chez vous!</title>
+    <style>
+      @keyframes mutate_x {
+        0% {
+          -webkit-transform:translate3D(0, 0, 0) scale3d(1,1,1);
+          transform:translate3D(0, 0, 0) scale3d(1,1,1);
+        }
+        100% {
+          -webkit-transform:translate3D(0, 100px, 0) scale3d(1,1,1);
+          transform:translate3D(0, 100px, 0) scale3d(1,1,1);
+        }
+      }
+      @keyframes mutate_x2 {
+        0% {
+          -webkit-transform:translate3D(0, 0, 0) scale3d(1,1,1);
+          transform:translate3D(0, 0, 0) scale3d(1,1,1);
+        }
+        100% {
+          -webkit-transform:translate3D(0, -100px, 0) scale3d(1,1,1);
+          transform:translate3D(0, -100px, 0) scale3d(1,1,1);
+        }
+      }
+      @keyframes mutate_y {
+        0% {
+          -webkit-transform:translate3D(0, 0, 0) scale3d(1,1,1);
+          transform:translate3D(0, 0, 0) scale3d(1,1,1);
+        }
+        100% {
+          -webkit-transform:translate3D(100px, 0, 0) scale3d(1,1,1);
+          transform:translate3D(100px, 0, 0) scale3d(1,1,1);
+        }
+      }
+      @keyframes mutate_y2 {
+        0% {
+          -webkit-transform:translate3D(0, 0, 0) scale3d(1,1,1);
+          transform:translate3D(0, 0, 0) scale3d(1,1,1);
+        }
+        100% {
+          -webkit-transform:translate3D(-100px, 0, 0) scale3d(1,1,1);
+          transform:translate3D(-100px, 0, 0) scale3d(1,1,1);
+        }
+      }
+      .round-one{
+        position: absolute;
+        width:50px;
+        height:50px;
+        border-radius: 50%;
+        background-color: #39c3ef;
+        animation: mutate_x 2s infinite 0.1s cubic-bezier(0,1,1,1);
+      }
+      .round-two{
+        position: absolute;
+        margin-top: 200px;
+        width:50px;
+        height:50px;
+        border-radius: 50%;
+        background-color: #39c3ef;
+        animation: mutate_x2 2s infinite 0.1s cubic-bezier(0,1,1,1);
+      }
+      .round-three{
+        position: absolute;
+        margin-top: 100px;
+        margin-left: -100px;
+        width:50px;
+        height:50px;
+        border-radius: 50%;
+        background-color:#fff;
+        animation: mutate_y 2s infinite 0.1s cubic-bezier(0,1,1,1);
+      }
+      .round-four{
+        position: absolute;
+        margin-top: 100px;
+        margin-left: 100px;
+        width:50px;
+        height:50px;
+        border-radius: 50%;
+        background-color:#fff;
+        animation: mutate_y2 2s infinite 0.1s cubic-bezier(0,1,1,1);
+      }
+      .preloader{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: #1b7895;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="preloader">
+        <div class="round-one"></div>
+        <div class="round-two"></div>
+        <div class="round-three"></div>
+        <div class="round-four"></div>
+     </div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

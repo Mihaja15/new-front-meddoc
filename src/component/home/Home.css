@@ -1,0 +1,503 @@
+.home-container{
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+@keyframes animatePhone{
+    0% {
+        top:20vh;
+    }
+    /* 25% {
+        top:50vh;
+    } */
+    50% {
+        top:22vh;
+    }
+    /* 75% {
+        top:30vh;
+    } */
+    /* 100% {
+        top:40vh;
+    } */
+}
+.rdv-telephonique{
+    position: absolute;
+    top: 20vh;
+    right: 0;
+    z-index: 900;
+    width: 35vh;
+    height: 35vh;
+    background-color: #fff;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    border-top-left-radius: 100%;
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
+    padding-right: 15px;
+    text-align: center;
+    display: block;
+    animation-delay: 1s;
+	animation-duration: 2s;
+	/* animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
+    animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	animation-name: animatePhone;
+}
+.rdv-telephonique p{
+    font-size: 25px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10vh;
+    font-weight: 700;
+    color: #c5305f;
+}
+.rdv-telephonique span{
+    font-size: 40px;
+    color: #c5305f;
+    text-align: center;
+}
+.banner-home{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 50px;
+    margin-top: 10vh;
+    display: block;
+    overflow: hidden;
+}
+.banner-start{
+    padding: 50px;
+    position: relative;
+    width: 100%;
+    min-height: 120vh;
+    background-color: #1b7895;
+    border-bottom-left-radius: 40%;
+    /* align-items: center; */
+}
+.banner-end{
+    /* position: relative; */
+    width: 100%;
+    height: 110vh;
+    background-color: #1b7895;
+    /* padding-top: 50px; */
+    /* border-top-right-radius: 100%; */
+}
+.banner-end::before{
+    content: "";
+    display: block;
+    width:100%;
+    height: 120vh;
+    position: absolute;
+    top:119.5vh;
+    right: 0;
+    background-color: white;
+    border-top-right-radius: 40%;
+}
+.search-bar{
+    width: 100%;
+    top:5vh;
+    justify-content: center;
+    display: block;
+    /* background-color: tomato; */
+    /* justify-items: center; */
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+.banner-start span{
+    color: #fff;
+    /* margin-bottom: 50px; */
+    text-align: center;
+    font-size: 70px;
+    font-weight: 700;
+}
+.banner-start u{
+    vertical-align: top;
+    color: #00bfd8;
+    justify-content: start;
+    
+}
+.banner-start p{
+    color: #fff;
+    font-size: 25px;
+}
+.banner-start h1{
+    margin: 0 auto;
+    width: 60%;
+    color: #fff;
+    margin-bottom: 50px;
+    text-align: center;
+    font-family: 'MontSerrat',sans-serif;
+    font-weight: 700;
+}
+.banner-start input{
+    width: 30%;
+    height: 60px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border:none;
+}
+.banner-start select{
+    width: 30%;
+    height: 60px;
+    margin-left: 2px;
+    border:none;
+}
+.banner-start button{
+    width: 10%;
+    height: 60px;
+    margin-left: 2px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    background-color: #c5305f;
+    color: white;
+    border:none;
+}
+.banner-start input:hover{
+    box-shadow: 0 0 10px 2px #fff;
+}
+.banner-start select:hover{
+    box-shadow: 0 0 10px 2px #fff;
+}
+.banner-start button:hover{
+    box-shadow: 0 0 10px 2px #c5305f;
+}
+.vaccin-about{
+    width: 70%;
+    height: 25vh;
+    background-color: #defded79;
+    /* background-color: #38a3a5a9; */
+    margin: 0 auto;
+    margin-top: 75px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    /* padding-left: 25px;
+    padding-right: 25px; */
+}
+.vaccin-about-img{
+    justify-content: center;
+    display: flex;
+}
+.vaccin-about-img img{
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    object-fit: fill;
+}
+.vaccin-about-text{
+    text-align: center;
+}
+.vaccin-about-text p{
+    color: #122354;
+}.vaccin-about-text a{
+    color: #b8627d;
+}
+a.vaccin-about-link{
+    background-color: #c5305f;
+    padding: 5px;
+    border-radius: 15px;
+    color: #fff;
+    font-weight: 600;
+}
+a.vaccin-about-link:hover{
+    text-decoration: none;
+    box-shadow: 0 0 5px 2px #c5305f;
+}
+.why-meddoc{
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    /* background-color: #c5305f; */
+}
+.why-meddoc h2{
+    text-align: center;
+    margin-bottom: 10px;
+    color: #004369;
+    font-size: 40px;
+}
+.why-meddoc img{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+}
+.subtitle-img{
+    text-align: center;
+    font-size: 20px;
+    width: 260px;
+    margin: 0 auto;
+	font-weight: bold;
+	margin-top: 5%;
+	height: 60px;
+    color: #004369;
+}
+.text-img{
+    width: 260px;
+    color:  #92b1b0 ;
+    font-size: 15.2px;
+    margin: 0 auto;
+    text-align: center;
+    font-weight: bolder;
+    font-family: sans-serif;
+}
+.first-content{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: center;
+    align-items: center;
+    margin-top: -15%;
+    margin-bottom: -10%;
+}
+.first-content h2{
+    text-align: center;
+    color: #ff6c0a;
+    font-weight: 700;
+    font-size: 35px;
+}
+.first-content p{
+    text-align: center;
+    color: #92b1b0;
+    font-size: 17px;
+}
+.first-content a{
+    padding: 8px;
+    background-color: #00bfd8;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 20px;
+    border: 2px solid #00bfd8;
+}
+.first-content img{
+    width: 100%;
+    height: auto;
+}
+.first-content a:hover{
+    color: #00bfd8;
+    text-decoration: none;
+    background-color: #fff;
+}
+.why{
+  min-height: 600px;
+  position: relative;
+  -moz-transition: all .1s ease;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+.why .overlay-two{
+  margin-top:25%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  /* background: #5533ff; */
+  background: linear-gradient(-95deg, #1b7895 50%, #39c3ef 100%);
+  -webkit-transform: skew(0, 12deg);
+  transform: skewY(-12deg);
+  -webkit-transform-origin: 0;
+  transform-origin: 0;
+  z-index: -12; 
+}
+.why .intro-img {
+  margin-top: -30%; 
+}
+.why .intro-img img {
+  display: block;
+  height: auto;
+  max-width: 100%; 
+}
+#services .container{
+  padding-top: 20%;
+  -moz-transition: all .1s ease;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+#services .services-item {
+  padding-top: 3%;
+  -moz-transition: all .8s ease;
+  -webkit-transition: all .8s ease;
+  transition: all .8s ease; }
+#services .services-item .icon {
+  background: #3ecf8e;
+  width: 120px;
+  height: 120px;
+  margin: 0px auto;
+  margin-bottom: 0px;
+  text-align: center;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 25px; 
+}
+#services .services-item:hover .icon{
+  background: none;
+  border: 2px double #3ecf8e;
+  box-shadow: 0px 0px 25px 0px rgba(255, 254, 254, 0.24);
+  -moz-transition: all .1s ease;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+#services .services-item .icon i {
+  font-size: 40px;
+  color: #ffffff;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30%; 
+}
+#services .services-item h4 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 15px; 
+}
+.partenaire{
+  position: relative;
+  min-height: 600px;
+  background-color: #fff;
+}
+.section-title{
+  color: #e5fff3;
+}
+.section-titles{
+  margin-top: 5%;
+  color: #122354;
+  padding-bottom: 5%;
+}
+.section-header h2{
+  font-weight: 500;
+}
+#soutien{
+  /* padding-top: 5%; */
+  padding-bottom: 5%;
+}
+#soutien .single-team {
+  margin-top: 5%;
+  border: 1px solid #ddd;
+  position: relative;
+  -moz-transition: all .8s ease;
+  -webkit-transition: all .8s ease;
+  transition: all .8s ease;
+  /* height: 450px; */
+}
+#soutien .single-team img {
+    padding-top: 5%;
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+}
+#soutien .single-team .team-social-icons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: -20px; 
+}
+#soutien .single-team:hover {
+  box-shadow: 0px 0px 25px 0px rgba(95, 95, 95, 0.658);
+  -moz-transition: all .8s ease;
+  -webkit-transition: all .8s ease;
+  transition: all .8s ease; 
+}
+#soutien .single-team .team-details {
+  padding: 45px 0px 30px 0px;
+  position: relative; 
+}
+#soutien .single-team .team-details h5.team-title {
+  font-size: 16px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0; 
+}
+#soutien .single-team .team-details p {
+  font-size: 12px;
+  color: #5e629c; 
+}
+
+.info-covid{
+    width: 100%;
+    height: 13vh;
+    position: fixed;
+    top: 14vh;
+    left:0;
+    background-color: #c4e7f9;
+    padding-top: 5px;
+    padding-left: 10%;
+    display: block;
+    z-index: 999;
+}
+.info-covid h5{
+    font-size: 16px;
+}
+.info-covid p{
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.info-covid a{
+    color: #000;
+    text-decoration: underline;
+    font-size: 13;
+    font-weight: 600;
+}
+.info-covid a:hover{
+    color: #000;
+}
+.info-covid ul{
+    left: 11%;
+}
+.info-covid li{
+    list-style: square;
+    font-size: 13;
+}
+.info-covid div{
+    width: 100%;
+    height: 15vh;
+    display: none;
+    position: absolute;
+    top:12.5vh;
+    left: 0;
+    padding-left: 10%;
+    background-color: #c4e7f9;
+}
+a.close{
+    text-decoration: none;
+    right: 5%;
+    position: absolute;
+    font-weight: 900;
+}
+.info-covid span{
+    position: absolute;
+    left: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+@media (max-width: 767px) {   
+    .banner-start{
+        border-radius: 0;
+    } 
+    .banner-end{
+        display: none;
+    }
+    .vaccin-about{
+        width: 90%;
+        display: block ;
+        height: 55vh;
+    }
+    .vaccin-about-img{
+        margin: 0 auto;
+    }
+    .vaccin-about-text{
+        margin: 0 auto;
+    }
+}
