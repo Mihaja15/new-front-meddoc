@@ -7,7 +7,7 @@ import {fetchPost} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { utile } from '../../services/utile';
 import { TablePagination } from '@trendmicro/react-paginations';
-import {  faChevronLeft, faChevronRight, faClock, faLongArrowAltUp, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {  faChevronLeft, faChevronRight, faClock, faTrash} from '@fortawesome/free-solid-svg-icons';
 import { authUser } from '../../services/authUser';
 import '@trendmicro/react-paginations/dist/react-paginations.css';
 

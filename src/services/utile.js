@@ -77,6 +77,12 @@ function getDateComplet(dateString){
     const dates= new Date(dateString);
     return ""+this.getNamesSemaine(dates.getDay())+", "+dates.getDate()+" "+this.getNamesMois(dates.getMonth())+" "+dates.getFullYear();
 }
+function getDateNormal(dateString){
+    if(dateString===null||dateString===undefined||dateString==="null")
+        return "";
+    const dates= new Date(dateString);
+    return completChiffre(dates.getDate())+" "+this.getNamesMois(dates.getMonth())+" "+dates.getFullYear();
+}
 function getDateCompletAbrev(dateString){
     if(dateString===null||dateString===undefined||dateString==="null")
         return "";
@@ -160,5 +166,7 @@ export const utile = {
     formatDateTextWithTime,
     autocompleteZero,
     getWeekAbrev,
-    getMonthAbrev
+    getMonthAbrev,
+    completChiffre,
+    getDateNormal
 };
