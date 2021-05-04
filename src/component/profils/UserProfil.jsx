@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './UserProfil.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch ,faCalendarAlt, faCalendarCheck, faComments, faFolderPlus, faHeadset, faMoneyBillAlt, faPills, faPowerOff, faUserAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch ,faCalendarAlt, faCalendarCheck, faFolderPlus, faPowerOff, faUserAlt} from '@fortawesome/free-solid-svg-icons';
 import { authUser } from '../../services/authUser';
 import {fetchGet} from '../../services/global.service';
 import ListeRdvPatient from '../listeRdvPatient/ListeRdvPatient';
@@ -11,7 +11,7 @@ import Causette from '../chat/Causette';
 import RechercheMedecin from '../recherche-medecin/RechercheMedecin';
 // import Confirmation from '../alert/Confirmation';
 // import Actualite from '../actualite/Actualite';
-import NewProfilPatient from '../profilePatient/NewProfilPatient';
+//import NewProfilPatient from '../profilePatient/NewProfilPatient';
 import ProfilPatient from './ProfilPatient';
 import Centre from '../centre/Centre';
 

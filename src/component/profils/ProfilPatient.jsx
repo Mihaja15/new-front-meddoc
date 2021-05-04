@@ -1,7 +1,7 @@
 import React from 'react';
 import './ProfilPatient.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import {fetchGet, fetchPost, fetchPostV2} from '../../services/global.service';
+import {fetchGet, fetchPost} from '../../services/global.service';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faEdit } from '@fortawesome/free-solid-svg-icons';

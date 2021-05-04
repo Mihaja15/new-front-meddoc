@@ -1,0 +1,93 @@
+.divActualites{
+    width: 100%;
+    min-height: 1100px;
+    overflow-x: hidden;
+    padding-top: 140px;
+    padding-bottom: 140px;
+    word-wrap:break-word;
+    font-family: 'Montserrat',sans-serif;
+}
+.bigtitle-actualites{
+    text-align: center;
+    font-weight: 800;
+    font-size: 40px;
+    color: #39c3ef;
+    margin-top: 7%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.image-actualites{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+    margin-top: 2%;
+}
+.image-actualites-title{
+    width: 400px;
+    height: 400px;
+}
+.text-actualites{
+    padding-left: 10%;
+    padding-top: 2%;
+    padding-right: 10%;
+    font-size: 1rems;
+    text-align: center;
+    font-weight: 400;
+}
+.document-actualites{
+    padding-left: 10%;
+    padding-top: 2%;
+    padding-right: 10%;
+    font-size: 1rems;
+    text-align: left;
+    font-weight: 400;
+}
+.sous-title-actualites{
+    margin-top: 3%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    text-decoration: underline;
+    color: #39c3ef;
+}
+.text-ul-actualites{
+    width: 88%;
+    margin: 2%;
+    text-align: left;
+    margin-left: 10%;
+}
+.text-ul-actualites li{
+    list-style: disc !important;
+}
+.textNormal-ul-actualites{
+    width: 100%;
+    text-align: left;
+    padding-left: 2% !important;
+}
+.textNormal-ul-actualites li{
+    list-style: disc;
+}
+.text-line-ul-actualites{
+    width: 100%;
+    text-align: left;
+    padding-left: 2% !important;
+}
+.text-line-ul-actualites li{
+    list-style: decimal;
+}
+.text-ul-actualites-son{
+    width: 87%;
+    margin: 2%;
+    text-align: left;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.text-ul-actualites-son li{
+    list-style: circle;
+}
+.lienInscriptionvaccination{
+    text-decoration: underline;
+    font-weight: 600;
+}

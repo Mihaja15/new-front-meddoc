@@ -4,7 +4,7 @@ import logo from '../../assets/logo/logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../../assets/fonts/Font.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faUserAlt, faVirus } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 class Header extends React.Component{
     constructor(props){

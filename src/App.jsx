@@ -7,6 +7,7 @@ import {
 import './App.css';
 import InscriptionCentre from './component/centre/InscriptionCentre';
 import Profil from './component/centre/Profil';
+import Actualites from './component/actualites/Actualites';
 import Connexion from './component/connexion/Connexion';
 import ConnexionCentre from './component/connexion/ConnexionCentre';
 import Footer from './component/footer/Footer';
@@ -16,6 +17,7 @@ import Inscription from './component/inscription/Inscription';
 import LeftMenu from './component/left/LeftMenu';
 import UserProfil from './component/profils/UserProfil';
 import RightMenu from './component/right/RightMenu';
+import SuiviMedicals from './component/suivi-medicals/SuiviMedical';
 import history from './history';
 
 class App extends React.Component {
@@ -50,6 +52,8 @@ class App extends React.Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" render={() => {return  this.contentShow(<Home/>,<Header/>,null,null,<Footer/>);}}/>
+            <Route exact path="/suivi-medical" render={() => { return this.contentShow(<SuiviMedicals/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>); }}/>
+            <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>); }}/>
             <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route exact path="/inscription-centre" render={() => {return  this.contentShow(<InscriptionCentre/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route exact path="/connexion-centre" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>

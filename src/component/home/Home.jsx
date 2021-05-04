@@ -12,8 +12,8 @@ import im3 from '../../assets/img/im3.png';
 import im4 from '../../assets/img/im4.png';
 import details1officeworker from '../../assets/img/who.jpg';
 import img1 from '../../assets/img/discussion.png';
-import mnsp from '../../assets/partenaire/mnsp.png';
 import egm from '../../assets/partenaire/egm.png';
+import mnsp from '../../assets/partenaire/mnsp.png';
 import presidence from '../../assets/partenaire/presidence.png';
 import '../../assets/fonts/Font.css';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -40,7 +40,7 @@ class Home extends React.Component{
                     <p>MEDDoC propose la prise de rendez-vous pour une vaccination contre la COVID-19</p>
                     <a href="#0" onClick={()=>this.setState({showMore:!this.state.showMore})}>En savoir plus<FontAwesomeIcon icon={faChevronDown}/></a>
                     <div style={{display:!this.state.showMore?'none':'block',height:this.state.showMore?'21vh':'15vh'}}>
-                        <p>Vérifiez si vous êtes éligibles <a href="/">ici</a></p>
+                        <p>Vérifiez si vous êtes éligibles <a href="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" target="_blank">ici</a></p>
                         <ul>
                             <li>Recherchez un centre de vaccination près de chez vous.</li>
                             <li>Choisissez la date et l'heure qui vous convient selon les disponibilités.</li>
@@ -76,7 +76,7 @@ class Home extends React.Component{
                             <div className="vaccin-about row">
                                 <div className="vaccin-about-img col-md-3 col-sm-12"><img src={vaccin} alt="vaccion show"/></div>
                                 <div className="vaccin-about-text col-md-9 col-sm-12">
-                                    <p>Découvrez si vous remplissez les conditions pour la vaccination Covid-19 <a href="/">ici</a>.
+                                    <p>Découvrez si vous remplissez les conditions pour la vaccination Covid-19 <a href="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" target="_blank">ici</a>.
                                     <br/>Vous pouvez également trouver votre RDV sur MEDDoC</p>
                                     <a className="vaccin-about-link" href="/">Lieux de vaccination près de chez vous</a>
                                 </div>
