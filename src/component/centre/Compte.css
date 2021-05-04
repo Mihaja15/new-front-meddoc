@@ -1,0 +1,42 @@
+.compte-container{
+    width: 100%;
+    height: auto;
+    padding-left: 10vh;
+    padding-bottom: 5vh;
+}
+span.compte-label{
+    /* border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px; */
+    /* background-color: #f1f4f5; */
+    border: 0;
+    text-align: left;
+    height: auto;
+    /* border-radius: 0; */
+}
+input.inscription-input:disabled{
+	background-color: #fff;
+    border: 0;
+	/* border-left: 1px solid #d4d4d4; */
+    border-radius: 0;
+}
+select.inscription-input:disabled{
+	background-color: #fff;
+    border: 0;
+	/* border-left: 1px solid #d4d4d4; */
+    border-radius: 0;
+}
+textarea.inscription-input:disabled{
+	background-color: #fff;
+    border: 0;
+	/* border-left: 1px solid #d4d4d4; */
+    border-radius: 0;
+}
+textarea.inscription-input::placeholder{
+	color: #b6b6b6;
+}
+.textDePreventionInscriptionMedecin{
+    color: red;
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+}

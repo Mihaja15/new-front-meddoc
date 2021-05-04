@@ -40,8 +40,11 @@ class ProfilPatient  extends React.Component{
             categorieVal:null,
             sousCategorieVal:null,
             typeMaladieVal:null,
-            maladiesVal:[]
+            maladiesVal:[],
+            listInstitution:[],
+            institutionVal:null
         }
+        // this.sousCategorieRef = React.createRef();
     }
     setStateByNameState(name,valeur,etatChamps,dataEdits){
         this.setState({showButtonModif : true});
@@ -127,40 +130,20 @@ class ProfilPatient  extends React.Component{
         }
         return newDate;
     }
-    setDataCategorie(){
-        const data = this.state.listCategorie;const newDate=[];
-        for(let i=(data.length-1);i>=0;i--){
-            newDate.push({value : data[i].idCategorie , label : data[i].libelle});
-        }
-        return newDate;
-    }
-    setDataSousCategorie(){
-        const data = this.state.listSousCategorie;const newDate=[];
-        for(let i=(data.length-1);i>=0;i--){
-            newDate.push({value : data[i].idSousCategorie , label : data[i].libelle});
-        }
-        return newDate;
-    }
-    setDataTypeMaladie(){
-        const data = this.state.listTypeMaladie;const newDate=[];
-        for(let i=(data.length-1);i>=0;i--){
-            newDate.push({value : data[i].idTypeMaladie , label : data[i].nomTypeMaladie});
-        }
-        return newDate;
-    }
-    setDataMaladie(){
-        const data = this.state.listMaladie;const newDate=[];
-        for(let i=(data.length-1);i>=0;i--){
-            newDate.push({value : data[i].idMaladie , label : data[i].nomMaladie});
-        }
-        return newDate;
-    }
     categorieChange(event){
-        this.setState({categorieVal:event.value}, function(){
+        this.setState({categorieVal:event.target.value}, function(){
+            // this.sousCategorieRef.current.select.inputRef.select();
             if(this.state.categorieVal!==null && this.state.categorieVal!==""){
                 fetchGet('/covid/list-sous-categorie-by-categorie/'+this.state.categorieVal).then(data=>{
 					if(data!=null){
-						this.setState({ listSousCategorie: data });
+                        const newData=[];
+                        for(let i=(data.length-1);i>=0;i--){
+                            newData.push({value : data[i].idSousCategorie , label : data[i].libelle});
+                        }
+						this.setState({ listSousCategorie: newData },function(){
+                            if(this.state.listSousCategorie.length === 1)
+                                this.setState({sousCategorieVal:this.state.listSousCategorie[0].idSousCategorie});
+                        });
 					}
 				});
             }else{
@@ -168,18 +151,31 @@ class ProfilPatient  extends React.Component{
             }
         })
     }
+    sousCategorieChange(event){
+        this.setState({sousCategorieVal:{idSousCategorie:event.target.value}});
+    }
     typeMaladieChange(event){
         this.setState({typeMaladieVal:event.value}, function(){
             if(this.state.typeMaladieVal!==null && this.state.typeMaladieVal!==""){
                 fetchGet('/covid/list-maladie-by-type-maladie/'+this.state.typeMaladieVal).then(data=>{
 					if(data!=null){
-						this.setState({ listMaladie: data });
+                        const newData=[];
+                        for(let i=(data.length-1);i>=0;i--){
+                            newData.push({value : data[i].idMaladie , label : data[i].nomMaladie});
+                        }
+						this.setState({ listMaladie: newData });
 					}
 				});
             }else{
                 this.setState({listMaladie:[]});
             }
         })
+    }
+    maladieChange(event){
+        this.setState({maladiesVal:event.target.value});
+    }
+    institutionChange(event){
+        this.setState({institutionVal:event.target.value});
     }
     searchProvinceById(id){
         const list = this.state.listProvince;let size = list.length;
@@ -363,14 +359,32 @@ class ProfilPatient  extends React.Component{
         });
         fetchGet('/covid/list-categorie').then(data=>{
 			if(data!=null){
-                this.setState({ listCategorie: data });
-                console.log('listCategorie : ',data)
+                const newData=[];
+                for(let i=(data.length-1);i>=0;i--){
+                    newData.push({value : data[i].idCategorie , label : data[i].libelle});
+                }
+                this.setState({ listCategorie: newData });
+                console.log('listInstitution : ',newData);
+            }
+        });
+        fetchGet('/covid/list-institution').then(data=>{
+			if(data!=null){
+                const newData=[];
+                for(let i=(data.length-1);i>=0;i--){
+                    newData.push({value : data[i].idInstitution , label : data[i].libelle});
+                }
+                this.setState({ listInstitution: newData });
+                console.log('listCategorie : ',newData);
             }
         });
         fetchGet('/covid/list-type-maladie').then(data=>{
 			if(data!=null){
-                this.setState({ listTypeMaladie: data });
-                console.log('listTypeMaladie : ',data)
+                const newData=[];
+                for(let i=(data.length-1);i>=0;i--){
+                    newData.push({value : data[i].idTypeMaladie , label : data[i].nomTypeMaladie});
+                }
+                this.setState({ listTypeMaladie: newData });
+                console.log('listTypeMaladie : ',newData);
             }
         });
     }
@@ -394,27 +408,54 @@ class ProfilPatient  extends React.Component{
                     <div className="form-group">
                         <ul className="ulDataUserNewProfil">
                             <li className="titleLiDataUserNewProfil">Catégorie :</li>
-                            <li className="textLiDataUserNewProfil"><Select onChange={(e)=>this.categorieChange(e)} className="selectNewProfil" options={this.setDataCategorie()} /></li>
+                            {/* <li className="textLiDataUserNewProfil"><Select isSearchable={false} onChange={(e)=>this.categorieChange(e)} className="selectNewProfil" options={this.state.listCategorie} /></li> */}
+                            <li className="textLiDataUserNewProfil">
+                                <select value={this.state.categorieVal} onChange={(e)=>this.categorieChange(e)} className="selectInput">
+                                    {this.state.listCategorie.map((cat, i)=>{
+                                        return <option key={i} value={cat.value}>{cat.label}</option>
+                                    })}
+                                </select>
+                            </li>
                         </ul>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group" style={{display:this.state.listSousCategorie.length<=1?"none":"block"}}>
                         <ul className="ulDataUserNewProfil">
                             <li className="titleLiDataUserNewProfil">Sous catégorie :</li>
-                            <li className="textLiDataUserNewProfil"><Select onChange={(e)=>this.categorieChange(e)} className="selectNewProfil" placeholder="Catégorie" options={this.setDataSousCategorie()} /></li>
+                            {/* <li className="textLiDataUserNewProfil"><Select ref={this.sousCategorieRef} /*onChange={(e)=>this.categorieChange(e)}* className="selectNewProfil" placeholder="Catégorie" options={this.state.listSousCategorie} /></li> */}
+                            <li className="textLiDataUserNewProfil">
+                                <select value={this.state.sousCategorieVal} className="selectInput">
+                                    {this.state.listSousCategorie.map((sousCat, i)=>{
+                                        return <option key={i} value={sousCat.value}>{sousCat.label}</option>
+                                    })}
+                                </select>
+                            </li>
                         </ul>
                     </div>
                     <div className="form-group">
+                        <ul className="ulDataUserNewProfil">
+                            <li className="titleLiDataUserNewProfil">Institution :</li>
+                            {/* <li className="textLiDataUserNewProfil"><Select isSearchable={false} onChange={(e)=>this.categorieChange(e)} className="selectNewProfil" options={this.state.listCategorie} /></li> */}
+                            <li className="textLiDataUserNewProfil">
+                                <select value={this.state.institutionVal} onChange={(e)=>this.institutionChange(e)} className="selectInput">
+                                    {this.state.listInstitution.map((inst, i)=>{
+                                        return <option key={i} value={inst.value}>{inst.label}</option>
+                                    })}
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                    {/* <div className="form-group">
                         <ul className="ulDataUserNewProfil">
                             <li className="titleLiDataUserNewProfil">Type Maladie :</li>
-                            <li className="textLiDataUserNewProfil"><Select onChange={(e)=>this.typeMaladieChange(e)} className="selectNewProfil" options={this.setDataTypeMaladie()} /></li>
+                            <li className="textLiDataUserNewProfil"><Select onChange={(e)=>this.typeMaladieChange(e)} className="selectNewProfil" options={this.state.listTypeMaladie} /></li>
                         </ul>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group" style={{display:this.state.listMaladie.length===0?"none":"block"}}>
                         <ul className="ulDataUserNewProfil">
                             <li className="titleLiDataUserNewProfil">Maladies :</li>
-                            <li className="textLiDataUserNewProfil"><Select onChange={(e)=>this.typeMaladieChange(e)} className="selectNewProfil" placeholder="Maladie chronique" options={this.setDataMaladie()} /></li>
+                            <li className="textLiDataUserNewProfil"><Select onChange={(e)=>this.maladieChange(e)} className="selectNewProfil" placeholder="Maladie chronique" options={this.state.listMaladie} /></li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
             );
         }else if(menu===2){

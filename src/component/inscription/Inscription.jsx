@@ -462,7 +462,7 @@ class Inscription extends Component{
                                             <Row>
                                                 <Col lg={12} md={12} sm={12}>
                                                     <div className="form-group mt-3">
-                                                        <label className='col-md-12' for='cgu'>
+                                                        <label className='col-md-12' htmlFor='cgu'>
                                                             <input type='checkbox' checked={this.state.validCgu} onChange={this.validChange} name='validation' style={{color:'blue'}} className='' id='cgu'/>
                                                             J'accepte les <a href="#0">Conditions Générales d'Utilisation</a>
                                                         </label>

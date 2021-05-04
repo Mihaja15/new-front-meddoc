@@ -1,0 +1,209 @@
+.inscription-centre-container{
+    width:100%;
+    /* padding-top: 20vh; */
+    padding-top: 20vh;
+    padding-left: 10vh;
+    padding-right: 0vh;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0;
+}
+.progressBarSonOfChildLoggin{
+    margin-top: 5px;
+    border: 0px;
+}
+span.inscription-label-success{
+    font-size: 13px;
+    color: #28a745;
+    text-align: right;
+    border: 0px;
+}
+span.inscription-label{
+    /* border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px; */
+    background-color: #f1f4f5;
+    border: 0;
+    text-align: left;
+    height: auto;
+    border-radius: 0;
+}
+span.inscription-label-other{
+    /* border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px; */
+    background-color: #1b7895;
+    border: 0;
+    text-align: left;
+    height: auto;
+    border-radius: 0;
+    color: #fff;
+}
+input.inscription-input{
+	background-color: #f1f4f5;
+    border: 0;
+	border-left: 1px solid #d4d4d4;
+    border-radius: 0;
+}
+select.inscription-input{
+	background-color: #f1f4f5;
+    border: 0;
+	border-left: 1px solid #d4d4d4;
+    border-radius: 0;
+}
+textarea.inscription-input{
+	background-color: #f1f4f5;
+    border: 0;
+	border-left: 1px solid #d4d4d4;
+    border-radius: 0;
+}
+textarea.inscription-input::placeholder{
+	color: #b6b6b6;
+}
+.mapsLocalisationInscriptionMedecin{
+    height: 250px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 21px;
+  border: 1px solid #1b7895;
+  transform: translateY(60%);
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "NON";
+  height: 26px;
+  width: 40px;
+  top:0px;
+  left: 10px;
+  bottom: 3px;
+  margin-top: -2px;
+  padding-left: 3px;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  font-size: 15px;
+  color: #1b7895;
+}
+.slider:after {
+    position: absolute;
+    content: "OUI";
+    height: 27px;
+    width: 40px;
+    top:0px;
+    bottom: 0;
+    left: -50px;
+    margin-top: -2px;
+    padding-left: 6px;
+    background-color: #1b7895;
+    -webkit-transition: .4s;
+    transition: .4s;
+    font-size: 15px;
+    color: #fff;
+  }
+
+input:checked + .slider {
+  background-color: #fff;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #fff;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(40px);
+  -ms-transform: translateX(40px);
+  transform: translateX(40px);
+}
+input:checked + .slider:after {
+    -webkit-transform: translateX(49px);
+    -ms-transform: translateX(49px);
+    transform: translateX(49px);
+}
+td.heure-content{
+    display: flex;
+    justify-content: center;
+}
+div span select{
+    border: 0;
+    border-bottom: 1px dashed #b6b6b6;
+}
+.emploi-temps-content{
+    display: flex;
+    justify-content: center;
+}
+.each-line-week{
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    border-bottom: 1px dashed #01bbc6;
+    padding-bottom: 5px;
+}
+.each-line-contact{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    padding-top: 5px;
+}
+.each-line-contact select{
+    font-size: 12px;
+    border: 0;
+}
+.each-line-contact input{
+    border: 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+.add-button-contact{
+    /* font-size: 30px; */
+    border: 0;
+    /* float: right; */
+    background-color: transparent;
+    position: absolute;
+    right: 10px;
+    top:5px;
+    color: #fff;
+}
+.add-button-contact:hover{
+    color: #fff;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+.remove-button-contact{
+    /* font-size: 40px; */
+    border: 0;
+    /* float: right; */
+    background-color: transparent;
+    position: absolute;
+    right: 5px;
+    top:0px;
+    color: rgb(255, 0, 0);
+}
+.remove-button-contact:hover{
+    color: rgba(255, 0, 0, 0.712);
+    text-decoration: none;
+    /* transform: scale(1.1); */
+}
+.colDivSupplementaireInscriptionMedecin{
+    display: flex;
+    justify-content: center;
+}

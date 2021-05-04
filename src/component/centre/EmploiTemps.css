@@ -1,0 +1,66 @@
+.emploi-temps-container{
+    width:100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 150px;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* height: 200px; */
+    /* overflow-y: scroll;
+    overflow-x: hidden; */
+}
+
+.emploi-temps-container::-webkit-scrollbar {
+    width: 2px;
+}
+.emploi-temps-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #39c3ef;
+}  
+.emploi-temps-container table{
+    width: 100%;
+}
+.emploi-temps-container th{
+    /* border: 1px solid #ccc; */
+    font-size: 14px;
+    font-weight: 500;
+    color: #011936;
+    text-align: center;
+    position: sticky;
+    background-color: #fff;
+    top: 0;
+}
+.emploi-temps-container th:hover{
+    /* transform: scale(1.2); */
+    cursor: default;
+}
+.emploi-temps-container th a{
+    color: #4d2863;
+}
+.emploi-temps-container th a:hover{
+    transform: scale(12);
+}
+.emploi-temps-container td{
+    /* text-align: center; */
+    vertical-align: top;
+    /* margin: auto; */
+    /* border: 1px solid #ccc; */
+}
+.emploi-temps-container td ul li{
+    font-family: 'Montserrat',sans-serif;
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #011936;
+    margin-left: -40px;
+    text-align: center;
+    background-color: #c4e7f9;
+    margin-top: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 5px;
+}
+.emploi-temps-container td ul li:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}

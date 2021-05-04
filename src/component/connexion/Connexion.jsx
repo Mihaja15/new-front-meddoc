@@ -68,6 +68,10 @@ class Connexion extends Component{
                     this.setState({error : {message : data.message,activation: true},nonValider : true, status : 500});
                 }else if(data.status === 200){
                     const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
+                    localStorage.setItem('photo',data.profilPicture);
+                    localStorage.setItem('idUser',data.idUser);
+                    localStorage.setItem('pseudo',data.pseudo);
+                    localStorage.setItem('connected',true);
                     if(log){
                         window.location.replace(''+authUser.premierUrl(data.typeUser));
                     }else{

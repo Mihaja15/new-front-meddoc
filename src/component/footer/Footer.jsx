@@ -35,7 +35,10 @@ class Footer extends React.Component{
                         <hr className="hrFooter"/>
                         <ul className="list-unstyled">
                             <li className="pListeFooter">
-                                <a href="/accueil-professionnel">Vous êtes professionnel de santé ?</a>
+                                <a href="/inscription-centre">Inscription centre de vaccination</a>
+                            </li>
+                            <li className="pListeFooter">
+                                <a href="/connexion-centre">Connexion centre de vaccination</a>
                             </li>
                             <li className="pListeFooter">
                                 <a href="/landing-page">Qui sommes-nous ?</a>

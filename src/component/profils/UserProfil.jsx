@@ -13,6 +13,7 @@ import RechercheMedecin from '../recherche-medecin/RechercheMedecin';
 // import Actualite from '../actualite/Actualite';
 import NewProfilPatient from '../profilePatient/NewProfilPatient';
 import ProfilPatient from './ProfilPatient';
+import Centre from '../centre/Centre';
 
 const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu']
 class UserProfil extends Component{
@@ -32,7 +33,7 @@ class UserProfil extends Component{
         this.setState({etatShow:indexLink.indexOf(window.location.pathname.split('/')[2])},function(){
             if(this.state.etatShow===0){
                 const value = window.location.pathname.split('/');
-                this.setState({dataSearch:{text:value[3],province:value[4]}},function(){
+                this.setState({dataSearch:{text:value[3],district:value[4]}},function(){
                     console.log(this.state.dataSearch);
                 });
             }
@@ -48,12 +49,14 @@ class UserProfil extends Component{
             if(this.state.etatShow===0){
                 window.history.pushState("object or string", "Title", "/profil/"+link+'//0');
                 const value = window.location.pathname.split('/');
-                this.setState({dataSearch:{text:value[3],province:value[4]}},function(){
+                this.setState({dataSearch:{text:value[3],district:value[4]}},function(){
                     console.log(this.state.dataSearch);
                 });
             }else{
                 window.history.pushState("object or string", "Title", "/profil/"+link);
-                this.setState({dataSearch:null});
+                this.setState({dataSearch:null},function(){
+                    console.log(this.state.dataSearch);
+                });
             } 
         });
         // if(link==='recherche')
@@ -114,10 +117,11 @@ class UserProfil extends Component{
                                 <li onClick={()=>this.linkInMenu('recherche')} className={this.isActive(0)}><FontAwesomeIcon icon={faSearch} /> Trouver un centre de vaccination</li>
                                 <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Mon profil</li>
                                 <li onClick={()=>this.linkInMenu('rendez-vous')} className={this.isActive(2)}><FontAwesomeIcon icon={faCalendarCheck} /> Mes rendez-vous</li>
-                                <li onClick={()=>this.linkInMenu('carnet-de-sante')} className={this.isActive(3)}><FontAwesomeIcon icon={faCalendarAlt}/> Mes suivis médicaux</li>
+                                <li onClick={()=>this.linkInMenu('carnet-de-sante')} className={this.isActive(3)}><FontAwesomeIcon icon={faCalendarAlt}/> Suivi médical</li>
                                 <li onClick={()=>this.linkInMenu('proches')} className={this.isActive(5)}><FontAwesomeIcon icon={faFolderPlus}/> Mes proches</li>
-                                <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li>
-                                <li><a href="/" onClick={()=>this.deconnexion()}><button className="btn btn-danger form-control textMenuProfileDeconnexionMedecin"><FontAwesomeIcon icon={faPowerOff}/> <br/> Déconnexion </button></a></li>
+                                {/* <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li> */}
+                                <a href="/" onClick={()=>this.deconnexion()}><button className="btn btn-info form-control"><FontAwesomeIcon icon={faHeadset}/> Assistance</button></a>
+                                <a href="/" onClick={()=>this.deconnexion()}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
                                             
                             </ul>
                         </div>
@@ -132,7 +136,7 @@ class UserProfil extends Component{
                                 :(this.state.etatShow===4)
                                 ?(<Causette/>)
                                 :(this.state.etatShow===0)
-                                ?(this.state.dataSearch!==null?<RechercheMedecin dataFind = {this.state.dataSearch}/>:'')
+                                ?(this.state.dataSearch!==null?<Centre dataFind = {this.state.dataSearch}/>:'')
                                 :this.showComponentProfil(this.state.user)
                                 // :(this.state.etatShow===1)
                                 // ?this.showComponentProfil(this.state.user)

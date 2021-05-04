@@ -27,6 +27,9 @@ class Home extends React.Component{
           textFind:''
         }
     }
+    handleChange = (param, e) => {
+        this.setState({ [param]: e.target.value })
+    }
     render(){
         return(
             <div className="home-container">
@@ -54,12 +57,12 @@ class Home extends React.Component{
                     <div className="banner-home">
                         <div className="banner-start">
                             <div className="input-group search-bar">
-                                <span>MEDD<u>o</u>C</span>
+                                <div>MEDD<span>o</span>C</div>
                                 <p>s'engage pour la campagne de vaccination contre la Covid-19 à Madagascar</p>
                                 <h1>Trouvez un centre de vaccination et prenez rendez-vous</h1>
                                 <form>
-                                    <input type="text" className="" value={this.state.textFind} placeholder="Rechercher un centre de vaccination"/>
-                                    <select className="" value={this.state.selectFind} >
+                                    <input type="text" className="" value={this.state.textFind} placeholder="Rechercher un centre de vaccination" onChange={this.handleChange.bind(this,"textFind")}/>
+                                    <select className="" value={this.state.selectFind} onChange={this.handleChange.bind(this,"selectFind")}>
                                         <option value="">Votre province</option>
                                         {/* { 
                                             this.state.listeProvince.map((data,i)=>{
@@ -185,38 +188,38 @@ class Home extends React.Component{
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-lg-4 col-md-6 col-xs-12">
+                            <div className="each-col-soutien col-lg-4 col-md-6 col-xs-12">
                                 <div className="single-team">
                                     <div className="team-thumb">
                                         <img src={presidence} className="img-fluid" alt=""/>
                                     </div>
                                     <div className="team-details">
                                         <div className="team-inner text-center">
-                                            <h5 className="team-title">Présidence de la République de Madagascar</h5>
+                                            <h5 className="team-title"><a href="#!" onClick={()=> window.open("http://presidence.gov.mg/", "_blank")}>Présidence de la République de Madagascar</a></h5>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-4 col-md-6 col-xs-12">
+                            <div className="each-col-soutien col-lg-4 col-md-6 col-xs-12">
                                 <div className="single-team">
                                     <div className="team-thumb">
                                         <img src={mnsp} className="img-fluid" alt=""/>
                                     </div>
                                     <div className="team-details">
                                         <div className="team-inner text-center">
-                                            <h5 className="team-title">Ministère de la Santé Publique</h5>
+                                            <h5 className="team-title"><a href="#!" onClick={()=> window.open("http://sante.gov.mg/", "_blank")}>Ministère de la Santé Publique</a></h5>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-4 col-md-6 col-xs-12">
+                            <div className="each-col-soutien col-lg-4 col-md-6 col-xs-12">
                                 <div className="single-team">
                                     <div className="team-thumb">
                                         <img src={egm} className="img-fluid" alt=""/>
                                     </div>
                                     <div className="team-details">
                                         <div className="team-inner text-center">
-                                            <h5 className="team-title">e-Gouvernance de Madagascar</h5>
+                                            <h5 className="team-title"><a href="#!" onClick={()=> window.open("http://digital.gov.mg/", "_blank")}>e-Gouvernance de Madagascar</a></h5>
                                         </div>
                                     </div>
                                 </div>

@@ -11,7 +11,83 @@ class Header extends React.Component{
         super(props);
         this.state={
             close:false,
-            showMore:false
+            showMore:false,
+            pseudo:null,
+            photo:null,
+            showMenu:false,
+            type:null,
+            way:''
+        }
+    }
+    componentDidMount(){
+        var isConnected = false;
+        const chemin = window.location.pathname.split('/')[1];
+        this.setState({way:chemin});
+        // alert(chemin)
+        // const isConnected = localStorage.getItem('connected');
+        if(localStorage.getItem('idCentre')===null && localStorage.getItem('idUser')===null){
+            isConnected = false;
+            if(chemin==='profil'||chemin==='profil-centre'){
+                alert('Vous n\'êtes pas autororisé à accéder ce lien');
+                window.location.replace('/');
+            }
+        }else if(localStorage.getItem('idCentre')!==null && localStorage.getItem('idUser')===null){
+            isConnected = true;
+            if(chemin==='profil'){
+                alert('Vous n\'êtes pas autororisé à accéder ce lien');
+                window.location.replace('/profil-centre/1');
+            }
+            if(chemin==='connexion-centre' || chemin==='inscription-centre' || chemin==='connexion' || chemin==='inscription'){
+                alert('Vous êtes déjà connecté');
+                window.location.replace('/profil-centre/1');
+            }
+            this.setState({type:'centre', pseudo:localStorage.getItem('pseudo'), photo: localStorage.getItem('photo')});
+        }else if(localStorage.getItem('idCentre')===null && localStorage.getItem('idUser')!==null){
+            isConnected = true;
+            if(chemin==='profil-centre'){
+                alert('Vous n\'êtes pas autororisé à accéder ce lien');
+                window.location.replace('/');
+            }
+            if(chemin==='connexion-centre' || chemin==='inscription-centre' || chemin==='connexion' || chemin==='inscription'){
+                alert('Vous êtes déjà connecté');
+                window.location.replace('/profil');
+            }
+            this.setState({type:'patient', pseudo:localStorage.getItem('pseudo'), photo: localStorage.getItem('photo')});
+        }
+        // console.log(localStorage.getItem('connected')===null);
+    }
+    getLink(){
+        if(this.state.type==='centre'){
+            if(this.state.way!=='profil-centre'){
+                return(
+                    <>
+                        <li onClick={()=>{window.location.replace("/profil-centre/1")}}>Compte</li>
+                        <li onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}>Déconnexion</li>
+                    </>
+                )
+            }else{
+                return(
+                    <>
+                        <li onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}>Déconnexion</li>
+                    </>
+                )
+            }
+        }
+        else if(this.state.type==='patient'){
+            if(this.state.way!=='profil'){
+                return(
+                    <>
+                        <li onClick={()=>{window.location.replace("/profil")}}>Compte</li>
+                        <li onClick={()=>{localStorage.clear(); window.location.replace("/connexion")}}>Déconnexion</li>
+                    </>
+                )
+            }else{
+                return(
+                    <>
+                        <li onClick={()=>{localStorage.clear(); window.location.replace("/connexion")}}>Déconnexion</li>
+                    </>
+                )
+            }
         }
     }
     render(){
@@ -19,7 +95,16 @@ class Header extends React.Component{
             <div className="root-header">
                 <a href="/"><img src={logo} alt="logo meddoc"/></a>
                 <ul>
-                    <li><a href="/inscription"><FontAwesomeIcon icon={faUserAlt}/> se connecter / s'inscrire</a></li>
+                    {
+                        this.state.pseudo !== null?
+                        <li className="user-icon-menu">
+                            <a className="icon-menu-right" href="#0" onClick={()=>{this.setState({showMenu:!this.state.showMenu})}}><img src={`/assets/upload/profile.png`} alt=""/>{this.state.pseudo} <FontAwesomeIcon style={{fontSize:'15px'}} icon={faChevronDown}/></a>
+                            <ul className="dropdown-menus" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
+                                {this.getLink()}
+                            </ul>
+                        </li>
+                        :<a href="/connexion"><FontAwesomeIcon icon={faUserAlt}/> se connecter / s'inscrire</a>
+                    }
                 </ul>
             </div>
         );

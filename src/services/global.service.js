@@ -34,6 +34,8 @@ export function fetchPost(url, dataSend){
     };
     return fetch(urlConf()+url, requestOptions).then(response=>response.json()).then(data=>{
         return data;
+    }).catch(error=>{
+        console.log(error);
     });
 }
 export function fetchPostV2(url, dataSend){
