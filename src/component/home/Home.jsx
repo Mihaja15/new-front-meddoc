@@ -27,6 +27,9 @@ class Home extends React.Component{
           textFind:''
         }
     }
+    handleChange = (param, e) => {
+        this.setState({ [param]: e.target.value })
+    }
     render(){
         return(
             <div className="home-container">
@@ -54,12 +57,12 @@ class Home extends React.Component{
                     <div className="banner-home">
                         <div className="banner-start">
                             <div className="input-group search-bar">
-                                <span>MEDD<u>o</u>C</span>
+                                <div>MEDD<span>o</span>C</div>
                                 <p>s'engage pour la campagne de vaccination contre la Covid-19 à Madagascar</p>
                                 <h1>Trouvez un centre de vaccination et prenez rendez-vous</h1>
                                 <form>
-                                    <input type="text" className="" value={this.state.textFind} placeholder="Rechercher un centre de vaccination"/>
-                                    <select className="" value={this.state.selectFind} >
+                                    <input type="text" className="" value={this.state.textFind} placeholder="Rechercher un centre de vaccination" onChange={this.handleChange.bind(this,"textFind")}/>
+                                    <select className="" value={this.state.selectFind} onChange={this.handleChange.bind(this,"selectFind")}>
                                         <option value="">Votre province</option>
                                         {/* { 
                                             this.state.listeProvince.map((data,i)=>{
@@ -114,7 +117,7 @@ class Home extends React.Component{
                     <div className="col-md-6 col-sm-12 text-first-content">
                         <h2 className="">Qui est concerné par la vaccination?</h2>
                         <div className="">
-                            <p>Vous êtes des professionnels du secteur de la santé ou du secteur médico-social? Des travailleurs en milieux à risques (policiers, militaires, gendarmes, pompiers, en centre de détention...)? Une personne âgée de plus de 60 ans? Prenez rendez-vous pour vous faire vacciner.</p>
+                            <p>Vous êtes des professionnels de santé sur le front dans la lutte contre la Covid-19? Ou agent des forces de défense et de sécurité? Vous êtes diabétique ou avez une maladie chronique pouvant être un facteur de comorbidité? Une personne  de 60 ans et plus quel que soit votre lieu de vie et votre état de santé? Prenez rendez-vous pour vous faire vacciner!</p>
                         </div>
                         <a className="bouton-solid-reg popup-with-move-anim a1" href="/recherche-medecin">Prendre rendez-vous</a>
                     </div> 
@@ -165,7 +168,7 @@ class Home extends React.Component{
                                             <div className="icon">
                                                 <i className="lni-timer"></i>
                                             </div>
-                                            <h4>24h/7j</h4>
+                                            <h4>24H/7J</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -185,38 +188,38 @@ class Home extends React.Component{
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-lg-4 col-md-6 col-xs-12">
+                            <div className="each-col-soutien col-lg-4 col-md-6 col-xs-12">
                                 <div className="single-team">
                                     <div className="team-thumb">
                                         <img src={presidence} className="img-fluid" alt=""/>
                                     </div>
                                     <div className="team-details">
                                         <div className="team-inner text-center">
-                                            <h5 className="team-title">Présidence de la République de Madagascar</h5>
+                                            <h5 className="team-title"><a href="#!" onClick={()=> window.open("http://presidence.gov.mg/", "_blank")}>Présidence de la République de Madagascar</a></h5>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-4 col-md-6 col-xs-12">
+                            <div className="each-col-soutien col-lg-4 col-md-6 col-xs-12">
                                 <div className="single-team">
                                     <div className="team-thumb">
                                         <img src={mnsp} className="img-fluid" alt=""/>
                                     </div>
                                     <div className="team-details">
                                         <div className="team-inner text-center">
-                                            <h5 className="team-title">Ministère de la Santé Publique</h5>
+                                            <h5 className="team-title"><a href="#!" onClick={()=> window.open("http://sante.gov.mg/", "_blank")}>Ministère de la Santé Publique</a></h5>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-4 col-md-6 col-xs-12">
+                            <div className="each-col-soutien col-lg-4 col-md-6 col-xs-12">
                                 <div className="single-team">
                                     <div className="team-thumb">
                                         <img src={egm} className="img-fluid" alt=""/>
                                     </div>
                                     <div className="team-details">
                                         <div className="team-inner text-center">
-                                            <h5 className="team-title">e-Gouvernance de Madagascar</h5>
+                                            <h5 className="team-title"><a href="#!" onClick={()=> window.open("http://digital.gov.mg/", "_blank")}>e-Gouvernance de Madagascar</a></h5>
                                         </div>
                                     </div>
                                 </div>

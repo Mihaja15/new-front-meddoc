@@ -36,8 +36,8 @@
 .new-input-suivi{
     width: 100%;
     height: 40px;
-    background-color: #e9ecef;
-    border: 1px solid #e9ecef;
+    background-color: #e9ecef !important;
+    border: 1px solid #e9ecef !important;
 }
 .new-span-input-suivi{
     width: 100%;
@@ -137,9 +137,6 @@
     font-size: 70px;
     color: white;
 }
-.new-input-file-suivi-input{
-
-}
 /* le zavatra */
 .box {
     background-color: white;
@@ -188,10 +185,6 @@
     outline: -webkit-focus-ring-color auto 5px;
 }
 
-.inputfile + label * {
-    /* pointer-events: none; */
-    /* in case of FastClick lib use */
-}
 
 .inputfile + label svg {
     width: 1em;
@@ -274,6 +267,13 @@
 .boutton-next-preview-suivi-next{
     text-align: right;
 }
+
+@media only screen and (max-width: 767px){
+    .boutton-next-preview-suivi-next,.boutton-next-preview-suivi-preview{
+        text-align: center;
+        margin-bottom: 2%;
+    }
+}
 .boutton-next-preview-suivi button{
     width: 200px;
     background-color: #82a64e;
@@ -308,4 +308,27 @@
 .new-button-imprimer-suivi-father{
     text-align: center;
     padding-top: 2%;
+}
+.image-temporaire-suivi-medical{
+    width: 180px;
+    margin-top: -5%;
+    object-fit: contain;
+    height: 180px;
+    border-radius: 12px;
+}
+.image-temporaire-suivi-medical-father{
+    text-align: center;
+}
+.image-temporaire-suivi-medical-father-of{
+    display: flex;
+}
+.image-temporaire-suivi-medical-son li{
+    text-align: left;
+    font-weight: 700;
+    padding-bottom: 5%;
+}
+.image-temporaire-suivi-tmp{
+    background-color: #eeeeee;
+    padding: 3%;
+    border-radius: 12px;
 }

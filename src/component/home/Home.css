@@ -1,7 +1,7 @@
 .home-container{
     width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+    /* min-height: 100vh; */
+    overflow-x: hidden;
 }
 @keyframes animatePhone{
     0% {
@@ -105,18 +105,27 @@
     text-align: center;
     position: relative;
 }
-.banner-start span{
+.search-bar div{
     color: #fff;
     /* margin-bottom: 50px; */
     text-align: center;
     font-size: 70px;
     font-weight: 700;
 }
-.banner-start u{
+.banner-start span{
+    margin-top: -12px;
+    color: #fff;
+    /* margin-bottom: 50px; */
+    text-align: center;
+    font-size: 70px;
+    font-weight: 700;
     vertical-align: top;
+    text-decoration: underline;
+}
+.banner-start u{
     color: #00bfd8;
     justify-content: start;
-    
+
 }
 .banner-start p{
     color: #fff;
@@ -165,7 +174,7 @@
 }
 .vaccin-about{
     width: 70%;
-    height: 25vh;
+    min-height: 25vh;
     background-color: #defded79;
     /* background-color: #38a3a5a9; */
     margin: 0 auto;
@@ -173,6 +182,7 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
+    padding-bottom: 2vh;
     /* padding-left: 25px;
     padding-right: 25px; */
 }
@@ -387,7 +397,7 @@ a.vaccin-about-link:hover{
   -moz-transition: all .8s ease;
   -webkit-transition: all .8s ease;
   transition: all .8s ease;
-  /* height: 450px; */
+  height: 250px;
 }
 #soutien .single-team img {
     padding-top: 5%;
@@ -433,7 +443,7 @@ a.vaccin-about-link:hover{
     padding-top: 5px;
     padding-left: 10%;
     display: block;
-    z-index: 999;
+    z-index: 990;
 }
 .info-covid h5{
     font-size: 16px;
@@ -481,6 +491,14 @@ a.close{
     justify-content: center;
     align-items: center;
     font-size: 50px;
+}
+.team-title a{
+    color:#1b7895;
+    text-decoration: none;
+    font-size: 20px;
+}
+.team-title a:hover{
+    color: #122354;
 }
 @media (max-width: 767px) {   
     .banner-start{

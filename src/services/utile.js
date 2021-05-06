@@ -1,5 +1,5 @@
 function getAllMois(){
-    return ["Janvier", "Fevrier", "Mars","Avril", "Mai", "Juin", "Juillet", "Août", "Septembre","Octobre", "Novembre", "Decembre"];
+    return ["janvier", "février", "mars","avril", "mai", "juin", "juillet", "août", "septembre","octobre", "novembre", "décembre"];
 }
 function getAllMoisBreviation(indice){
     const month= ["JANV", "FEVR", "MARS","AVR", "MAI", "JUIN", "JUIL", "AOUT", "SEPT","OCT", "NOV", "DEC"];
@@ -13,7 +13,7 @@ function getNamesMois(indice){
     return data[indice];
 }
 function getAllSemaine(){
-    return ["Dimanche","Lundi", "Mardi", "Mercredi","Jeudi", "Vendredi", "Samedi"];   
+    return ["dimanche","lundi", "mardi", "mercredi","jeudi", "vendredi", "samedi"];   
 }
 function getWeekAbrev(jour){
     const week = ["dim.","lun.", "mar.", "mer.","jeu.", "ven.", "sam."];
@@ -100,7 +100,12 @@ function getNbJoursMois(mois, annee) {
     var lgMois = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     if ((annee%4 === 0 && annee%100 !== 0) || annee%400 === 0) lgMois[1] += 1;
     return lgMois[mois-1]; // 0 < mois <11
-};
+}
+function getEndMonth(month, year) {
+    var months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (year%4===0) months[1] += 1;
+    return months[month]; // 0 < mois <11
+}
 function getConfirme(text){
     if(window.confirm(''+text)) {return true;}
     return false;
@@ -113,10 +118,10 @@ function createSemaineEmploieDuTemps() {
             names : semaine[i],
             activation : false,
             jour : i,
-            topStart : 0,
-            topStop : 0,
-            bottomStart : 0,
-            bottomStop : 0,
+            topStart : null,
+            topStop : null,
+            bottomStart : null,
+            bottomStop : null,
         })
     }
     return data; // 0 < mois <11
@@ -143,6 +148,11 @@ function autocompleteZero(number, totalLength){
     }
     return result;
 }
+function isEqualJourDate(dateA, dateB){
+    const date1 = new Date(dateA);
+    const date2 = new Date(dateB);
+    return (date1.getDate()===date2.getDate()&&date1.getMonth()===date2.getMonth()&&date1.getFullYear()===date2.getFullYear())
+}
 export const utile = {
     getAllMois,
     getNamesMois,
@@ -168,5 +178,7 @@ export const utile = {
     getWeekAbrev,
     getMonthAbrev,
     completChiffre,
-    getDateNormal
+    getDateNormal,
+    getEndMonth,
+    isEqualJourDate
 };

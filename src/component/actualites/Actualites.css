@@ -1,8 +1,8 @@
 .divActualites{
     width: 100%;
     min-height: 1100px;
+    padding-top: 5vh;
     overflow-x: hidden;
-    padding-top: 140px;
     padding-bottom: 140px;
     word-wrap:break-word;
     font-family: 'Montserrat',sans-serif;
@@ -90,4 +90,13 @@
 .lienInscriptionvaccination{
     text-decoration: underline;
     font-weight: 600;
+}
+#spanSonOfChildLoggins{
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: #f1f4f5;
+}
+#inputSonOfChildLoggins{
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }

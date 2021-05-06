@@ -1,0 +1,30 @@
+
+.left-menu-root{
+    width: 20%;
+    background-color: #1b7895;
+    height: 100vh;
+    position: fixed;
+    /* position: fixed; */
+    /* top: 0; */
+    /* height: 10vh; */
+    /* background-color: #1b789511; */
+    /* border-bottom: 5px solid #1b7895; */
+    /* background-image: linear-gradient(176deg, #1b7895 48%, #ffcd66 52%); */
+}
+.left-menu-root li{
+    background-color: transparent;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #fff;
+    font-family: 'Montserrat',sans-serif;
+}
+.left-menu-root li:hover{
+    background-color: #119da4;
+}
+li.active-menu{
+    background-color: #119da4;
+}

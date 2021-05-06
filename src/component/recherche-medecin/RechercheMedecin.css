@@ -389,6 +389,7 @@
     width: 100%;
     height: 51px;
     background-color: #ea526a;
+    color: white;
 }
 .buttonSearch:hover{
     box-shadow: 7px 0px 14px 4px #ea5269b0;

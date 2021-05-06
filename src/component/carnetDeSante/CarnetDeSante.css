@@ -453,9 +453,11 @@ font-size: 1.4em;
 .allContentPatient{
     background-color: #1b7895;
     min-height: 720px;
-    width: 100%;
-    padding:10%;
-    /* border-radius: 12px; */
+    width: 98%;
+    padding: 2%;
+    border-radius: 12px !important;
+    margin: 1%;
+    margin-bottom: 3%;
 }
 @media (max-width: 767px){
 	.sonrechercheCarnetDeSanteV3{
@@ -487,8 +489,9 @@ font-size: 1.4em;
 }
 .liChoixCarnetDeSante{
     width: 29%;
-    margin: 2%;
-    min-height: 500px;
+    margin: 0 auto;
+    margin-bottom: 2%;
+    min-height: 260px;
     color:#0085f1;
     background-color: white;
     border-radius: 12px;
@@ -538,9 +541,10 @@ font-size: 1.4em;
     background-color: #27213c;
 } 
 #iconDecorationCarnetDeSante{
-    width:120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
 }
+
 @media only screen and (min-width: 573px) and  (max-width: 1099px){
 	.ulChoixCarnetDeSante{
         width: 100%;
@@ -548,12 +552,24 @@ font-size: 1.4em;
         display: initial;
     }
     .liChoixCarnetDeSante{
-        width: 45%;
-        margin: 2%;
-        min-height: 500px;
-        background-color: #0085f1;
+        width: 30%;
+        margin: 0 auto;
+        margin-bottom: 2%;
+        min-height: 260px;
+        background-color: white;
         border-radius: 12px;
-        margin-left: 27%;
+        color: #0090af;
+    }
+    @media only screen and (min-width: 573px) and  (max-width: 640px){
+        .liChoixCarnetDeSante{
+            width: 40%;
+            margin: 0 auto;
+            margin-bottom: 2%;
+            min-height: 260px;
+            background-color: white;
+            border-radius: 12px;
+            color: #0090af;
+        }
     }
 }
 @media (max-width: 572px){
@@ -563,11 +579,13 @@ font-size: 1.4em;
         display: initial;
     }
     .liChoixCarnetDeSante{
-        width: 96%;
-        margin: 2%;
-        min-height: 500px;
-        background-color: #0085f1;
+        width: 45%;
+        min-height: 260px;
+        background-color: white;
         border-radius: 12px;
+        color: #0090af;
+        margin: 0 auto;
+        margin-bottom: 2%;
     }
 }
 .newClassNameCarnetDeSante{
@@ -583,12 +601,14 @@ font-size: 1.4em;
     font-size: 40px;
     color: #00a1e7;
     cursor: pointer;
+    line-height: 60px;
 }
 .miniTitleUrgenceCarnetDeSante{
     width: 70%;
     text-align: center;
-    font-size: 40px;
+    font-size: 30px;
     color: #00a1e7;
+    font-weight: 700;
 }
 .accessCarnetDeSante{
     display: flex;
@@ -639,4 +659,138 @@ font-size: 1.4em;
     font-weight: 600;
     margin-top: 2%;
     margin-left: 2%;
+}
+
+.table-maladie-carnetMedical{
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+    border: 1px solid #4d2863;
+}
+.table-maladie-carnetMedical thead{
+    background-color: #4d2863;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    height: 38px;
+}
+.table-maladie-carnetMedical td{
+    width: 50%;
+    min-height: 38px;
+    height: 38px;
+    text-align: center;
+    background-color: #eeeeee;
+}
+.table-maladie-carnetMedical th{
+    width: 50%;
+    height: 40px !important;
+}
+.documentTitleCarnetDeSante{
+    text-align: center;
+    font-size: 23px;
+    font-weight: 600;
+    color: #4d2863;
+}
+.titleDiagnosticCarnetSante{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+.titleDiagnosticCarnetSanteV2{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+}
+.demo-editor-carnetDeSante{
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+.diagTextVaccinateur{
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    padding: 2%;
+    border-radius: 12px;
+    border: 1px solid #eeeeee;
+}
+.dimensionthDiagnostic{
+    width: 50%;
+    padding: 2%;
+    border-radius: 12px;
+    border: 1px solid #eeeeee;
+}
+.allDiagnosticContentData{
+    background-color: white;
+    padding: 2%;
+    margin-top: 3%;
+    border-radius: 12px;
+}
+.deuxiemeclassTablecarnetMedical{
+    width: 96% !important;
+    margin : 2%;
+    overflow-x: auto;
+}
+
+
+.table-maladie-carnetMedical-tmp2{
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+    border: 1px solid #4d2863;
+}
+.table-maladie-carnetMedical-tmp2 thead{
+    background-color: #4d2863;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    height: 38px;
+}
+.table-maladie-carnetMedical-tmp2 td{
+    width: 10%  !important;
+    min-height: 38px;
+    height: 38px;
+    text-align: center;
+    background-color: #eeeeee;
+}
+.table-maladie-carnetMedical-tmp2 th{
+    width: 10% !important;
+    height: 40px !important;
+}
+.document-carnet-medicale-mere{
+    background-color: white;
+    border-radius: 12px;
+    width: 96%;
+    margin: 2%;
+}
+.document-carnet-medicale-mere-img{
+    width: 99%;
+    height: 200px;
+    margin-left: 1%;
+}
+.document-carnet-medicale-mere-img img{
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+}
+.document-carnet-medicale-mere-name{
+    height: 65px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 600;
+    overflow: auto;
+}
+.allUrgenceCarnetDeSanteRow-new{
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.allUrgenceCarnetDeSanteRow-new-title{
+    text-align: center;
+    width: 100%;
+    background-color: #4d2863;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
 }
