@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './UserProfil.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch ,faCalendarAlt, faCalendarCheck, faFolderPlus, faPowerOff, faUserAlt} from '@fortawesome/free-solid-svg-icons';
+import { faSearch ,faCalendarAlt, faCalendarCheck, faFolderPlus, faPowerOff, faUserAlt, faHeadset} from '@fortawesome/free-solid-svg-icons';
 import { authUser } from '../../services/authUser';
 import {fetchGet} from '../../services/global.service';
 import ListeRdvPatient from '../listeRdvPatient/ListeRdvPatient';
@@ -14,6 +14,8 @@ import RechercheMedecin from '../recherche-medecin/RechercheMedecin';
 //import NewProfilPatient from '../profilePatient/NewProfilPatient';
 import ProfilPatient from './ProfilPatient';
 import Centre from '../centre/Centre';
+import ListeRdv from '../listeRdvPatient/ListeRdv';
+import Proche from '../mesProches/Proche';
 
 const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu']
 class UserProfil extends Component{
@@ -81,7 +83,14 @@ class UserProfil extends Component{
             // return <NewProfilPatient  dataUser ={valeur} />
             return <ProfilPatient  dataUser ={valeur} />
         }
-        return (<div>Il y a une erreur de chargement</div>)
+        // return (<div>Il y a une erreur de chargement</div>)
+    }
+    showComponentRdv(valeur){
+        if(valeur!==null && valeur!==undefined){
+            // return <NewProfilPatient  dataUser ={valeur} />
+            return <ListeRdv id={valeur.idUser}/>
+        }
+        // return (<div>Il y a une erreur de chargement</div>)
     }
     render(){
         return(
@@ -128,11 +137,11 @@ class UserProfil extends Component{
                         <div className="" id="right-content">
                             {
                                 (this.state.etatShow===2)
-                                ?(<ListeRdvPatient/>)
+                                ?this.showComponentRdv(this.state.user)
                                 :(this.state.etatShow===3)
                                 ?(<CarnetDeSante/>)
                                 :(this.state.etatShow===5)
-                                ?(<MesProches/>) 
+                                ?(<Proche/>) 
                                 :(this.state.etatShow===4)
                                 ?(<Causette/>)
                                 :(this.state.etatShow===0)

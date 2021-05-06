@@ -67,18 +67,25 @@ class Connexion extends Component{
                     this.setState({showValidation : true});
                     this.setState({error : {message : data.message,activation: true},nonValider : true, status : 500});
                 }else if(data.status === 200){
-                    const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
-                    localStorage.setItem('photo',data.profilPicture);
-                    localStorage.setItem('idUser',data.idUser);
-                    localStorage.setItem('pseudo',data.pseudo);
-                    localStorage.setItem('connected',true);
-                    if(log){
-                        window.location.replace(''+authUser.premierUrl(data.typeUser));
+                    if(data.idTypeUser===4){
+                        localStorage.setItem('idStaff',data.idUser);
+                        localStorage.setItem('pseudo',data.pseudo);
+                        window.location.replace('/profil-staff/1');
                     }else{
-                        console.log('log : '+log+"   :=> ",data);
-                        localStorage.clear();
-                        this.setState({error : {message : 'Il y a une erreur.',activation: true}})
+                        const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
+                        localStorage.setItem('photo',data.profilPicture);
+                        localStorage.setItem('idUser',data.idUser);
+                        localStorage.setItem('pseudo',data.pseudo);
+                        localStorage.setItem('connected',true);
+                        window.location.replace('/profil');
                     }
+                    // if(log){
+                    //     window.location.replace(''+authUser.premierUrl(data.typeUser));
+                    // }else{
+                    //     console.log('log : '+log+"   :=> ",data);
+                    //     localStorage.clear();
+                    //     this.setState({error : {message : 'Il y a une erreur.',activation: true}})
+                    // }
                 }else{
                     this.setState({error : {message : data.message,activation: true}})
                 }

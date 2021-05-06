@@ -19,6 +19,7 @@ import UserProfil from './component/profils/UserProfil';
 import RightMenu from './component/right/RightMenu';
 import SuiviMedicals from './component/suivi-medicals/SuiviMedical';
 import history from './history';
+import ProfilStaff from './component/staff/ProfilStaff';
 
 class App extends React.Component {
   constructor(props){
@@ -29,7 +30,7 @@ class App extends React.Component {
   }
   contentShow(content,header, leftNav, rightNav ,footer){
     return(
-      <div className="root-container">
+      <div id="root-container">
         <div className="row">
           {header?<header className="col-md-12">{header}</header>:""}
           <nav className="col-md-2" style={{display:leftNav!==null?"block":"none"}}>{leftNav}</nav>
@@ -59,7 +60,8 @@ class App extends React.Component {
             <Route exact path="/connexion-centre" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route exact path="/connexion" render={() => {return  this.contentShow(<Connexion/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
-            <Route path="/profil-centre" render={() => {return  this.contentShow(<Profil/>,<Header/>,<LeftMenu/>,<RightMenu/>,null);}}/>
+            <Route path="/profil-centre" render={() => {return  this.contentShow(<Profil/>,<Header/>,<LeftMenu type={0}/>,<RightMenu/>,null);}}/>
+            <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header/>,<LeftMenu type={1}/>,<RightMenu/>,null);}}/>
           </Switch>
         </Router>
       </div>

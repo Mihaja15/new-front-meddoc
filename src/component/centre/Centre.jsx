@@ -14,6 +14,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { fetchGet } from '../../services/global.service';
 import EmploiTemps from './EmploiTemps';
+import DetailCentre from './DetailCentre';
+import Select from 'react-select';
 
 export default class Centre extends React.Component{
     constructor(props){
@@ -31,7 +33,8 @@ export default class Centre extends React.Component{
             position:[0.0,0.0],
             centreDetail:null,
             stateShow:1,
-            idUser:null
+            idUser:null,
+            dateHeure:null
         }
     }    
     getUrlPhoto(photo){
@@ -56,11 +59,13 @@ export default class Centre extends React.Component{
                                         </div>
                                         <p className="">{data.adresse.addrValue}</p>
                                         <a href='#0' onClick={()=>this.setState({centreDetail:data,stateShow:2})}>{data.nomCentre}</a>
+                                        {/* <a href='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}></a> */}
                                         {/* <div className="adresseMedecinRechercheMedecin">{data.medecinData.user.adresse.addrValue}</div> */}
                                         {/* <div className="buttonMedecinRechercheMedecin"><a className=" popup-with-move-anim a1" href="#0" onClick={()=>this.setState({medecinDetail:data.medecinData,stateShow:2,medecinEdt:data.emploiDuTemps})}>Prendre rendez-vous</a></div> */}
                                     </div>
                                     <div className="col-md-8 col-sm-12 each-line-search-emploi-temps">
-                                        <EmploiTemps idCentre={data.idCentre} idUser={this.state.idUser} nomCentre={data.nomCentre} link={"/covid/schedule"}/>
+                                        <EmploiTemps centre={data} idCentre={data.idCentre} link={"/covid/schedule"} setDataCentre={this.changeCentre} /*changeStateShow={this.changeStateShow}*//>
+                                        {/* <EmploiTemps idCentre={data.idCentre} idUser={this.state.idUser} nomCentre={data.nomCentre} link={"/covid/schedule"}/> */}
                                     </div>
                                 </div>
                             )
@@ -137,36 +142,58 @@ export default class Centre extends React.Component{
             )
         }
     }
+    
+    search=()=>{
+        if(window.location.pathname.split('/')[1]==='recherche')
+            window.history.pushState("object or string", "Title", '/recherche-medecin/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
+        else
+            window.history.pushState("object or string", "Title", '/profil/recherche/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
+        const text = this.state.text===""?"----":this.state.text;
+        const  urls='/covid/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
+        fetchGet(urls).then(data=>{
+            if(data!==null && data!==undefined){
+                if(data.content !==null && data.content !==undefined){
+                    const dataTmp=data.content;
+                    this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
+                    console.log('rechercherNew : ', data);
+                    if(dataTmp.length > 0){
+                        this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
+                    } else this.setState({hiddenMap:true});
+                }
+            }
+        });
+    }
     componentDidMount(){
         if(localStorage.getItem('idUser')!==null){
             this.setState({idUser:localStorage.getItem('idUser')});
         }
         fetchGet('/adresse/find-district-part/all').then(data=>{
-            const newData= [];
-            for (let i = 0; i < data.length; i++) {
-                newData.push({ value : data[i].idDistrict,label :data[i].nomDistrict});
-            }
-            this.setState({listDistrict: newData});
+            // const newData= [];
+            // for (let i = 0; i < data.length; i++) {
+            //     newData.push({ value : data[i].idDistrict,label :data[i].nomDistrict});
+            // }
+            this.setState({listDistrict: data});
         });
         console.log(this.props.dataFind)
         if(this.props.dataFind!==null){
             if(this.props.dataFind.text==="" && this.props.dataFind.district==="0"){
                 const  urls='/covid/recherche/0/----/'+this.state.page+'/'+this.state.size;
-                    fetchGet(urls).then(data=>{
-                        if(data!==null && data!==undefined){
-                            if(data.content !==null && data.content !==undefined){
-                                const dataTmp=data.content;
-                                this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                                console.log('rechercherNew : ', data);
-                                if(dataTmp.length > 0){
-                                    this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
-                                } else this.setState({hiddenMap:true});
-                            }
+                fetchGet(urls).then(data=>{
+                    if(data!==null && data!==undefined){
+                        if(data.content !==null && data.content !==undefined){
+                            const dataTmp=data.content;
+                            this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
+                            console.log('rechercherNew : ', data);
+                            if(dataTmp.length > 0){
+                                this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
+                            } else this.setState({hiddenMap:true});
                         }
-                    });
+                    }
+                });
             }else{
                 this.setState({text:decodeURI(this.props.dataFind.text.toString()),district:this.props.dataFind.district},function(){
-                    const  urls='/covid/recherche/'+this.state.district+'/'+this.state.text+'/'+this.state.page+'/'+this.state.size;
+                    const text = this.state.text===""?"----":this.state.text;
+                    const  urls='/covid/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
                     fetchGet(urls).then(data=>{
                         if(data!==null && data!==undefined){
                             if(data.content !==null && data.content !==undefined){
@@ -183,7 +210,7 @@ export default class Centre extends React.Component{
             }
             console.log('rechercherNew : ', this.props.dataFind);
         }else{
-            const  urls='/covid/recherche/ / /'+this.state.page+'/'+this.state.size;
+            const urls='/covid/recherche/0/----/'+this.state.page+'/'+this.state.size;
             fetchGet(urls).then(data=>{
                 if(data!==null && data!==undefined){
                     if(data.content !==null && data.content !==undefined){
@@ -199,37 +226,90 @@ export default class Centre extends React.Component{
         }
     }
     searchOnChange=(param, e)=>{
-        this.setState({[param]:e.target.value});
+        if(param==="district"){
+            if(e!==null)
+                this.setState({[param]:e.value});
+            else
+                this.setState({[param]:'0'});
+        }else
+            this.setState({[param]:e.target.value});
+    }
+    changeStateShow=(status)=>{
+        this.setState({stateShow:status});
+    }
+    changeCentre=(data)=>{
+        this.setState({centreDetail:data, stateShow:2});
+    }
+    handlePageChange=(pageNumber)=> {
+        this.scrollToTop();
+        const text = this.state.text===""?"----":this.state.text;
+        const  urls='/covid/recherche/'+this.state.district+'/'+text+'/'+(pageNumber-1)+'/'+this.state.size;
+        fetchGet(urls+'/'+pageNumber).then(data=>{
+            if(data!==null && data!==undefined){
+                if(data.content !==null && data.content !==undefined){
+                    this.setState({listCentre : data.content,activePage : pageNumber, totalPage : data.nbPage,nbElement : data.nbElement}, function(){
+                        console.log('count : ', this.state.listCentre.length);
+                        if(this.state.listCentre.length > 0) this.setState({hiddenMap:false});
+                        else this.setState({hiddenMap:true});
+                    });
+                    console.log('rechercherNew : ', data);
+                }
+                if(data.content.length > 0) this.setState({hiddenMap:false});
+                else this.setState({hiddenMap:true});
+            }
+        });
     }
     render(){
+        const customStyles = {
+            option: (provided, state) => ({
+              ...provided,
+              borderBottom: '1px dotted pink',
+              color: state.isSelected ? '#fff' : '#1b7895'
+            }),
+            control: (provided) => ({
+              // none of react-select's styles are passed to <Control />
+                ...provided,
+                width: 330,
+                height: 51,
+                borderRadius: '0 !important',
+                backgroundColor: '#fff',
+                marginRight: 5,
+                marginLeft: 0
+            })
+          }
         return(
             <div className="centre-container">
-                <div className="divRecherchePrincipaleRechercheMedecin">
-                    <div className="divSearchBar row">
-                        <input className="inputSearch col-md-4" name="text" type="text" value={this.state.text} onChange={this.searchOnChange.bind(this,'text')} placeholder="Rechercher un centre de vaccination" />
-                        <select className="selectSearch col-md-4" name="district" value={this.state.district} onChange={this.searchOnChange.bind(this,'district')}>
-                            <option value="">Votre province</option>
-                            { 
-                                this.state.listDistrict.map((data,i)=>{
-                                    return <option value={data.value}  key={i}>{data.label}</option>
-                                })
-                            }
-                        </select>
-                        <button href='#sendMessage' className="buttonSearch col-md-2" onClick={()=>this.search()}><FontAwesomeIcon icon={faSearch}/></button>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4 col-sm-12 fathermapsRechercheMedecin">
-                    {/* style={{position : `${this.state.nav}`,top:`${this.state.tops}`,width:'400px'}} */}
-                        <div hidden={this.state.hiddenMap} className="mapsRechercheMedecin">
-                            {this.getMap(this.state.listCentre)}
+                {this.state.stateShow===1?(
+                <>
+                    <div className="divRecherchePrincipaleRechercheMedecin">
+                        <div className="divSearchBar row">
+                            <input className="inputSearch col-md-4" name="text" type="text" value={this.state.text} onChange={this.searchOnChange.bind(this,'text')} placeholder="Rechercher un centre de vaccination" />
+                            {/* <select className="selectSearch col-md-4" name="district" value={this.state.district} onChange={this.searchOnChange.bind(this,'district')}>
+                                <option value="0">Votre district</option>
+                                { 
+                                    this.state.listDistrict.map((data,i)=>{
+                                        return <option value={data.value}  key={i}>{data.label}</option>
+                                    })
+                                }
+                            </select> */}
+                            <Select styles={customStyles} isClearable className="" options={this.state.listDistrict} onChange={this.searchOnChange.bind(this,"district")}/>
+                            <button href='#sendMessage' className="buttonSearch col-md-2" onClick={()=>this.search()}><FontAwesomeIcon icon={faSearch}/></button>
                         </div>
                     </div>
-                    <div className="col-md-7 col-sm-12 listeMedecinRechercheMedecin">
-                        {this.getDataHtmlResultatRecherche(this.state.listCentre)}
-                        
+                    <div className="row">
+                        <div className="col-md-4 col-sm-12 fathermapsRechercheMedecin">
+                        {/* style={{position : `${this.state.nav}`,top:`${this.state.tops}`,width:'400px'}} */}
+                            <div hidden={this.state.hiddenMap} className="mapsRechercheMedecin">
+                                {this.getMap(this.state.listCentre)}
+                            </div>
+                        </div>
+                        <div className="col-md-7 col-sm-12 listeMedecinRechercheMedecin">
+                            {this.getDataHtmlResultatRecherche(this.state.listCentre)}
+                            
+                        </div>
                     </div>
-                </div>
+                </>):(this.state.centreDetail!==null?<DetailCentre setStateShow={this.changeStateShow} centreData={this.state.centreDetail}/>:'')
+                }
             </div>
         )
     }

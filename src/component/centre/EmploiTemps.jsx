@@ -51,21 +51,22 @@ export default class EmploiTemps extends React.Component{
         this.setState({ [param]: e.target.value })
     }
     takeAppointment=(date,heure)=>{
-        if(this.props.idUser===null||this.props.idUser===undefined){
-            alert('Vous devez d\'abord vous connecter');
-            return;
-        }
-        const dateNow = new Date();
-        console.log(dateNow.getTime()+' > '+date.getTime());
-        if(dateNow.getTime() > date.getTime()){
-            alert('La date de rendez-vous doit être ultérieurement!');
-        }else{
-            if(this.state.typeRdv!==""&&this.state.motifRdv!==""&&this.state.motifRdv!==""){
-                this.setState({dateRdv:date,heureRdv:heure,showConfirmation:true});   
-            }else{
-                alert('Tous les champs sont obligatoires!');
-            }
-        }
+        this.props.setDataCentre(this.props.centre);
+        // if(this.props.idUser===null||this.props.idUser===undefined){
+        //     alert('Vous devez d\'abord vous connecter');
+        //     return;
+        // }
+        // const dateNow = new Date();
+        // console.log(dateNow.getTime()+' > '+date.getTime());
+        // if(dateNow.getTime() > date.getTime()){
+        //     alert('La date de rendez-vous doit être ultérieurement!');
+        // }else{
+        //     if(this.state.typeRdv!==""&&this.state.motifRdv!==""&&this.state.motifRdv!==""){
+        //         this.setState({dateRdv:date,heureRdv:heure,showConfirmation:true});   
+        //     }else{
+        //         alert('Tous les champs sont obligatoires!');
+        //     }
+        // }
     }
     handleClick=(validation)=>{
         // this.props.changeConfirmation(validation);

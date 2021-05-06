@@ -1,24 +1,32 @@
-import { faCalendar, faCalendarAlt, faCalendarCheck, faChartPie, faCogs, faDigitalTachograph, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import Agenda from './Agenda';
 import Calendrier from './Calendrier';
-import Compte from './Compte';
-import Dashboard from './Dashboard';
-import './Profil.css';
-import RessourcesHumaines from './RessourcesHumaines';
+import { fetchGet } from '../../services/global.service';
+import './ProfilStaff.css';
 
-export default class Profil extends React.Component{
+export default class ProfilStaff extends React.Component{
     constructor(props){
         super();
         this.state={
-            show:1
+            show:1,
+            centreUser: null
         }
     }
     componentDidMount(){
-        
+        fetchGet('/covid/personalCentre/'+localStorage.getItem('idStaff')).then(data=>{
+            if(data!=null){
+                this.setState({ centreUser: data});
+                console.log(data)
+            }else{
+                
+            }
+        });
         const view = window.location.pathname.split('/')[2];
         this.setState({show:view})
+    }
+    showComponentAgenda(valeur){
+        if(valeur!==null && valeur!==undefined){
+            return <Calendrier id={valeur.idCentreRel} type={0}/>
+        }
     }
     render(){
         return(
@@ -35,13 +43,10 @@ export default class Profil extends React.Component{
                         <div className="container">
                             <div className="row">
                             {
-                                this.state.show==="2"?
-                                <div className="col-md-12"><Calendrier/></div>
-                                :this.state.show==="3"?
-                                <div className="col-md-12"><Compte/></div>
-                                :this.state.show==="4"?
-                                <div className="col-md-12"><RessourcesHumaines/></div>
-                                :<div className="col-md-12"><Dashboard/></div>
+                                this.state.show==="1"?
+                                <div className="col-md-12">{this.showComponentAgenda(this.state.centreUser)}</div>
+                                :
+                                <div className="col-md-12"></div>
                             }
                             </div>
                         </div>

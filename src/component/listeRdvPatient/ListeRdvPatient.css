@@ -185,10 +185,98 @@
     display: inline;
 }
 .warning-rdv{
-    background-color: rgba(255, 0, 0, 0.075);
+    background-color: #ffcc6675;
     border-radius: 10px;
     padding: 10px;
+    font-family: 'Montserrat',sans-serif;
 }
 .warning-rdv li{
     list-style: square;
+}
+.full-rdv-container{
+    /* border: 2px solid #1b7895; */
+    background-color: #1b7895;
+    padding-bottom: 0px;
+    margin-bottom: 5vh;
+    font-family: 'Montserrat',sans-serif;
+}
+.header-rdv-patient{
+    background-color: #1b7895;
+    color:#ffffff;
+    text-align: center;
+    margin: 0 auto;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 17px;
+}
+.footer-rdv-patient{
+    background-color: #1b7895;
+    color:#ffffff;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+.container-rdv-patient{
+    text-align: center;
+    background-color: #ffffff;
+    color: #27213c;
+    margin: 0 auto;
+    padding: 5px;
+}
+.rdv-list-statut{
+    text-align: right;
+}
+
+.pagClassFirst,.pagClassLast{
+    width: 50px;
+    text-align: center;
+    padding: 1%;
+    display: none;
+}
+.pagClassNext a , .pagClassPrev a, .pagClassFirst a, .pagClassLast a, .pagClassItemTmp a{ 
+    text-decoration: none;
+    color: #96ebd7;
+    font-weight: bold;
+}
+.pagClassActive{
+    width: 50px;
+    text-align: center;
+    padding: 1%;
+    cursor: not-allowed;
+}
+.pagClassActive a{
+    cursor: not-allowed;
+    color: #004369;
+}
+.pagClassItemTmp{
+    min-width: 50px;
+    text-align: center;
+    padding: 2%;
+    font-weight: bold;
+}
+.pagClassItemTmp:hover{
+    text-decoration: none;
+}
+.pagClassItemTmp a:hover{
+    text-decoration: none;
+}
+.pagClassActive:hover{
+    color: black;
+    cursor: not-allowed;
+}
+.pagClassActive a:hover{
+    color: black;
+    cursor: not-allowed;
+}
+.pagClassNext{
+    text-align: right;
+    padding: 1%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.pagClassPrev{
+    text-align: left;
+    padding: 1%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
