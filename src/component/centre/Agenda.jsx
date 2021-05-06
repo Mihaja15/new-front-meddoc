@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './Agenda.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {fetchPost} from '../../services/global.service';
-import { authUser } from '../../services/authUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faChevronCircleLeft, faChevronCircleRight, faEdit, faEye, faMapMarkedAlt, faMoneyBillAlt, faPhoneAlt, faTrash, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { utile } from '../../services/utile';

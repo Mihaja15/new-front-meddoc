@@ -5,10 +5,8 @@ import { faSearch ,faCalendarAlt, faCalendarCheck, faFolderPlus, faPowerOff, faU
 import { authUser } from '../../services/authUser';
 import {fetchGet} from '../../services/global.service';
 import ListeRdvPatient from '../listeRdvPatient/ListeRdvPatient';
-import CarnetDeSante from '../carnetDeSante/CarnetDeSante';
 import MesProches from '../mesProches/MesProches';
 import Causette from '../chat/Causette';
-import RechercheMedecin from '../recherche-medecin/RechercheMedecin';
 // import Confirmation from '../alert/Confirmation';
 // import Actualite from '../actualite/Actualite';
 //import NewProfilPatient from '../profilePatient/NewProfilPatient';
@@ -16,6 +14,8 @@ import ProfilPatient from './ProfilPatient';
 import Centre from '../centre/Centre';
 import ListeRdv from '../listeRdvPatient/ListeRdv';
 import Proche from '../mesProches/Proche';
+//import SuiviMedicalPatient from '../suivi-medical-patient/SuiviMedicalPatient';
+import CarnetDeSante from '../carnetDeSante/CarnetDeSante';
 
 const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu']
 class UserProfil extends Component{

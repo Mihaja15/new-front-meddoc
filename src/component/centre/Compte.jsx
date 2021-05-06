@@ -2,10 +2,10 @@ import React from 'react';
 import './Compte.css';
 import { ProgressBar } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import redIcon from '../../assets/icon/marker-icon-2x-red.png';
-import { fetchGet, fetchPost,fetchPostV2 } from '../../services/global.service';
+import { fetchGet, fetchPost } from '../../services/global.service';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { utile } from '../../services/utile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,8 +49,6 @@ export default class Compte extends React.Component{
             update:false,
             mailIndice:null,
             phoneIndice:null,
-            percentageMdp:0,
-            confirmationMdp:'',
             disableButton:false,
             erreurMessage:'',
             erreurEtat:false

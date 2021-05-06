@@ -1,7 +1,4 @@
-import { faCalendar, faCalendarAlt, faCalendarCheck, faChartPie, faCogs, faDigitalTachograph, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import Agenda from './Agenda';
 import Calendrier from './Calendrier';
 import Compte from './Compte';
 import Dashboard from './Dashboard';

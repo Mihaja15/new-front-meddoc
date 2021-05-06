@@ -47,6 +47,17 @@ export function fetchPostV2(url, dataSend){
         return data;
     });
 }
+
+export function fetchPostV3(url, dataSend){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataSend)
+    };
+    return fetch(url, requestOptions).then(response=>response.json()).then(data=>{
+        return data;
+    });
+}
 export function fetchPostIndependent(url, dataSend){
     const requestOptions = {
         method: 'POST',

@@ -477,9 +477,13 @@ class ListeRdvPatient extends Component{
                     <div className="col-md-12 warning-rdv">
                         <p>Lors de votre rendez-vous dans un centre de vaccination, veuillez vous munir des documents suivants:</p>
                         <ul>
-                            <li>CIN</li>
-                            <li>Preuve d'emploi ou d'ordre d'appartenance (carte ordre des médecins, services sociaux, militaires, policiers...)</li>
-                            <li>Votre carte assurance santé (le cas échéant)</li>
+                            <li>Apportez votre carte d’identité pour vous identifier</li>
+                            <li>Apportez votre preuve d’emploi ou d’ordre d’appartenance (carte professionnelle ou badge professionnel, carte étudiant si le candidat au vaccin est encore étudiant…)</li>
+                            <li>Apportez votre carte assurance santé (si n’avez pas vous pouvez quand même recevoir le vaccin)</li>
+                            <li>Respectez les consignes sanitaires de base (distanciation physique, lavage des mains, etc.) lors de votre rendez-vous</li>
+                            <li>Ne vous présentez pas en centre de vaccination si vous êtes en isolement ou en quarantaine</li>
+                            <li>Prévoyez votre déplacement et présentez-vous seulement cinq minutes avant l'heure de votre rendez-vous afin d’éviter de causer des files d’attente</li>
+                            <li>Attention: Un retard pourrait entraîner le report de votre rendez-vous</li>
                         </ul>
                     </div>
                     <div className="pagnationRecherche">

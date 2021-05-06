@@ -15,15 +15,16 @@ class Actualites extends Component{
                     <img src={actualites} className="image-actualites-title" alt="actualites" srcset=""/>
                 </div>   
                 <div className="text-actualites">
-                    <p>Comme le Président de la République l'a récemment annoncé, Madagascar va se lancer dans une campagne de vaccination contre la COVID-19 selon des modalités et un calendrier préconisé par le Ministère de la Santé Publique.</p>
+                    <p>Comme le Président de la République a annoncé, Madagascar va se lancer dans une campagne de vaccination contre la COVID-19 selon des modalités et un calendrier préconisé par le Ministère de la Santé Publique.</p>
                 </div>  
                 <div className="sous-title-actualites">Procédures pour se faire vacciner</div> 
                 <div className="document-actualites">
-                    Trois catégories ont été pris en compte dans la définition des populations prioritaires pour la vaccination:
+                    Quatre catégories ont été pris en compte dans la définition des populations prioritaires pour la vaccination:
                     <ul className="text-ul-actualites">
                         <li>Les professionnels du secteur de la santé et du secteur médico-social</li>
                         <li>Les travailleurs en milieux à risques et de la sécurité publique (policiers, militaires, gendarmes, pompiers, surveillants pénitentiaires…)</li>
-                        <li>Les Personnes de 55 ans et plus quel que soit leur lieu de vie et leur état de santé (avec ou sans comorbidités)</li>
+                        <li>Des personnes diabétiques ou qui ont des maladies chroniques pouvant être un facteur de commodité</li>
+                        <li>Les Personnes de 60 ans et plus quel que soit leur lieu de vie et leur état de santé (avec ou sans comorbidités)</li>
                     </ul>
                     Si vous ne faites pas partie de ces groupes de vaccination, évitez de téléphoner ou de vous présenter sur place pour vous faire vacciner. Vous serez informés lorsque votre groupe pourra commencer à prendre rendez-vous.
                 </div>
@@ -34,7 +35,7 @@ class Actualites extends Component{
                         <li>Prise de rendez-vous en ligne: <a href="/">www.meddoc.mg</a></li>
                         <li>Appeler le 911 pour une prise de rendez-vous téléphonique</li>
                     </ul>
-                    Si vous éprouvez des difficultés pour prendre votre rendez-vous en ligne, demandez l’aide de vos proches ou consultez la page Marche à suivre pour l’inscription à la vaccination contre la COVID-19 qui vous guidera étape par étape dans la prise de rendez-vous. <br/><br/> 
+                    Si vous éprouvez des difficultés pour prendre votre rendez-vous en ligne, demandez l’aide de vos proches. <br/><br/> 
                     Au besoin, il est possible d’obtenir de l’aide en appelant de 8 h à 20 h du lundi au vendredi ou de 8 h 30 à 16 h 30 les samedi et dimanche au : 0326503158.
                 </div>
 

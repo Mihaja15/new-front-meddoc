@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip';
 import './InscriptionCentre.css';
 import { fetchGet, fetchPost,fetchPostV2 } from '../../services/global.service';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import { utile } from '../../services/utile';
 import redIcon from '../../assets/icon/marker-icon-2x-red.png';
@@ -99,7 +99,6 @@ export default class InscriptionCentre extends React.Component{
 		event.preventDefault();
         this.setState({disableButton:true});
 		const data = new FormData(event.target);
-        const date= new Date();
         var contacts = this.state.listContact;
         if(this.state.phone!=='')
             contacts.push({

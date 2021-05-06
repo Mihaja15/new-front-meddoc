@@ -146,16 +146,16 @@ class Connexion extends Component{
                                 <p className="titlePLogin">Pas encore de compte ? <a className="titleALogin" href="/inscription"> Créer mon compte</a></p>
                                 <div className="form-group row descenteLogin">
                                     <div className="input-group">
-                                        <span className="form-control spanSonOfChildLoggin col-2"><FontAwesomeIcon style={{textAlign : "center"}} icon={faUser} /></span>
-                                        <input className="form-control inputSonOfChildLoggin col-10" required={true} type="text" value={this.state.identification.valuesText} onChange={(e) => this.setValue("identification", e)} placeholder="E-mail ou numéro de téléphone" name="identification"/>
+                                        <span className="form-control spanSonOfChildLoggin col-2" id="spanSonOfChildLoggins"><FontAwesomeIcon style={{textAlign : "center"}} icon={faUser} /></span>
+                                        <input className="form-control inputSonOfChildLoggin col-10" id="inputSonOfChildLoggins" required={true} type="text" value={this.state.identification.valuesText} onChange={(e) => this.setValue("identification", e)} placeholder="E-mail ou numéro de téléphone" name="identification"/>
                                         {this.getErrorMessage(this.state.identification.etat,'Le champs identification est obligatoire')}
                                     </div>
                                     
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
-                                        <span className="form-control spanSonOfChildLoggin col-2"><FontAwesomeIcon icon={faLock} /></span>
-                                        <input onKeyDown={this.keyPressed.bind(this)} className="form-control inputSonOfChildLoggin col-10" required={true} type="password" value={this.state.mdp.valuesText} onChange={(e) => this.setValue("mdp", e)} placeholder="Mot de passe" name="mdp"/>
+                                        <span className="form-control spanSonOfChildLoggin col-2" id="spanSonOfChildLoggins"><FontAwesomeIcon icon={faLock} /></span>
+                                        <input onKeyDown={this.keyPressed.bind(this)} className="form-control inputSonOfChildLoggin col-10" id="inputSonOfChildLoggins" required={true} type="password" value={this.state.mdp.valuesText} onChange={(e) => this.setValue("mdp", e)} placeholder="Mot de passe" name="mdp"/>
                                         {this.getErrorMessage(this.state.mdp.etat,'Le champs mot de passe est obligatoire')}
                                     </div>
                                 </div>

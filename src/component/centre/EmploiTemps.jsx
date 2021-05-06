@@ -4,7 +4,6 @@ import { utile } from '../../services/utile';
 import { fetchGet, fetchPost} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { authUser } from '../../services/authUser';
 
 export default class EmploiTemps extends React.Component{
     constructor(props){

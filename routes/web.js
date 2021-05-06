@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const multer  = require('multer');
+const fs = require('fs');
 
 const date = new Date();
 const storage = multer.diskStorage({
@@ -15,7 +16,10 @@ const storage = multer.diskStorage({
 var upload = multer({storage: storage})
 
 const router = express.Router();
-
+router.use(express.urlencoded(
+  {extended:true}
+));
+router.use(express.json());
 // Upload Image
 router.post("/photo", upload.single('photo'), (req, res, next) => {
     console.log(req);
@@ -23,6 +27,44 @@ router.post("/photo", upload.single('photo'), (req, res, next) => {
     return res.json({
         image: req.file.path
     });
+});
+
+router.post('/deleteFichier', async function (request, response) {
+    try {
+      if(request.body.name!== undefined){
+        fs.unlinkSync('./public/uploads/'+request.body.name);
+        response.status(200).json({'status': true, 'message': 'suppresion fichier avec succés'});
+      }
+      //file removed
+    } catch(err) {
+      response.status(500).json({'status': false, 'message': ''+err, 'code': ''});
+    }
+})
+
+router.post('/download', async function(req, res){
+    try {
+      if(req.body.name!== undefined){
+        
+        /*var file = fs.readFileSync(__dirname + '/public/uploads/'+req.body.name, 'binary');
+        res.setHeader('Content-Length', file.length);
+        res.write(file, 'binary');
+        res.end();*/
+        
+        /*var file = __dirname + '/public/uploads/'+req.body.name;
+        res.download(file);*/
+        var file = __dirname + '/public/uploads/'+req.body.name;
+        res.download(''+file, function(error){
+            console.log("Error : ", error);
+            res.status(500).json({'status': false, 'message': ''+error, 'code': ''});
+        });
+        res.status(200).json({'status': true, 'message': 'suppresion fichier avec succés'});
+      }
+      //file removed
+    } catch(err) {
+      console.log(err);
+      res.status(500).json({'status': false, 'message': ''+err, 'code': ''});
+    }
+
 });
 
 //new method

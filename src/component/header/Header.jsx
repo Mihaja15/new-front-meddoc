@@ -127,7 +127,7 @@ class Header extends React.Component{
                                 {this.getLink()}
                             </ul>
                         </li>
-                        :<a href="/connexion"><FontAwesomeIcon icon={faUserAlt}/> se connecter / s'inscrire</a>
+                        :<a href="/connexion"><FontAwesomeIcon icon={faUserAlt}/> Se connecter / s'inscrire</a>
                     }
                 </ul>
             </div>

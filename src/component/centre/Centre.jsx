@@ -1,10 +1,9 @@
-import { faChevronLeft, faChevronRight, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './Centre.css';
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
-import { utile } from '../../services/utile';
 import L from 'leaflet';
 import Pagination from "react-js-pagination";
 // import DetailMedecin from '../medecin/DetailMedecin';

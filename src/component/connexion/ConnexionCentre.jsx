@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './ConnexionCentre.css';
 import {fetchPost} from '../../services/global.service';
-import { authUser } from '../../services/authUser';
 import bgLogin from '../../assets/background/centre.jpg';
 
 export default class ConnexionCentre extends React.Component{

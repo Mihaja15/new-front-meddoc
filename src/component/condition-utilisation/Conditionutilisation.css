@@ -1,0 +1,9 @@
+.divConditionutilisation{
+    width: 100%;
+    min-height: 1100px;
+    padding-top: 15vh;
+    overflow-x: hidden;
+    padding-bottom: 140px;
+    word-wrap:break-word;
+    font-family: 'Montserrat',sans-serif;
+}

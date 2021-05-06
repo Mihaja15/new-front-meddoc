@@ -1,4 +1,4 @@
-import { faBoxes, faCalendarAlt, faChartPie, faCogs, faInfo, faThList, faUserEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBoxes, faCalendarAlt, faChartPie, faInfo, faThList, faUserEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './LeftMenu.css';

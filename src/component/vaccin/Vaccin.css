@@ -1,0 +1,134 @@
+.new-div-vaccin{
+    width: 100%;
+    min-height: 1100px;
+    padding-top: 15vh;
+    padding-left: 10vh;
+    overflow-x: hidden;
+    padding-bottom: 140px;
+    word-wrap:break-word;
+    font-family: 'Montserrat',sans-serif;
+}
+.new-div-vaccin-big-title{
+    text-align: center;
+    font-weight: bold;
+    color: #4d2863;
+}
+.table-vaccin-voir-plus{
+    font-weight: bold;
+    color: #a05c7b;
+    cursor: pointer;
+}
+.table-vaccin-voir-plus:hover{
+    color: #c5305f;
+}
+.table-vaccin-detail-plus{
+    display: none;
+}
+.table-vaccin-theader-body th , .table-vaccin-theader-body td{
+    width: 25%;
+    text-align: center;
+    border: 1px solid #adb5bd;
+}
+.table-vaccin-theader-body{
+    
+}
+.div-ajouter-vaccin{
+    width: 96%;
+    margin-left: 2%;
+}
+.bouton-ajouter-vaccin{
+    width: 140px;
+    margin-bottom: 2%;
+    background-color: white;
+    height: 35px;
+    border-color: #da6c4ff2;
+    border: 2px solid #da6c4ff2;
+    color: #da6c4ff2;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.bouton-ajouter-vaccin:hover{
+    background-color: #da6c4ff2;
+    color: white;
+}
+.champ-ajout-vaccin-title{
+    color: #dc694bf2;
+    text-align: center;
+    font-weight: 900;
+    font-size: 21px;
+    margin-bottom: 2%;
+}
+.champ-ajout-vaccin{
+    border: 2px solid #da6c4ff2;
+    width: 90%;
+    border-radius: 12px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.new-input-champ-vaccin{
+    width: 100%;
+    height: 40px;
+    background-color: #ca6b5352;
+    border: 1px solid #ca6b5352;
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.new-span-input-champ-vaccin{
+    width: 100%;
+    min-height: 40px;
+    line-height: 40px;
+    padding-left: 3%;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    background-color: #ca6b53fa;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+.new-select-champ-vaccin{
+    font-weight: bold;
+}
+.bouton-fermer-vaccin{
+    background-color: white;
+    border: 1px solid #ca6b53fa;
+    color: #ca6b53fa;
+    font-weight: bold;
+    border-radius: 12px;
+}
+.bouton-enregistrer-vaccin{
+    background-color: #ca6b53fa;
+    border: 1px solid #ca6b53fa;
+    color: white;
+    border-radius: 12px;
+}
+.champ-ajout-erreur-vaccin{
+    text-align: center;
+    margin-bottom: 4%;
+    color: red;
+    font-weight: 600;
+}
+.limiter-ecriture-vaccin{
+    width: 150px;
+    height: 27px;
+    overflow: hidden;
+}
+.limiter-ecriture-vaccin-description{
+    width: 200px;
+    height: auto;
+}
+
+@media only screen and (max-width: 770px){    
+    .new-div-vaccin{
+        width: 100%;
+        min-height: 1100px;
+        padding-top: 15vh;
+        padding-left: 25vh;
+        overflow-x: auto;
+        padding-bottom: 140px;
+        word-wrap:break-word;
+        font-family: 'Montserrat',sans-serif;
+    }
+    .div-responsive-vaccin{
+        overflow-x: auto;
+    }
+}

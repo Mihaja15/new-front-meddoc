@@ -1,0 +1,79 @@
+.div-suivi-medical-patient{
+    width: 100%;
+    min-height: 1100px;
+    padding-top: 5vh;
+    overflow-x: hidden;
+    padding-bottom: 140px;
+    word-wrap:break-word;
+    font-family: 'Montserrat',sans-serif;
+}
+.div-suivi-medical-patient-menu{
+    width: 100%;
+    min-height: 200px;
+    margin-left: 1%;
+    margin-right: 4%;
+}
+.div-suivi-medical-patient-menu-ul{
+    display: flex;
+}
+.div-suivi-medical-patient-menu-ul li{
+    width: 20%;
+}
+.div-suivi-medical-patient-menu-ul-li-button{
+    margin-top: -1%;
+    border: 1px solid #1b7895;
+    background-color: #1b7895;
+    color: white;
+    width: 100%;
+    border-left-color: white;
+    height: 50px;
+    font-weight: bold;
+    transition: all .2s ease-in;
+    
+    transform: skew(-17deg);
+}
+.div-suivi-medical-patient-menu-ul-li-button-label{
+    transform: skew(-17deg);
+}
+.component-suivi-medical-patient{
+    width: 96%;
+    min-height: 200px;
+    margin-right: 2%;
+    margin-left: 2%;
+    margin-top: -1%;
+}
+.bloc-info-smp{
+    width: 96%;
+    margin-left: 2%;
+    margin-top: 2%;
+    min-height: 150px;
+    border-radius: 12px;
+}
+.typeDeMaladieSMPLu li{
+    list-style: disc !important;
+    text-align: left;
+}
+.typeDeMaladieSMPSon{
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: left;
+}
+.demo-editor-smp{
+    border: 1px solid #4d2863;
+    height: 200px;
+}
+.dateSMP{
+    width: 10% !important;
+}
+.examenMedicalSMP{
+    width: 70% !important;
+}
+
+.new-file-show-SMP{
+    width: 100%;
+    height: 200px;
+    object-fit:contain;
+}
+.vaccination-table-smp td{
+    width: 10% !important;
+}

@@ -117,7 +117,7 @@ class Home extends React.Component{
                     <div className="col-md-6 col-sm-12 text-first-content">
                         <h2 className="">Qui est concerné par la vaccination?</h2>
                         <div className="">
-                            <p>Vous êtes des professionnels du secteur de la santé ou du secteur médico-social? Des travailleurs en milieux à risques (policiers, militaires, gendarmes, pompiers, en centre de détention...)? Une personne âgée de plus de 60 ans? Prenez rendez-vous pour vous faire vacciner.</p>
+                            <p>Vous êtes des professionnels de santé sur le front dans la lutte contre la Covid-19? Ou agent des forces de défense et de sécurité? Vous êtes diabétique ou avez une maladie chronique pouvant être un facteur de comorbidité? Une personne  de 60 ans et plus quel que soit votre lieu de vie et votre état de santé? Prenez rendez-vous pour vous faire vacciner!</p>
                         </div>
                         <a className="bouton-solid-reg popup-with-move-anim a1" href="/recherche-medecin">Prendre rendez-vous</a>
                     </div> 
@@ -168,7 +168,7 @@ class Home extends React.Component{
                                             <div className="icon">
                                                 <i className="lni-timer"></i>
                                             </div>
-                                            <h4>24h/7j</h4>
+                                            <h4>24H/7J</h4>
                                         </div>
                                     </div>
                                 </div>

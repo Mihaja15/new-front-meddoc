@@ -3,7 +3,7 @@ import './Calendrier.css';
 import { utile } from '../../services/utile';
 import {fetchPost} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAirFreshener, faCheckCircle, faCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 
 const dateNow = new Date();
