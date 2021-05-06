@@ -1,0 +1,31 @@
+#titleMotDePasseOublie{
+    line-height: 21px;
+}
+.sonlogginAllMeddocs{
+    background-color: white;
+	width: 100%;
+	min-height:800px;
+	text-align: center;
+	padding-top: 10%;
+}
+.sonV2logginAllMeddocs{
+    background-color: #f1f4f5;
+	width: 100%;
+	min-height:950px;	
+	text-align: center;
+	padding-top: 10%;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+.inputSonOfChildLoggins{
+	background-color: white;
+    border-top-right-radius: 12px !important;
+	border-bottom-right-radius: 12px !important;
+	border: 1px solid white;
+}
+.spanSonOfChildLoggins{
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+	background-color: white;
+	border: 1px solid white;
+}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './SuiviMedical.css';
 import Select from 'react-select';
-import { EditorState, ContentState, convertFromRaw, convertFromHtml } from 'draft-js';
+import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { utile } from '../../services/utile';
