@@ -159,7 +159,7 @@ class Connexion extends Component{
                                         {this.getErrorMessage(this.state.mdp.etat,'Le champs mot de passe est obligatoire')}
                                     </div>
                                 </div>
-                                <a className="motDePasseOublieLogin" href="/mot-de-passe">Mot de passe oublié ?</a>
+                                <a className="motDePasseOublieLogin" href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
                             </div>
                             <div className="boutonConnecterLogin">
                                 <a className="bouton-solid-reg popup-with-move-anim a1" hidden={this.state.disableButton} id="sonboutonConnecter" href="#details-lightbox-1" onClick={this.loginConnexion}>Se connecter</a>
