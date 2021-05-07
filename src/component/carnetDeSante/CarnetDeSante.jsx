@@ -184,7 +184,7 @@ class CarnetDeSante extends Component{
         if(vaccination.length>0){
             return (
                 <>
-                    <div>
+                    <div className="documentTitleCarnetDeSanteFather">
                         <div className="documentTitleCarnetDeSante">Diagnostic</div>
                         {
                             vaccination.map((dataTmp,i)=>{
@@ -196,11 +196,11 @@ class CarnetDeSante extends Component{
                                                     <td colSpan={2} className="titleDiagnosticCarnetSante">{utile.getDateComplet( (new Date(dataTmp.dateVaccination)).toString())}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="dimensionthDiagnostic">Centre de vaccination</td>
+                                                    <td className="dimensionthDiagnostic dimensionthDiagnosticTitleChamp">Centre de vaccination</td>
                                                     <td className="dimensionthDiagnostic">{dataTmp.centre.nomCentre}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="dimensionthDiagnostic">Motif</td>
+                                                    <td className="dimensionthDiagnostic dimensionthDiagnosticTitleChamp">Motif</td>
                                                     <td className="dimensionthDiagnostic">Vaccination</td>
                                                 </tr>
                                                 <tr>

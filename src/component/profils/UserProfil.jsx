@@ -16,8 +16,9 @@ import ListeRdv from '../listeRdvPatient/ListeRdv';
 import Proche from '../mesProches/Proche';
 //import SuiviMedicalPatient from '../suivi-medical-patient/SuiviMedicalPatient';
 import CarnetDeSante from '../carnetDeSante/CarnetDeSante';
+import Assistance from './Assistance';
 
-const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu']
+const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu','assistance']
 class UserProfil extends Component{
     constructor(props){
         super();
@@ -129,7 +130,7 @@ class UserProfil extends Component{
                                 <li onClick={()=>this.linkInMenu('carnet-de-sante')} className={this.isActive(3)}><FontAwesomeIcon icon={faCalendarAlt}/> Suivi médical</li>
                                 <li onClick={()=>this.linkInMenu('proches')} className={this.isActive(5)}><FontAwesomeIcon icon={faFolderPlus}/> Mes proches</li>
                                 {/* <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li> */}
-                                <a href="/" onClick={()=>this.deconnexion()}><button className="btn btn-info form-control"><FontAwesomeIcon icon={faHeadset}/> Assistance</button></a>
+                                <a href="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
                                 <a href="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
                                             
                             </ul>
@@ -144,6 +145,8 @@ class UserProfil extends Component{
                                 ?(<Proche/>) 
                                 :(this.state.etatShow===4)
                                 ?(<Causette/>)
+                                :(this.state.etatShow===7)
+                                ?(<Assistance/>)
                                 :(this.state.etatShow===0)
                                 ?(this.state.dataSearch!==null?<Centre dataFind = {this.state.dataSearch}/>:'')
                                 :this.showComponentProfil(this.state.user)

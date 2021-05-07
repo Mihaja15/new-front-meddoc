@@ -12,6 +12,7 @@ import Header from './component/header/Header';
 import Home from './component/home/Home';
 import Inscription from './component/inscription/Inscription';
 import LeftMenu from './component/left/LeftMenu';
+import MotDePasse from './component/motDePasse/MotDePasse';
 import UserProfil from './component/profils/UserProfil';
 import RightMenu from './component/right/RightMenu';
 import SuiviMedicals from './component/suivi-medicals/SuiviMedical';
@@ -75,6 +76,7 @@ class App extends React.Component {
             <Route exact path="/suivi-medical" render={() => { return this.contentShowV2(<SuiviMedicals/>,<Header/>,<Footer/>); }}/>
             <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShowV2(<Actualites/>,<Header/>,<Footer/>); }}/>
             <Route exact path="/conditions-generales-d-utilisation-de-MEDDoC" render={() => { return this.contentShowV2(<Conditionutilisation/>,<Header/>,<Footer/>); }}/>
+            <Route exact path="/mot-de-passe-oublie" render={() => { return this.contentShowV2(<MotDePasse/>,<Header/>,<Footer/>); }}/>
             <Route path="/mes-vaccins" render={() => {return  this.contentShow(<Vaccin/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>);}}/>
             <Route path="/recherche-centre" render={() => {return  this.contentShow(<div style={{marginTop:'15vh'}}><Centre dataFind={this.setProps()}/></div>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>

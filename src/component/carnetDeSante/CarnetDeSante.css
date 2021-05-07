@@ -687,9 +687,12 @@ font-size: 1.4em;
 }
 .documentTitleCarnetDeSante{
     text-align: center;
-    font-size: 23px;
+    font-size: 16px;
     font-weight: 600;
-    color: #4d2863;
+    color: white;
+    background-color: #4d2863;
+    height: 50px;
+    line-height: 50px;
 }
 .titleDiagnosticCarnetSante{
     text-align: center;
@@ -724,6 +727,9 @@ font-size: 1.4em;
     padding: 2%;
     margin-top: 3%;
     border-radius: 12px;
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
 }
 .deuxiemeclassTablecarnetMedical{
     width: 96% !important;
@@ -793,4 +799,11 @@ font-size: 1.4em;
     color: white;
     font-size: 18px;
     font-weight: 600;
+}
+.dimensionthDiagnosticTitleChamp{
+    font-weight: 700;
+}
+.documentTitleCarnetDeSanteFather{
+    border: 1px solid #4d2863;
+    background-color: #4d2863;
 }
