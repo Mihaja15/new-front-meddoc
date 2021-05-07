@@ -7,16 +7,20 @@ class LeftMenu extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            show:1
+            show:1,
+            type:0
         }
     }
     componentDidMount(){
+        if(this.props.type!==null)
+            this.setState({type:this.props.type})
         const view = window.location.pathname.split('/')[2];
         this.setState({show:view})
     }
     render(){
         return(
             <div className="left-menu-root">
+                {this.state.type===0?
                 <ul className="col-md-12">
                     <li onClick={()=>window.location.replace('/profil-centre/1')} className={this.state.show==="1"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faChartPie}/>&nbsp; Tableau de bord</li>
                     <li onClick={()=>window.location.replace('/profil-centre/2')} className={this.state.show==="2"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;&nbsp; Agenda</li>
@@ -26,6 +30,14 @@ class LeftMenu extends React.Component{
                     <li onClick={()=>window.location.replace('/profil-centre/6')} className={this.state.show==="6"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faThList}/>&nbsp;&nbsp;&nbsp; To do List</li>
                     <li onClick={()=>window.location.replace('/profil-centre/7')} className={this.state.show==="7"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faInfo}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Besoin d'aide?</li>
                 </ul>
+                :<ul className="col-md-12">
+                    <li onClick={()=>window.location.replace('/profil-staff/1')} className={this.state.show==="1"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faChartPie}/>&nbsp; Agenda</li>
+                    <li onClick={()=>window.location.replace('/profil-staff/2')} className={this.state.show==="2"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserEdit}/>&nbsp; Compte</li>
+                    <li onClick={()=>window.location.replace('/profil-staff/3')} className={this.state.show==="3"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faThList}/>&nbsp;&nbsp;&nbsp; To do List</li>
+                    <li onClick={()=>window.location.replace('/profil-staff/4')} className={this.state.show==="4"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faInfo}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Besoin d'aide?</li>
+                </ul>
+                }
+                
             </div>
         );
     }

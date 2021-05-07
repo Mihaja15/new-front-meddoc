@@ -1,5 +1,6 @@
 import React from 'react';
-import Calendrier from './Calendrier';
+import Calendrier from '../staff/Calendrier';
+// import Calendrier from './Calendrier';
 import Compte from './Compte';
 import Dashboard from './Dashboard';
 import './Profil.css';
@@ -13,6 +14,7 @@ export default class Profil extends React.Component{
         }
     }
     componentDidMount(){
+        
         const view = window.location.pathname.split('/')[2];
         this.setState({show:view})
     }
@@ -32,7 +34,8 @@ export default class Profil extends React.Component{
                             <div className="row">
                             {
                                 this.state.show==="2"?
-                                <div className="col-md-12"><Calendrier/></div>
+                                // <div className="col-md-12"><Calendrier/></div>
+                                <div className="col-md-12"><Calendrier id={localStorage.getItem('idCentre')} type={0}/></div>
                                 :this.state.show==="3"?
                                 <div className="col-md-12"><Compte/></div>
                                 :this.state.show==="4"?

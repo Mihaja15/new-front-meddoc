@@ -68,6 +68,7 @@ textarea.inscription-input::placeholder{
   height: 21px;
   border: 1px solid #1b7895;
   transform: translateY(60%);
+  overflow: hidden;
 }
 .switch input { 
   opacity: 0;

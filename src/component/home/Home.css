@@ -1,7 +1,8 @@
 .home-container{
     width: 100%;
     /* min-height: 100vh; */
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
+    /* overflow-y: scroll; */
 }
 @keyframes animatePhone{
     0% {
@@ -141,11 +142,12 @@
     font-weight: 700;
 }
 .banner-start input{
-    width: 30%;
+    width: 60%;
     height: 60px;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     border:none;
+    padding-left: 5vh;
 }
 .banner-start select{
     width: 30%;
@@ -437,7 +439,7 @@ a.vaccin-about-link:hover{
     width: 100%;
     height: 13vh;
     position: fixed;
-    top: 14vh;
+    top: 15vh;
     left:0;
     background-color: #c4e7f9;
     padding-top: 5px;

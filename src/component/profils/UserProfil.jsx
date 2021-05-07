@@ -12,6 +12,8 @@ import Causette from '../chat/Causette';
 //import NewProfilPatient from '../profilePatient/NewProfilPatient';
 import ProfilPatient from './ProfilPatient';
 import Centre from '../centre/Centre';
+import ListeRdv from '../listeRdvPatient/ListeRdv';
+import Proche from '../mesProches/Proche';
 //import SuiviMedicalPatient from '../suivi-medical-patient/SuiviMedicalPatient';
 import CarnetDeSante from '../carnetDeSante/CarnetDeSante';
 import Assistance from './Assistance';
@@ -98,7 +100,14 @@ class UserProfil extends Component{
             // return <NewProfilPatient  dataUser ={valeur} />
             return <ProfilPatient  dataUser ={valeur} />
         }
-        return (<div>Il y a une erreur de chargement</div>)
+        // return (<div>Il y a une erreur de chargement</div>)
+    }
+    showComponentRdv(valeur){
+        if(valeur!==null && valeur!==undefined){
+            // return <NewProfilPatient  dataUser ={valeur} />
+            return <ListeRdv id={valeur.idUser}/>
+        }
+        // return (<div>Il y a une erreur de chargement</div>)
     }
     render(){
         return(
@@ -139,18 +148,18 @@ class UserProfil extends Component{
                                 <li onClick={()=>this.linkInMenu('proches')} className={this.isActive(5)}><FontAwesomeIcon icon={faFolderPlus}/> Mes proches</li>
                                 {/* <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li> */}
                                 <a href="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
-                                <a href="/" onClick={()=>this.deconnexion()}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
+                                <a href="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
                                             
                             </ul>
                         </div>
                         <div className="" id="right-content">
                             {
                                 (this.state.etatShow===2)
-                                ?(<ListeRdvPatient/>)
+                                ?this.showComponentRdv(this.state.user)
                                 :(this.state.etatShow===3)
                                 ?(<CarnetDeSante/>)
                                 :(this.state.etatShow===5)
-                                ?(<MesProches/>) 
+                                ?(<Proche/>) 
                                 :(this.state.etatShow===4)
                                 ?(<Causette/>)
                                 :(this.state.etatShow===7)

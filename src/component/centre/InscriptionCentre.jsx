@@ -137,7 +137,7 @@ export default class InscriptionCentre extends React.Component{
             contact:this.state.listContact,
             photo:this.state.fileName,
             mdp:this.state.mdp,
-            duree:this.state.duree
+            dureeVaccination:this.state.duree
         }
         if(this.state.file!==null){
             fetchPost('/covid/ajout-centre',dataCentre).then(result=>{
@@ -145,6 +145,7 @@ export default class InscriptionCentre extends React.Component{
                     fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{
                         console.log(mm);
                         this.setState({disableButton:false});
+                        window.location.replace('/connexion-centre');
                     }).catch(error=>{
                         console.log(error);
                         this.setState({disableButton:false});
@@ -406,8 +407,6 @@ export default class InscriptionCentre extends React.Component{
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="tel " value={this.state.phone} onChange={this.handleChange.bind(this,"phone")} placeholder=""  />
                                     </div>
                                 </div>
-                                {this.state.update?
-                                <div>
                                 <div className="form-group row formgroupCssInscriptionMedecin">
                                     <div className="input-group" data-tip data-for="registerTip">
                                         <span className="form-control inscription-label col-5">Mot de passe</span>
@@ -428,7 +427,6 @@ export default class InscriptionCentre extends React.Component{
                                         <span className="inscription-label-success col-12">Mot de passe confirmé</span>
                                     </div>
                                 </div>
-                                </div>:""}
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Photo</span>
@@ -504,10 +502,10 @@ export default class InscriptionCentre extends React.Component{
                                                     </label> {data.names}
                                                 </div>
                                                 <div className="col-md-4" hidden={!this.state.emploiTemps[i].activation}>
-                                                    <span>Matin de <select onChange={(e)=>this.setValueEmploieDuTemps('topStart',i,e)}>{this.generaterTabSelect(0,12)}</select>  &nbsp;&nbsp;à <select onChange={(e)=>this.setValueEmploieDuTemps('topStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].topStart,12)}</select></span>
+                                                    <span>Matin de <select value={this.state.emploiTemps[i].topStart} onChange={(e)=>this.setValueEmploieDuTemps('topStart',i,e)}>{this.generaterTabSelect(0,12)}</select>  &nbsp;&nbsp;à <select value={this.state.emploiTemps[i].topStop} onChange={(e)=>this.setValueEmploieDuTemps('topStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].topStart,12)}</select></span>
                                                 </div>
                                                 <div className="col-md-4" hidden={!this.state.emploiTemps[i].activation}>
-                                                    <span>Midi de <select onChange={(e)=>this.setValueEmploieDuTemps('bottomStart',i,e)}>{this.generaterTabSelect(12,23)}</select>  &nbsp;&nbsp;à <select onChange={(e)=>this.setValueEmploieDuTemps('bottomStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].bottomStart,23)}</select></span>
+                                                    <span>Midi de <select value={this.state.emploiTemps[i].bottomStart} onChange={(e)=>this.setValueEmploieDuTemps('bottomStart',i,e)}>{this.generaterTabSelect(12,23)}</select>  &nbsp;&nbsp;à <select value={this.state.emploiTemps[i].bottomStop} onChange={(e)=>this.setValueEmploieDuTemps('bottomStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].bottomStart!==null?this.state.emploiTemps[i].bottomStart:12,23)}</select></span>
                                                 </div>
                                             </div>
                                         );

@@ -283,14 +283,15 @@
     width: 100%;
     /* margin: 2%; */
     height: 250px;
-    border: 2px solid #c4e7f9;
+    /* border: 2px solid #dde8ce; */
+    box-shadow: 0px 0px 2px 1px #dde8ce;
     overflow: hidden;
     z-index: 1;
     transition: 0.1s;
     transition-timing-function: linear;
     position: sticky;
     position: -webkit-sticky;
-    top:150px;
+    top:100px;
     display: block;
 }
 .fathermapsRechercheMedecin{
@@ -298,7 +299,7 @@
     display: block;
     position: sticky;
     position: -webkit-sticky;
-    top:200px;
+    top:180px;
 }
 .divProfilMedecinRechercheMedecin{
     width:100%;
@@ -363,9 +364,9 @@
     margin-right: 5px;
 }
 .inputSearch:hover{
-    box-shadow: 7px 0px 14px 4px #00bfd8;
+    /* box-shadow: 7px 0px 14px 4px #00bfd8;
     -webkit-box-shadow: 7px 0px 14px 4px #00bfd8;
-    -moz-box-shadow: 7px 0px 14px 4px #00bfd8;
+    -moz-box-shadow: 7px 0px 14px 4px #00bfd8; */
 }
 .inputSearch::placeholder{
     color: rgba(0, 0, 0, 0.719);
@@ -392,9 +393,9 @@
     color: white;
 }
 .buttonSearch:hover{
-    box-shadow: 7px 0px 14px 4px #ea5269b0;
+    /* box-shadow: 7px 0px 14px 4px #ea5269b0;
     -webkit-box-shadow: 7px 0px 14px 4px #ea5269b0;
-    -moz-box-shadow: 7px 0px 14px 4px #ea5269b0;
+    -moz-box-shadow: 7px 0px 14px 4px #ea5269b0; */
 }
 @media (max-width: 767px){
     .inputSearch{
@@ -597,6 +598,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #2e266d;
+    width: 100%;
 }
 .thV2emploiDuTempsRechercheMedecin a{
     text-decoration:none;

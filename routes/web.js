@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         cb(null, './public/assets/upload/')
     },
     filename: function (req, file, cb) {
-        cb(null,''+file.originalname)
+        cb(null,''+file.filename)
     }
 });
 
@@ -22,6 +22,8 @@ router.use(express.urlencoded(
 router.use(express.json());
 // Upload Image
 router.post("/photo", upload.single('photo'), (req, res, next) => {
+    console.log(req);
+    console.log(res);
     return res.json({
         image: req.file.path
     });
@@ -70,7 +72,7 @@ router.post('/fichier', async function (request, response) {
     let nameFinal = 'fichier_'+(Math.random()*100000000)+'_';
     const storagevv2 = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, './public/uploads/')
+            cb(null, './public/assets/upload/')
         },
         filename: function (req, file, cb) {
             let name = nameFinal+file.originalname;

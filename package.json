@@ -1,5 +1,5 @@
 {
-  "name": "pharmacie",
+  "name": "vaccin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,7 +43,7 @@
     "react-scripts": "4.0.3",
     "react-select": "^4.3.0",
     "react-stompjs": "^0.5.3",
-    "react-tooltip": "^4.2.17",
+    "react-tooltip": "^4.2.18",
     "react-vis": "^1.11.7",
     "routes": "^2.1.0",
     "sockjs-client": "^1.5.1",

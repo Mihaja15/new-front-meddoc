@@ -16,6 +16,8 @@ import egm from '../../assets/partenaire/egm.png';
 import mnsp from '../../assets/partenaire/mnsp.png';
 import presidence from '../../assets/partenaire/presidence.png';
 import '../../assets/fonts/Font.css';
+import { fetchGet } from '../../services/global.service';
+import Select from 'react-select';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faCartPlus, faCartArrowDown, faHandHoldingMedical, faClipboardList, faReceipt, faShoppingBasket, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,13 +26,43 @@ class Home extends React.Component{
         super(props);
         this.state={
           selectFind:'',
-          textFind:''
+          textFind:'',
+          listDistrict:[]
         }
     }
     handleChange = (param, e) => {
-        this.setState({ [param]: e.target.value })
+        // this.setState({ [param]: e.target.value });
+        if(param==="selectFind"){
+            if(e!==null)
+                this.setState({[param]:e.value});
+            else
+                this.setState({[param]:'0'});
+        }else
+            this.setState({[param]:e.target.value});
+    }
+    componentDidMount(){
+        fetchGet('/adresse/find-district-part/all').then(data=>{
+            this.setState({listDistrict: data});
+        });
     }
     render(){
+        const customStyles = {
+            option: (provided, state) => ({
+              ...provided,
+              borderBottom: '1px dotted pink',
+              color: state.isSelected ? '#fff' : '#1b7895'
+            }),
+            control: (provided) => ({
+              // none of react-select's styles are passed to <Control />
+                ...provided,
+                width: 330,
+                height: 51,
+                borderRadius: '0 !important',
+                backgroundColor: '#fff',
+                marginRight: 5,
+                marginLeft: 0
+            })
+        }
         return(
             <div className="home-container">
                 <div className="info-covid" style={{display:this.state.close?'none':'block'}}>
@@ -60,25 +92,26 @@ class Home extends React.Component{
                                 <div>MEDD<span>o</span>C</div>
                                 <p>s'engage pour la campagne de vaccination contre la Covid-19 à Madagascar</p>
                                 <h1>Trouvez un centre de vaccination et prenez rendez-vous</h1>
-                                <form>
+                                {/* <form> */}
                                     <input type="text" className="" value={this.state.textFind} placeholder="Rechercher un centre de vaccination" onChange={this.handleChange.bind(this,"textFind")}/>
-                                    <select className="" value={this.state.selectFind} onChange={this.handleChange.bind(this,"selectFind")}>
-                                        <option value="">Votre province</option>
-                                        {/* { 
-                                            this.state.listeProvince.map((data,i)=>{
-                                                return <option value={data.idProvince} key={i}>{data.nomProvince}</option>
+                                    {/* <select className="" value={this.state.selectFind} onChange={this.handleChange.bind(this,"selectFind")}>
+                                        <option value="">Votre District</option>
+                                        { 
+                                            this.state.listDistrict.map((data,i)=>{
+                                                return <option value={data.idDistrict} key={i}>{data.nomDistrict}</option>
                                             })
-                                        } */}
-                                    </select>
-                                    <button type="submit"><FontAwesomeIcon icon={faSearch}/></button>
-                                </form>
+                                        }
+                                    </select> */}
+                                    {/* <Select styles={customStyles} isClearable className="" options={this.state.listDistrict} onChange={this.handleChange.bind(this,"selectFind")}/> */}
+                                    <button type="submit"><FontAwesomeIcon icon={faSearch} onClick={()=>window.location.replace('/recherche-centre/'+this.state.textFind+'/0')}/></button>
+                                {/* </form> */}
                             </div>
                             <div className="vaccin-about row">
                                 <div className="vaccin-about-img col-md-3 col-sm-12"><img src={vaccin} alt="vaccion show"/></div>
                                 <div className="vaccin-about-text col-md-9 col-sm-12">
                                     <p>Découvrez si vous remplissez les conditions pour la vaccination Covid-19 <a href="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" target="_blank">ici</a>.
                                     <br/>Vous pouvez également trouver votre RDV sur MEDDoC</p>
-                                    <a className="vaccin-about-link" href="/">Lieux de vaccination près de chez vous</a>
+                                    <a className="vaccin-about-link" href="/recherche-centre//0">Lieux de vaccination près de chez vous</a>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +152,7 @@ class Home extends React.Component{
                         <div className="">
                             <p>Vous êtes des professionnels de santé sur le front dans la lutte contre la Covid-19? Ou agent des forces de défense et de sécurité? Vous êtes diabétique ou avez une maladie chronique pouvant être un facteur de comorbidité? Une personne  de 60 ans et plus quel que soit votre lieu de vie et votre état de santé? Prenez rendez-vous pour vous faire vacciner!</p>
                         </div>
-                        <a className="bouton-solid-reg popup-with-move-anim a1" href="/recherche-medecin">Prendre rendez-vous</a>
+                        <a className="bouton-solid-reg popup-with-move-anim a1" href="/inscription">Prendre rendez-vous</a>
                     </div> 
                     <div className="col-md-6 col-sm-12 img-first-content">
                         <div className="image-container">

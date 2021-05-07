@@ -1,0 +1,236 @@
+.calendrier-container{
+    width: 100%;
+    /* height: auto; */
+    /* margin-left: 10vh; */
+    padding-left: 10vh;
+    padding-right: 10vh;
+    /* padding-bottom: 5vh; */
+}
+.header-agenda{
+    padding: 1vh;
+    margin-bottom: 2vh;
+    /* padding-right: 20vh; */
+    position: fixed;
+    top:15vh;
+    z-index: 500;
+    width: 77.2%;
+    background-color: #fff;
+    /* border: 5px solid #1b7895; */
+}
+.centre-content-agenda{
+    /* position: relative; */
+    /* display: inline-flex; */
+    width: 100%;
+    /* justify-content: space-between; */
+    /* padding-top: 12px; */
+    padding-bottom: 12px;
+    /* padding-top: 12px; */
+    margin: auto;
+    /* background-color: #f1f1f1; */
+    /* padding-left: 15vh; */
+    /* margin: auto; */
+}
+.centre-agenda-left{
+    /* width: 49.5%; */
+    padding: 0;
+    position: relative;
+    background-color: #fff;
+    border: 2px solid #3891a6;
+    margin-top: 15vh;
+}
+.centre-agenda-left h5{
+    text-align: center;
+    background-color: #3891a6;
+    color: #fff;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+.centre-agenda-right{
+    padding: 0;
+    position: relative;
+    background-color: #fff;
+    border: 2px solid #2b3a3b;
+    margin-top: 5vh;
+}
+.centre-agenda-right h5{
+    text-align: center;
+    background-color: #2b3a3b;
+    color: #fff;
+    margin-bottom: 0;
+}
+.footer-rdv-staff{
+    background-color: #2b3a3b;
+    color:#ffffff;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    /* margin: 0 auto; */
+    padding-top: 5px;
+    padding: 0;
+}
+.select-date{
+    width: 100%;
+    height: 5vh;
+    border: none;
+    border-bottom: 1px dashed #353535;
+    text-align: center;
+}
+.tableau-calendrier{
+    width: 100%;
+    /* margin-bottom: 5vh; */
+}
+.tableau-calendrier thead{
+    width: 100%;
+    text-align: center;
+    background-color: #3891a6;
+    color: #fff;
+}
+/* .tableau-calendrier td{
+    display: inline-flex;
+    justify-content: center;
+    text-align: center;
+    background-color: tomato;
+} */
+.tableau-calendrier tr{
+    /* border: 1px solid #919191; */
+    margin-top: 15px;
+}
+.calendar-case{
+    display: flex;
+    justify-content: center;
+    width:60px;
+    height:40px;
+    text-align: center;
+    /* background-color: #d7fcf4; */
+    /* border: 0.1px solid #92b1b0; */
+    margin:auto;
+    justify-content: center;
+    /* align-items: flex-end; */
+    /* border-radius: 10px; */
+    overflow: hidden;
+}
+.calendar-case h4{
+    color:#1b7895;
+    margin-top: 0;
+    /* margin-bottom: 0; */
+}
+.calendar-case:hover{
+    border-top: 2px solid #1b7895;
+    border-left: 2px solid #1b7895;
+    cursor: pointer;
+}
+.calendar-case p{
+    color:#fff;
+    /* padding-bottom: 10px; */
+    background-color: #92b1b0;
+    /* margin-bottom: 0; */
+}
+.case-selected{
+    border-top: 2px solid #1b7895;
+    border-left: 2px solid #1b7895;
+    cursor: default;
+}
+.case-now h4{
+    /* border: 1px solid #82d4fd; */
+    /* background-color: teal; */
+    color: #b8627d;
+}
+.case-now p{
+    background-color: #82d4fd;
+}
+.case-active {
+    width: 22px;
+    height: 10px;
+    box-sizing: content-box;
+    margin-top: 12px;
+    margin-left: 35px;
+    padding-top: 10px;
+    padding-left: 1px;
+    padding-bottom: 5px;
+    position: absolute;
+    background: #c5305f;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
+    /* transform: rotate(-90deg); */
+}
+.case-active:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 23px solid #fff;
+    /* border-left: -15px solid white; */
+    border-right: 20px solid transparent;
+}
+.tableau-rdv{
+    width: 100%;
+    /* margin-bottom: 5vh; */
+}
+.tableau-rdv thead{
+    width: 100%;
+    text-align: center;
+    background-color: #2b3a3b;
+    color: #fff;
+}
+.tableau-rdv tr{
+    /* border: 1px solid #919191; */
+    /* margin-top: 25px; */
+}
+.tableau-rdv td{
+    text-align: center;
+    font-family: 'Montserrat',sans-serif;
+    color: #011936;
+}
+.tableau-rdv>tbody>tr:hover{
+    background-color: #c4e7f9;
+    cursor: pointer;
+}
+.tableau-calendrier{
+    width: 100%;
+    margin: 0 auto;
+}
+.tableau-header-cal{
+    /* background-color: coral; */
+    margin: 0 auto;
+    width: 100%;
+}
+.tableau-header-cal ul{
+    display: block;
+    width: 100%;
+    /* background-color: blueviolet; */
+    margin: 0 auto;
+    /* justify-content: center; */
+}
+.tableau-header-cal li{
+    display: inline-block;
+    margin:0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* width: fit-content; */
+    background-color: aquamarine;
+}
+.tableau-body-cal{
+    /* background-color: coral; */
+    margin: 0 auto;
+    width: 100%;
+}
+.tableau-body-cal ul{
+    display: block;
+    width: 100%;
+    /* background-color: blueviolet; */
+    margin: 0 auto;
+    /* justify-content: center; */
+}
+.tableau-body-cal li{
+    display: inline-block;
+    margin:0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* width: fit-content; */
+    background-color: aquamarine;
+}

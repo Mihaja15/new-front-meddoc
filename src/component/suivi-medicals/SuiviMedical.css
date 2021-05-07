@@ -49,6 +49,11 @@
     font-weight: bold;
     background-color: #f1f4f5;
 }
+.new-basic-multi-select-maladie{
+    width: 100%;
+    background-color: #e9ecef;
+    z-index: 500;
+}
 .new-basic-multi-select{
     width: 100%;
     background-color: #e9ecef;
