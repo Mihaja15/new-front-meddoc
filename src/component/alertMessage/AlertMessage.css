@@ -1,0 +1,124 @@
+.alertContent-new-sms{
+    background-color: #00000052;
+    z-index: 9999;
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.dialogBox-new-sms{
+    border-radius: 5px;
+    margin: 100px auto;
+    width: 60%;
+    min-height: 200px;
+    height : 350px;
+    background-color: white;
+}
+
+.HHHheader-modal-box-head{
+    width: 100%;
+    height: 15%;
+    background-color: #ff6c0a;
+}
+.BBBody-modal-box-body{
+    width: 100%;
+    height: 70%;
+    padding: 2%;
+    overflow-y: scroll;
+    z-index: 1,
+}
+
+.BBBody-modal-box-body::-webkit-scrollbar {
+    width: 5px;
+}
+.BBBody-modal-box-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #39c3ef;
+}  
+
+.FFFfooter-modal-box-modal{
+    width: 100%;
+    height: 15%;
+    background-color: white;
+    text-align: center;
+    padding: 1%;
+}
+
+.alertHeader-new-sms{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+}
+.alertHeader-new-sms h2{
+    font-size: 18px;
+    color: white;
+    padding: 2%;
+}
+.alertBody-new-sms{
+    text-align: center;
+}
+.alertBody-new-sms p{
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-size: 17px;
+}
+.alertFooter-new-sms{
+    text-align: center;
+}
+.alertFooter-new-sms a{
+    background-color: #00bfd8;
+    border-radius: 12px;
+    padding: 2%;
+    color: white;
+    border: 2px solid #00bfd8;
+    padding-left: 40%;
+    padding-right: 40%;
+}
+.alertFooter-new-sms a:hover{
+    background-color: white;
+    color: #00bfd8;
+    text-decoration: none;
+}
+.alertBody-new-sms-text-header-in-body{
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    font-weight: 700;
+    margin-top: 2%;
+    font-size: 14px;
+}
+.alertBody-new-sms-text-content-in-body{
+    text-align: left;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    font-weight: 600;
+    margin-top: 7%;
+    margin-bottom: 1%;
+    font-size: 14px;
+    font-weight: 700;
+}
+.alertBody-new-sms-text-content-ul-in-body{
+    width: 88%;
+    margin-left: 6%;
+    margin-right: 6%;
+    margin-top: 4%;
+    text-align: left;
+    font-size: 14px;
+}
+.alertBody-new-sms-text-content-ul-in-body li{
+    list-style: disc;
+}
+.alertBody-new-sms-text-content-nb-in-body{
+    text-align: left;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    font-weight: 600;
+    margin-top: 7%;
+    margin-bottom: 1%;
+    font-size: 14px;
+    font-weight: 700;
+}

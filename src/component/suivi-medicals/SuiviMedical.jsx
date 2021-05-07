@@ -426,6 +426,7 @@ class SuiviMedical extends Component{
     enregistre(event){
         event.preventDefault();
         const data = new FormData(event.target);
+        data.append('last-name','tous_sur_malandy');
         console.log(" event : ",event.target);
         fetchPostV2('http://localhost:5000/fichier',data).then((res)=>{ 
             if(res.status){

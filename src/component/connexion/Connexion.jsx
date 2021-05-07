@@ -72,6 +72,7 @@ class Connexion extends Component{
                     localStorage.setItem('idUser',data.idUser);
                     localStorage.setItem('pseudo',data.pseudo);
                     localStorage.setItem('connected',true);
+                    localStorage.setItem('etatshowAvertissement',true);
                     if(log){
                         window.location.replace(''+authUser.premierUrl(data.typeUser));
                     }else{
