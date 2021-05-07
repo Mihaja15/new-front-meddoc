@@ -17,6 +17,7 @@ import Proche from '../mesProches/Proche';
 //import SuiviMedicalPatient from '../suivi-medical-patient/SuiviMedicalPatient';
 import CarnetDeSante from '../carnetDeSante/CarnetDeSante';
 import Assistance from './Assistance';
+import AlertMessage from '../alertMessage/AlertMessage';
 
 const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu','assistance']
 class UserProfil extends Component{
@@ -79,6 +80,21 @@ class UserProfil extends Component{
     // valideState=(value)=>{
     //     this.setState({validation:value});
     // }
+
+    getAffichageAvertisement(){
+        let data = localStorage.getItem('etatshowAvertissement');
+        if(data!=null && data!==undefined){
+            return data;
+        }
+        return false;
+    }
+    getDataHtmlAffichageAvertisement(){
+        if(this.getAffichageAvertisement()){
+            return <AlertMessage />;
+        }else{
+            return <div></div>;
+        }
+    }
     showComponentProfil(valeur){
         if(valeur!==null && valeur!==undefined){
             // return <NewProfilPatient  dataUser ={valeur} />
@@ -96,6 +112,7 @@ class UserProfil extends Component{
     render(){
         return(
             <div id="profil-content">
+                {this.getDataHtmlAffichageAvertisement()}
                 <div className="row">
                     <div className="col-md-12" id="top-banner">
                         <div className="col-md-12" id="wave">

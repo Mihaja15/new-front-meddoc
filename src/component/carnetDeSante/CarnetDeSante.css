@@ -675,14 +675,14 @@ font-size: 1.4em;
     height: 38px;
 }
 .table-maladie-carnetMedical td{
-    width: 50%;
+    width: 100%;
     min-height: 38px;
     height: 38px;
     text-align: center;
     background-color: #eeeeee;
 }
 .table-maladie-carnetMedical th{
-    width: 50%;
+    width: 100%;
     height: 40px !important;
 }
 .documentTitleCarnetDeSante{
@@ -690,7 +690,7 @@ font-size: 1.4em;
     font-size: 16px;
     font-weight: 600;
     color: white;
-    background-color: #4d2863;
+    background-color: #9b4661;
     height: 50px;
     line-height: 50px;
 }
@@ -804,6 +804,6 @@ font-size: 1.4em;
     font-weight: 700;
 }
 .documentTitleCarnetDeSanteFather{
-    border: 1px solid #4d2863;
-    background-color: #4d2863;
+    border: 1px solid #9b4661;
+    background-color: #9b4661;
 }

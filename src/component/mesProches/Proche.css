@@ -1,5 +1,4 @@
-.personal-container{
-    /* background-color: lightcoral; */
+.personal-container-new{
     width: 100%;
     padding-top: 2vh;
     padding-left: 8vh;
@@ -11,7 +10,7 @@
     font-weight: 500; 
 }
 table.table{
-    max-width: 50%;
+    max-width: 100%;
     border: 1px solid #1b7895;
 }
 .table-responsive {
@@ -153,4 +152,24 @@ button.enregistrer{
     /* margin-left: 5px; */
     margin: 0 auto;
     margin-top: 10px;
+}
+.div-title-proche{
+    background-color: #1b7895;
+    margin-bottom: 2%;
+    padding: 1%;
+    color: white;
+    font-weight: 700;
+    height: 60px;
+}
+.div-title-proche h4{
+    line-height: 40px;
+    font-weight: 700;
+}
+.div-title-proche a{
+    text-align: right;
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    top: 15px;
 }

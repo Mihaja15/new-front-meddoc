@@ -71,18 +71,21 @@ class ListeRdv extends Component{
                     ordre : this.state.ordre
                 }
                 fetchPost('/covid/rdv-patient',data).then(data=>{
-                    var userName = [];
-                    console.log('dataTmp dataTmp :',data);
-                    for(let i=0; i <data.content.length; i++){
-                        if(!userName.find(element => element.value === data.content[i].patient.nom+" "+data.content[i].patient.prenoms)){
-                            userName.push({
-                                value:data.content[i].patient.nom+" "+data.content[i].patient.prenoms,
-                                indice: data.content[i].patient.idUser
-                            })
+                    if(data!==null && data!==undefined){
+                        var userName = [];
+                        console.log('dataTmp dataTmp :',data);
+                        for(let i=0; i <data.content.length; i++){
+                            if(!userName.find(element => element.value === data.content[i].patient.nom+" "+data.content[i].patient.prenoms)){
+                                userName.push({
+                                    value:data.content[i].patient.nom+" "+data.content[i].patient.prenoms,
+                                    indice: data.content[i].patient.idUser
+                                })
+                            }
                         }
+                        console.log(userName)
+                        this.setState({ list: data.content ,page : (data.number+1), nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
                     }
-                    console.log(userName)
-                    this.setState({ list: data.content ,page : (data.number+1), nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
+                    
                 });
             });
         }
@@ -121,7 +124,7 @@ class ListeRdv extends Component{
                                     itemClassFirst='pagClassFirst'
                                     itemClassLast='pagClassLast'
                                     itemClass='pagClassItemTmp'
-                                    prevPageText='< Précédant'
+                                    prevPageText='< Précédent'
                                     nextPageText='> Suivant'
                                     activePage={(this.state.page)}
                                     itemsCountPerPage={this.state.size}

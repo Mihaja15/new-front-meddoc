@@ -42,12 +42,13 @@ footer{
   /* position: fixed; */
 }
 ::-webkit-scrollbar-corner{
-  background: #fff ;
+  background: #1b7895 ;
 }
 ::-webkit-scrollbar {
   width: 10px;
-  background-color: #fff;
-  content: 'MEDDoC';
+  background-color: #1b7895;
+  /* content: 'MEDDoC'; */
+  opacity: 1;
 }
 :hover ::-webkit-scrollbar{
   opacity: 1;

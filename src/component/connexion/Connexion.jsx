@@ -67,10 +67,14 @@ class Connexion extends Component{
                     this.setState({showValidation : true});
                     this.setState({error : {message : data.message,activation: true},nonValider : true, status : 500});
                 }else if(data.status === 200){
-                    if(data.idTypeUser===4){
-                        localStorage.setItem('idStaff',data.idUser);
-                        localStorage.setItem('pseudo',data.pseudo);
-                        window.location.replace('/profil-staff/1');
+                    const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
+                    localStorage.setItem('photo',data.profilPicture);
+                    localStorage.setItem('idUser',data.idUser);
+                    localStorage.setItem('pseudo',data.pseudo);
+                    localStorage.setItem('connected',true);
+                    localStorage.setItem('etatshowAvertissement',true);
+                    if(log){
+                        window.location.replace(''+authUser.premierUrl(data.typeUser));
                     }else{
                         const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
                         localStorage.setItem('photo',data.profilPicture);
