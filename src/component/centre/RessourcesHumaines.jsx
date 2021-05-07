@@ -46,57 +46,6 @@ export default class RessourcesHumaines extends React.Component{
             });
         });
     }
-    // addPersonal=()=>{
-    //     const data = this.state.listUser;
-    //     data.push({
-    //         nom:'',
-    //         prenoms:'',
-    //         mdp:'',
-    //         mail:'',
-    //         phone:'',
-    //         type:0
-    //     })
-    // }
-    // removePersonal=(indice)=>{
-    //     const data = this.state.list;
-    //     data.splice(indice, 1);
-    //     this.setState({listContact: data});
-    // }
-    // changeNomPersonalText=(indice, event)=>{
-    //     const data= this.state.listUser;
-    //     data[indice].nom= event.target.value;
-	// 	this.setState({listUser: data});
-    // }
-    // changePrenomsPersonalText=(indice, event)=>{
-    //     const data= this.state.listUser;
-    //     data[indice].prenoms= event.target.value;
-	// 	this.setState({listUser: data});
-    // }
-    // changeMailPersonalText=(indice, event)=>{
-    //     const data= this.state.listUser;
-    //     data[indice].mail= event.target.value;
-	// 	this.setState({listUser: data});
-    // }
-    // changePhonePersonalText=(indice, event)=>{
-    //     const data= this.state.listUser;
-    //     data[indice].phone= event.target.value;
-	// 	this.setState({listUser: data});
-    // }
-    // changePersonalText=(indice, champ, event)=>{
-    //     const data= this.state.listUser;
-    //     data[indice][champ]= event.target.value;
-	// 	this.setState({listUser: data});
-    // }
-    // changeMdpPersonalText=(indice, event)=>{
-    //     const data= this.state.listUser;
-    //     data[indice].mdp= event.target.value;
-	// 	this.setState({listUser: data});
-    // }
-    // changePersonalType=(indice, event)=>{
-    //     const data= this.state.listContact;
-    //     data[indice].typeContact= {idTypeContact:event.target.value};
-	// 	this.setState({listContact: data});
-    // }
     handleChange=(param, event)=>{
         if(param==="viewType"){
             fetchGet('/covid/personals/'+this.state.idCentre+'/'+event.target.value+'/'+this.state.page+'/'+this.state.size).then(data=>{
@@ -143,8 +92,8 @@ export default class RessourcesHumaines extends React.Component{
                 statut: data[indice].statut.idStatut,
                 dateDebut: data[indice].dateDebut
             });
-        }else if(type==="Supprimer"){
-            this.setState({idUser:data[indice].userRel.idUser,})
+        }else if(type==="supprimer"){
+            this.setState({idUser:data[indice].userRel.idUser, show:true, typeShow:3})
         }
         else{
             this.setState({show:true});
@@ -169,6 +118,15 @@ export default class RessourcesHumaines extends React.Component{
                 }
             }
         }
+    }
+    supprimer=()=>{
+        fetchGet('/covid/remove-personal/'+this.state.idCentre+'/'+this.state.idUser).then(data=>{
+            if(data!=null){
+                if(data.statut.idStatut===2){
+                    window.location.reload();
+                }
+            }
+        });
     }
     enregistrer=()=>{
         var ids = [];
@@ -266,9 +224,10 @@ export default class RessourcesHumaines extends React.Component{
                     <div className="col-md-12" style={{display:this.state.show?"block":"none"}}>
                         <div className="edit-cover-content row">
                             <div className="edit-header col-md-12">
-                                <h5>{this.state.typeShow===1?"Vue":this.setState.typeShow===2?"Modification":"Ajout"}</h5>
+                                <h5>{this.state.typeShow===1?"Vue":this.state.typeShow===2?"Modification":this.state.typeShow===3?"Suppression":"Ajout"}</h5>
                             </div>
                             <div className="edit-content col-md-8">    
+                                {this.state.typeShow!==3?
                                 <div className="row">
                                     <div className="input-group">
                                         <label className="col-md-5">Nom</label>
@@ -306,7 +265,11 @@ export default class RessourcesHumaines extends React.Component{
                                     <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-5">Annuler</button>
                                     <button onClick={()=>this.enregistrer()} className="enregistrer col-md-5">Enregistrer</button>
                                     </>:""}
-                                </div>
+                                </div>:
+                                <div>
+                                    <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-5">Annuler</button>
+                                    <button onClick={()=>this.supprimer()} className="enregistrer col-md-5">Supprimer</button>
+                                </div>}
                             </div>
                         </div>
                     </div>

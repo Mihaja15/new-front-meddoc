@@ -151,8 +151,8 @@ export default class Proche extends React.Component{
                 indice: indice,
                 lien:data[indice].lien
             });
-        }else if(type==="Supprimer"){
-            this.setState({idProche:data[indice].proche.idUser,})
+        }else if(type==="supprimer"){
+            this.setState({idProche:data[indice].proche.idUser, show:true, typeShow:3});
         }
         else{
             this.setState({show:true});
@@ -176,22 +176,15 @@ export default class Proche extends React.Component{
             typeShow:0
         });
     }
-    // getMailOrPhone(type, data){
-    //     const contact = data.contact;
-    //     const ids = data.identifiant;
-    //     for(let i = 0; i < contact.length; i++){
-    //         for(let j = 0; j < ids.length; j++){
-    //             if(ids[j].identifiant===contact[i].contact){
-    //                 if(contact[i].typeContact.idTypeContact===1 && type===1){
-    //                     return contact[i].contact;
-    //                 }
-    //                 if(contact[i].typeContact.idTypeContact===2 && type===2){
-    //                     return contact[i].contact;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    supprimer=()=>{
+        fetchGet('/covid/remove-proche/'+this.state.idUser+'/'+this.state.idProche).then(data=>{
+            if(data!=null){
+                if(data.statut.idStatut===2){
+                    window.location.reload();
+                }
+            }
+        });
+    }
     enregistrer=()=>{
         var ids = [];
         var contacts = [];
@@ -281,9 +274,10 @@ export default class Proche extends React.Component{
                     <div className="col-md-12" style={{display:this.state.show?"block":"none"}}>
                         <div className="edit-cover-content row">
                             <div className="edit-header col-md-12">
-                                <h5>{this.state.typeShow===1?"Vue":this.setState.typeShow===2?"Modification":"Ajout"}</h5>
+                                <h5>{this.state.typeShow===1?"Vue":this.setState.typeShow===2?"Modification":this.state.typeShow===3?"Suppression":"Ajout"}</h5>
                             </div>
                             <div className="edit-content col-md-8">    
+                                {this.state.typeShow!==3?
                                 <div className="row">
                                     <div className="input-group">
                                         <label className="col-md-5">Lien</label>
@@ -313,11 +307,11 @@ export default class Proche extends React.Component{
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">Date de naissance</label>
-                                        <input className="col-md-7" type="date" disabled={this.state.typeShow===1} disabled={this.state.typeShow===1} value={this.state.dateNaissance} onChange={this.handleChange.bind(this,"dateNaissance")}/>
+                                        <input className="col-md-7" type="date" disabled={this.state.typeShow===1} required={true} disabled={this.state.typeShow===1} value={this.state.dateNaissance} onChange={this.handleChange.bind(this,"dateNaissance")}/>
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">Lieu de naissance</label>
-                                        <input className="col-md-7" type="text" disabled={this.state.typeShow===1} value={this.state.lieuNaissance} onChange={this.handleChange.bind(this,"lieuNaissance")}/>
+                                        <input className="col-md-7" type="text" disabled={this.state.typeShow===1} required={true} value={this.state.lieuNaissance} onChange={this.handleChange.bind(this,"lieuNaissance")}/>
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">Province</label>
@@ -349,7 +343,7 @@ export default class Proche extends React.Component{
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">Adresse</label>
-                                        <input className="col-md-7" type="text" disabled={this.state.typeShow===1} value={this.state.adresse} onChange={this.handleChange.bind(this,"adresse")}/>
+                                        <input className="col-md-7" type="text" disabled={this.state.typeShow===1} required={true} value={this.state.adresse} onChange={this.handleChange.bind(this,"adresse")}/>
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">N° CIN</label>
@@ -363,9 +357,16 @@ export default class Proche extends React.Component{
                                         <label className="col-md-5">Lieu de délivrance</label>
                                         <input className="col-md-7" type="text" disabled={this.state.typeShow===1} value={this.state.lieuCin} onChange={this.handleChange.bind(this,"lieuCin")}/>
                                     </div>
+                                    {this.state.typeShow!==1?
+                                    <>
                                     <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-5">Annuler</button>
                                     <button onClick={()=>this.enregistrer()} className="enregistrer col-md-5">Enregistrer</button>
-                                </div>
+                                    </>:""}
+                                </div>:
+                                <>
+                                    <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-5">Annuler</button>
+                                    <button onClick={()=>this.supprimer()} className="enregistrer col-md-5">Supprimer</button>
+                                </>}
                             </div>
                         </div>
                     </div>
