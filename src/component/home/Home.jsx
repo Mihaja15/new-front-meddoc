@@ -111,7 +111,7 @@ class Home extends React.Component{
                                 <div className="vaccin-about-text col-md-9 col-sm-12">
                                     <p>Découvrez si vous remplissez les conditions pour la vaccination Covid-19 <a href="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" target="_blank">ici</a>.
                                     <br/>Vous pouvez également trouver votre RDV sur MEDDoC</p>
-                                    <a className="vaccin-about-link" href="/">Lieux de vaccination près de chez vous</a>
+                                    <a className="vaccin-about-link" href="/recherche-centre//0">Lieux de vaccination près de chez vous</a>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +152,7 @@ class Home extends React.Component{
                         <div className="">
                             <p>Vous êtes des professionnels de santé sur le front dans la lutte contre la Covid-19? Ou agent des forces de défense et de sécurité? Vous êtes diabétique ou avez une maladie chronique pouvant être un facteur de comorbidité? Une personne  de 60 ans et plus quel que soit votre lieu de vie et votre état de santé? Prenez rendez-vous pour vous faire vacciner!</p>
                         </div>
-                        <a className="bouton-solid-reg popup-with-move-anim a1" href="/recherche-medecin">Prendre rendez-vous</a>
+                        <a className="bouton-solid-reg popup-with-move-anim a1" href="/inscription">Prendre rendez-vous</a>
                     </div> 
                     <div className="col-md-6 col-sm-12 img-first-content">
                         <div className="image-container">

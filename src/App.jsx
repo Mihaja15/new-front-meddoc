@@ -56,7 +56,7 @@ class App extends React.Component {
   setProps(){
     const value = window.location.pathname.split('/');
     const dataFind = {
-      text: value[2]!==""?value[2]:"----",
+      text: value[2],
       district: "0",
     }
     return dataFind;

@@ -118,7 +118,7 @@ class MotDePasse extends Component{
                         }else{
                             this.setState({erreur : 'Votre identifiant est introuvable',etatErreur : 2,change : true});
                         }
-                        console.log('valiny :',dataTmp)
+                        // console.log('valiny :',dataTmp)
                     })
                 }else{
                     this.setState({erreur : 'Votre code de validation ne correspond pas',etatErreur : 2});
@@ -139,7 +139,7 @@ class MotDePasse extends Component{
                     <div className="form-group row">
                         <div className="input-group">
                             <span className="form-control spanSonOfChildLoggins col-2"><FontAwesomeIcon icon={faUserLock} /></span>
-                            <input className="form-control inputSonOfChildLoggins col-10" onChange={(e) => this.setValue('mdp', e)} type="text" placeholder="Nouveau mot de passe"/>
+                            <input className="form-control inputSonOfChildLoggins col-10" onChange={(e) => this.setValue('mdp', e)} type="password" placeholder="Nouveau mot de passe"/>
                             <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
                             <div className="col-12" data-tip data-for="registerTip">
                                 <span className=" col-12 progressBarSonOfChildLoggin"><ProgressBar variant={this.getColorPourcentage(this.state.percentageMdp)} now={this.state.percentageMdp} /></span>
@@ -149,7 +149,7 @@ class MotDePasse extends Component{
                     <div className="form-group row">
                         <div className="input-group">
                             <span className="form-control spanSonOfChildLoggins col-2"><FontAwesomeIcon icon={faLock} /></span>
-                            <input className="form-control inputSonOfChildLoggins col-10" onChange={(e) => this.setValue('confirmer', e)} type="text" placeholder="Confirmer votre mot de passe"/>
+                            <input className="form-control inputSonOfChildLoggins col-10" onChange={(e) => this.setValue('confirmer', e)} type="password" placeholder="Confirmer votre mot de passe"/>
                         </div>
                     </div>
                     <div className="form-group row">

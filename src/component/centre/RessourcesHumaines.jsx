@@ -301,8 +301,11 @@ export default class RessourcesHumaines extends React.Component{
                                             })}
                                         </select>
                                     </div>
+                                    {this.state.typeShow!==1?
+                                    <>
                                     <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-5">Annuler</button>
                                     <button onClick={()=>this.enregistrer()} className="enregistrer col-md-5">Enregistrer</button>
+                                    </>:""}
                                 </div>
                             </div>
                         </div>

@@ -177,8 +177,18 @@ class Inscription extends Component{
             fetchPost('/users/autorisationAccesPageApresInscription',newData).then(data=>{
                 if(data.status === 200){
                     const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
+                    localStorage.setItem('photo',data.profilPicture);
+                    localStorage.setItem('idUser',data.idUser);
+                    localStorage.setItem('pseudo',data.pseudo);
+                    localStorage.setItem('connected',true);
+                    window.location.replace('/profil');
                     if(log){
-                        window.location.replace(''+authUser.premierUrl(data.typeUser));
+                        localStorage.setItem('photo',data.profilPicture);
+                        localStorage.setItem('idUser',data.idUser);
+                        localStorage.setItem('pseudo',data.pseudo);
+                        localStorage.setItem('connected',true);
+                        window.location.replace('/profil');
+                        // window.location.replace(''+authUser.premierUrl(data.typeUser));
                         this.setState({connectionafterInscription : {text : '',etat : false}});
                     }else{
                         localStorage.clear();

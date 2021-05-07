@@ -653,3 +653,9 @@
     text-decoration:none;
     color: black;
 }
+.text-before-list{
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 600;
+    color: #0e1011;
+    margin-bottom: 5vh;
+}

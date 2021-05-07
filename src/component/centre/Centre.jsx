@@ -303,6 +303,7 @@ export default class Centre extends React.Component{
                             </div>
                         </div>
                         <div className="col-md-7 col-sm-12 listeMedecinRechercheMedecin">
+                            <span className="ccol-md-12 text-before-list">Prenez rendez-vous en ligne dans un centre de vaccination partout à Madagascar</span>
                             {this.getDataHtmlResultatRecherche(this.state.listCentre)}
                             
                         </div>
