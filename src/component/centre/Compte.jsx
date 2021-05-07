@@ -104,7 +104,7 @@ export default class Compte extends React.Component{
         fetchPost('/covid/edition-centre',dataSend).then(result=>{
             if(result.etat === "0"){
                 alert(result.message);
-                this.setState({update:false});
+                this.setState({disableButton:false,update:false});
             }else{
                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
             }
@@ -458,26 +458,29 @@ export default class Compte extends React.Component{
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} type="tel " value={this.state.phone} onChange={this.handleChange.bind(this,"phone")} placeholder=""  />
                                     </div>
                                 </div>
-                                <div className="form-group row formgroupCssInscriptionMedecin">
-                                    <div className="input-group" data-tip data-for="registerTip">
-                                        <span className="form-control compte-label col-5">Nouveau mot de passe</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" value={this.state.mdp} disabled={!this.state.update} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder="Changer votre mot de passe en tapant un nouveau"/>
-                                        <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
-                                        
+                                {this.state.update?
+                                <div>
+                                    <div className="form-group row formgroupCssInscriptionMedecin">
+                                        <div className="input-group" data-tip data-for="registerTip">
+                                            <span className="form-control compte-label col-5">Nouveau mot de passe</span>
+                                            <input className="form-control inscription-input inscription-inputV12 col-7" value={this.state.mdp} disabled={!this.state.update} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder="Changer votre mot de passe en tapant un nouveau"/>
+                                            <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
+                                            
+                                        </div>
+                                        <div className="input-group" data-tip data-for="registerTip">
+                                            <span className="col-12 progressBarSonOfChildLoggin"><ProgressBar variant={this.getColorPourcentage(this.state.percentageMdp)} now={this.state.percentageMdp} /></span>
+                                        </div>
                                     </div>
-                                    <div className="input-group" data-tip data-for="registerTip">
-                                        <span className="col-12 progressBarSonOfChildLoggin"><ProgressBar variant={this.getColorPourcentage(this.state.percentageMdp)} now={this.state.percentageMdp} /></span>
+                                    <div className="form-group row">
+                                        <div className="input-group">
+                                            <span className="form-control compte-label col-5">Confirmation</span>
+                                            <input className="form-control inscription-input inscription-inputV12 col-7 " value={this.state.confirmationMdp} disabled={!this.state.update} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder="Confirmation du nouveau mot de passe"/>
+                                        </div>
+                                        <div className="input-group" hidden={!this.getVerificationMdp()}>
+                                            <span className="inscription-label-success col-12">Mot de passe confirmé</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-group row">
-                                    <div className="input-group">
-                                        <span className="form-control compte-label col-5">Confirmation</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7 " value={this.state.confirmationMdp} disabled={!this.state.update} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder="Confirmation du nouveau mot de passe"/>
-                                    </div>
-                                    <div className="input-group" hidden={!this.getVerificationMdp()}>
-                                        <span className="inscription-label-success col-12">Mot de passe confirmé</span>
-                                    </div>
-                                </div>
+                                </div>:""}
                                 {/* <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control compte-label col-5">Photo</span>

@@ -1,49 +1,72 @@
 .calendrier-container{
     width: 100%;
-    height: auto;
-    margin-left: 10vh;
-    padding-right: 20vh;
-    padding-bottom: 5vh;
+    /* height: auto; */
+    /* margin-left: 10vh; */
+    padding-left: 10vh;
+    padding-right: 10vh;
+    /* padding-bottom: 5vh; */
 }
 .header-agenda{
     padding: 1vh;
     margin-bottom: 2vh;
-    margin-left: 2vh;
+    /* padding-right: 20vh; */
+    position: fixed;
+    top:15vh;
+    z-index: 500;
+    width: 77.2%;
+    background-color: #fff;
     /* border: 5px solid #1b7895; */
 }
 .centre-content-agenda{
     /* position: relative; */
-    display: inline-flex;
+    /* display: inline-flex; */
     width: 100%;
-    justify-content: space-between;
-    padding-top: 12px;
+    /* justify-content: space-between; */
+    /* padding-top: 12px; */
     padding-bottom: 12px;
-    
-    background-color: #f1f1f1;
+    /* padding-top: 12px; */
+    margin: auto;
+    /* background-color: #f1f1f1; */
     /* padding-left: 15vh; */
     /* margin: auto; */
 }
 .centre-agenda-left{
-    width: 49.5%;
+    /* width: 49.5%; */
+    padding: 0;
     position: relative;
     background-color: #fff;
+    border: 2px solid #3891a6;
+    margin-top: 15vh;
 }
 .centre-agenda-left h5{
     text-align: center;
     background-color: #3891a6;
     color: #fff;
     margin-bottom: 0;
+    margin-left: 0;
 }
 .centre-agenda-right{
+    padding: 0;
     position: relative;
-    width: 49.5%;
     background-color: #fff;
+    border: 2px solid #2b3a3b;
+    margin-top: 5vh;
 }
 .centre-agenda-right h5{
     text-align: center;
     background-color: #2b3a3b;
     color: #fff;
     margin-bottom: 0;
+}
+.footer-rdv-staff{
+    background-color: #2b3a3b;
+    color:#ffffff;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    /* margin: 0 auto; */
+    padding-top: 5px;
+    padding: 0;
 }
 .select-date{
     width: 100%;
@@ -54,7 +77,7 @@
 }
 .tableau-calendrier{
     width: 100%;
-    margin-bottom: 5vh;
+    /* margin-bottom: 5vh; */
 }
 .tableau-calendrier thead{
     width: 100%;
@@ -146,12 +169,7 @@
 }
 .tableau-rdv{
     width: 100%;
-    margin-bottom: 5vh;
-}
-  
-.tableau-rdv{
-    width: 100%;
-    margin-bottom: 5vh;
+    /* margin-bottom: 5vh; */
 }
 .tableau-rdv thead{
     width: 100%;
@@ -171,4 +189,48 @@
 .tableau-rdv>tbody>tr:hover{
     background-color: #c4e7f9;
     cursor: pointer;
+}
+.tableau-calendrier{
+    width: 100%;
+    margin: 0 auto;
+}
+.tableau-header-cal{
+    /* background-color: coral; */
+    margin: 0 auto;
+    width: 100%;
+}
+.tableau-header-cal ul{
+    display: block;
+    width: 100%;
+    /* background-color: blueviolet; */
+    margin: 0 auto;
+    /* justify-content: center; */
+}
+.tableau-header-cal li{
+    display: inline-block;
+    margin:0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* width: fit-content; */
+    background-color: aquamarine;
+}
+.tableau-body-cal{
+    /* background-color: coral; */
+    margin: 0 auto;
+    width: 100%;
+}
+.tableau-body-cal ul{
+    display: block;
+    width: 100%;
+    /* background-color: blueviolet; */
+    margin: 0 auto;
+    /* justify-content: center; */
+}
+.tableau-body-cal li{
+    display: inline-block;
+    margin:0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* width: fit-content; */
+    background-color: aquamarine;
 }

@@ -116,6 +116,10 @@ class DetailCentre extends Component{
     takeAppointment=(date,heure)=>{
         const dateNow = new Date();
         console.log(dateNow.getTime()+' > '+date.getTime());
+        if(this.state.beneficiaire===null||this.state.beneficiaire===undefined||this.state.beneficiaire===""){
+            alert('Vous devez vous connecter!');
+            return;
+        }
         fetchGet('/covid/check-appointment/'+this.state.beneficiaire).then(has=>{
             if(has){  
                 alert('Vous avez déjà pris un rendez-vous pour cette personne');
@@ -124,7 +128,7 @@ class DetailCentre extends Component{
                 if(dateNow.getTime() > date.getTime()){
                     alert('La date de rendez-vous doit être ultérieurement!');
                 }else{
-                    if(this.state.idUser!==null){
+                    if(this.state.idUser!==null&&this.state.idUser!==undefined){
                         this.setState({dateRdv:date,heureRdv:heure,showConfirmation:true});   
                     }else{
                         alert('Vous devez vous connecter!');

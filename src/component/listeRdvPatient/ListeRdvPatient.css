@@ -185,7 +185,7 @@
     display: inline;
 }
 .warning-rdv{
-    background-color: #ffcc6675;
+    background-color: #ffcc663d;
     border-radius: 10px;
     padding: 10px;
     font-family: 'Montserrat',sans-serif;
@@ -212,7 +212,9 @@
 .footer-rdv-patient{
     background-color: #1b7895;
     color:#ffffff;
+    display: flex;
     text-align: center;
+    justify-content: center;
     margin: 0 auto;
     padding-top: 15px;
 }

@@ -546,7 +546,7 @@ class SuiviMedical extends Component{
                             isMulti
                             name="colors"
                             options={maladie}
-                            className="new-basic-multi-select col-8"
+                            className="new-basic-multi-select-maladie col-8"
                             classNamePrefix="select"
                         />
                     </div>
@@ -601,7 +601,7 @@ class SuiviMedical extends Component{
                 if(''+vaccins[i].idVaccin===''+value){
                     count = vaccins[i].nbrInjection;
                     if(this.state.userCentre!==null && this.state.userCentre!==undefined){
-                        this.getDecalageProchainVaccin(this.state.userCentre.centre.idCentre,vaccins[i].interaction);
+                        this.getDecalageProchainVaccin(this.state.userCentre.centreRel.idCentre,vaccins[i].interaction);
                     }
                 }
             }
@@ -674,7 +674,7 @@ class SuiviMedical extends Component{
                                 <Text style={styles.documentText}>Zone :  {this.getLabelByValue(this.state.zone.value,zone)}</Text>
                                 <Text style={styles.documentText}>Injection :  {this.state.injection.value+'/'+this.state.nbr_inj}</Text>
                                 <Text style={styles.documentText}>Vaccin</Text>
-                                <Text style={styles.documentTextUl}>Désignation : {this.state.nomvaccin.value}</Text>
+                                <Text style={styles.documentTextUl}>Désignation : {this.getLabelByValue(this.state.nomvaccin.value,vaccin)}</Text>
                                 <Text style={styles.documentTextUl}>N° Lot : {this.state.lot.value}</Text>
                                 <Text style={styles.documentText}>Vaccinateur : {this.state.vaccinateur.value}</Text>                            
                                 {
@@ -754,8 +754,8 @@ class SuiviMedical extends Component{
             let date = dateAujourdhui.getFullYear()+'-'+utile.completChiffre(dateAujourdhui.getMonth())+'-'+utile.completChiffre(utile.completChiffre(dateAujourdhui.getDate()));
             let inj=utile.parseStringToInt(this.state.injection.value);
             let data ={
-                centre:{idCentre : this.state.userCentre.centre.idCentre},
-                vaccinateur:{idUser : this.state.userCentre.user.idUser},
+                centre:{idCentre : this.state.userCentre.centreRel.idCentre},
+                vaccinateur:{idUser : this.state.userCentre.userRel.idUser},
                 patient:{idUser : this.state.patient.idUser, maladies:this.getMaladieFinal()},
                 vaccin:{ idVaccin : this.state.nomvaccin.value},
                 numLot: this.state.lot.value,
@@ -774,9 +774,9 @@ class SuiviMedical extends Component{
                         dateDmdRdv : this.state.prochainRdv.date,
                         dateHeureRdv : this.state.prochainRdv.date+' '+this.state.prochainRdv.time,
                         motif : 'Rendez-vous '+(inj+1),
-                        centre:{idCentre : this.state.userCentre.centre.idCentre},
+                        centre:{idCentre : this.state.userCentre.centreRel.idCentre},
                         patient: {idUser : this.state.patient.idUser, maladies:this.getMaladieFinal()},
-                        userAccueil :{idUser : this.state.userCentre.user.idUser},
+                        userAccueil :{idUser : this.state.userCentre.userRel.idUser},
                         userDmd : {idUser : this.state.patient.idUser, maladies:this.getMaladieFinal()},
                     }
                 }
@@ -830,16 +830,18 @@ class SuiviMedical extends Component{
                 console.log('vaccin : ',data);
             this.setState({vaccins : data});
         })
-        fetchGet('/covid/userCentre/'+74).then((data) => {
-            console.log('centre  : ', data);
+        if(this.props.idVaccinateur!==undefined)
+        fetchGet('/covid/userCentre/'+this.props.idVaccinateur).then((data) => {
+            console.log('centremlm  : ', data);
             if(data !== null && data !== undefined){
-                const tmpAdr = data.centre.adresse;
+                const tmpAdr = data.centreRel.adresse;
                 console.log('ttt :',tmpAdr)
-                this.setState({userCentre : data,centrevaccin : {value: ''+data.centre.nomCentre,etat : 0},vaccinateur: {value: ''+data.user.nom,etat : 0},lieu : {value: ''+tmpAdr[0].district.nomDistrict,etat : 0}})
+                this.setState({userCentre : data,centrevaccin : {value: ''+data.centreRel.nomCentre,etat : 0},vaccinateur: {value: ''+data.userRel.nom+' '+data.userRel.prenoms,etat : 0},lieu : {value: ''+tmpAdr[0].district.nomDistrict,etat : 0}})
             }
         })
-        fetchGet('/users/userByIdPatient/'+79).then((data) => {
-            console.log('centre  : ', data);
+        if(this.props.idUser!==undefined)
+        fetchGet('/users/userByIdPatient/'+this.props.idUser).then((data) => {
+            console.log('centreu  : ', data);
             if(data !== null && data !== undefined){
                 console.log('patient  :',data)   ; let numero='';let email='';
                 let contact = data.contact;let size = contact.length;

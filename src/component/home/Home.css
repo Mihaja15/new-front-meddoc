@@ -142,11 +142,12 @@
     font-weight: 700;
 }
 .banner-start input{
-    width: 30%;
+    width: 60%;
     height: 60px;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     border:none;
+    padding-left: 5vh;
 }
 .banner-start select{
     width: 30%;

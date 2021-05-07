@@ -5,6 +5,7 @@ import {fetchPost} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAirFreshener, faCheckCircle, faCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
+import Pagination from "react-js-pagination";
 
 const dateNow = new Date();
 
@@ -26,7 +27,13 @@ export default class Calendrier extends React.Component{
                 number:0,
                 size:0
             },
-            listUserName:[]
+            listUserName:[],
+            page:1,
+            size:10,
+            nbPage:1,
+            totalElement:0,
+            ordre:'desc',
+            colonne:'dateHeureRdv',
         }
     }
     getScroll(numberStart, numberStop){
@@ -76,6 +83,36 @@ export default class Calendrier extends React.Component{
     inList=(value)=>{
         return this.state.listUserName.find(element => element.indice === value).value;
     }
+    handlePageChange=(pageNumber)=> {
+        const data= {
+            id : this.state.idEntite,
+            colonne : this.state.colonne,
+            page : (pageNumber-1),
+            id : this.state.idEntite,
+            type : this.state.typeEntite,
+            statut : this.state.statut,
+            jour : this.state.jourSelected,
+            mois : this.state.moisSelected,
+            annee : this.state.anneeSelected,
+            size : this.state.size
+        }
+        fetchPost('/covid/rdv-centre',data).then(data=>{
+            var userName = [];
+            console.log('dataTmp dataTmp :',data);
+            for(let i=0; i <data.content.length; i++){
+                if(!userName.find(element => element.value === data.content[i].patient.nom+" "+data.content[i].patient.prenoms)){
+                    userName.push({
+                        value:data.content[i].patient.nom+" "+data.content[i].patient.prenoms,
+                        indice: data.content[i].patient.idUser
+                    })
+                }
+            }
+            console.log(userName)
+            // this.setState({ list: data.content ,page : data.number, listUserName: userName});
+            this.setState({ listRdv: data ,page : (data.number+1),nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
+        });
+        
+    }
     getRdv(){
         const data = {
             id : this.state.idEntite,
@@ -84,8 +121,8 @@ export default class Calendrier extends React.Component{
             jour : this.state.jourSelected,
             mois : this.state.moisSelected,
             annee : this.state.anneeSelected,
-            page: 0,
-            size: 10
+            page: (this.state.page-1),
+            size: this.state.size
         }
         fetchPost('/covid/rdv-centre',data).then(dataTmp=>{
             console.log(dataTmp)
@@ -99,7 +136,7 @@ export default class Calendrier extends React.Component{
                 }
             }
             console.log('dataTmp dataTmp :',userName);
-            this.setState({listRdv : dataTmp, listUserName: userName});
+            this.setState({listRdv : dataTmp, listUserName: userName,page : (dataTmp.number+1), nbPage : dataTmp.totalPages, totalElement: dataTmp.totalElements});
         });
     }
     getAgenda(){
@@ -189,100 +226,123 @@ export default class Calendrier extends React.Component{
                                 <option value={101}>Déjà pris</option>
                             </select>
                         </div>
-                        <div className="centre-content-agenda col-md-12">
-                            <div className="centre-agenda-left">
-                                <h5 className="col-md-12">Calendrier</h5>
-                                <table className="tableau-calendrier col-md-12">
-                                    <thead>
-                                        <tr>
-                                            <th>dimanche</th>
-                                            <th>lundi</th>
-                                            <th>mardi</th>
-                                            <th>mercredi</th>
-                                            <th>jeudi</th>
-                                            <th>vendredi</th>
-                                            <th>samedi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            this.state.calendrier!==null?
-                                            this.state.calendrier.map((week,i)=>{
+                        {/* <div className="centre-content-agenda- col-md-12 row"> */}
+                            <div className="centre-content-agenda col-md-12 row">
+                                <div className="centre-agenda-left col-md-12">
+                                    <h5 className="col-md-12">Calendrier</h5>
+                                    <table className="tableau-calendrier col-md-12">
+                                        <thead>
+                                            <tr>
+                                                <th>dimanche</th>
+                                                <th>lundi</th>
+                                                <th>mardi</th>
+                                                <th>mercredi</th>
+                                                <th>jeudi</th>
+                                                <th>vendredi</th>
+                                                <th>samedi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                this.state.calendrier!==null?
+                                                this.state.calendrier.map((week,i)=>{
+                                                    return(
+                                                    <tr key={i}>
+                                                        {
+                                                            week.map((day, j)=>{
+                                                                return (
+                                                                <td key={j}>
+                                                                    {
+                                                                        day!==null?
+                                                                        <div onClick={()=>this.selectDate(day.dateString)} className={"calendar-case"+this.isToday(day.dateString)+this.isSelected(day.dateString)}>
+                                                                            {day.hasRdv?<div className="case-active">{day.nbRdv}</div>:""}
+                                                                            <h4>{day.day}</h4>
+                                                                        </div>
+                                                                        :"" 
+                                                                    }  
+                                                                </td>)
+                                                            })
+                                                        }
+                                                    </tr>)
+                                                }):<tr></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="centre-agenda-right col-md-12">
+                                    <h5 className="col-md-12">Liste des rendez-vous du {utile.getDateComplet(this.state.dateSelected)}</h5>
+                                    <table className="tableau-rdv col-md-12">
+                                        <thead>
+                                            <tr>
+                                                <th>Heure</th>
+                                                <th>Accueil</th>
+                                                <th>Patient</th>
+                                                <th>Motif</th>
+                                                <th>Etat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {this.state.listRdv.content!==undefined?this.state.listRdv.content.map((rdv, i)=>{
                                                 return(
-                                                <tr key={i}>
-                                                    {
-                                                        week.map((day, j)=>{
-                                                            return (
-                                                            <td key={j}>
-                                                                {
-                                                                    day!==null?
-                                                                    <div onClick={()=>this.selectDate(day.dateString)} className={"calendar-case"+this.isToday(day.dateString)+this.isSelected(day.dateString)}>
-                                                                        {day.hasRdv?<div className="case-active">{day.nbRdv}</div>:""}
-                                                                        <h4>{day.day}</h4>
-                                                                    </div>
-                                                                    :"" 
-                                                                }  
-                                                            </td>)
-                                                        })
-                                                    }
-                                                </tr>)
-                                            }):<tr></tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                                    rdv.statut!==null?rdv.statut.idStatut===101 
+                                                    ?<tr key={i}>
+                                                        <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
+                                                        <td>{rdv.centre.nomCentre}</td>
+                                                        <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.motif}</td>
+                                                        <td data-tip data-for={"line-rdv"+i}>
+                                                            <FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/>
+                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous déjà pris</ReactTooltip>
+                                                        </td>
+                                                    </tr>
+                                                    :<tr key={i} onClick={()=>{this.props.setPatient(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient,"vaccination",rdv.dateHeureRdv);}}>
+                                                        <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
+                                                        <td>{rdv.centre.nomCentre}</td>
+                                                        <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.motif}</td>
+                                                        <td data-tip data-for={"line-rdv"+i}>
+                                                            <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
+                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
+                                                        </td>
+                                                    </tr>
+                                                    :<tr key={i}>
+                                                        <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
+                                                        <td>{rdv.centre.nomCentre}</td>
+                                                        <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.motif}</td>
+                                                        <td data-tip data-for={"line-rdv"+i}>
+                                                            <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
+                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            }):<tr></tr>}
+                                        </tbody>
+                                    </table>
+                                    {/* <div className="col-md-12"> */}
+                                        <div className="footer-rdv-staff col-md-12">
+                                            <div className='divPagination'>
+                                                <Pagination
+                                                    activeClass='pagClassActive'
+                                                    itemClassNext='pagClassNext'
+                                                    itemClassPrev='pagClassPrev'
+                                                    itemClassFirst='pagClassFirst'
+                                                    itemClassLast='pagClassLast'
+                                                    itemClass='pagClassItemTmp'
+                                                    prevPageText='< Précédant'
+                                                    nextPageText='> Suivant'
+                                                    activePage={(this.state.page)}
+                                                    itemsCountPerPage={this.state.size}
+                                                    totalItemsCount={this.state.totalElement}
+                                                    pageRangeDisplayed={10}
+                                                    onChange={(pageNumber)=>this.handlePageChange(pageNumber)}
+                                                />
+                                            </div>
+                                        </div>
+                                    {/* </div> */}
+                                </div>
                             </div>
-                            <div className="centre-agenda-right">
-                                <h5 className="col-md-12">Liste des rendez-vous du {utile.getDateComplet(this.state.dateSelected)}</h5>
-                                <table className="tableau-rdv col-md-12">
-                                    <thead>
-                                        <tr>
-                                            <th>Heure</th>
-                                            <th>Accueil</th>
-                                            <th>Patient</th>
-                                            <th>Motif</th>
-                                            <th>Etat</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.listRdv.content!==undefined?this.state.listRdv.content.map((rdv, i)=>{
-                                            return(
-                                                rdv.statut!==null?rdv.statut.idStatut===101 
-                                                ?<tr key={i}>
-                                                    <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
-                                                    <td>{rdv.centre.nomCentre}</td>
-                                                    <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
-                                                    <td>{rdv.motif}</td>
-                                                    <td data-tip data-for={"line-rdv"+i}>
-                                                        <FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/>
-                                                        <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous déjà pris</ReactTooltip>
-                                                    </td>
-                                                </tr>
-                                                :<tr key={i}>
-                                                    <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
-                                                    <td>{rdv.centre.nomCentre}</td>
-                                                    <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
-                                                    <td>{rdv.motif}</td>
-                                                    <td data-tip data-for={"line-rdv"+i}>
-                                                        <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
-                                                        <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
-                                                    </td>
-                                                </tr>
-                                                :<tr key={i}>
-                                                    <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
-                                                    <td>{rdv.centre.nomCentre}</td>
-                                                    <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
-                                                    <td>{rdv.motif}</td>
-                                                    <td data-tip data-for={"line-rdv"+i}>
-                                                        <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
-                                                        <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }):<tr></tr>}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        {/* </div> */}
                     </div>
                 {/* </div> */}
             </div>

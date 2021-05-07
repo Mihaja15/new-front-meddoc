@@ -12,6 +12,9 @@ export default class Calendrier extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            idEntite:null,
+            typeEntite:null,
+            statut:null,
             dateSelected: new Date(),
             jourSelected: dateNow.getDate(),
             moisSelected: dateNow.getMonth(),
@@ -114,6 +117,7 @@ export default class Calendrier extends React.Component{
     componentDidMount(){
         var data = {
             id : localStorage.getItem('idCentre'),
+            type:0,
             jour : this.state.jourSelected,
             mois : this.state.moisSelected,
             annee : this.state.anneeSelected
@@ -123,6 +127,7 @@ export default class Calendrier extends React.Component{
         });
         data = {
             id : localStorage.getItem('idCentre'),
+            type:0,
             jour : this.state.jourSelected,
             mois : this.state.moisSelected,
             annee : this.state.anneeSelected,

@@ -42,7 +42,7 @@ export default class Centre extends React.Component{
                 return <img src={"/assets/upload/"+photo} alt="image_profile" className="photo-centre-search"/>
             }
         } catch (error) { }
-        return <img src={"/assets/upload/profile.png"} alt="image_profile" className="photo-centre-search"/>
+        return <img src={"/assets/upload/profile-centre.png"} alt="image_profile" className="photo-centre-search"/>
     }
     getDataHtmlResultatRecherche(listCentre){
         if(listCentre.length>0){
@@ -143,8 +143,8 @@ export default class Centre extends React.Component{
     }
     
     search=()=>{
-        if(window.location.pathname.split('/')[1]==='recherche')
-            window.history.pushState("object or string", "Title", '/recherche-medecin/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
+        if(window.location.pathname.split('/')[1]==='recherche-centre')
+            window.history.pushState("object or string", "Title", '/recherche-centre/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
         else
             window.history.pushState("object or string", "Title", '/profil/recherche/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
         const text = this.state.text===""?"----":this.state.text;

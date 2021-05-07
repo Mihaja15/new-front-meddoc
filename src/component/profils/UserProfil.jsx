@@ -130,7 +130,7 @@ class UserProfil extends Component{
                                 <li onClick={()=>this.linkInMenu('proches')} className={this.isActive(5)}><FontAwesomeIcon icon={faFolderPlus}/> Mes proches</li>
                                 {/* <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li> */}
                                 <a href="/" onClick={()=>this.deconnexion()}><button className="btn btn-info form-control"><FontAwesomeIcon icon={faHeadset}/> Assistance</button></a>
-                                <a href="/" onClick={()=>this.deconnexion()}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
+                                <a href="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
                                             
                             </ul>
                         </div>

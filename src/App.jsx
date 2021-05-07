@@ -18,6 +18,7 @@ import SuiviMedicals from './component/suivi-medicals/SuiviMedical';
 import Vaccin from './component/vaccin/Vaccin';
 import history from './history';
 import ProfilStaff from './component/staff/ProfilStaff';
+import Centre from './component/centre/Centre';
 
 class App extends React.Component {
   constructor(props){
@@ -51,6 +52,14 @@ class App extends React.Component {
       </div>
     );
   }
+  setProps(){
+    const value = window.location.pathname.split('/');
+    const dataFind = {
+      text: value[2]!==""?value[2]:"----",
+      district: "0",
+    }
+    return dataFind;
+  }
   render(){
     return (
       <div>
@@ -58,7 +67,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" render={() => {return  this.contentShow(<Home/>,<Header/>,null,null,<Footer/>);}}/>
             <Route exact path="/suivi-medical" render={() => { return this.contentShow(<SuiviMedicals/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>); }}/>
-            <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>); }}/>
+            {/* <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>); }}/> */}
             <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route exact path="/inscription-centre" render={() => {return  this.contentShow(<InscriptionCentre/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route exact path="/connexion-centre" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
@@ -67,6 +76,7 @@ class App extends React.Component {
             <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShowV2(<Actualites/>,<Header/>,<Footer/>); }}/>
             <Route exact path="/conditions-generales-d-utilisation-de-MEDDoC" render={() => { return this.contentShowV2(<Conditionutilisation/>,<Header/>,<Footer/>); }}/>
             <Route path="/mes-vaccins" render={() => {return  this.contentShow(<Vaccin/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>);}}/>
+            <Route path="/recherche-centre" render={() => {return  this.contentShow(<div style={{marginTop:'15vh'}}><Centre dataFind={this.setProps()}/></div>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
             <Route path="/profil-centre" render={() => {return  this.contentShow(<Profil/>,<Header/>,<LeftMenu type={0}/>,<RightMenu/>,null);}}/>
             <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header/>,<LeftMenu type={1}/>,<RightMenu/>,null);}}/>
