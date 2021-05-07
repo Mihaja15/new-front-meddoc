@@ -1,7 +1,7 @@
 import React from 'react';
 import './Proche.css';
 import { fetchGet, fetchPost,fetchPostV2 } from '../../services/global.service';
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Proche extends React.Component{
@@ -233,11 +233,11 @@ export default class Proche extends React.Component{
     }
     render(){
         return(
-            <div className="personal-container">
+            <div className="personal-container-new">
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="row">
-                            <h4 className="card-title col-md-4">Liste de mes proches</h4>
+                        <div className="row div-title-proche">
+                            <h4 className="card-title col-md-8">Liste de mes proches</h4>
                             {/* <select className="card-title col-md-4" value={this.state.viewType} onChange={this.handleChange.bind(this,"viewType")}>
                                 <option value={0}>Tous</option>
                                 {this.state.listType.map((one,i)=>{
@@ -246,7 +246,7 @@ export default class Proche extends React.Component{
                                     )
                                 })}
                             </select> */}
-                            <a className="card-title col-md-4" href="#0" onClick={()=>this.clickIcon(0,"créer")}>Nouveau</a>
+                            <a className="card-title col-md-4" href="#0" onClick={()=>this.clickIcon(0,"créer")}><FontAwesomeIcon icon={faPlusCircle}/>Nouveau</a>
                         </div>
                         <div className="all-list-container row">
                             <div className="list-header col-md-12">
