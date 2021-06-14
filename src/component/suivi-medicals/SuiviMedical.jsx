@@ -858,7 +858,7 @@ class SuiviMedical extends Component{
                     naissance : {value: ''+data.dateNaissance,etat : 0},
                     lieunaissance : {value: ''+data.lieuNaissance,etat : 0},
                     cin : {value: ''+data.numCin,etat : 0},
-                    identification : {value: '',etat : 0},
+                    identification : {value: data.idMeddoc,etat : 0},
                     datedelivrance : {value: ''+data.dateCin,etat : 0},
                     lieudelivrance : {value: ''+data.lieuCin,etat : 0},
                     telephone : {value: ''+numero,etat : 0},
@@ -877,7 +877,7 @@ class SuiviMedical extends Component{
         })
     }
     render(){
-        const { contentState } = this.state;
+        // const { contentState } = this.state;
         return (
             <div className="divSuivi">
                 <div id="menu">    

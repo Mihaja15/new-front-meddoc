@@ -1,8 +1,9 @@
 import React from 'react';
 import './Proche.css';
-import { fetchGet, fetchPost,fetchPostV2 } from '../../services/global.service';
+import { fetchGet, fetchPostHeader } from '../../services/global.service';
 import { faEdit, faEye, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { userSession } from '../../services/userSession';
 
 export default class Proche extends React.Component{
     constructor(props){
@@ -42,7 +43,7 @@ export default class Proche extends React.Component{
     componentDidMount(){
         // console.log(this.state.listUser)
         // this.setState({listUser:})
-        this.setState({idUser:localStorage.getItem('idUser')},function(){
+        this.setState({idUser:userSession.get('token')},function(){
             fetchGet('/users/proche/'+this.state.idUser+'/'+this.state.page+'/'+this.state.size).then(data=>{
                 if(data!=null){
                     this.setState({ list: data });
@@ -177,7 +178,7 @@ export default class Proche extends React.Component{
         });
     }
     supprimer=()=>{
-        fetchGet('/covid/remove-proche/'+this.state.idUser+'/'+this.state.idProche).then(data=>{
+        fetchGet('/users/remove-proche/'+this.state.idProche).then(data=>{
             if(data!=null){
                 if(data.statut.idStatut===2){
                     window.location.reload();
@@ -186,8 +187,6 @@ export default class Proche extends React.Component{
         });
     }
     enregistrer=()=>{
-        var ids = [];
-        var contacts = [];
         var adresse = [{
             addrValue:this.state.adresse,
             district:{
@@ -219,11 +218,11 @@ export default class Proche extends React.Component{
             }
         }
         const data = {
-            user: {idUser:this.state.idUser},
+            // user: {idUser:this.state.idUser},
             lien: this.state.lien,
             proche: user
         }
-        fetchPost('/users/ajout-proche',data).then(result=>{
+        fetchPostHeader('/users/ajout-proche',data).then(result=>{
             if(result.etat === "0"){
                 window.location.reload();
             }else{
@@ -307,7 +306,7 @@ export default class Proche extends React.Component{
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">Date de naissance</label>
-                                        <input className="col-md-7" type="date" disabled={this.state.typeShow===1} required={true} disabled={this.state.typeShow===1} value={this.state.dateNaissance} onChange={this.handleChange.bind(this,"dateNaissance")}/>
+                                        <input className="col-md-7" type="date" disabled={this.state.typeShow===1} required={true} value={this.state.dateNaissance} onChange={this.handleChange.bind(this,"dateNaissance")}/>
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">Lieu de naissance</label>

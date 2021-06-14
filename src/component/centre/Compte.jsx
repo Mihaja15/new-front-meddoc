@@ -5,11 +5,12 @@ import ReactTooltip from 'react-tooltip';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import redIcon from '../../assets/icon/marker-icon-2x-red.png';
-import { fetchGet, fetchPost } from '../../services/global.service';
+import { fetchGet, fetchPostHeader } from '../../services/global.service';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { utile } from '../../services/utile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faUndoAlt, faUserEdit } from '@fortawesome/free-solid-svg-icons';
+import { userSession } from '../../services/userSession';
 function MyComponent(props) {
 	useMapEvent('click', (e) => {
 		props.dataCenter(e.latlng.lat, e.latlng.lng);
@@ -101,7 +102,7 @@ export default class Compte extends React.Component{
             mdp: this.state.oldMdp
         }
         console.log(dataCentre);
-        fetchPost('/covid/edition-centre',dataSend).then(result=>{
+        fetchPostHeader('/covid/edition-centre',dataSend).then(result=>{
             if(result.etat === "0"){
                 alert(result.message);
                 this.setState({disableButton:false,update:false});
@@ -123,12 +124,21 @@ export default class Compte extends React.Component{
             });
         }
         if(param==="phone"){
-            if(this.state.phoneIndice!==null)
-                this.state.listContact[this.state.phoneIndice].contact=e.target.value;
+            if(this.state.phoneIndice!==null){
+                const data = this.state.listContact;
+                data[this.state.phoneIndice].contact = e.target.value;
+                this.setState({listContact: data});
+                // this.state.listContact[this.state.phoneIndice].contact=e.target.value;
+            }
+                
         }
         if(param==="mail"){
-            if(this.state.mailIndice!==null)
-                this.state.listContact[this.state.mailIndice].contact=e.target.value;
+            if(this.state.mailIndice!==null){
+                const data = this.state.listContact;
+                data[this.state.mailIndice].contact = e.target.value;
+                this.setState({listContact: data});
+            }
+                // this.state.listContact[this.state.mailIndice].contact=e.target.value;
         }
         this.setState({ [param]: e.target.value })
     }
@@ -260,8 +270,8 @@ export default class Compte extends React.Component{
 		this.setState({listContact: data});
     }
     componentDidMount(){
-        fetchGet('/covid/centre/'+localStorage.getItem('idCentre')).then(data=>{
-			if(data!=null){
+        fetchGet('/covid/centre/'+userSession.get('token')).then(data=>{
+            if(data!==null){
                 fetchGet('/adresse/find-province-by-id-district/'+data.adresse[0].district.idDistrict).then(idProvince=>{
                     this.setState({province:idProvince});
                     fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(datas=>{
@@ -374,8 +384,12 @@ export default class Compte extends React.Component{
         return(
             <div className="compte-container">
                 <div className="row">
-                    <div className="col-md-12">
-                        <a href="#0" onClick={()=>this.setState({update:!this.state.update})}>{!this.state.update?"Modifier":"Annuler"}</a>
+                    <div className="centre-banner-titre col-md-12 row">
+                        <h4 className="card-title col-md-6">Profil du centre</h4>
+                        {this.state.update?
+                        <a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUndoAlt}/> Annuler</a>
+                        :<a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUserEdit}/> Modifier</a>
+                        }
                     </div>
                     <div className="col-md-12">
                         <form className="row" onSubmit={this.modificationCompte.bind(this)}>
@@ -526,7 +540,7 @@ export default class Compte extends React.Component{
                                 </div>
                                 <div className="form-group col-md-12">
                                     <span className="form-control inscription-label-other col-md-12">Autres contacts {this.state.update?<a href="#ajout-contact" className="add-button-contact" onClick={()=>this.addContact()}>Ajouter</a>:""}</span>
-                                    <div className = "row col-md-12 contact-group">
+                                    <div className = "contact-content-control row col-md-12">
                                         {this.state.listContact.map((contact,j)=>{
                                             return (
                                             <div className="col-md-12 row each-line-contact" key={j}>
@@ -536,10 +550,10 @@ export default class Compte extends React.Component{
                                                             return <option key={i} value={typeContact.idTypeContact}>{typeContact.libelleTypeContact}</option>
                                                         })}
                                                     </select>
-                                                :<span className="form-control compte-label col-md-4">{contact.typeContact.libelleTypeContact}</span>}
+                                                :<span className="col-md-4">{contact.typeContact.libelleTypeContact}</span>}
                                                 {contact.idContact===null||contact.idContact===undefined?
                                                     <input disabled={!this.state.update} type="text" className="col-md-6" value={contact.contact} onChange={this.changeContactText.bind(this,j)}/>
-                                                :<span className="form-control compte-label col-md-4">{contact.contact}</span>}
+                                                :<span className="col-md-6">{contact.contact}</span>}
                                                 {contact.idContact===null||contact.idContact===undefined?this.state.update?<a href="#ajout-contact" className="remove-button-contact col-md-1" onClick={()=>this.removeContact(j)}><FontAwesomeIcon icon={faTrashAlt}/></a>:"":""}
                                             </div>)
                                         })}

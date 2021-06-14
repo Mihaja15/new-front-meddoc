@@ -202,8 +202,8 @@ class Causette extends Component{
 		fetchGet('/users/dataUser/'+authUser.getToken()).then(data=>{
             console.log('type-medecin/list : ',data);
             this.setState({ dataUser: data },function(){
-				fetchGet('/discussion/listDiscussionByUser/'+authUser.getToken()+'/ /'+this.state.max).then(data=>{
-					this.setState({listDiscussion:data},function(){
+				fetchGet('/discussion/listDiscussionByUser/'+authUser.getToken()+'/ /'+this.state.max).then(dataList=>{
+					this.setState({listDiscussion:dataList},function(){
 						// if(this.state.listDiscussion.length>0){
                         //     this.setState({userDiscussion:this.state.listDiscussion[0].user},function(){
                         //         fetchGet('/discussion/listMessageByUser/'+authUser.getToken()+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
@@ -259,7 +259,7 @@ class Causette extends Component{
                                 <div className="discussion-list">
                                     <ul className="">
                                         {
-                                            this.state.listDiscussion.map((discussion,i)=>{
+                                            this.state.listDiscussion!==null&&this.state.listDiscussion!==undefined?this.state.listDiscussion.map((discussion,i)=>{
                                                 return (
                                                     <li key={i} onClick={()=>this.onClickDiscussion(discussion.user)} className="row">
                                                         <div className='col-md-3 profile-place'>
@@ -271,7 +271,7 @@ class Causette extends Component{
                                                         </div>
                                                     </li>
                                                 )
-                                            })
+                                            }):""
                                         }
                                     </ul>
                                 </div>
@@ -284,7 +284,7 @@ class Causette extends Component{
                                     <div className='col-md-6'><h2>{this.state.userDiscussion!==null?this.state.userDiscussion.nom+' '+this.state.userDiscussion.prenoms:''}</h2></div>
                                     <div className='col-md-3'></div>
                                 </div>
-                                <div className="row list-users-discussion" style={{display:this.state.showToInput?'block':'none'}}>
+                                <div className="row list-users-discussion" style={{display:this.state.showToInput?'block':'none', transition:'all 1s'}}>
                                     <div className='col-md-12 row'>
                                         <div className="input-group">
                                             <label classNme='col-md-4'>Envoyer à:</label>

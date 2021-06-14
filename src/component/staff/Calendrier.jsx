@@ -1,9 +1,9 @@
 import React from 'react';
 import './Calendrier.css';
 import { utile } from '../../services/utile';
-import {fetchPost} from '../../services/global.service';
+import {fetchPostHeader} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAirFreshener, faCheckCircle, faCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import Pagination from "react-js-pagination";
 
@@ -88,7 +88,6 @@ export default class Calendrier extends React.Component{
             id : this.state.idEntite,
             colonne : this.state.colonne,
             page : (pageNumber-1),
-            id : this.state.idEntite,
             type : this.state.typeEntite,
             statut : this.state.statut,
             jour : this.state.jourSelected,
@@ -96,7 +95,7 @@ export default class Calendrier extends React.Component{
             annee : this.state.anneeSelected,
             size : this.state.size
         }
-        fetchPost('/covid/rdv-centre',data).then(data=>{
+        fetchPostHeader('/covid/rdv-centre',data).then(data=>{
             var userName = [];
             console.log('dataTmp dataTmp :',data);
             for(let i=0; i <data.content.length; i++){
@@ -124,19 +123,21 @@ export default class Calendrier extends React.Component{
             page: (this.state.page-1),
             size: this.state.size
         }
-        fetchPost('/covid/rdv-centre',data).then(dataTmp=>{
+        fetchPostHeader('/covid/rdv-centre',data).then(dataTmp=>{
             console.log(dataTmp)
             var userName = [];
-            for(let i=0; i <dataTmp.content.length; i++){
-                if(!userName.find(element => element.value === dataTmp.content[i].patient.nom+" "+dataTmp.content[i].patient.prenoms)){
-                    userName.push({
-                        value:dataTmp.content[i].patient.nom+" "+dataTmp.content[i].patient.prenoms,
-                        indice: dataTmp.content[i].patient.idUser
-                    })
+            if(dataTmp.content){
+                for(let i=0; i <dataTmp.content.length; i++){
+                    if(!userName.find(element => element.value === dataTmp.content[i].patient.nom+" "+dataTmp.content[i].patient.prenoms)){
+                        userName.push({
+                            value:dataTmp.content[i].patient.nom+" "+dataTmp.content[i].patient.prenoms,
+                            indice: dataTmp.content[i].patient.idUser
+                        })
+                    }
                 }
+                console.log('dataTmp dataTmp :',userName);
+                this.setState({listRdv : dataTmp, listUserName: userName,page : (dataTmp.number+1), nbPage : dataTmp.totalPages, totalElement: dataTmp.totalElements});
             }
-            console.log('dataTmp dataTmp :',userName);
-            this.setState({listRdv : dataTmp, listUserName: userName,page : (dataTmp.number+1), nbPage : dataTmp.totalPages, totalElement: dataTmp.totalElements});
         });
     }
     getAgenda(){
@@ -147,14 +148,14 @@ export default class Calendrier extends React.Component{
             mois : this.state.moisSelected,
             annee : this.state.anneeSelected
         }
-        fetchPost('/covid/agenda-centre',data).then(dataTmp=>{
+        fetchPostHeader('/covid/agenda-centre',data).then(dataTmp=>{
             console.log(dataTmp)
             this.setState({calendrier : dataTmp});
         });
     }
     componentDidMount(){
         console.log(this.props.id+"  "+this.props.type);
-        if(this.props.id!==null&&this.props.type!==null){
+        if(this.props.id!==null&&this.props.id!==undefined&&this.props.type!==null&&this.props.type!==undefined){
             this.setState({idEntite:this.props.id,typeEntite:this.props.type},function(){
                 this.getAgenda();
                 this.getRdv();
@@ -197,7 +198,7 @@ export default class Calendrier extends React.Component{
                 {/* <div className="container"> */}
                     <div className="row">
                         <div className="header-agenda col-md-12 row">
-                            <label className="col-md-1">Date : </label>
+                            <label className="col-md-2">Date : </label>
                             <select name="jourSelected" id="day" value={this.state.jourSelected} onChange={this.changeDate.bind(this,'jourSelected')} className="select-date col-md-1">
                                 {
                                     this.getScroll(1,utile.getEndMonth(this.state.moisSelected, this.state.anneeSelected)).map((day, i)=>{
@@ -228,7 +229,7 @@ export default class Calendrier extends React.Component{
                         </div>
                         {/* <div className="centre-content-agenda- col-md-12 row"> */}
                             <div className="centre-content-agenda col-md-12 row">
-                                <div className="centre-agenda-left col-md-12">
+                                <div className="centre-agenda-left">
                                     <h5 className="col-md-12">Calendrier</h5>
                                     <table className="tableau-calendrier col-md-12">
                                         <thead>
@@ -269,7 +270,7 @@ export default class Calendrier extends React.Component{
                                         </tbody>
                                     </table>
                                 </div>
-                                <div className="centre-agenda-right col-md-12">
+                                <div className="centre-agenda-right">
                                     <h5 className="col-md-12">Liste des rendez-vous du {utile.getDateComplet(this.state.dateSelected)}</h5>
                                     <table className="tableau-rdv col-md-12">
                                         <thead>

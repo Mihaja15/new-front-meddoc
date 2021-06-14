@@ -1,0 +1,71 @@
+.detail-profil-content{
+    width:100%;
+    min-height: 120vh;
+    font-family: 'Montserrat',sans-serif;
+}
+.detail-profil-left{
+    width:100%;
+    height: 31.5vh;
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 5px;
+    position: sticky;
+    top:0;
+}
+.detail-profil-left ul{
+    margin: 0 auto;
+    padding: 0;
+}
+.detail-profil-left li{
+    display: block;
+    padding: 10px;
+    color: #011936;
+    font-weight: 600;
+    cursor: pointer;
+}
+.detail-profil-right{
+    padding: 5px;
+    width:100%;
+    /* min-height: 50vh; */
+    /* background-color: brown; */
+}
+.label-details-profil{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color: #011936;
+    font-weight: 600;
+}
+.input-details-profil{
+    height: 50px;
+    font-weight: 600;
+    /* background-color: chartreuse; */
+}
+.input-details-profil:disabled{
+    height: 50px;
+    color: #2b3a3b;
+    border-bottom: 0.1px solid #b4dbdc;
+    text-align: center;
+}
+.select-details-profil{
+    height: 50px;
+    font-weight: 600;
+    text-align: center;
+}
+.select-details-profil:disabled{
+    height: 50px;
+    color: #2b3a3b;
+    border-bottom: 0.1px solid #b4dbdc;
+    text-align: center;
+}
+h1.name-age-patient{
+    font-weight: 700;
+    font-size: 25px;
+    text-align: center;
+    color: #27213c;
+}
+.name-age-patient span{
+    font-weight: 600;
+    font-size: 20px;
+    color: #2b3a3b;
+}

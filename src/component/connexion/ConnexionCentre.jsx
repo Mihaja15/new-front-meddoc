@@ -5,6 +5,8 @@ import './ConnexionCentre.css';
 import {fetchPost} from '../../services/global.service';
 import bgLogin from '../../assets/background/centre.jpg';
 
+import {userSession} from '../../services/userSession';
+
 export default class ConnexionCentre extends React.Component{
     constructor(props){
         super();
@@ -26,17 +28,28 @@ export default class ConnexionCentre extends React.Component{
         this.setState({disableButton:true,error:{activation:false}});
          if(this.state.login !== "" && this.state.mdp !== ""){
             const userAuth = {identification: this.state.login,mdp: this.state.mdp}
-            fetchPost('/covid/loginCentre',userAuth).then(data=>{
-                if(data.message===undefined){
-                    console.log(data);
-                    localStorage.setItem('photo',data.photo);
-                    localStorage.setItem('idCentre',data.idCentre);
-                    localStorage.setItem('pseudo',data.nomCentre);
-                    localStorage.setItem('connected',true);
-                    window.location.replace('/profil-centre/1');
-                }
-                else{
-                    this.setState({disableButton:false, error : {message : data.message,activation: true}})
+            fetchPost('/covid/loginCentre',userAuth).then(response=>{
+                console.log(response);
+                if(response.statut===200){
+                    if(response.role.toLowerCase()==='staff'){
+                        userSession.userLogin(response.data.username,
+                            (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
+                            response.token,
+                            response.role);
+                        window.location.replace('/profil-staff/1');
+                    } else if(response.role.toLowerCase()==='centre'){
+                        userSession.userLogin(response.data.username,
+                            (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile-centre.png",
+                            response.token,
+                            response.role);
+                        window.location.replace('/profil-centre/1');
+                    } else{
+                        this.setState({disableButton:false,error : {message : "Erreur de connexion",activation: true}});
+                    }
+                }else if(response.statut===400){
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
+                }else{
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
                 }
             }).catch(error=>{
                 console.log(error)

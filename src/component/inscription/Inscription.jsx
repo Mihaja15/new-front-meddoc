@@ -8,6 +8,7 @@ import { authUser } from '../../services/authUser';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import ReactTooltip from 'react-tooltip';
 import bienvenue from '../../assets/img/bienvenue.jpg';
+import {userSession} from '../../services/userSession';
 
 class Inscription extends Component{
     constructor(props){
@@ -52,7 +53,7 @@ class Inscription extends Component{
         this.nomText = this.nomText.bind(this);
         this.prenomsText = this.prenomsText.bind(this);
         this.lieuNaissText = this.lieuNaissText.bind(this);
-        this.sexeText = this.lieuNaissText.bind(this);
+        this.sexeText = this.sexeText.bind(this);
         this.emailText = this.emailText.bind(this);
         this.phoneText = this.phoneText.bind(this);
         this.adresseText = this.adresseText.bind(this);
@@ -127,8 +128,10 @@ class Inscription extends Component{
             dateNaissance: this.state.dateNaissance,
             lieuNaissance: this.state.lieuNaissance,
             identification: this.state.phone,
+            phone: this.state.phone,
+            email: this.state.email,
             identifiant: identiter,
-            mdp: this.state.mdp,
+            password: this.state.mdp,
             sexe : this.state.sexe,
             contact: [{
                 contact: this.state.phone,
@@ -159,15 +162,38 @@ class Inscription extends Component{
             this.setState({disableButton:false});
             return;
         }
-        fetchPost('/users/addUserPatient',user).then((data)=>{
-            if(data.status === 200){
+        // fetchPost('/users/addUserPatient',user).then((data)=>{
+        //     if(data.status === 200){
                 
-                this.setState({message : "Inscription réussie ",etatMessage: 2, codeCompte : ''+data.code,etatMenu : 2});
+        //         this.setState({message : "Inscription réussie ",etatMessage: 2, codeCompte : ''+data.code,etatMenu : 2});
+        //     }else{
+        //         this.setState({message : ''+data.message, etatMessage: 3, disableButton:false})
+        //     }
+        // }).catch(error=>{
+        //     this.setState({disableButton:false,error : {message : 'Erreur de connexion aux réseaux',activation: true}});
+        // });
+        fetchPost('/users/register',user).then((response)=>{
+            console.log(response);
+            if(response.statut === 200){
+                // if(response.role.toLowerCase()==="patient"){
+                //     userSession.userLogin(response.data.username,
+                //         (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
+                //         response.token,
+                //         response.role);
+                //     this.setState({message : response.message,etatMessage: 2, codeCompte : ''+response.code,etatMenu : 2});
+                //     window.location.pathname = "/profil-patient";
+                //     // window.location.replace('/profil-patient');
+                // }else{
+                //     throw new Error("Erreur de connexion");
+                // }
+                this.setState({etatMenu:2})
+            }else if(response.statut === 100){
+                this.setState({message : response.message,etatMessage: 1, disableButton:false});
             }else{
-                this.setState({message : ''+data.message, etatMessage: 3, disableButton:false})
+                this.setState({message : ''+response.message, etatMessage: 1, disableButton:false,error : {message : response.message,activation: true}});
             }
-        }).catch(error=>{
-            this.setState({disableButton:false,error : {message : 'Erreur de connexion aux réseaux',activation: true}});
+        }).catch(erreur=>{
+            this.setState({disableButton:false,error : {message : erreur,activation: true}});
         });
     }
     seConnecter=()=>{
@@ -217,9 +243,11 @@ class Inscription extends Component{
             //     }
             // });
             fetchGet('/adresse/find-district-by-id-province/'+event.currentTarget.value).then(data=>{
-                if(data!=null){
+                if(data!=null && data.length>=0){
                     this.setState({ dataDistrict: data });
                     this.setState({showF: true});
+                }else{
+                    this.setState({dataDistrict:[]});
                 }
             });
             // this.setState({showF: true, dataFokontany : globalActions.getData('/adresse/quartiers')});
@@ -254,18 +282,30 @@ class Inscription extends Component{
         if(this.state.code1>=0 && this.state.code2>=0 && this.state.code3>=0 && this.state.code4>=0){
             const dataTmp = {
                 identification: this.state.phone,
+                password: this.state.mdp,
                 code : this.state.code1+''+this.state.code2+''+this.state.code3+''+this.state.code4
             }
             //this.setState({erreurMessage : "",erreurEtat: false});
-            fetchPost('/users/validationComptePatient',dataTmp).then(resultatTmp=>{
-                if(resultatTmp.status){
-                    this.setState({erreurMessage : '',erreurEtat: false, etatMenu : 3});
+            fetchPost('/users/validation-compte-patient',dataTmp).then(response=>{
+                console.log(response)
+                if(response.statut===200){
+                    if(response.role.toLowerCase()==="patient"){
+                        userSession.userLogin(response.data.username,
+                            (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
+                            response.token,
+                            response.role);
+                        window.location.pathname = "/profil-patient";
+                    }else{
+                        throw new Error("Erreur de connexion");
+                    }
+                }else if(response.statut===400){
+                    this.setState({erreurMessage : response.message,erreurEtat: true});
                 }else{
-                    this.setState({erreurMessage : "Verifiez votre champs car il y a une erreur.",erreurEtat: true});
+                    this.setState({erreurMessage : response.message,erreurEtat: true});
                 }
             });
         }else{
-            this.setState({erreurMessage : "Verifiez votre champs car il y a une erreur.",erreurEtat: true});
+            this.setState({erreurMessage : "Erreur de connexion.",erreurEtat: true});
         }
     }
     //data html
@@ -308,7 +348,7 @@ class Inscription extends Component{
                                                 </Col>
                                                 <Col sm={7}>
                                                     <div className="form-group">
-                                                        <select className="form-control">
+                                                        <select className="form-control" value={this.state.sexe} onChange={this.sexeText} name="sexe" id="sexe">
                                                             <option value=''>Sélectionner</option>
                                                             <option value={1}>Homme</option>
                                                             <option value={2}>Femme</option>
@@ -483,7 +523,7 @@ class Inscription extends Component{
                                                     <p className="titlePLogin" style={{textAlign: 'right'}}>(*) : Champs obligatoires </p>
                                                     </div>
                                                 </Col>
-                                                <Col lg={12} md={12} sm={12} hidden={this.state.etatMessage!==3 || this.state.etatMessage!==2}>
+                                                <Col lg={12} md={12} sm={12} hidden={this.state.etatMessage!==1}>
                                                     <div className="form-group mt-3">
                                                         <div className="errorInscriptionPatient">{this.state.message}</div>
                                                     </div>
@@ -532,7 +572,7 @@ class Inscription extends Component{
     }
     componentDidMount(){
         fetchGet('/adresse/province/all').then(data=>{
-            if(data!=null){
+            if(data!=null && data.length>=0){
                 this.setState({ dataProvince: data });
                 this.setState({showP: true});
             }

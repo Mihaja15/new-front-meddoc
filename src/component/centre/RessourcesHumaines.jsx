@@ -1,8 +1,9 @@
 import React from 'react';
 import './RessourcesHumaines.css';
-import { fetchGet, fetchPost,fetchPostV2 } from '../../services/global.service';
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { fetchGet, fetchGetHandler, fetchPostHeader } from '../../services/global.service';
+import { faEdit, faEye, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { userSession } from '../../services/userSession';
 
 export default class RessourcesHumaines extends React.Component{
     constructor(props){
@@ -32,14 +33,17 @@ export default class RessourcesHumaines extends React.Component{
     componentDidMount(){
         // console.log(this.state.listUser)
         // this.setState({listUser:})
-        this.setState({idCentre:localStorage.getItem('idCentre')},function(){
-            fetchGet('/covid/personals/'+this.state.idCentre+'/'+this.state.viewType+'/'+this.state.page+'/'+this.state.size).then(data=>{
+        this.setState({idCentre:userSession.get('token')},function(){
+            fetchGetHandler('/covid/personals/'+this.state.idCentre+'/'+this.state.viewType+'/'+this.state.page+'/'+this.state.size).then(data=>{
                 if(data!=null){
                     this.setState({ list: data.content });
                     console.log(data)
                 }else{
                     
                 }
+            }).catch(error=>{
+                console.log(error)
+                this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
             });
             fetchGet('/covid/list-poste').then(data=>{
                 this.setState({ listType: data });
@@ -93,7 +97,11 @@ export default class RessourcesHumaines extends React.Component{
                 dateDebut: data[indice].dateDebut
             });
         }else if(type==="supprimer"){
-            this.setState({idUser:data[indice].userRel.idUser, show:true, typeShow:3})
+            this.setState({
+                idUser:data[indice].userRel.idUser,
+                nom: data[indice].userRel.nom,
+                prenoms: data[indice].userRel.prenoms,
+                show:true, typeShow:3})
         }
         else{
             this.setState({show:true});
@@ -161,13 +169,13 @@ export default class RessourcesHumaines extends React.Component{
             }
         }
         const data = {
-            centreRel: {idCentre:this.state.idCentre},
+            // centreRel: {idCentre:this.state.idCentre},
             statut: {idStatut:this.state.statut},
             userRel: user,
             poste: {idPoste:this.state.type},
             dateDebut: this.state.dateDebut
         }
-        fetchPost('/covid/ajout-personal',data).then(result=>{
+        fetchPostHeader('/covid/ajout-personal',data).then(result=>{
             if(result.etat === "0"){
                 window.location.reload();
             }else{
@@ -190,7 +198,7 @@ export default class RessourcesHumaines extends React.Component{
                                     )
                                 })}
                             </select>
-                            <a className="card-title col-md-4" href="#0" onClick={()=>this.clickIcon(0,"créer")}>Nouveau</a>
+                            <a className="card-title col-md-4" style={{textAlign:'right'}} href="#0" onClick={()=>this.clickIcon(0,"créer")}><FontAwesomeIcon icon={faPlusCircle}/> Nouveau</a>
                         </div>
                         <div className="all-list-container row">
                             <div className="list-header col-md-12">
@@ -239,7 +247,7 @@ export default class RessourcesHumaines extends React.Component{
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">E-mail</label>
-                                        <input className="col-md-7" type="email" disabled={this.state.typeShow===1} disabled={this.state.typeShow===1} value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}/>
+                                        <input className="col-md-7" type="email" disabled={this.state.typeShow===1} value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}/>
                                     </div>
                                     <div className="input-group">
                                         <label className="col-md-5">Téléphone</label>
@@ -266,7 +274,10 @@ export default class RessourcesHumaines extends React.Component{
                                     <button onClick={()=>this.enregistrer()} className="enregistrer col-md-5">Enregistrer</button>
                                     </>:""}
                                 </div>:
-                                <div>
+                                <div className='row'>
+                                    <div className="input-group">
+                                        <span className="col-md-12" style={{textAlign:'center'}}>Voulez-vous vraiment supprimer {this.state.nom+' '+this.state.prenoms}?</span>
+                                    </div>
                                     <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-5">Annuler</button>
                                     <button onClick={()=>this.supprimer()} className="enregistrer col-md-5">Supprimer</button>
                                 </div>}

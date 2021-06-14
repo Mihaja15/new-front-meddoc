@@ -163,6 +163,7 @@ div span select{
     /* align-items: center; */
     justify-content: center;
     text-align: center;
+    margin-left: -15px;
     padding: 0;
     padding-top: 5px;
 }

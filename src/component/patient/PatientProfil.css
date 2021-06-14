@@ -1,0 +1,128 @@
+.profil-patient{
+    width: 100%;
+    min-height: 50vh;
+    /* height: calc(100vh - 70px); */
+    /* background-color: #39c1ef05; */
+    background-color: #fff;
+    /* background-color: #fbf6f3; */
+    /* padding-top: 10vh; */
+    /* overflow-x: hidden; */
+    /* overflow-y: scroll; */
+    /* position: fixed;*/
+}
+.header-profil-patient{
+    width: 100%;
+    /* height: 15vh; */
+    background-color: #fff;
+    position: fixed;
+    z-index: 700;
+    /* top: 15vh; */
+    left:0;
+    /* border-bottom: 1px solid #1b7895; */
+}
+.header-profil-patient ul{
+    margin: 0 auto;
+    display: flex;
+    padding: 0;
+    justify-content: center;
+}
+.header-profil-patient>ul>li{
+    display: inline-block;
+    /* background-color: darkmagenta; */
+    font-family: 'Montserrat',sans-serif;
+    color: #1b7895;
+    font-weight: bold;
+    padding: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+.header-profil-patient>ul>li:hover{
+    color: #c5305f;
+    background-color: #fff;
+    border-bottom: 5px solid #c5305f;
+    transition: all 0.1s;
+}
+.header-profil-patient>ul>li.active-menu{
+    /* color: #004369; */
+    color: #c5305f;
+    background-color: #fff;
+    /* border-top: 2px solid #1b7895; */
+    border-bottom: 5px solid #c5305f;
+}
+.content-profil-patient{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    /* position: fixed; */
+    top: 10vh;
+    left:0;
+    right:0;
+    padding: 5px;
+    padding-bottom: 15vh;
+    margin: 0 auto;
+}
+.header-profil-phone{
+    display: none;
+    width: 100%;
+    /* height: 15vh; */
+    background-color: #fff;
+    position: fixed;
+    z-index: 700;
+    /* top: 15vh; */
+    left:0;
+    /* border-bottom: 1px solid #1b7895; */
+}
+.header-profil-phone ul{
+    margin: 0 auto;
+    display: flex;
+    padding: 0;
+    justify-content: center;
+}
+.header-profil-phone>ul>li{
+    display: inline-block;
+    /* background-color: darkmagenta; */
+    font-family: 'Montserrat',sans-serif;
+    color: #1b7895;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+.header-profil-phone>ul>li:hover{
+    color: #c5305f;
+    background-color: #fff;
+    border-bottom: 5px solid #c5305f;
+    transition: all 0.1s;
+}
+.header-profil-phone>ul>li.active-menu{
+    /* color: #004369; */
+    color: #c5305f;
+    background-color: #fff;
+    /* border-top: 2px solid #1b7895; */
+    border-bottom: 5px solid #c5305f;
+}
+@media (max-width: 767px){
+    .header-profil-patient{
+        display: none
+        /* top: 41vh; */
+    }
+    .header-profil-phone{
+        display: block;
+    }
+    .content-profil-patient{
+        top:15vh;  
+    }
+}
+@media (min-width: 768px) and (max-width: 1091px){
+    .content-profil-patient{
+        top:20vh;  
+    }
+}
+/*@media (min-width: 1092px) {
+    .content-profil-patient{
+        top:15vh;  
+    }
+} */

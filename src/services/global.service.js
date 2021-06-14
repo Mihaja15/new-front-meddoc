@@ -1,4 +1,6 @@
 import urlConf from '../config';
+import authHeader from './authHeader';
+import {userSession} from './userSession';
 
 export const globalService = {
     getData,
@@ -11,8 +13,16 @@ function getData(url){
 
 export function fetchGet(url){
     console.log('url : '+urlConf()+url);
-    return fetch(urlConf()+url).then(response=>response.json()).then(data=>{
+    return fetch(urlConf()+url, { headers: authHeader() }).then(response=>response.json()).then(data=>{
         return data;
+    }).catch(error=>{
+        console.log('global service '+error)
+    });
+}
+export function fetchGetHandler(url){
+    console.log('url : '+urlConf()+url);
+    return fetch(urlConf()+url, { headers: authHeader() }).then(response=>handleResponse(response)).catch(error=>{
+        console.log('global service '+error)
     });
 }
 
@@ -34,9 +44,15 @@ export function fetchPost(url, dataSend){
     };
     return fetch(urlConf()+url, requestOptions).then(response=>response.json()).then(data=>{
         return data;
-    }).catch(error=>{
-        console.log(error);
     });
+}
+export function fetchPostHeader(url, dataSend){
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(true),
+        body: JSON.stringify(dataSend)
+    };
+    return fetch(urlConf()+url, requestOptions).then(handleResponse);
 }
 export function fetchPostV2(url, dataSend){
     const requestOptions = {
@@ -75,7 +91,13 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                window.location.reload();
+                console.log(response);
+                const role = userSession.get('role');
+                userSession.userLogout();
+                if(role==='Patient')
+                    window.location.replace('/connexion');
+                else
+                    window.location.replace('/connexion-centre');
             }
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);

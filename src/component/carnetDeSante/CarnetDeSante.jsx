@@ -8,7 +8,7 @@ import { EditorState, ContentState, convertFromRaw, convertFromHTML  } from 'dra
 import {stateToHTML} from 'draft-js-export-html';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { authUser } from '../../services/authUser';
-import {fetchGet,fetchPostV2} from '../../services/global.service';
+import {fetchGet} from '../../services/global.service';
 import { utile } from '../../services/utile';
 import ReactTooltip from 'react-tooltip';
 
@@ -26,7 +26,7 @@ class CarnetDeSante extends Component{
     }
 
     telechargerFichier=(nom)=>{
-        const data = {name : nom};
+        // const data = {name : nom};
         
     }
     getVaccination(vaccination){
@@ -107,7 +107,8 @@ class CarnetDeSante extends Component{
                                                 if(result.type==='application/pdf'){
                                                     return (
                                                         <div className="col-md-3 col-sm-6 col-xs-12 document-carnet-medicale-mere" key={a} >               
-                                                            <div className="document-carnet-medicale-mere-img"> <a href={'http://localhost:3000/uploads/'+result.nomDocument} target="_blank"><img data-tip data-for='textTelechargementFichierv1' src={'/uploads/pdf.jpg'} alt={result.nomDocument}/></a> </div>
+                                                            {/* <div className="document-carnet-medicale-mere-img"> <a href={'http://localhost:3000/uploads/'+result.nomDocument} target="_blank"><img data-tip data-for='textTelechargementFichierv1' src={'/uploads/pdf.jpg'} alt={result.nomDocument}/></a> </div> */}
+                                                            <div className="document-carnet-medicale-mere-img"> <a href="#!" onClick={()=> window.open('/uploads/'+result.nomDocumen, "_blank")}><img data-tip data-for='textTelechargementFichierv1' src={'/uploads/pdf.jpg'} alt={result.nomDocument}/></a> </div>
                                                             <div className="document-carnet-medicale-mere-name">{this.getOriginalNameFichier(result.nomDocument)} <br/> {result.type} </div>
                                                             <ReactTooltip id='textTelechargementFichierv1' type='error'>
                                                                 <span>Cliquer ici pour télécharger le fichier</span>
@@ -117,7 +118,8 @@ class CarnetDeSante extends Component{
                                                 }else{
                                                     return (
                                                         <div className="col-md-3 col-sm-6 col-xs-12 document-carnet-medicale-mere" key={a} >               
-                                                            <div className="document-carnet-medicale-mere-img"><a href={'http://localhost:3000/uploads/'+result.nomDocument}  target="_blank" download={result.nomDocument}><img data-tip data-for='textTelechargementFichierv2' src={'/uploads/'+result.nomDocument} alt={result.nomDocument}/></a> </div>
+                                                            {/* <div className="document-carnet-medicale-mere-img"><a href={'http://localhost:3000/uploads/'+result.nomDocument}  target="_blank" download={result.nomDocument}><img data-tip data-for='textTelechargementFichierv2' src={'/uploads/'+result.nomDocument} alt={result.nomDocument}/></a> </div> */}
+                                                            <div className="document-carnet-medicale-mere-img"><a href="#!" onClick={()=> window.open('/uploads/'+result.nomDocumen, "_blank")}><img data-tip data-for='textTelechargementFichierv2' src={'/uploads/'+result.nomDocument} alt={result.nomDocument}/></a> </div>
                                                             <div className="document-carnet-medicale-mere-name">{this.getOriginalNameFichier(result.nomDocument)} <br/> {result.type} </div>
                                                             <ReactTooltip id='textTelechargementFichierv2' type='error'>
                                                                 <span>Cliquer ici pour télécharger le fichier</span>

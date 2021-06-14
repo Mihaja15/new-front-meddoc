@@ -3,7 +3,7 @@
     width: 20%;
     background-color: #1b7895;
     height: 100vh;
-    position: fixed;
+    /* position: fixed; */
     /* position: fixed; */
     /* top: 0; */
     /* height: 10vh; */
@@ -25,6 +25,6 @@
 .left-menu-root li:hover{
     background-color: #119da4;
 }
-li.active-menu{
+.left-menu-root li.active-menu{
     background-color: #119da4;
 }

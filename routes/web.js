@@ -22,7 +22,7 @@ router.use(express.urlencoded(
 router.use(express.json());
 // Upload Image
 router.post("/photo", upload.single('photo'), (req, res, next) => {
-    console.log(req);
+    console.log(req.body.file);
     console.log(res);
     return res.json({
         image: req.file.path

@@ -1,8 +1,12 @@
 .causette-container{
     width:100%;
+    padding-bottom: 25vh;
+    font-family: 'Montserrat',sans-serif;
 }
 .chat__container{
     position: static;
+    border: 1px solid #f1f1f1;
+
 }
 .list-discussion{
     position: relative;
@@ -17,7 +21,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color: #1b7895;
+    background-color: #fff;
+    border: 0.1px solid #f1f1f1;
     /* background-clip: border-box; */
     padding: 0;
     overflow: hidden;
@@ -50,9 +55,10 @@
 .card-header {
     /* padding: 0.75rem 1.25rem; */
     /* margin-bottom: 0; */
-    background-color: #1b7895;
+    background-color: #fff;
+    border: 0.1px solid #f1f1f1;
     /* border-bottom: 1px solid rgba(0, 0, 0, 0.125); */
-    color: white;
+    color: #2e3860;
     text-align: center;
     width: 100%;
     display: inline-block;
@@ -69,7 +75,7 @@
 .card-header h2{
     font-size: 20px;
     font-weight: bold;
-    color: white;
+    color: #2e3860;
     line-height: 50px;
     text-align: center;
     vertical-align: middle;
@@ -77,13 +83,14 @@
 .card-header:nth-child(2){
     font-size: 20px;
     font-weight: bold;
-    color: white;
+    color: #2e3860;
     align-items: center;
 }
 .card-footer {
     margin-bottom: 0;
-    background-color: #1b7895;
-    color: white;
+    background-color: #fff;
+    border: 0.1px solid #f1f1f1;
+    color: #2e3860;
     text-align: center;
     width: 100%;
 }
@@ -91,30 +98,29 @@
     border-radius: 15px;
 }
 .searchButtonChat{
-    background-color: #00bfd8;
-    color: white;
+    background-color: #c5305f;
+    color: #fff;
     border-radius: 15px;
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
 }
 .searchButtonChat:hover{
-    background-color: #00bfd8cb;
     color: white;
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
 }
 .newMessageButton{
     background-color: transparent;
-    color: white;
+    color: #c5305f;
     border-radius: 100%;
 }
 .newMessageButton:hover{
-    color: #fff;
+    color: #c5305f;
     transform: scale(1.2);
 }
 .discussion-list{
     /* background-color: #3abda7; */
-    background: rgb(27,120,149);
+    background: #fff;
     /* background: linear-gradient(180deg, rgba(27,120,149,1) 20%, rgba(57,195,239,1) 100%); */
 
     padding-top: 1px;
@@ -138,7 +144,7 @@
     padding: 5px;
     /* background-color: #1b789518; */
     min-height: 60px;
-    border:1px outset #1f86a5;
+    /* border:1px outset #1f86a5; */
     margin-top: 2px;
     overflow: hidden;
 }
@@ -172,14 +178,14 @@
 .name-place{
     font-size: 12px;
     font-weight: 700;
-    color: white;
+    color: #2e3860;
 }
 .date-place{
     font-size: 10px;
-    color: white;
+    color: #2e3860;
 }
 .message-place{
-    color: white;
+    color: #2e3860;
 }
 .chat {
     width: 100%;
@@ -294,6 +300,7 @@
     min-width: 90%;
     padding-left: 15px;
     background-color: #fff;
+    border: 0.1px solid #f1f1f1;
     border-radius: 15px;
     border: none;
 }
@@ -306,6 +313,7 @@
     text-align: center;
     text-transform: uppercase;
     cursor: pointer;
+    color: #c5305f;
 }
 .chat__form button:hover {
     font-weight: bold;
@@ -318,10 +326,10 @@
     position: absolute;
     display: inline-flex;
     left: 10%;
-    top:50%;
+    top:40%;
     background-color: white;
-    color: #1B9472;
-    font-size: 35px;
+    color: #2b3a3b;
+    font-size: 30px;
     font-weight: 700;
     text-align: center;
 }
@@ -367,6 +375,7 @@
     align-items: center;
     vertical-align: middle;
     justify-content: center;
+    transition: all 0.5s;
 }
 .list-users-discussion input{
     margin-left: 5px;
@@ -374,7 +383,7 @@
     border: none;
     border-bottom: 1px solid #6bb3c9;
     border-radius: 0;
-    color: aliceblue;
+    color: #2e3860;
     margin-top: -5px;
     width: 200px;
 }
@@ -384,7 +393,7 @@
     position: absolute;
     top:50px;
     left:90px;
-    background-color: #1b7895;
+    background-color: #fff;
 }
 .users-list li{
     padding: 10px;
@@ -394,5 +403,5 @@
     margin-top: 5px;
 }
 .users-list li:hover{
-    background-color: #38849b;
+    background-color: #f1f1f1;
 }

@@ -1,25 +1,4 @@
-.profil-centre-container{
-    width: 100%;
-    /* height: 100vh; */
-    /* margin-top: 15vh; */
-    margin-left: 0vh;
-    margin-right: 0vh;
-    /* overflow-x: hidden; */
-    /* padding-left: 5vh; */
-    /* padding-bottom: 5vh; */
-    /* margin-right: 0vh; */
-    /* position: fixed; */
-    /* background-color: yellowgreen; */
-}
-.profil-content{
-    width: 100%;
-    margin-left: 5vh;
-    margin-right: 0vh;
-    /* height: 100vh; */
-    /* overflow-x: hidden; */
-    /* height: 100vh; */
-    /* background-color: #fbf6f3; */
-}
+
 .vaccination-content>a{
     /* text-align: center; */
     font-family: 'Montserrat',sans-serif;

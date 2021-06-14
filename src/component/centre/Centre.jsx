@@ -25,7 +25,7 @@ export default class Centre extends React.Component{
             nbElement:0,
             totalPage:1,
             text:'',
-            district:'',
+            district:'0',
             listDistrict:[],
             listCentre:[],
             hiddenMap:true,
@@ -55,6 +55,7 @@ export default class Centre extends React.Component{
                                     <div className="col-md-4 col-sm-12 each-line-search-detail">
                                         <div className="">
                                             {this.getUrlPhoto(data.photo)}
+                                            {/* <span className="initial-centre-icon">{this.getInitial(data.nomCentre)}</span> */}
                                         </div>
                                         <p className="">{data.adresse.addrValue}</p>
                                         <a href='#0' onClick={()=>this.setState({centreDetail:data,stateShow:2})}>{data.nomCentre}</a>
@@ -146,7 +147,7 @@ export default class Centre extends React.Component{
         if(window.location.pathname.split('/')[1]==='recherche-centre')
             window.history.pushState("object or string", "Title", '/recherche-centre/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
         else
-            window.history.pushState("object or string", "Title", '/profil/recherche/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
+            window.history.pushState("object or string", "Title", '/profil-patient/recherche/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
         const text = this.state.text===""?"----":this.state.text;
         const  urls='/covid/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
         fetchGet(urls).then(data=>{
@@ -161,6 +162,14 @@ export default class Centre extends React.Component{
                 }
             }
         });
+    }
+    getInitial=(complete)=>{
+        const initials = complete.trim().split(' ');
+        var init = '';
+        for(let i = 0; i < initials.length; i++){
+            init+=initials[i][0]+' ';
+        }
+        return init;
     }
     componentDidMount(){
         if(localStorage.getItem('idUser')!==null){
@@ -268,21 +277,31 @@ export default class Centre extends React.Component{
             control: (provided) => ({
               // none of react-select's styles are passed to <Control />
                 ...provided,
-                width: 330,
-                height: 51,
+                width: '100%',
+                height: '51px',
                 borderRadius: '0 !important',
                 backgroundColor: '#fff',
-                marginRight: 5,
-                marginLeft: 0
-            })
-          }
+                marginLeft: 0,
+                // border:'1px solid #38a3a5'
+                border:'none',
+                boxShadow:'0px 0px 5px 5px #f1f1f1'
+            }),
+            container: base => ({
+                ...base,
+                // flex: 1,
+                height:51,
+                padding:0
+                // margin:'0 auto',
+
+              })
+        }
         return(
-            <div className="centre-container">
+            <div className="search-centre-container">
                 {this.state.stateShow===1?(
                 <>
-                    <div className="divRecherchePrincipaleRechercheMedecin">
+                    <div className={this.props.show?"divRecherchePrincipaleRechercheMedecinProfil":"divRecherchePrincipaleRechercheMedecin"}>
                         <div className="divSearchBar row">
-                            <input className="inputSearch col-md-4" name="text" type="text" value={this.state.text} onChange={this.searchOnChange.bind(this,'text')} placeholder="Rechercher un centre de vaccination" />
+                            <input className="inputSearch col-md-4" name="text" type="text" value={this.state.text} onChange={this.searchOnChange.bind(this,'text')} placeholder="Rechercher un professionnel de santé" />
                             {/* <select className="selectSearch col-md-4" name="district" value={this.state.district} onChange={this.searchOnChange.bind(this,'district')}>
                                 <option value="0">Votre district</option>
                                 { 
@@ -291,7 +310,7 @@ export default class Centre extends React.Component{
                                     })
                                 }
                             </select> */}
-                            <Select styles={customStyles} isClearable className="" options={this.state.listDistrict} onChange={this.searchOnChange.bind(this,"district")}/>
+                            <Select styles={customStyles} isClearable className="col-md-4" options={this.state.listDistrict} onChange={this.searchOnChange.bind(this,"district")}/>
                             <button href='#sendMessage' className="buttonSearch col-md-2" onClick={()=>this.search()}><FontAwesomeIcon icon={faSearch}/></button>
                         </div>
                     </div>

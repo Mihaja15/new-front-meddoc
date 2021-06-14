@@ -329,6 +329,7 @@ class ProfilPatient  extends React.Component{
     }
     componentDidMount() {
         if(this.props.dataUser!==null && this.props.dataUser!==undefined){
+            console.log(this.props.dataUser)
             this.setState({
                 nom : {valuesText : ''+this.props.dataUser.nom,etat : 0, dataEdit:false},
                 prenoms : {valuesText : ''+this.props.dataUser.prenoms,etat : 0, dataEdit:false},
@@ -338,17 +339,19 @@ class ProfilPatient  extends React.Component{
                 numCin : {valuesText : ''+this.props.dataUser.numCin,etat : 0, dataEdit:false},
                 dateCin : {valuesText : ''+this.props.dataUser.dateCin,etat : 0, dataEdit:false},
                 lieuCin : {valuesText : ''+this.props.dataUser.lieuCin,etat : 0, dataEdit:false},
-                province : {valuesText : ''+this.props.dataUser.province.idProvince,etat : 0, dataEdit:false},
-                district : {valuesText : ''+this.props.dataUser.district.idDistrict,etat : 0, dataEdit:false},
-                adresse : {valuesText : ''+this.props.dataUser.adresse.addrValue,etat : 0, dataEdit:false},
+                // province : {valuesText : ''+this.props.dataUser.province.idProvince,etat : 0, dataEdit:false},
+                district : {valuesText : ''+this.props.dataUser.adresse[0].district.idDistrict,etat : 0, dataEdit:false},
+                adresse : {valuesText : ''+this.props.dataUser.adresse[0].addrValue,etat : 0, dataEdit:false},
                 listContact : this.props.dataUser.contact,
                 dataUser : this.props.dataUser
             });
-            console.log("this.props.dataUser.fokotany ", this.props.dataUser.district);
-            fetchGet('/adresse/find-district-by-id-province/'+this.props.dataUser.province.idProvince).then(data=>{
-                if(data!=null){
-                    this.setState({ listDistrict: data });
-                }
+            console.log("this.props.dataUser.fokotany ", this.props.dataUser.adresse[0].district.idDistrict);
+            fetchGet('/adresse/find-province-by-id-district/'+this.props.dataUser.adresse[0].district.idDistrict).then(idProvince=>{ 
+                fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(data=>{
+                    if(data!=null){
+                        this.setState({ province: {valuesText : ''+idProvince,etat : 0, dataEdit:false},listDistrict: data });
+                    }
+                });
             });
         }
         fetchGet('/adresse/province/all').then(data=>{
@@ -484,12 +487,6 @@ class ProfilPatient  extends React.Component{
             <div className="profil-manager-content">
                 {/* <div className="container"> */}
                     <div className="row">
-                        <div className="col-md-8 profil-left-content">
-                            {this.getMenuShow(this.state.menuShow)}
-                            <div className="alert alert-info" hidden={!(this.state.error.etat===2)}>{this.state.error.text}</div>
-                            <div hidden={!(this.state.error.etat===1)} className="textSuccesModificationProfilMedecin">{this.state.error.text} <a href="/profil/compte" className="atextSuccesModificationProfilMedecin">Actualiser la page</a></div>
-                            <div hidden={!this.state.showButtonModif} className="boutonModifierProfil"><button className="form-control" type="submit" onClick={()=>this.updateDataUser()}>Enregistrer</button></div>
-                        </div>
                         <div className="col-md-3 profil-right-menu">
                             <ul>
                                 <li className={this.state.menuShow===1?"active-show-menu":""} onClick={()=>this.setState({menuShow:1})}>Information générale</li>
@@ -497,6 +494,12 @@ class ProfilPatient  extends React.Component{
                                 <li className={this.state.menuShow===2?"active-show-menu":""} onClick={()=>this.setState({menuShow:2})}>Adresse</li>
                                 <li className={this.state.menuShow===3?"active-show-menu":""} onClick={()=>this.setState({menuShow:3})}>Contact</li>
                             </ul>
+                        </div>
+                        <div className="col-md-8 profil-left-content">
+                            {this.getMenuShow(this.state.menuShow)}
+                            <div className="alert alert-info" hidden={!(this.state.error.etat===2)}>{this.state.error.text}</div>
+                            <div hidden={!(this.state.error.etat===1)} className="textSuccesModificationProfilMedecin">{this.state.error.text} <a href="/profil/compte" className="atextSuccesModificationProfilMedecin">Actualiser la page</a></div>
+                            <div hidden={!this.state.showButtonModif} className="boutonModifierProfil"><button className="form-control" type="submit" onClick={()=>this.updateDataUser()}>Enregistrer</button></div>
                         </div>
                     </div>
                 {/* </div> */}

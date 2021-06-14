@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import './UserProfil.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch ,faCalendarAlt, faCalendarCheck, faFolderPlus, faPowerOff, faUserAlt, faHeadset} from '@fortawesome/free-solid-svg-icons';
-import { authUser } from '../../services/authUser';
+import { userSession } from '../../services/userSession';
 import {fetchGet} from '../../services/global.service';
-import ListeRdvPatient from '../listeRdvPatient/ListeRdvPatient';
-import MesProches from '../mesProches/MesProches';
 import Causette from '../chat/Causette';
 // import Confirmation from '../alert/Confirmation';
 // import Actualite from '../actualite/Actualite';
@@ -41,10 +39,9 @@ class UserProfil extends Component{
                     console.log(this.state.dataSearch);
                 });
             }
-            console.log('token = '+authUser.getToken())
-            fetchGet('/users/dataUser/'+authUser.getToken()).then(data=>{
-                this.setState({user : data});
-                console.log(data)
+            console.log('token = '+userSession.get('token'))
+            fetchGet('/users/dataUser/'+userSession.get('token')).then(response=>{
+                this.setState({user : response.data});
             });
         });
     }
@@ -98,7 +95,7 @@ class UserProfil extends Component{
     showComponentProfil(valeur){
         if(valeur!==null && valeur!==undefined){
             // return <NewProfilPatient  dataUser ={valeur} />
-            return <ProfilPatient  dataUser ={valeur} />
+            return <ProfilPatient dataUser ={valeur} />
         }
         // return (<div>Il y a une erreur de chargement</div>)
     }

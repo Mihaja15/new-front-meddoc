@@ -9,7 +9,7 @@
 	width: 100%;
 	min-height:100vh;	
 	text-align: center;
-	padding-top: 25vh;
+	padding-top: 5vh;
 	padding-left: 5%!important;
 	padding-right: 5%!important;
 	margin: 0 auto;
@@ -20,7 +20,7 @@
 		transform: translate3d(0,0,0);
 	}
 	50%{
-		transform: translate3d(0,50px,0);
+		transform: translate3d(0,25px,0);
 	}
 	100%{
 		transform: translate3d(0,0,0);
@@ -31,20 +31,23 @@
 		transform: translate3d(0,0,0);
 	}
 	50%{
-		transform: translate3d(0,50px,0);
+		transform: translate3d(0,25px,0);
 	}
 	100%{
 		transform: translate3d(0,0,0);
 	}
 }
 .sonlogginAllMeddoc{
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	background-color: #f1f4f5;
 	width: 100%;
 	min-height:100vh;
 	text-align: center;
-	padding-top: 10%;
+	padding-top: 5vh;
 	overflow: hidden;
-	padding: 5%;
+	/* padding: 5%; */
 }
 @keyframes loader {
 	from{
@@ -69,16 +72,16 @@
   /* position: absolute; */
   /* top: 750px;
   left: 200px; */
-  margin-top: -10px;
+  margin-top: -50px;
   margin: auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 650px;
-  height: 100px;
-  background: rgba(0, 0, 0, 0.2);
+  width: 60%;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.089);
   border-radius: 100%;
-  box-shadow: 0px 15px 5px 0px #aaaaaa;
+  box-shadow: 0px 15px 5px 0px #aaaaaaa9;
   /* -moz-transform: translate3d(66.66667px, 66.66667px, -10px) scale3d(1.25, 1.25, 1);
   -ms-transform: translate3d(66.66667px, 66.66667px, -1px) scale3d(1.25, 1.25, 1);
   -webkit-transform: translate3d(66.66667px, 66.66667px, -1px) scale3d(1.25, 1.25, 1);
@@ -86,7 +89,7 @@
   animation: levitateShadow 10s cubic-bezier(1,1,1,1) infinite;
 }
 .imgSizeLoginMeddoc{
-	max-width: 650px;
+	width: 100%;
 	animation: levitate 10s cubic-bezier(1,1,1,1) infinite;
 	overflow: hidden;
 }

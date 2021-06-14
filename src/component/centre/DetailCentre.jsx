@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import './DetailCentre.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faLanguage, faInfo, faGraduationCap, faLevelUpAlt, faCompass, faBusinessTime, faAddressCard, faCoins, faCreditCard, faChevronRight, faCalendarCheck} from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faInfo, faCompass, faBusinessTime, faAddressCard, faChevronRight, faCalendarCheck} from '@fortawesome/free-solid-svg-icons';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { fetchGet, fetchPost } from '../../services/global.service';
 import blueIcon from '../../assets/icon/marker-icon-2x-blue.png';
 import { utile } from '../../services/utile';
-import { authUser } from '../../services/authUser';
 
 class DetailCentre extends Component{
     constructor(props){

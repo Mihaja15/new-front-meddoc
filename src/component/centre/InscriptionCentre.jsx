@@ -141,7 +141,7 @@ export default class InscriptionCentre extends React.Component{
         }
         if(this.state.file!==null){
             fetchPost('/covid/ajout-centre',dataCentre).then(result=>{
-                if(result.etat === "0"){
+                if(result.statut === 200){
                     fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{
                         console.log(mm);
                         this.setState({disableButton:false});
@@ -153,6 +153,9 @@ export default class InscriptionCentre extends React.Component{
                 }else{
                     this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
                 }
+            }).catch(error=>{
+                console.log(error)
+                this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
             });
         }
         // if(dataUser!==null && this.state.file!=null){

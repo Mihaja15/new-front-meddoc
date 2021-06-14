@@ -20,38 +20,76 @@ import Vaccin from './component/vaccin/Vaccin';
 import history from './history';
 import ProfilStaff from './component/staff/ProfilStaff';
 import Centre from './component/centre/Centre';
+import { withCookies } from 'react-cookie';
+import PatientProfil from './component/patient/PatientProfil';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state={
-
+      nav:false
     }
   }
-  contentShow(content,header, leftNav, rightNav ,footer){
+  contentShow(content,header,footer){
     return(
       <div id="root-container">
-        <div className="row">
+        <header className="col-md-12">{header}</header>
+        <main className="col-md-12">{content}</main>
+        <footer className="col-md-12">{footer}</footer>
+          <a href="#0" onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
+            {/* <i className="lni-chevron-up"></i> */}
+            <FontAwesomeIcon icon={faArrowUp}/>
+          </a>
+      </div>
+    );
+  } 
+  contentShowWithLeft(content,header, leftNav, footer){
+    return(
+      <div id="root-container">
           {header?<header className="col-md-12">{header}</header>:""}
-          <nav className="col-md-2" style={{display:leftNav!==null?"block":"none"}}>{leftNav}</nav>
-          {/* <nav className="col-md-2" style={{display:leftNav!==null?"block":"none"}}>{leftNav}</nav> */}
-          <main className={leftNav!==null?"col-md-10":"col-md-12"}>{content}</main>
-          {/* <main className={leftNav!==null?"col-md-10":"col-md-12"}>{content}</main> */}
+          <nav className="col-md-2">{leftNav}</nav>
+          <main className="col-md-10">{content}</main>
           {footer?<footer className="col-md-12">{footer}</footer>:null}
-        </div>
+          <a href="#0" onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
+            {/* <i className="lni-chevron-up"></i> */}
+            <FontAwesomeIcon icon={faArrowUp}/>
+          </a>
       </div>
     );
   }  
   contentShowV2(content,header,footer){
     return(
-      <div className="root-container">
-        <div className="row">
+      <div id="root-container">
+        {/* <div className="row"> */}
           {header?<header className="col-md-12">{header}</header>:""}
           <main className="col-md-12">{content}</main>
           {footer?<footer className="col-md-12">{footer}</footer>:null}
-        </div>
+          <a href="#0" onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
+            {/* <i className="lni-chevron-up"></i> */}
+            <FontAwesomeIcon icon={faArrowUp}/>
+          </a>
+        {/* </div> */}
       </div>
     );
+  }
+  componentDidMount(){
+    window.addEventListener("scroll", this.handleScroll);
+  }
+  componentWillUnmount() {
+      window.removeEventListener('scroll', this.handleScroll);
+  }
+  handleScroll= () => {
+      if (window.pageYOffset > 190) {
+              this.setState({ nav: true});
+      }else{
+              this.setState({ nav: false});
+      }
+      // this.setState({scrollTop: $(window).scrollTop()});
+  }
+  scrollToTop() {
+      window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
   }
   setProps(){
     const value = window.location.pathname.split('/');
@@ -63,30 +101,31 @@ class App extends React.Component {
   }
   render(){
     return (
-      <div>
         <Router history={history}>
           <Switch>
-            <Route exact path="/" render={() => {return  this.contentShow(<Home/>,<Header/>,null,null,<Footer/>);}}/>
-            <Route exact path="/suivi-medical" render={() => { return this.contentShow(<SuiviMedicals/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>); }}/>
-            {/* <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>); }}/> */}
-            <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
-            <Route exact path="/inscription-centre" render={() => {return  this.contentShow(<InscriptionCentre/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
-            <Route exact path="/connexion-centre" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
-            <Route exact path="/connexion" render={() => {return  this.contentShow(<Connexion/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
-            <Route exact path="/suivi-medical" render={() => { return this.contentShowV2(<SuiviMedicals/>,<Header/>,<Footer/>); }}/>
-            <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShowV2(<Actualites/>,<Header/>,<Footer/>); }}/>
-            <Route exact path="/conditions-generales-d-utilisation-de-MEDDoC" render={() => { return this.contentShowV2(<Conditionutilisation/>,<Header/>,<Footer/>); }}/>
-            <Route exact path="/mot-de-passe-oublie" render={() => { return this.contentShowV2(<MotDePasse/>,<Header/>,<Footer/>); }}/>
-            <Route path="/mes-vaccins" render={() => {return  this.contentShow(<Vaccin/>,<Header/>,<LeftMenu/>,<RightMenu/>,<Footer/>);}}/>
-            <Route path="/recherche-centre" render={() => {return  this.contentShow(<div style={{marginTop:'15vh'}}><Centre dataFind={this.setProps()}/></div>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
-            <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header/>,null,<RightMenu/>,<Footer/>);}}/>
-            <Route path="/profil-centre" render={() => {return  this.contentShow(<Profil/>,<Header/>,<LeftMenu type={0}/>,<RightMenu/>,null);}}/>
-            <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header/>,<LeftMenu type={1}/>,<RightMenu/>,null);}}/>
+            <Route exact path="/" render={() => {return  this.contentShow(<Home/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/suivi-medical" render={() => { return this.contentShowWithLeft(<SuiviMedicals/>,<Header cookies={this.props.cookies}/>,<LeftMenu/>,<Footer/>); }}/>
+            {/* <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<Footer/>); }}/> */}
+            <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/inscription-centre" render={() => {return  this.contentShow(<InscriptionCentre/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/connexion-centre" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/connexion" render={() => {return  this.contentShow(<Connexion cookies={this.props.cookies}/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/suivi-medical" render={() => { return this.contentShowV2(<SuiviMedicals/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
+            <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShowV2(<Actualites/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
+            <Route exact path="/conditions-generales-d-utilisation-de-MEDDoC" render={() => { return this.contentShowV2(<Conditionutilisation/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
+            <Route exact path="/mot-de-passe-oublie" render={() => { return this.contentShowV2(<MotDePasse/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
+            <Route path="/mes-vaccins" render={() => {return  this.contentShowWithLeft(<Vaccin/>,<Header cookies={this.props.cookies}/>,<LeftMenu/>,<Footer/>);}}/>
+            <Route path="/recherche-centre" render={() => {return  this.contentShow(<div style={{marginTop:'15vh'}}><Centre dataFind={this.setProps()}/></div>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route path="/profil-patient" render={() => {return  this.contentShow(<PatientProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            {/* <Route path="/profil-centre" render={() => {return  this.contentShowWithLeft(<Profil/>,<Header cookies={this.props.cookies}/>,<LeftMenu type={0}/>,null);}}/> */}
+            <Route path="/profil-centre" render={() => {return  this.contentShow(<Profil/>,<Header cookies={this.props.cookies}/>);}}/>
+            {/* <Route path="/profil-staff" render={() => {return  this.contentShowWithLeft(<ProfilStaff/>,<Header cookies={this.props.cookies}/>,<LeftMenu type={1}/>,null);}}/> */}
+            <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header cookies={this.props.cookies}/>);}}/>
           </Switch>
         </Router>
-      </div>
     );
   }
 }
 
-export default App;
+export default withCookies(App);

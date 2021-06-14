@@ -2,15 +2,11 @@ import React, {Component} from 'react';
 import './ListeRdvPatient.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import {Modal,Button} from 'react-bootstrap';
 import {fetchPost} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { utile } from '../../services/utile';
-import {  faCheckCircle, faChevronLeft, faChevronRight, faClock, faExclamationCircle, faTrash} from '@fortawesome/free-solid-svg-icons';
-import { authUser } from '../../services/authUser';
+import {  faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import Pagination from "react-js-pagination";
-
-let ordres = false;
 
 class ListeRdv extends Component{
     constructor(props){
@@ -135,8 +131,8 @@ class ListeRdv extends Component{
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-12 warning-rdv row">
-                    <p>Lors de votre rendez-vous dans un centre de vaccination, veuillez vous munir des documents suivants:</p>
+                    {/* <div className="col-md-12 warning-rdv row">
+                        <p>Lors de votre rendez-vous dans un centre de vaccination, veuillez vous munir des documents suivants:</p>
                         <ul>
                             <li>Apportez votre carte d’identité pour vous identifier</li>
                             <li>Apportez votre preuve d’emploi ou d’ordre d’appartenance (carte professionnelle ou badge professionnel, carte étudiant si le candidat au vaccin est encore étudiant…)</li>
@@ -146,7 +142,7 @@ class ListeRdv extends Component{
                             <li>Prévoyez votre déplacement et présentez-vous seulement cinq minutes avant l'heure de votre rendez-vous afin d’éviter de causer des files d’attente</li>
                             <li>Attention: Un retard pourrait entraîner le report de votre rendez-vous</li>
                         </ul>
-                    </div>
+                    </div> */}
                     <div className="pagnationRecherche">
                         {/* <TablePagination
                             type="full"

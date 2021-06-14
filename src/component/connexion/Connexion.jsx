@@ -5,13 +5,21 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.css';
 import {fetchPost} from '../../services/global.service';
-import { authUser } from '../../services/authUser';
 import {Modal,Button} from 'react-bootstrap';
 import details1officeworker from '../../assets/img/details-1-office-worker.svg';
+import { Cookies } from 'react-cookie';
+import { instanceOf } from "prop-types";
+
+import {userSession} from '../../services/userSession';
+import ValidationCompte from './ValidationCompte';
 
 class Connexion extends Component{
-    constructor(props){
-        super();
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+     
+    constructor(props) {
+        super(props);
         this.state = {
             identification : {valuesText : '',etat : 1},
             mdp : {valuesText : '',etat : 1},
@@ -25,6 +33,7 @@ class Connexion extends Component{
             showValidation : false,
             nonValider : false,
             status : 0,
+            toShow : 1,
             disableButton:false
         }
         this.setValue = this.setValue.bind(this);
@@ -54,57 +63,35 @@ class Connexion extends Component{
     openModalValidation=()=>{
         this.setState({showValidation : true})
     }
+    componentDidMount(){
+        console.log(this.props.cookies);
+    }
     loginConnexion = () => {
         this.setState({disableButton:true,error:{activation:false}});
         const dataIdentification = this.state.identification;const dataMdp = this.state.mdp;
         if(dataIdentification.etat === 2 && dataIdentification.etat === 2 ){
             const userAuth = {identification: dataIdentification.valuesText,mdp: dataMdp.valuesText}
-            fetchPost('/users/loginMeddoc',userAuth).then(data=>{
-                if(data.status === 300){
-                    this.setState({showValidation : true});
-                    this.setState({error : {message : data.message,activation: true},nonValider : true,status : 300});
-                }else if(data.status === 500){
-                    this.setState({showValidation : true});
-                    this.setState({error : {message : data.message,activation: true},nonValider : true, status : 500});
-                }else if(data.status === 200){
-                    const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
-                    if(data.idTypeUser===4){
-                        localStorage.setItem('photo',data.profilPicture);
-                        localStorage.setItem('idStaff',data.idUser);
-                        localStorage.setItem('pseudo',data.pseudo);
-                        localStorage.setItem('connected',true);
-                        window.location.replace('/profil-staff/1');
+            fetchPost('/users/login',userAuth).then(response=>{
+                console.log(response)
+                if(response.statut===200){
+                    if(response.role.toLowerCase()==="patient"){
+                        userSession.userLogin(response.data.username,
+                            (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
+                            response.token,
+                            response.role);
+                        window.location.pathname = "/profil-patient";
                     }else{
-                        localStorage.setItem('photo',data.profilPicture);
-                        localStorage.setItem('idUser',data.idUser);
-                        localStorage.setItem('pseudo',data.pseudo);
-                        localStorage.setItem('connected',true);
-                        localStorage.setItem('etatshowAvertissement',true);
-                        window.location.replace('/profil');
+                        throw new Error("Erreur de connexion");
                     }
-                    if(log){
-                        window.location.replace(''+authUser.premierUrl(data.typeUser));
-                    }else{
-                        const log = authUser.loginUser(data.token,data.typeUser,data.sessionToken,data.profilPicture);
-                        localStorage.setItem('photo',data.profilPicture);
-                        localStorage.setItem('idUser',data.idUser);
-                        localStorage.setItem('pseudo',data.pseudo);
-                        localStorage.setItem('connected',true);
-                        window.location.replace('/profil');
-                    }
-                    // if(log){
-                    //     window.location.replace(''+authUser.premierUrl(data.typeUser));
-                    // }else{
-                    //     console.log('log : '+log+"   :=> ",data);
-                    //     localStorage.clear();
-                    //     this.setState({error : {message : 'Il y a une erreur.',activation: true}})
-                    // }
+                }else if(response.statut===201){
+                    this.setState({toShow : 2, disableButton:false});
+                }else if(response.statut===400){
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
                 }else{
-                    this.setState({error : {message : data.message,activation: true}})
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
                 }
-                this.setState({disableButton:false});
             }).catch(error=>{
-                this.setState({disableButton:false,error : {message : 'Erreur de connexion aux réseaux',activation: true}});
+                this.setState({disableButton:false,error : {message : "Erreur de connexion",activation: true}});
             });
         }
     }
@@ -153,6 +140,7 @@ class Connexion extends Component{
             <div className="logginAllMeddoc">
                 <div className="row">
                      <div className="col-md-6 col-sm-12 sonVlogginAllMeddoc">
+                        {this.state.toShow===2?<ValidationCompte identification={this.state.identification.valuesText} password={this.state.mdp.valuesText}/>:
                         <div className="row">
                             <div className="col-md-12 col-sm-12">
                                 <h1 className="titleH1Login"><b>Connexion</b></h1>
@@ -179,11 +167,11 @@ class Connexion extends Component{
                                 <div hidden={!this.state.disableButton} className="login-loader"></div>
                             </div>
                             <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div>
-                        </div>
+                        </div>}
                      </div>
                      <div className="col-md-6 col-sm-12 sonlogginAllMeddoc">
                         <img className="img-fluid imgSizeLoginMeddoc" src={details1officeworker} alt="alternative"/>
-                        <div className="shadowImg"></div>
+                        {/* <div className="shadowImg"></div> */}
                      </div>
                 </div>
                 {/*<button className="btn btn-primary" onClick={()=>this.openModalValidation()}>Open</button>*/}

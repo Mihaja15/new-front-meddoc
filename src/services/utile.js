@@ -157,6 +157,63 @@ function dateToHour(date){
     const dateRes = new Date(date);
     return autocompleteZero(dateRes.getHours(),2)+":"+autocompleteZero(dateRes.getMinutes(),2)+":00";
 }
+function calculateAge(dateNaissance){
+    var today = new Date();
+    var birthDate = new Date(dateNaissance);
+    var ageNow = today.getFullYear() - birthDate.getFullYear();
+    var month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        ageNow--;
+    }
+    return ageNow;
+}
+function checkEligibility(age, testResponse, dateTest){
+    if(testResponse===null || testResponse===undefined)
+        return false;
+    else if(age===null || age===undefined)
+        return false;
+    else if(dateTest===null || dateTest===undefined)
+        return false;
+    const date = new Date(dateTest);
+    const now = new Date();
+    const j = 24 * 60 * 60 * 1000;
+    const duree = 3 * 30 * j;
+    const dureeTest = now.getTime()-date.getTime();
+    if(testResponse)
+        return (duree < dureeTest) && age >= 18;
+    else
+        return age >= 18;
+}
+function getInitial(complete){
+    const initials = complete.trim().split(' ');
+    var init = '';
+    // for(let i = 0; i < initials.length; i++){
+    for(let i = 0; i < 2; i++){
+        init+=initials[i][0]+' ';
+    }
+    return init;
+}
+function getPercent(value, total){
+    if(total===null || total===0)
+        return 0;
+    var per = value * 100 / total;
+    return per | 0;
+}
+function numStr(a, b) {
+    a = '' + a;
+    b = b || ' ';
+    var c = '',
+        d = 0;
+    while (a.match(/^0[0-9]/)) {
+      a = a.substr(1);
+    }
+    for (var i = a.length-1; i >= 0; i--) {
+      c = (d !== 0 && d % 3 === 0) ? a[i] + b + c : a[i] + c;
+      d++;
+    }
+    return c;
+}
 export const utile = {
     getAllMois,
     getNamesMois,
@@ -185,5 +242,10 @@ export const utile = {
     isEqualJourDate,
     completChiffre,
     getDateNormal,
-    dateToHour
+    dateToHour,
+    calculateAge,
+    checkEligibility,
+    getInitial,
+    getPercent,
+    numStr
 };
