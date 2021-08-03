@@ -12,6 +12,7 @@ import Centre from '../centre/Centre';
 import ListeRdv from '../listeRdvPatient/ListeRdv';
 import ProfilPatient from '../profils/ProfilPatient';
 import DetailProfil from './DetailProfil';
+import { utile } from '../../services/utile';
 
 const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu','assistance']
 export default class PatientProfil extends React.Component{
@@ -43,7 +44,8 @@ export default class PatientProfil extends React.Component{
         }
         fetchGetHandler('/users/dataUser/'+userSession.get('token')).then(response=>{
             console.log(response)
-            this.setState({user : response.data});
+            if(utile.hasValue(response))
+                this.setState({user : response.data});
         });
     }
     linkInMenu=(link)=>{

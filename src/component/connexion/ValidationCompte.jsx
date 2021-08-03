@@ -1,6 +1,6 @@
 import React from 'react';
 import './ValidationCompte.css';
-import {fetchPost} from '../../services/global.service';
+import {fetchPost, fetchPostNotLogged} from '../../services/global.service';
 import {userSession} from '../../services/userSession';
 
 export default class ValidationCompte extends React.Component{
@@ -34,22 +34,23 @@ export default class ValidationCompte extends React.Component{
                 }
                 console.log(dataTmp);
                 //this.setState({erreurMessage : "",erreurEtat: false});
-                fetchPost('/users/validation-compte-patient',dataTmp).then(response=>{
+                fetchPostNotLogged('/users/validation-compte-patient',dataTmp).then(response=>{
                     console.log(response)
-                    if(response.statut===200){
-                        if(response.role.toLowerCase()==="patient"){
-                            userSession.userLogin(response.data.username,
-                                (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
-                                response.token,
-                                response.role);
-                            window.location.pathname = "/profil-patient";
+                    if(response.statut){
+                        if(response.statut===200){
+                            console.log(response);
+                            if(response.role.toLowerCase()==="patient"){
+                                userSession.userLogin(response.data.username,
+                                    (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
+                                    response.token,
+                                    response.role);
+                                window.location.pathname = "/profil-patient";
+                            }
+                        }else if(response.statut===400){
+                            this.setState({erreurMessage : response.message,erreurEtat: true});
                         }else{
-                            throw new Error("Erreur de connexion");
+                            this.setState({erreurMessage : response.message,erreurEtat: true});
                         }
-                    }else if(response.statut===400){
-                        this.setState({erreurMessage : response.message,erreurEtat: true});
-                    }else{
-                        this.setState({erreurMessage : response.message,erreurEtat: true});
                     }
                 });
             }else{

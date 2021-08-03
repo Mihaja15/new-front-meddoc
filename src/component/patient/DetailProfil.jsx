@@ -86,15 +86,17 @@ export default class DetailProfil extends React.Component{
                 numCin : this.props.dataUser.numCin,
                 dateCin : this.props.dataUser.dateCin,
                 lieuCin : this.props.dataUser.lieuCin,
+                mail : this.props.dataUser.email,
+                phone : this.props.dataUser.phone,
                 // province : {valuesText : ''+this.props.dataUser.province.idProvince,etat : 0, dataEdit:false},
-                district : this.props.dataUser.adresse[0].district.idDistrict,
-                adresse : this.props.dataUser.adresse[0].addrValue,
+                district : this.props.dataUser.adresse.district.idDistrict,
+                adresse : this.props.dataUser.adresse.informationAdresse,
                 listContact : this.props.dataUser.contact,
                 dataUser : this.props.dataUser,
                 age: utile.calculateAge(this.props.dataUser.dateNaissance)
             });
-            console.log("this.props.dataUser.fokotany ", this.props.dataUser.adresse[0].district.idDistrict);
-            fetchGet('/adresse/find-province-by-id-district/'+this.props.dataUser.adresse[0].district.idDistrict).then(idProvince=>{ 
+            console.log("this.props.dataUser.fokotany ", this.props.dataUser.adresse.district.idDistrict);
+            fetchGet('/adresse/find-province-by-id-district/'+this.props.dataUser.adresse.district.idDistrict).then(idProvince=>{ 
                 fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(data=>{
                     if(data!=null){
                         this.setState({ province: idProvince,listDistrict: data });
@@ -197,7 +199,7 @@ export default class DetailProfil extends React.Component{
                 <div className="col-md-12">
                     <div className="col-md-12 input-group ">
                         <label className="col-md-4 label-details-profil">Adresse</label>
-                        <input className="col-md-8 input-details-profil" type="text" name="nom" disabled={!this.state.onEdit} value={this.state.adresse}  onChange={this.handleChange.bind(this,"adresse")}/>
+                        <input className="col-md-8 input-details-profil" type="text" name="adresse" disabled={!this.state.onEdit} value={this.state.adresse}  onChange={this.handleChange.bind(this,"adresse")}/>
                     </div>
                     <div className="col-md-12 input-group">
                         <label className="col-md-4 label-details-profil">Province</label>
@@ -240,17 +242,17 @@ export default class DetailProfil extends React.Component{
                     {this.state.listContact.map((contact,j)=>{
                         return (
                             <div className="col-md-12 input-group" key={j}>
-                                {contact.idContact===null||contact.idContact===undefined?
+                                {contact.idUser===null||contact.idUser===undefined?
                                     <select className="col-md-5 select-details-profil" disabled={!this.state.onEdit} value={contact.typeContact.idTypeContact} onChange={this.changeContactType.bind(this,j)}>
                                         {this.state.listTypeContact.map((typeContact,i)=>{
-                                            return <option key={i} value={typeContact.idTypeContact}>{typeContact.libelleTypeContact}</option>
+                                            return <option key={i} value={typeContact.idTypeContact}>{typeContact.libelle}</option>
                                         })}
                                     </select>
-                                :<label className="col-md-5 label-details-profil">{contact.typeContact.libelleTypeContact}</label>}
-                                {contact.idContact===null||contact.idContact===undefined?
-                                    <input disabled={!this.state.onEdit} type="text" className="col-md-5 input-details-profil" value={contact.contact} onChange={this.changeContactText.bind(this,j)}/>
-                                :<label className="col-md-5 label-details-profil">{contact.contact}</label>}
-                                {contact.idContact===null||contact.idContact===undefined?this.state.onEdit?<a href="#ajout-contact" className="remove-button-contact col-md-1" onClick={()=>this.removeContact(j)}><FontAwesomeIcon icon={faTrashAlt}/></a>:"":""}
+                                :<label className="col-md-5 label-details-profil">{contact.typeContact.libelle}</label>}
+                                {contact.idUser===null||contact.idUser===undefined?
+                                    <input disabled={!this.state.onEdit} type="text" className="col-md-5 input-details-profil" value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/>
+                                :<label className="col-md-5 label-details-profil">{contact.valeurContact}</label>}
+                                {contact.idUser===null||contact.idUser===undefined?this.state.onEdit?<a href="#ajout-contact" className="remove-button-contact col-md-1" onClick={()=>this.removeContact(j)}><FontAwesomeIcon icon={faTrashAlt}/></a>:"":""}
                             </div>)
                     })}
                 </div>

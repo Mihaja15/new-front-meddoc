@@ -33,7 +33,7 @@
 .profil-centre-left-menu{
     background-color: rgba(215, 226, 224, 0.082);
     /* border-right: 0.1px solid #d4d4d4; */
-    box-shadow: 5px 0px 5px 0px #f0e9dd;
+    box-shadow: 5px 0px 5px 0px #1b78953a;
     height: 100vh;
     width: 22%;
     position: fixed;
@@ -55,13 +55,13 @@
     /* background-color: #d6b0ff; */
     border-right: 5px solid #c5305f;
     color: #c5305f;
-    box-shadow: 0px 0px 5px 1px #f0e9dd;
+    box-shadow: 0px 0px 5px 1px #c5305f2a;
     /* transform: scaleY(1.1); */
 }
 .profil-centre-left-menu li.active-menu{
     /* background-color: #119da4; */
     color: #c5305f;
     border-right: 5px solid #c5305f;
-    box-shadow: 0px 0px 5px 1px #f0e9dd;
+    box-shadow: 0px 0px 5px 1px #c5305f2a;
     /* transform: scaleY(1.1); */
 }

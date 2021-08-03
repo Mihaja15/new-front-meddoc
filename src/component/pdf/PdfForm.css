@@ -1,0 +1,35 @@
+.pdf-content{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width:100%;
+    /* text-align: center; */
+    /* height: 500px; */
+}
+.pdf-form{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: block;
+}
+.input-group{
+    margin-bottom: 5px;
+}
+.labelStyle{
+    border-radius: 0px;
+    padding-left: 25px;
+    padding-top: 5px;
+    height: 40px;
+    background-color: transparent;
+    /* border: 1px solid #d4d4d4; */
+    border: none;
+    font-weight: 600;
+}
+.inputStyle{
+    border-radius: 0px;
+    padding-left: 25px;
+    /* padding-top: 5px; */
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #d4d4d4;
+    font-weight: 400;
+    outline: none;
+}

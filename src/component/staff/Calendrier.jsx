@@ -1,11 +1,12 @@
 import React from 'react';
 import './Calendrier.css';
 import { utile } from '../../services/utile';
-import {fetchPostHeader} from '../../services/global.service';
+import {fetchPost, fetchPostHeader} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import Pagination from "react-js-pagination";
+import { userSession } from '../../services/userSession';
 
 const dateNow = new Date();
 
@@ -95,14 +96,14 @@ export default class Calendrier extends React.Component{
             annee : this.state.anneeSelected,
             size : this.state.size
         }
-        fetchPostHeader('/covid/rdv-centre',data).then(data=>{
+        fetchPost('/professionnel/rdv-centre',data).then(data=>{
             var userName = [];
             console.log('dataTmp dataTmp :',data);
             for(let i=0; i <data.content.length; i++){
-                if(!userName.find(element => element.value === data.content[i].patient.nom+" "+data.content[i].patient.prenoms)){
+                if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
                     userName.push({
-                        value:data.content[i].patient.nom+" "+data.content[i].patient.prenoms,
-                        indice: data.content[i].patient.idUser
+                        value:data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms,
+                        indice: data.content[i].personnePatient.idUser
                     })
                 }
             }
@@ -123,15 +124,16 @@ export default class Calendrier extends React.Component{
             page: (this.state.page-1),
             size: this.state.size
         }
-        fetchPostHeader('/covid/rdv-centre',data).then(dataTmp=>{
-            console.log(dataTmp)
+        console.log('post data ',data)
+        fetchPostHeader('/professionnel/rdv-centre',data).then(dataTmp=>{
+            console.log('getRdv',dataTmp)
             var userName = [];
             if(dataTmp.content){
                 for(let i=0; i <dataTmp.content.length; i++){
-                    if(!userName.find(element => element.value === dataTmp.content[i].patient.nom+" "+dataTmp.content[i].patient.prenoms)){
+                    if(!userName.find(element => element.value === dataTmp.content[i].personnePatient.nom+" "+dataTmp.content[i].personnePatient.prenoms)){
                         userName.push({
-                            value:dataTmp.content[i].patient.nom+" "+dataTmp.content[i].patient.prenoms,
-                            indice: dataTmp.content[i].patient.idUser
+                            value:dataTmp.content[i].personnePatient.nom+" "+dataTmp.content[i].personnePatient.prenoms,
+                            indice: dataTmp.content[i].personnePatient.idUser
                         })
                     }
                 }
@@ -148,14 +150,14 @@ export default class Calendrier extends React.Component{
             mois : this.state.moisSelected,
             annee : this.state.anneeSelected
         }
-        fetchPostHeader('/covid/agenda-centre',data).then(dataTmp=>{
+        fetchPostHeader('/professionnel/agenda-centre',data).then(dataTmp=>{
             console.log(dataTmp)
             this.setState({calendrier : dataTmp});
         });
     }
     componentDidMount(){
         console.log(this.props.id+"  "+this.props.type);
-        if(this.props.id!==null&&this.props.id!==undefined&&this.props.type!==null&&this.props.type!==undefined){
+        if(userSession.isLogged()){
             this.setState({idEntite:this.props.id,typeEntite:this.props.type},function(){
                 this.getAgenda();
                 this.getRdv();
@@ -243,6 +245,7 @@ export default class Calendrier extends React.Component{
                                                 <th>samedi</th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
                                             {
                                                 this.state.calendrier!==null?
@@ -271,7 +274,7 @@ export default class Calendrier extends React.Component{
                                     </table>
                                 </div>
                                 <div className="centre-agenda-right">
-                                    <h5 className="col-md-12">Liste des rendez-vous du {utile.getDateComplet(this.state.dateSelected)}</h5>
+                                    <h5 className="col-md-12">Liste des rendez-vous {utile.isEqualJourDate(dateNow,this.state.dateSelected)?"aujourd'hui":"du "+utile.getDateComplet(this.state.dateSelected)}</h5>
                                     <table className="tableau-rdv col-md-12">
                                         <thead>
                                             <tr>
@@ -285,21 +288,34 @@ export default class Calendrier extends React.Component{
                                         <tbody>
                                             {this.state.listRdv.content!==undefined?this.state.listRdv.content.map((rdv, i)=>{
                                                 return(
-                                                    rdv.statut!==null?rdv.statut.idStatut===101 
-                                                    ?<tr key={i}>
+                                                    rdv.statut!==null?
+                                                    rdv.statut.idStatut===101?
+                                                    <tr key={i} onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo))}>
                                                         <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
-                                                        <td>{rdv.centre.nomCentre}</td>
-                                                        <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
+                                                        <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
                                                         <td>{rdv.motif}</td>
                                                         <td data-tip data-for={"line-rdv"+i}>
                                                             <FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/>
                                                             <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous déjà pris</ReactTooltip>
                                                         </td>
                                                     </tr>
-                                                    :<tr key={i} onClick={()=>{this.props.setPatient(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient,"vaccination",rdv.dateHeureRdv);}}>
+                                                    :rdv.statut.idStatut===100?
+                                                    <tr key={i} onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo))}>
                                                         <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
-                                                        <td>{rdv.centre.nomCentre}</td>
-                                                        <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
+                                                        <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.motif}</td>
+                                                        <td data-tip data-for={"line-rdv"+i}>
+                                                            <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
+                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
+                                                        </td>
+                                                    </tr>
+                                                    // :<tr key={i} onClick={()=>{this.props.setPatient(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient,"vaccination",rdv.dateHeureRdv);}}>
+                                                    :<tr key={i} onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo))}>
+                                                        <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
+                                                        <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
+                                                        <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
                                                         <td>{rdv.motif}</td>
                                                         <td data-tip data-for={"line-rdv"+i}>
                                                             <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
@@ -308,8 +324,8 @@ export default class Calendrier extends React.Component{
                                                     </tr>
                                                     :<tr key={i}>
                                                         <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
-                                                        <td>{rdv.centre.nomCentre}</td>
-                                                        <td>{this.inList(rdv.patient.idUser!==undefined?rdv.patient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
+                                                        <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
                                                         <td>{rdv.motif}</td>
                                                         <td data-tip data-for={"line-rdv"+i}>
                                                             <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>

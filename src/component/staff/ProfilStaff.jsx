@@ -1,6 +1,6 @@
 import React from 'react';
 import Calendrier from './Calendrier';
-import { fetchGet } from '../../services/global.service';
+import { fetchGet, fetchGetHandler } from '../../services/global.service';
 import './ProfilStaff.css';
 import SuiviMedical from '../suivi-medicals/SuiviMedical';
 import { utile } from '../../services/utile';
@@ -15,7 +15,7 @@ export default class ProfilStaff extends React.Component{
         }
     }
     componentDidMount(){
-        fetchGet('/covid/personalCentre/'+localStorage.getItem('idStaff')).then(data=>{
+        fetchGetHandler('/professionnel/data').then(data=>{
             if(data!=null){
                 this.setState({ centreUser: data});
                 console.log(data)

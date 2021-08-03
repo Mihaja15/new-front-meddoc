@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import './Inscription.css';
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import {fetchGet, fetchPost} from '../../services/global.service';
+import {fetchGet, fetchPost, fetchPostNotLogged} from '../../services/global.service';
 import details2officeworker from '../../assets/img/details-2-office-team-work.svg';
 import { authUser } from '../../services/authUser';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import ReactTooltip from 'react-tooltip';
 import bienvenue from '../../assets/img/bienvenue.jpg';
 import {userSession} from '../../services/userSession';
+import Select from 'react-select';
 
 class Inscription extends Component{
     constructor(props){
@@ -120,36 +121,44 @@ class Inscription extends Component{
         //     console.log(this.state.phone)
         // });
         this.setState({disableButton:true});
-        let identiter = [];
-        if(this.state.email!== ''){identiter=[{identifiant : this.state.email}, {identifiant : this.state.phone}];}else{identiter=[{identifiant : this.state.phone}];}
+        // let identiter = [];
+        // if(this.state.email!== ''){identiter=[{identifiant : this.state.email}, {identifiant : this.state.phone}];}else{identiter=[{identifiant : this.state.phone}];}
         const user = {
             nom: this.state.nom,
             prenoms: this.state.prenoms,
             dateNaissance: this.state.dateNaissance,
             lieuNaissance: this.state.lieuNaissance,
-            identification: this.state.phone,
+            // identification: this.state.phone,
             phone: this.state.phone,
             email: this.state.email,
-            identifiant: identiter,
+            // identifiant: identiter,
             password: this.state.mdp,
             sexe : this.state.sexe,
             contact: [{
-                contact: this.state.phone,
+                valeurContact: this.state.phone,
+                idTypeContact: 1,
                 typeContact: {
                     idTypeContact: 1
                 }
             },{
-                contact: this.state.email,
+                valeurContact: this.state.email,
+                idTypeContact: 2,
                 typeContact: {
                     idTypeContact: 2
                 }
             }],
-            adresse:[{
-                addrValue:this.state.adresse,
+            // adresse:[{
+            //     informationAdresse:this.state.adresse,
+            //     district:{
+            //         idDistrict:this.state.districtVal
+            //     }
+            // }],
+            adresse:{
+                informationAdresse:this.state.adresse,
                 district:{
                     idDistrict:this.state.districtVal
                 }
-            }],
+            },
             typeUser:{
                 idTypeUser: 1
             }
@@ -172,7 +181,7 @@ class Inscription extends Component{
         // }).catch(error=>{
         //     this.setState({disableButton:false,error : {message : 'Erreur de connexion aux réseaux',activation: true}});
         // });
-        fetchPost('/users/register',user).then((response)=>{
+        fetchPostNotLogged('/users/register',user).then((response)=>{
             console.log(response);
             if(response.statut === 200){
                 // if(response.role.toLowerCase()==="patient"){
@@ -247,7 +256,7 @@ class Inscription extends Component{
                     this.setState({ dataDistrict: data });
                     this.setState({showF: true});
                 }else{
-                    this.setState({dataDistrict:[]});
+                    this.setState({dataDistrict:[],showF:true});
                 }
             });
             // this.setState({showF: true, dataFokontany : globalActions.getData('/adresse/quartiers')});
@@ -260,7 +269,7 @@ class Inscription extends Component{
         this.setState({regionVal: event.currentTarget.value});
     }
     districtChange(event){
-        this.setState({districtVal: event.currentTarget.value});
+        this.setState({districtVal: event.value});
     }
     getColorPourcentage(pourcentage){
         if(pourcentage>=100){
@@ -387,13 +396,15 @@ class Inscription extends Component{
                                                 </Col>
                                                 <Col sm={5}>
                                                     <div className="form-group">
-                                                        <p className="textInscriptionPatient">Province *:</p>
+                                                        {/* <p className="textInscriptionPatient">Province *:</p> */}
+                                                        <p className="textInscriptionPatient">District *:</p>
                                                     </div>
                                                 </Col>
                                                 <Col sm={7}>
                                                     <div className="form-group">
-                                                        <select className="form-control" value={this.state.provinceVal} onChange={this.provinceChange}>
-                                                        <option value=''>Province</option>
+                                                        <Select onChange={this.districtChange} className="selectNewProfil" clearable placeholder="District" options={this.state.dataDistrict} />
+                                                        {/* <select className="form-control" value={this.state.provinceVal} onChange={this.provinceChange}>
+                                                            <option value=''>Province</option>
                                                         {this.state.showP
                                                             ? this.state.dataProvince.map((province,i) => {
                                                                 return(
@@ -404,14 +415,14 @@ class Inscription extends Component{
                                                             })
                                                             : 'Loading...'
                                                         }
-                                                        </select>
+                                                        </select> */}
                                                     </div>
                                                 </Col>
-                                                <Col hidden={!this.state.showF} sm={5}>
+                                                {/* <Col hidden={!this.state.showF} sm={5}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">District *:</p>
                                                     </div>
-                                                </Col>
+                                                </Col> */}
                                                 {/* <Col hidden={!this.state.showF} sm={8}>
                                                     <div className="form-group">
                                                         <select className="form-control" value={this.state.fokontanyVal} onChange={this.fokontanyChange}>
@@ -447,8 +458,9 @@ class Inscription extends Component{
                                                     </div>
                                                 </Col> */}
                                                 
-                                                <Col hidden={!this.state.showF} sm={7}>
+                                                {/* <Col hidden={!this.state.showF} sm={7}>
                                                     <div className="form-group">
+                                                        <Select onChange={(e)=>this.setValue(e,'fokontany',true,true)} className="selectNewProfil" placeholder="Fokontany" />
                                                         <select className="form-control" value={this.state.districtVal} onChange={this.districtChange}>
                                                         <option value=''>District</option>
                                                         {this.state.showF
@@ -463,7 +475,7 @@ class Inscription extends Component{
                                                         }
                                                         </select>
                                                     </div>
-                                                </Col>
+                                                </Col> */}
                                                 <Col sm={5}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">E-mail *:</p>
@@ -571,6 +583,12 @@ class Inscription extends Component{
         )
     }
     componentDidMount(){
+        fetchGet('/adresse/find-district-part/all').then(data=>{
+            if(data!=null && data.length>=0){
+                this.setState({ dataDistrict: data });
+                this.setState({showP: true});
+            }
+        });
         fetchGet('/adresse/province/all').then(data=>{
             if(data!=null && data.length>=0){
                 this.setState({ dataProvince: data });

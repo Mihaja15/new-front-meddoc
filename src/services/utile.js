@@ -214,6 +214,18 @@ function numStr(a, b) {
     }
     return c;
 }
+function hasValue(data){
+    return data!==undefined&&data!==null&&data!=="";
+}
+function getYearFromActual(add){
+    const today = new Date();
+    var year = today.getFullYear();
+    if(add) return year+add;
+    else return year;
+}
+function valueToLink(value){
+    return value.trim().replace(/\s+/g, '-').toLowerCase();
+}
 export const utile = {
     getAllMois,
     getNamesMois,
@@ -247,5 +259,8 @@ export const utile = {
     checkEligibility,
     getInitial,
     getPercent,
-    numStr
+    numStr,
+    hasValue,
+    getYearFromActual,
+    valueToLink
 };

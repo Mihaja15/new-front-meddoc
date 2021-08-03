@@ -5,10 +5,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faSearch, faEdit,faInbox} from '@fortawesome/free-solid-svg-icons';
-import { fetchGet } from '../../services/global.service';
+import { fetchGetHandler } from '../../services/global.service';
 import { authUser } from '../../services/authUser';
 import { utile } from '../../services/utile';
 import urlConf from '../../config';
+import {userSession} from '../../services/userSession';
 const Stomp = require('stompjs');
 
 var stompClient = null;
@@ -111,7 +112,7 @@ class Causette extends Component{
                 dataList.unshift(message);
                 console.log(dataList);
                 // dataList[this.state.listMessage.length] = message;
-                fetchGet('/discussion/listDiscussionByUser/'+authUser.getToken()+'/ /'+this.state.max).then(data=>{
+                fetchGetHandler('/discussion/listDiscussionByUser/'+userSession.get('token')+'/ /'+this.state.max).then(data=>{
                     this.setState({listMessage : dataList,listDiscussion:data});
                 });
                  if(''+message.userReceiver.idUser === ''+this.state.dataUser.idUser){
@@ -169,11 +170,11 @@ class Causette extends Component{
     }
     rechercheInChat=()=>{
         if(this.state.searchInput.toString().trim()!=='')
-            fetchGet('/discussion/listDiscussionByUser/'+authUser.getToken()+'/'+this.state.searchInput+'/'+this.state.max).then(data=>{
+            fetchGetHandler('/discussion/listDiscussionByUser/'+userSession.get('token')+'/'+this.state.searchInput+'/'+this.state.max).then(data=>{
                 this.setState({listDiscussion:data});
             });
         else
-            fetchGet('/discussion/listDiscussionByUser/'+authUser.getToken()+'/ /'+this.state.max).then(data=>{
+            fetchGetHandler('/discussion/listDiscussionByUser/'+userSession.get('token')+'/ /'+this.state.max).then(data=>{
                 this.setState({listDiscussion:data});
             });
     }
@@ -185,28 +186,31 @@ class Causette extends Component{
         if(e.keyCode!==13){
             // alert(e.keyCode)
             if(this.state.toInput==='')
-            this.setState({listToInput:[]});
-            fetchGet('/users/search-user-discussion/'+authUser.getToken()+'/'+this.state.toInput+'/'+this.state.dataUser.typeUser.idTypeUser+'/'+this.state.max).then(liste=>{
-                this.setState({listToInput:liste});
-            });
+                this.setState({listToInput:[]});
+            else
+                fetchGetHandler('/users/search-user-discussion/'+userSession.get('token')+'/'+this.state.toInput+'/'+this.state.dataUser.typeUser.idTypeUser+'/'+this.state.max).then(liste=>{
+                    this.setState({listToInput:liste});
+                });
         }
     }
     viewOlderMessage=()=>{
         this.setState({max:this.state.max+5,showPlus:true},function(){
-            fetchGet('/discussion/listMessageByUser/'+authUser.getToken()+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
+            fetchGetHandler('/discussion/listMessageByUser/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
                 this.setState({listMessage:messages,showPlus:false});
             });
         })
     }
     componentDidMount(){
-		fetchGet('/users/dataUser/'+authUser.getToken()).then(data=>{
+        console.log(userSession.get('token'));
+        // this.setState({})
+		fetchGetHandler('/users/dataUser/'+userSession.get('token')).then(data=>{
             console.log('type-medecin/list : ',data);
-            this.setState({ dataUser: data },function(){
-				fetchGet('/discussion/listDiscussionByUser/'+authUser.getToken()+'/ /'+this.state.max).then(dataList=>{
+            this.setState({ dataUser: data.data },function(){
+				fetchGetHandler('/discussion/listDiscussionByUser/'+userSession.get('token')+'/ /'+this.state.max).then(dataList=>{
 					this.setState({listDiscussion:dataList},function(){
 						// if(this.state.listDiscussion.length>0){
                         //     this.setState({userDiscussion:this.state.listDiscussion[0].user},function(){
-                        //         fetchGet('/discussion/listMessageByUser/'+authUser.getToken()+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
+                        //         fetchGetHandler('/discussion/listMessageByUser/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
                         //             console.log(messages);
                         //             this.setState({listMessage:messages});
                         //         });
@@ -220,9 +224,9 @@ class Causette extends Component{
     }
     onClickDiscussion=(userDiscuss)=>{
         this.setState({userDiscussion:userDiscuss,max:5,showToInput:false},function(){
-            fetchGet('/discussion/listMessageByUser/'+authUser.getToken()+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
+            fetchGetHandler('/discussion/listMessageByUser/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
                 console.log(messages);
-                fetchGet('/discussion/nombreDeDiscussion/'+authUser.getToken()+'/'+this.state.userDiscussion.idUser).then(nb=>{
+                fetchGetHandler('/discussion/nombreDeDiscussion/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser).then(nb=>{
                     this.setState({nombreDeMessage : nb});
                     this.setState({listMessage:messages});
                 });
@@ -231,9 +235,9 @@ class Causette extends Component{
     }
     onSelectUser=(userDiscuss)=>{
         this.setState({userDiscussion:userDiscuss,max:5,showToInput:false,listToInput:[]},function(){
-            fetchGet('/discussion/listMessageByUser/'+authUser.getToken()+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
+            fetchGetHandler('/discussion/listMessageByUser/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
                 console.log(messages);
-                fetchGet('/discussion/nombreDeDiscussion/'+authUser.getToken()+'/'+this.state.userDiscussion.idUser).then(nb=>{
+                fetchGetHandler('/discussion/nombreDeDiscussion/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser).then(nb=>{
                     this.setState({nombreDeMessage : nb});
                     this.setState({listMessage:messages});
                 });
@@ -255,7 +259,7 @@ class Causette extends Component{
                                     <div className='col-md-3'><a className='btn newMessageButton' onClick={()=>this.setState({showToInput:!this.state.showToInput})} href='#0' type='button'><FontAwesomeIcon icon={faEdit}/></a></div>
                                 </div>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body-causette">
                                 <div className="discussion-list">
                                     <ul className="">
                                         {
@@ -263,10 +267,11 @@ class Causette extends Component{
                                                 return (
                                                     <li key={i} onClick={()=>this.onClickDiscussion(discussion.user)} className="row">
                                                         <div className='col-md-3 profile-place'>
-                                                            <img src={`/uploads/${discussion.user.profilPicture!==null?discussion.user.profilPicture:'profile.jpg'}`} alt='causette profile'/>
+                                                            {/* <img src={`/uploads/${discussion.user.profilPicture!==null?discussion.user.profilPicture:'profile.jpg'}`} alt='causette profile'/> */}
+                                                            <span className="mini-initial-icon">{utile.hasValue(discussion.user)?utile.getInitial(discussion.user.pseudo):''}</span>
                                                         </div>
                                                         <div className='row col-md-9 discussion-detail-place'>
-                                                            <span className='col-md-8 name-place'>{discussion.user.nom+' '+discussion.user.prenoms}</span><br/><span className='col-md-4 date-place'>{utile.formatDate(new Date(discussion.sentTime))}</span>
+                                                            <span className='col-md-8 name-place'>{discussion.user.pseudo}</span><br/><span className='col-md-4 date-place'>{utile.formatDate(new Date(discussion.sentTime))}</span>
                                                             <span className='col-md-12 message-place'>{discussion.type==='out'?'Vous:':''}{discussion.contents}</span>
                                                         </div>
                                                     </li>
@@ -280,22 +285,23 @@ class Causette extends Component{
                         <div className='col-md-8 message-content'>
                             <div className="card-header">
                                 <div className="row" style={{visibility:this.state.userDiscussion===null||this.state.showToInput?'hidden':'visible'}}>
-                                    <div className='col-md-3'><img src={`/uploads/${this.state.userDiscussion!==null?this.state.userDiscussion.profilPicture:'profile.jpg'}`} alt='causette header profile'/></div>
-                                    <div className='col-md-6'><h2>{this.state.userDiscussion!==null?this.state.userDiscussion.nom+' '+this.state.userDiscussion.prenoms:''}</h2></div>
+                                    {/* <div className='col-md-3'><img src={`/uploads/${this.state.userDiscussion!==null?this.state.userDiscussion.profilPicture:'profile.jpg'}`} alt='causette header profile'/></div> */}
+                                    <div className='col-md-3'><span className="initial-icon">{utile.hasValue(this.state.userDiscussion)?utile.getInitial(this.state.userDiscussion.pseudo):''}</span></div>
+                                    <div className='col-md-6'><h2>{this.state.userDiscussion!==null?this.state.userDiscussion.pseudo:''}</h2></div>
                                     <div className='col-md-3'></div>
                                 </div>
                                 <div className="row list-users-discussion" style={{display:this.state.showToInput?'block':'none', transition:'all 1s'}}>
                                     <div className='col-md-12 row'>
                                         <div className="input-group">
-                                            <label classNme='col-md-4'>Envoyer à:</label>
-                                            <input classNme='col-md-8' value={this.state.toInput} onChange={this.handleChange.bind(this,'toInput')} onKeyUp={this.searchUserKeyPressed.bind(this)} name='toInput'/>
+                                            <label className='col-md-4'>Envoyer à:</label>
+                                            <input className='col-md-8' value={this.state.toInput} onChange={this.handleChange.bind(this,'toInput')} onKeyUp={this.searchUserKeyPressed.bind(this)} name='toInput'/>
                                         </div>
                                         <div className="users-list" style={{display:this.state.listToInput.length!==0?'block':'none'}}>
                                             <ul>
                                                 {
                                                     this.state.listToInput.map((one,i)=>{
                                                         return(
-                                                            <li key={i} onClick={()=>this.onSelectUser(one)}>{one.nom+' '+one.prenoms}</li>
+                                                            <li key={i} onClick={()=>this.onSelectUser(one)}>{one.pseudo}</li>
                                                         )
                                                     })
                                                 }
@@ -304,20 +310,20 @@ class Causette extends Component{
                                     </div>
                                 </div>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body-causette">
                                 <div className='selection-message row' style={{visibility:this.state.userDiscussion!==null?'hidden':'visible'}}>
                                     <span className='col-md-12'>Veuillez sélectionner une discussion à gauche</span>
                                     <span className='col-md-12'><FontAwesomeIcon icon={faInbox}/></span>
                                 </div>
-                                <div class="chat" style={{visibility:this.state.userDiscussion===null?'hidden':'visible'}}>
+                                <div className="chat" style={{visibility:this.state.userDiscussion===null?'hidden':'visible'}}>
                                     <a href='#0' style={{display:this.state.nombreDeMessage!==this.state.listMessage.length?'block':'none'}} onClick={this.viewOlderMessage}>Voir plus</a>
                                     <span className='loader-show-plus' style={{display:this.state.showPlus?'inline-block':'none'}}></span>
-                                        <div class="chat__wrapper">
+                                        <div className="chat__wrapper">
                                         {
                                             this.state.listMessage.map((messages,i)=>{
                                                 let own = messages.userSender.idUser!==undefined?this.state.dataUser.idUser===messages.userSender.idUser?'-own':'':this.state.dataUser.idUser===messages.userSender?'-own':'';
 												return(
-                                                    <div className={"chat__message chat__message"+own}>
+                                                    <div key={messages.idDiscussion} className={"chat__message chat__message"+own}>
                                                         <div className='content__message'>{messages.contents}</div>
                                                         <div className="date__message">{utile.formatDateTextWithTime(new Date(messages.sentTime))}</div>
                                                     </div>
@@ -329,7 +335,7 @@ class Causette extends Component{
                                         
                             </div>
                             <div className='card-footer'>
-                                <div class="chat__form" style={{visibility:this.state.userDiscussion===null?'hidden':'visible'}}>
+                                <div className="chat__form" style={{visibility:this.state.userDiscussion===null?'hidden':'visible'}}>
                                     <div className="chat__form_input">
                                         <input id="text-message" name='messageInput' value={this.state.messageInput} onChange={this.handleChange.bind(this,'messageInput')} type="text" placeholder="Ecrire votre message ..."/>
                                         <button href='#sendMessage' onClick={this.sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>

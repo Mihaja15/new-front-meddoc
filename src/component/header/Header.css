@@ -85,7 +85,7 @@
     /* box-shadow: 0px 0px 2px 1px #fff; */
 }
 .account-menu li.sign-in-link:hover{
-    transition: all 0.5s;
+    /* transition: all 0.5s; */
     background-color: #c5305f;
     /* box-shadow: 0px 0px 5px 1px #c5305f50; */
     /* padding-top: 15px; */
@@ -97,15 +97,17 @@
 .account-menu ul.dropdown-menu-compte{
     display: none;
     padding: 0;
-    padding-top: 5vh;
+    /* padding-top: 5vh; */
     text-align: center;
-    border-radius: 15px;
+    /* border-radius: 15px; */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     color: #fff;
     font-size: 17px;
     font-weight: 600;
     right:0;
-    min-width: 122px;
-    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+    width: 124px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     overflow: hidden;
 }
 .account-menu li.sign-in-link:hover ul.dropdown-menu-compte{
@@ -114,24 +116,30 @@
     /* animation: ease-in-out 1s 1 ; */
     transition: all 2s !important;
     visibility:visible !important;
-    display: block;
     opacity:1 !important;
     /* border-top-left-radius: 0;
     border-top-right-radius: 0; */
     /* background-color: #c5305f; */
 }
+.connected-menu li.sign-in-link a{
+    color: #fff;
+}
+.account-menu .dropdown-menu-compte li a{
+    color: #fff;
+}
+.account-menu .dropdown-menu-compte li:hover a{
+    color: #c5305f;
+}
 .account-menu .dropdown-menu-compte li{
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-left: 0;
     background-color: #c5305f;
 }
 .account-menu .dropdown-menu-compte li:hover{
     transition: all 0.5s;
     background-color: #fff;
     color: #c5305f;
-}
-.connected-menu li.sign-in-link a{
-    color: #fff;
 }
 .connected-menu li.sign-in-link a:hover{
     /* color: #c5305f; */
@@ -169,7 +177,6 @@
     animation: ease-in-out 1s 1 ;
     transition: all 2s !important;
     visibility:visible !important;
-    display: block;
     opacity:1 !important;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -219,6 +226,19 @@ span.initial-icon{
     border: 2px solid #c5305f;
     border-radius: 100%;
 }
+span.mini-initial-icon{
+    min-width:40px;
+    height:40px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #fff;
+    color: #1b7895;
+    border: 2px solid #1b7895;
+    border-radius: 15%;
+    font-size: 14px;
+    line-height: 37px;
+}
 li.nav-menu-link{
     display: inline;
     color: #fff !important;
@@ -226,7 +246,7 @@ li.nav-menu-link{
 }
 li.nav-menu-link:hover{
     transition: all 0.5s;
-    color: #011936 !important;
+    color: #39c3ef !important;
 }
 #drop-down-menu-sublink{
     transition: all 0.5s;

@@ -43,13 +43,13 @@ class Header extends React.Component{
         userSession.userLogout();
     }
     componentDidMount(){
-        fetchGet('/adresse/find-district-part/all').then(data=>{
-            // const newData= [];
-            // for (let i = 0; i < data.length; i++) {
-            //     newData.push({ value : data[i].idDistrict,label :data[i].nomDistrict});
-            // }
-            this.setState({listDistrict: data});
-        });
+        // fetchGet('/adresse/find-district-part/all').then(data=>{
+        //     // const newData= [];
+        //     // for (let i = 0; i < data.length; i++) {
+        //     //     newData.push({ value : data[i].idDistrict,label :data[i].nomDistrict});
+        //     // }
+        //     this.setState({listDistrict: data});
+        // });
         // var type = 0;
         // if(localStorage.getItem('typeConnected')!==null&&localStorage.getItem('typeConnected')!==undefined&&localStorage.getItem('typeConnected')!=="")
         //     type = localStorage.getItem('typeConnected');
@@ -88,7 +88,7 @@ class Header extends React.Component{
                 }
                 // this.setState({type:'patient', pseudo:userData.username, photo: userData.profilPicture});
                 this.setState({initial: utile.getInitial(cookies.get('pseudo')), photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
-            }else if(cookies.get('role').toLowerCase()==='staff'){
+            }else if(cookies.get('role').toLowerCase()==='professionnel santé'){
                 if(chemin==='profil-patient'||chemin==='profil-centre'){
                     alert('Vous n\'êtes pas autororisé à accéder ce lien');
                     window.location.replace('/profil-staff/1');
@@ -97,7 +97,7 @@ class Header extends React.Component{
                     alert('Vous êtes déjà connecté');
                     window.location.replace('/profil-staff/1');
                 }
-                // this.setState({type:'staff', pseudo:localStorage.getItem('pseudo'), photo: 'profile.png'});
+                // this.setState({type:'professionnel santé', pseudo:localStorage.getItem('pseudo'), photo: 'profile.png'});
                 this.setState({initial: utile.getInitial(cookies.get('pseudo')),photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
             }else{
                 if(chemin==='profil-patient'||chemin==='profil-centre'||chemin==='profil-staff'){
@@ -147,7 +147,7 @@ class Header extends React.Component{
         //         alert('Vous êtes déjà connecté');
         //         window.location.replace('/profil-staff/1');
         //     }
-        //     this.setState({type:'staff', pseudo:localStorage.getItem('pseudo'), photo: 'profile.png'});
+        //     this.setState({type:'professionnel santé', pseudo:localStorage.getItem('pseudo'), photo: 'profile.png'});
         // }
         // console.log(localStorage.getItem('connected')===null);
         window.addEventListener("scroll", this.handleScroll);
@@ -212,18 +212,18 @@ class Header extends React.Component{
         //         )
         //     }
         // }
-        else if((this.state.type).toLowerCase()==='staff'){
-            if(this.state.way!=='profil-staff'){
+        else if((this.state.type).toLowerCase()==='professionnel santé'){
+            if(this.state.way!=='professionnel'){
                 return(
                     <>
-                        <li onClick={()=>{window.location.replace("/profil-staff/1")}}>Compte <FontAwesomeIcon icon={faUser}/></li>
-                        <li onClick={()=>{this.logout(); window.location.replace("/connexion")}}>Déconnexion <FontAwesomeIcon icon={faSignOutAlt}/></li>
+                        <li onClick={()=>{window.location.replace("/professionnel/"+utile.valueToLink(userSession.get('pseudo')))}}>Compte <FontAwesomeIcon icon={faUser}/></li>
+                        <li onClick={()=>{this.logout(); window.location.replace("/connexion-centre")}}>Déconnexion <FontAwesomeIcon icon={faSignOutAlt}/></li>
                     </>
                 )
             }else{
                 return(
                     <>
-                        <li onClick={()=>{this.logout(); window.location.replace("/connexion")}}>Déconnexion <FontAwesomeIcon icon={faSignOutAlt}/></li>
+                        <li onClick={()=>{this.logout(); window.location.replace("/connexion-centre")}}>Déconnexion <FontAwesomeIcon icon={faSignOutAlt}/></li>
                     </>
                 )
             }
@@ -303,8 +303,10 @@ class Header extends React.Component{
                                     <li className="sign-in-link">
                                         <a href="#0"><FontAwesomeIcon style={{fontSize:'25px', color:'#fff'}} icon={faUserCircle}/>&nbsp;Compte&nbsp;<FontAwesomeIcon style={{fontSize:'15px', color:'#fff'}} icon={faCaretDown}/></a>
                                         <ul className="dropdown-menu-compte" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
-                                            <li onClick={()=>window.location.replace('/inscription')}>Inscription</li>
-                                            <li onClick={()=>window.location.replace('/connexion')}>Connexion</li>
+                                            {/* <li onClick={()=>window.location.replace('/inscription')}><a href="/inscription">Inscription</a></li> */}
+                                            <li ><a href="/inscription">Inscription</a></li>
+                                            {/* <li onClick={()=>window.location.replace('/connexion')}><a href="/connexion">Connexion</a></li> */}
+                                            <li ><a href="/connexion">Connexion</a></li>
                                         </ul>
                                     </li>
                                 </ul>

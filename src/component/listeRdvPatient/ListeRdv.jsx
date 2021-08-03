@@ -37,14 +37,14 @@ class ListeRdv extends Component{
             statut : this.state.statut,
             ordre : this.state.ordre
         }
-        fetchPost('/covid/rdv-patient',data).then(data=>{
+        fetchPost('/professionnel/rdv-patient',data).then(data=>{
             var userName = [];
             console.log('dataTmp dataTmp :',data);
             for(let i=0; i <data.content.length; i++){
-                if(!userName.find(element => element.value === data.content[i].patient.nom+" "+data.content[i].patient.prenoms)){
+                if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
                     userName.push({
-                        value:data.content[i].patient.nom+" "+data.content[i].patient.prenoms,
-                        indice: data.content[i].patient.idUser
+                        value:data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms,
+                        indice: data.content[i].personnePatient.idUser
                     })
                 }
             }
@@ -66,15 +66,15 @@ class ListeRdv extends Component{
                     statut : this.state.statut,
                     ordre : this.state.ordre
                 }
-                fetchPost('/covid/rdv-patient',data).then(data=>{
+                fetchPost('/professionnel/rdv-patient',data).then(data=>{
                     if(data!==null && data!==undefined){
                         var userName = [];
                         console.log('dataTmp dataTmp :',data);
                         for(let i=0; i <data.content.length; i++){
-                            if(!userName.find(element => element.value === data.content[i].patient.nom+" "+data.content[i].patient.prenoms)){
+                            if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
                                 userName.push({
-                                    value:data.content[i].patient.nom+" "+data.content[i].patient.prenoms,
-                                    indice: data.content[i].patient.idUser
+                                    value:data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms,
+                                    indice: data.content[i].personnePatient.idUser
                                 })
                             }
                         }
@@ -101,10 +101,10 @@ class ListeRdv extends Component{
                         {this.state.list.map((one, i)=>{
                             return(
                             <div className="container-rdv-patient col-md-12 row" key={i}>
-                                <span className="col-md-3">{this.inList(one.patient.idUser!==undefined?one.patient.idUser:one.patient)}</span>
+                                <span className="col-md-3">{this.inList(one.personnePatient.idUser!==undefined?one.personnePatient.idUser:one.patient)}</span>
                                 <span className="col-md-3">{utile.getDateComplet(one.dateHeureRdv)}</span>
                                 <span className="col-md-1">{utile.dateToHour(one.dateHeureRdv)}</span>
-                                <span className="col-md-3">{one.centre.nomCentre+","+one.centre.adresse[0].addrValue}</span>
+                                <span className="col-md-3">{utile.hasValue(one.structure)?one.structure.raisonSociale+","+one.structure.adresse[0].addrValue:""}</span>
                                 {one.statut.idStatut===101?
                                     <span className="rdv-list-statut col-md-2">Déjà fait&nbsp;&nbsp;<FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/></span>
                                     :<span className="rdv-list-statut col-md-2">A venir&nbsp;&nbsp;<FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/></span>

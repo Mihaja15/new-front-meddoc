@@ -32,7 +32,7 @@ class Footer extends React.Component{
                             <hr className="hrFooter"/>
                             <ul className="list-unstyled">
                                 <li className="pListeFooter">
-                                    <a href="/inscription-centre">Inscription centre de vaccination</a>
+                                    <a href="/inscription-professionnel-sante">Inscription centre de vaccination</a>
                                 </li>
                                 <li className="pListeFooter">
                                     <a href="/connexion-centre">Connexion centre de vaccination</a>

@@ -1,12 +1,13 @@
 .inscription-centre-container{
     width:100%;
-    /* padding-top: 20vh; */
-    padding-top: 20vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
     padding-left: 10vh;
     padding-right: 0vh;
     align-items: center;
     justify-content: center;
     margin-left: 0;
+    margin-bottom: 10vh;
 }
 .progressBarSonOfChildLoggin{
     margin-top: 5px;
@@ -172,6 +173,29 @@ div span select{
     border: 0;
 }
 .each-line-contact input{
+    border: 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+.each-line-experience{
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: right; */
+    text-align: center;
+    /* margin-left: 5px;
+    padding: 0;
+    padding-left: 5px;
+    padding-top: 5px; */
+}
+.each-line-experience select{
+    /* font-size: 12px; */
+    border: 0;
+}
+.each-line-experience input{
+    text-align: center;
+    border: 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+.each-line-experience textarea{
     border: 0;
     border-bottom: 1px solid #dbdbdb;
 }

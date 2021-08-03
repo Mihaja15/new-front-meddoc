@@ -13,9 +13,12 @@ function getData(url){
 
 export function fetchGet(url){
     console.log('url : '+urlConf()+url);
-    return fetch(urlConf()+url, { headers: authHeader() }).then(response=>response.json()).then(data=>{
-        return data;
-    }).catch(error=>{
+    // return fetch(urlConf()+url, { headers: authHeader() }).then(response=>response.json()).then(data=>{
+    //     return data;
+    // }).catch(error=>{
+    //     console.log('global service '+error)
+    // });
+    return fetch(urlConf()+url).then(response=>handleResponse(response)).catch(error=>{
         console.log('global service '+error)
     });
 }
@@ -33,17 +36,37 @@ function postData(url, dataSend){
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataSend)
     };
-    return fetch(urlConf()+url, requestOptions).then(handleResponse);
+    // return fetch(urlConf()+url, requestOptions).then(handleResponse);
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
+        console.log('global service '+error)
+    });
 }
 
 export function fetchPost(url, dataSend){
     const requestOptions = {
         method: 'POST',
+        // headers: { 'Content-Type': 'application/json' },
+        headers: authHeader(true),
+        body: JSON.stringify(dataSend)
+    };
+    // return fetch(urlConf()+url, requestOptions).then(response=>response.json()).then(data=>{
+    //     return data;
+    // });
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
+        console.log('global service '+error)
+    });
+}
+export function fetchPostNotLogged(url, dataSend){
+    const requestOptions = {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataSend)
     };
-    return fetch(urlConf()+url, requestOptions).then(response=>response.json()).then(data=>{
-        return data;
+    // return fetch(urlConf()+url, requestOptions).then(response=>response.json()).then(data=>{
+    //     return data;
+    // });
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
+        console.log('global service '+error)
     });
 }
 export function fetchPostHeader(url, dataSend){
@@ -52,7 +75,10 @@ export function fetchPostHeader(url, dataSend){
         headers: authHeader(true),
         body: JSON.stringify(dataSend)
     };
-    return fetch(urlConf()+url, requestOptions).then(handleResponse);
+    // return fetch(urlConf()+url, requestOptions).then(handleResponse);
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
+        console.log('global service '+error)
+    });
 }
 export function fetchPostV2(url, dataSend){
     const requestOptions = {
@@ -89,6 +115,7 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
+            // alert(response.status);
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 console.log(response);
@@ -96,8 +123,10 @@ function handleResponse(response) {
                 userSession.userLogout();
                 if(role==='Patient')
                     window.location.replace('/connexion');
-                else
+                else if(role==='Professionnel santé')
                     window.location.replace('/connexion-centre');
+                else
+                    window.location.replace('/');
             }
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);

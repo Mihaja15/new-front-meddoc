@@ -27,13 +27,14 @@ export default class Centre extends React.Component{
             text:'',
             district:'0',
             listDistrict:[],
-            listCentre:[],
+            listResultSearch:[],
             hiddenMap:true,
             position:[0.0,0.0],
-            centreDetail:null,
+            professionnelDetail:null,
             stateShow:1,
             idUser:null,
-            dateHeure:null
+            dateHeure:null,
+            showResult:false
         }
     }    
     getUrlPhoto(photo){
@@ -44,28 +45,30 @@ export default class Centre extends React.Component{
         } catch (error) { }
         return <img src={"/assets/upload/profile-centre.png"} alt="image_profile" className="photo-centre-search"/>
     }
-    getDataHtmlResultatRecherche(listCentre){
-        if(listCentre.length>0){
+    getDataHtmlResultatRecherche(listResultSearch){
+        // console.log(listResultSearch)
+        if(listResultSearch.length>0){
             return (
                 <>
                     {
-                        (listCentre).map((data,i)=>{
+                        (listResultSearch).map((data,i)=>{
                             return (
                                 <div className="row each-line-search" key={i} onMouseOver={()=>{this.setState({indiceIcon :i, setIcon : true, position : [data.adresse.latitude,data.adresse.longitude]})}}>
                                     <div className="col-md-4 col-sm-12 each-line-search-detail">
                                         <div className="">
-                                            {this.getUrlPhoto(data.photo)}
+                                            {this.getUrlPhoto()}
                                             {/* <span className="initial-centre-icon">{this.getInitial(data.nomCentre)}</span> */}
                                         </div>
-                                        <p className="">{data.adresse.addrValue}</p>
-                                        <a href='#0' onClick={()=>this.setState({centreDetail:data,stateShow:2})}>{data.nomCentre}</a>
+                                        <p className="">{data.adresse.informationAdresse}</p>
+                                        {/* <a href='#0' onClick={()=>this.setState({professionnelDetail:data,stateShow:2})}>{data.pseudo}</a> */}
+                                        <a href={`/${data.adresse.district.nomDistrict.trim().replace(/\s+/g, '-').toLowerCase()+'/'+data.specialite.trim().replace(/\s+/g, '-').toLowerCase()+'/'+data.pseudo.trim().replace(/\s+/g, '-').toLowerCase()}`}>{data.pseudo}</a>
                                         {/* <a href='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}></a> */}
                                         {/* <div className="adresseMedecinRechercheMedecin">{data.medecinData.user.adresse.addrValue}</div> */}
                                         {/* <div className="buttonMedecinRechercheMedecin"><a className=" popup-with-move-anim a1" href="#0" onClick={()=>this.setState({medecinDetail:data.medecinData,stateShow:2,medecinEdt:data.emploiDuTemps})}>Prendre rendez-vous</a></div> */}
                                     </div>
                                     <div className="col-md-8 col-sm-12 each-line-search-emploi-temps">
-                                        <EmploiTemps centre={data} idCentre={data.idCentre} link={"/covid/schedule"} setDataCentre={this.changeCentre} /*changeStateShow={this.changeStateShow}*//>
-                                        {/* <EmploiTemps idCentre={data.idCentre} idUser={this.state.idUser} nomCentre={data.nomCentre} link={"/covid/schedule"}/> */}
+                                        <EmploiTemps professionnel={data} idProfessionnel={data.idUser} link={"/professionnel/schedule"} setDataCentre={this.changeCentre} /*changeStateShow={this.changeStateShow}*//>
+                                        {/* <EmploiTemps idCentre={data.idCentre} idUser={this.state.idUser} nomCentre={data.nomCentre} link={"/professionnel/schedule"}/> */}
                                     </div>
                                 </div>
                             )
@@ -90,11 +93,11 @@ export default class Centre extends React.Component{
                     </div>
                 </>
             )
-        }
-        return <div>Aucun résultat trouvé</div>
+        }else
+            return <div>Aucun résultat trouvé</div>
     }//info medecin
-    getMap(listCentre){
-        if(listCentre.length>0){
+    getMap(listResultSearch){
+        if(listResultSearch.length>0){
             return (
                 <MapContainer center={this.state.position} zoom={10} scrollWheelZoom={true}>
                     <TileLayer
@@ -102,7 +105,7 @@ export default class Centre extends React.Component{
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     {
-                        listCentre.map((data,i)=>{
+                        listResultSearch.map((data,i)=>{
                             if(this.state.setIcon && this.state.indiceIcon === i){
                                 return (
                                     <Marker position={[data.adresse.latitude,data.adresse.longitude]}  icon={new L.Icon({
@@ -114,7 +117,7 @@ export default class Centre extends React.Component{
                                         shadowSize: [41, 41]
                                     })} key={i} >
                                         <Popup>
-                                            {data.nomCentre}
+                                            {data.pseudo}
                                         </Popup>
                                     </Marker>
                                 )
@@ -129,7 +132,7 @@ export default class Centre extends React.Component{
                                         shadowSize: [41, 41]
                                     })} key={i} >
                                         <Popup>
-                                            {data.nomCentre}
+                                            {data.pseudo}
                                         </Popup>
                                     </Marker>
                                 )
@@ -144,23 +147,25 @@ export default class Centre extends React.Component{
     }
     
     search=()=>{
-        if(window.location.pathname.split('/')[1]==='recherche-centre')
-            window.history.pushState("object or string", "Title", '/recherche-centre/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
+        this.setState({showResult:false});
+        if(window.location.pathname.split('/')[1]==='recherche')
+            window.history.pushState("object or string", "Title", '/recherche/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
         else
             window.history.pushState("object or string", "Title", '/profil-patient/recherche/'+decodeURI(this.state.text.toString())+'/'+this.state.district);
         const text = this.state.text===""?"----":this.state.text;
-        const  urls='/covid/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
+        const  urls='/professionnel/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
         fetchGet(urls).then(data=>{
             if(data!==null && data!==undefined){
                 if(data.content !==null && data.content !==undefined){
                     const dataTmp=data.content;
-                    this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
+                    this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
                     console.log('rechercherNew : ', data);
                     if(dataTmp.length > 0){
                         this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                     } else this.setState({hiddenMap:true});
                 }
             }
+            this.setState({showResult:true});
         });
     }
     getInitial=(complete)=>{
@@ -185,51 +190,56 @@ export default class Centre extends React.Component{
         console.log(this.props.dataFind)
         if(this.props.dataFind!==null){
             if(this.props.dataFind.text==="" && this.props.dataFind.district==="0"){
-                const  urls='/covid/recherche/0/----/'+this.state.page+'/'+this.state.size;
+                const  urls='/professionnel/recherche/0/----/'+this.state.page+'/'+this.state.size;
                 fetchGet(urls).then(data=>{
+                    console.log(data)
                     if(data!==null && data!==undefined){
                         if(data.content !==null && data.content !==undefined){
                             const dataTmp=data.content;
-                            this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
+                            this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
                             console.log('rechercherNew : ', data);
                             if(dataTmp.length > 0){
                                 this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                             } else this.setState({hiddenMap:true});
                         }
                     }
+                    this.setState({showResult:true});
                 });
             }else{
                 this.setState({text:decodeURI(this.props.dataFind.text.toString()),district:this.props.dataFind.district},function(){
                     const text = this.state.text===""?"----":this.state.text;
-                    const  urls='/covid/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
+                    const  urls='/professionnel/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
                     fetchGet(urls).then(data=>{
+                        console.log(data)
                         if(data!==null && data!==undefined){
                             if(data.content !==null && data.content !==undefined){
                                 const dataTmp=data.content;
-                                this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
+                                this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
                                 console.log('rechercherNew : ', data);
                                 if(dataTmp.length > 0){
                                     this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                                 } else this.setState({hiddenMap:true});
                             }
                         }
+                        this.setState({showResult:true});
                     });
                 })
             }
             console.log('rechercherNew : ', this.props.dataFind);
         }else{
-            const urls='/covid/recherche/0/----/'+this.state.page+'/'+this.state.size;
+            const urls='/professionnel/recherche/0/----/'+this.state.page+'/'+this.state.size;
             fetchGet(urls).then(data=>{
                 if(data!==null && data!==undefined){
                     if(data.content !==null && data.content !==undefined){
                         const dataTmp=data.content;
-                        this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
+                        this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
                         console.log('rechercherNew : ', data);
                         if(dataTmp.length > 0){
                             this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                         } else this.setState({hiddenMap:true});
                     }
                 }
+                this.setState({showResult:true});
             });
         }
     }
@@ -246,18 +256,22 @@ export default class Centre extends React.Component{
         this.setState({stateShow:status});
     }
     changeCentre=(data)=>{
-        this.setState({centreDetail:data, stateShow:2});
+        this.setState({professionnelDetail:data, stateShow:2});
+    }
+    scrollToTop() {
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
     }
     handlePageChange=(pageNumber)=> {
         this.scrollToTop();
         const text = this.state.text===""?"----":this.state.text;
-        const  urls='/covid/recherche/'+this.state.district+'/'+text+'/'+(pageNumber-1)+'/'+this.state.size;
+        const  urls='/professionnel/recherche/'+this.state.district+'/'+text+'/'+(pageNumber-1)+'/'+this.state.size;
         fetchGet(urls+'/'+pageNumber).then(data=>{
+            console.log(data)
             if(data!==null && data!==undefined){
                 if(data.content !==null && data.content !==undefined){
-                    this.setState({listCentre : data.content,activePage : pageNumber, totalPage : data.nbPage,nbElement : data.nbElement}, function(){
-                        console.log('count : ', this.state.listCentre.length);
-                        if(this.state.listCentre.length > 0) this.setState({hiddenMap:false});
+                    this.setState({listResultSearch : data.content,activePage : pageNumber, totalPage : data.nbPage,nbElement : data.nbElement}, function(){
+                        console.log('count : ', this.state.listResultSearch.length);
+                        if(this.state.listResultSearch.length > 0) this.setState({hiddenMap:false});
                         else this.setState({hiddenMap:true});
                     });
                     console.log('rechercherNew : ', data);
@@ -265,6 +279,7 @@ export default class Centre extends React.Component{
                 if(data.content.length > 0) this.setState({hiddenMap:false});
                 else this.setState({hiddenMap:true});
             }
+            this.setState({showResult:true});
         });
     }
     render(){
@@ -315,19 +330,21 @@ export default class Centre extends React.Component{
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-4 col-sm-12 fathermapsRechercheMedecin">
-                        {/* style={{position : `${this.state.nav}`,top:`${this.state.tops}`,width:'400px'}} */}
-                            <div hidden={this.state.hiddenMap} className="mapsRechercheMedecin">
-                                {this.getMap(this.state.listCentre)}
+                        {!this.state.showResult?<div style={{textAlign:"center", width:"100%"}}>Chargement . . .</div>:<>
+                            <div className="col-md-4 col-sm-12 fathermapsRechercheMedecin">
+                            {/* style={{position : `${this.state.nav}`,top:`${this.state.tops}`,width:'400px'}} */}
+                                <div hidden={this.state.hiddenMap} className="mapsRechercheMedecin">
+                                    {this.getMap(this.state.listResultSearch)}
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-md-7 col-sm-12 listeMedecinRechercheMedecin">
-                            <span className="ccol-md-12 text-before-list">Prenez rendez-vous en ligne dans un centre de vaccination partout à Madagascar</span>
-                            {this.getDataHtmlResultatRecherche(this.state.listCentre)}
-                            
-                        </div>
+                            <div className="col-md-7 col-sm-12 listeMedecinRechercheMedecin">
+                                <span className="ccol-md-12 text-before-list">Prenez rendez-vous en ligne dans un centre de vaccination partout à Madagascar</span>
+                                {this.getDataHtmlResultatRecherche(this.state.listResultSearch)}
+                                
+                            </div>
+                            </>}
                     </div>
-                </>):(this.state.centreDetail!==null?<DetailCentre setStateShow={this.changeStateShow} centreData={this.state.centreDetail}/>:'')
+                </>):(this.state.professionnelDetail!==null?<DetailCentre setStateShow={this.changeStateShow} professionnelData={this.state.professionnelDetail}/>:'')
                 }
             </div>
         )

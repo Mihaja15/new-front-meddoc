@@ -15,7 +15,7 @@ function MyComponent(props) {
 	return null;
 }
 
-export default class InscriptionCentre extends React.Component{
+export default class InscriptionStructure extends React.Component{
     constructor(props){
         super();
         this.state = {

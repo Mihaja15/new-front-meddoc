@@ -20,8 +20,8 @@ export default class EmploiTemps extends React.Component{
     }
     componentDidMount(){
         console.log(this.props);
-        if(this.props.idCentre!==null){
-            fetchGet(this.props.link+'/'+this.props.idCentre+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
+        if(this.props.idProfessionnel!==null){
+            fetchGet(this.props.link+'/'+this.props.idProfessionnel+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                 this.setState({jour:edt},function(){
                     console.log('EDT : ',this.state.jour);
                 });
@@ -38,7 +38,7 @@ export default class EmploiTemps extends React.Component{
     onClickPrevNext=(direction)=>{
         var jour = new Date(this.state.dateFirst.getTime() + (direction * 3 * 24 * 60 * 60 * 1000));
         this.setState({dateFirst:jour}, function(){
-            fetchGet(this.props.link+'/'+this.props.idCentre+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
+            fetchGet(this.props.link+'/'+this.props.idProfessionnel+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                 this.setState({jour:edt},function(){
                     console.log('EDT : ',this.state.jour);
                 });
@@ -50,7 +50,7 @@ export default class EmploiTemps extends React.Component{
         this.setState({ [param]: e.target.value })
     }
     takeAppointment=(date,heure)=>{
-        this.props.setDataCentre(this.props.centre);
+        this.props.setDataCentre(this.props.professionnel);
         // if(this.props.idUser===null||this.props.idUser===undefined){
         //     alert('Vous devez d\'abord vous connecter');
         //     return;
@@ -74,7 +74,7 @@ export default class EmploiTemps extends React.Component{
         if(validation){
             const data = { 
                 dateHeureRdv : dateHeure ,
-                idCentre : this.props.idCentre,
+                idProfessionnel : this.props.idProfessionnel,
                 idDmdUser:this.props.idUser,
                 idPatient:this.props.idUser,
                 motif : "Premier rendez-vous",

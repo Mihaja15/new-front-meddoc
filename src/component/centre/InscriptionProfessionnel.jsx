@@ -1,16 +1,13 @@
 import React from 'react';
-import './Compte.css';
 import { ProgressBar } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
+import './InscriptionCentre.css';
+import { fetchGet, fetchPost,fetchPostNotLogged,fetchPostV2 } from '../../services/global.service';
+import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
-import redIcon from '../../assets/icon/marker-icon-2x-red.png';
-import { fetchGet, fetchGetHandler, fetchPostHeader } from '../../services/global.service';
-import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { utile } from '../../services/utile';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faUndoAlt, faUserEdit } from '@fortawesome/free-solid-svg-icons';
-import { userSession } from '../../services/userSession';
+import redIcon from '../../assets/icon/marker-icon-2x-red.png';
 import Select from 'react-select';
 function MyComponent(props) {
 	useMapEvent('click', (e) => {
@@ -19,41 +16,10 @@ function MyComponent(props) {
 	return null;
 }
 
-export default class Compte extends React.Component{
+export default class InscriptionProfessionnel extends React.Component{
     constructor(props){
-        super(props);
-        this.state={
-            // idProfessionnel:null,
-            // idAdresse:null,
-            // latitude:-18.41106708060209,
-            // longitude:47.516397059313796,
-            // listLieu:[],
-            // listDistrict:[],
-            // listContact:[],
-            // listTypeContact:[],
-            // nomCentre:'',
-            // presentation:'',
-            // infoAcces:'',
-            // nbSalle:0,
-            // adresse:'',
-            // emploiTemps:utile.createSemaineEmploieDuTemps(),
-            // phone:'',
-            // mail:'',
-            // file:null,
-            // fileName:'',
-            // mdp:'',
-            // oldMdp:'',
-            // province:'',
-            // district:'',
-            // duree:0,
-            // percentageMdp:0,
-            // confirmationMdp:'',
-            update:false,
-            // mailIndice:null,
-            // phoneIndice:null,
-            // disableButton:false,
-            // erreurMessage:'',
-            // erreurEtat:false
+        super();
+        this.state = {
             latitude:-18.41106708060209,
             longitude:47.516397059313796,
             // latitude:0,
@@ -112,96 +78,7 @@ export default class Compte extends React.Component{
         if(this.state.mdp === this.state.confirmationMdp && this.state.percentageMdp === 100){
             return true;
         }
-    }
-    modificationCompte(event){
-        event.preventDefault();
-        this.setState({disableButton:true});
-		// const data = new FormData(event.target);
-        const dataCentre = {
-            idCentre:this.state.idCentre,
-            nomCentre:this.state.nomCentre,
-            presentation:this.state.presentation,
-            infoAcces:this.state.infoAcces,
-            nbSalle:this.state.nbSalle,
-            adresse:[{
-                idAdresse: this.state.idAdresse,
-                addrValue:this.state.adresse,
-                latitude : this.state.latitude,
-                longitude : this.state.longitude,
-                district:{
-                    idDistrict: this.state.district
-                }
-            }],
-            identifiant:[{
-                identifiant: this.state.mail.trim()
-            },{
-                identifiant: this.state.phone.trim()
-            }],
-            emploiTemps:this.getEmploiDuTemps(),
-            contact:this.state.listContact,
-            dureeVaccination:this.state.duree
-        }
-        const dataSend = {
-            centre: JSON.stringify(dataCentre),
-            mdp: this.state.oldMdp
-        }
-        console.log(dataCentre);
-        fetchPostHeader('/covid/edition-centre',dataSend).then(result=>{
-            if(result.etat === "0"){
-                alert(result.message);
-                this.setState({disableButton:false,update:false});
-            }else{
-                this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
-            }
-            console.log(result);
-        });
-    }
-    handleChange = (param, e) => {
-        if(param==="mdp"){
-            this.setState({percentageMdp:verificationMotDePasseEnPourcentage(e.target.value)});
-        }
-        if(param==="province"){
-            fetchGet('/adresse/find-district-by-id-province/'+e.target.value).then(data=>{
-                if(data!=null){
-                    this.setState({ listDistrict: data });
-                }
-            });
-        }
-        if(param==="phone"){
-            if(this.state.phoneIndice!==null){
-                const data = this.state.listContact;
-                data[this.state.phoneIndice].contact = e.target.value;
-                this.setState({listContact: data});
-                // this.state.listContact[this.state.phoneIndice].contact=e.target.value;
-            }
-                
-        }
-        if(param==="mail"){
-            if(this.state.mailIndice!==null){
-                const data = this.state.listContact;
-                data[this.state.mailIndice].contact = e.target.value;
-                this.setState({listContact: data});
-            }
-                // this.state.listContact[this.state.mailIndice].contact=e.target.value;
-        }
-        this.setState({ [param]: e.target.value })
-    }
-    generaterTabSelect = (min,max) =>{
-		const valeur = [];
-		for (let index = (min-1); index < max; index++) {
-			valeur.push({
-				label : utile.autocompleteZero((index+1),2)+' h',
-				value : (index+1)
-			})
-		}
-		return(
-            <>
-                <option disabled={!this.state.update} value={-1}>--h</option>
-                {valeur.map((heure, i)=>{
-                    return <option key={i} disabled={!this.state.update} value={heure.value}>{heure.label}</option>
-                })}
-            </>
-        );
+        return false;
     }
     setDataCenter=(lats,lngs)=>{
         this.setState({latitude : lats,longitude : lngs});
@@ -236,10 +113,238 @@ export default class Compte extends React.Component{
 		}
 		return newData;
 	}
+    inscriptionUserMedecin(event) {
+		event.preventDefault();
+        this.setState({disableButton:true});
+		const data = new FormData(event.target);
+        const contacts = this.state.listContact;
+        if(this.state.phone!=='')
+            contacts.push({
+                valeurContact: this.state.phone,
+                typeContact: {
+                    idTypeContact: 1
+                }
+            })
+        if(this.state.mail!=='')
+            contacts.push({
+                valeurContact: this.state.mail,
+                typeContact: {
+                    idTypeContact: 2
+                }
+            })
+        this.setState({listContact:contacts});
+        const dataCentre = {
+            personne:{
+                nom:this.state.nom,
+                prenoms:this.state.prenoms,
+                sexe:this.state.sexe,
+                langue:this.state.langue,
+                dateNaissance:this.state.dateNaissance,
+                lieuNaissance:this.state.lieuNaissance,
+                contact:this.state.listContact,
+                adresse:[{
+                    informationAdresse:this.state.adresse,
+                    informationAcces:this.state.infoAcces,
+                    latitude:this.state.latitude,
+                    longitude:this.state.longitude,
+                    district:{
+                        idDistrict:this.state.district
+                    }
+                }],
+                user:{
+                    phone:this.state.phone,
+                    email:this.state.mail,
+                    password:this.state.mdp,
+                    typeUser:{
+                        idTypeUser:2
+                    },
+                    statut:{
+                        idStatut:0
+                    }
+                }
+            },
+            informationMedecin:this.state.presentation,
+            emploiTemps:this.getEmploiDuTemps(),
+            dureeConsultation:this.state.duree,
+            numeroOrdre:this.state.numOrdre,
+            typeOrdre:{
+                idTypeOrdre:this.state.typeOrdre
+            },
+            specialite:{
+                idSpecialite:this.state.specialite
+            },
+            modePaiement:this.state.paiement,
+            fraisConsultation:this.state.fraisConsultation,
+            diplomes:this.state.diplomes,
+            experiences:this.state.experiences
+        }
+        console.log(dataCentre);
+        localStorage.setItem("tempForm",dataCentre);
+        // if(this.state.file!==null){
+            fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
+                if(result.statut === 200){
+                    // fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{
+                        // console.log(mm);
+                        this.setState({disableButton:false});
+                        window.location.replace('/connexion-centre');
+                    // }).catch(error=>{
+                    //     console.log(error);
+                    //     this.setState({disableButton:false});
+                    // });
+                }else{
+                    this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
+                }
+            }).catch(error=>{
+                console.log(error)
+                this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
+            });
+        // }
+        // if(dataUser!==null && this.state.file!=null){
+        //     dataUser.profilPicture=''+this.state.fileName;
+        //     console.log('dataUser : ',dataUser);
+        //     fetchPost('/medecin/insertionMedecin',dataUser).then(resultatTmp=>{
+        //         if(resultatTmp.status === 200){
+        //             fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{});console.log("resultatTmp.codeValidation : "+resultatTmp.codeValidation);
+        //             //fetch('http://localhost:5000/photo', {method: 'POST',body: data})//
+        //             this.setState({fileName:''+date.getDate()+''+date.getMonth()+''+date.getFullYear()+''+this.state.fileName,erreurMessage : "",erreurEtat: false,codeValidation : resultatTmp.codeValidation,etatMenu : 2});
+        //             localStorage.setItem('tel',''+this.state.telephone.valuesText);
+        //             localStorage.setItem('nom',''+this.state.nom.valuesText);
+        //             localStorage.setItem('prenom',''+this.state.prenom.valuesText);
+        //             localStorage.setItem('niveau','meddocInscriptionNiveauConfirmation');
+        //             window.location.reload(true);
+        //         }else if(resultatTmp.status === 300){
+        //             this.setState({errorusersms : resultatTmp.message,erroruser: 2});
+        //             this.setState({disableButton:false});
+        //         }else{
+        //             this.setState({errorusersms : resultatTmp.message,erroruser: 3});
+        //             this.setState({disableButton:false});
+        //         }
+        //     });
+        // }else{
+        //     this.setState({erreurMessage : "Verifiez votre champs si il n'y a un champs vide ou une erreur",erreurEtat: true})
+        // }
+    }
+    handleChange = (param, e) => {
+        if(param==="mdp"){
+            this.setState({percentageMdp:verificationMotDePasseEnPourcentage(e.target.value)});
+        }
+        if(param==="province"){
+            fetchGet('/adresse/find-district-by-id-province/'+e.target.value).then(data=>{
+                if(data!=null){
+                    this.setState({ listDistrict: data });
+                }
+            });
+        }
+        if(param==="langue"){
+            if(e!==null){
+                const lang = [];
+                for(let i=0;i<e.length;i++){
+                    lang.push({
+                        idLangue:e[i].value
+                    })
+                }
+                this.setState({ [param]: lang });
+            }else
+                this.setState({ [param]: null });
+        }else if(param==="paiement"){
+            if(e!==null){
+                const lang = [];
+                for(let i=0;i<e.length;i++){
+                    lang.push({
+                        idModePaiement:e[i].value
+                    })
+                }
+                this.setState({ [param]: lang });
+            }else
+                this.setState({ [param]: null });
+        }else if(param==="district"){
+            if(e!==null)
+                this.setState({ [param]: e.value });
+            else
+                this.setState({ [param]: '' });
+        }else
+            this.setState({ [param]: e.target.value });
+    }
+    componentDidMount(){
+        navigator.geolocation.getCurrentPosition((position) => {
+            let lat = position.coords.latitude
+            let lng = position.coords.longitude
+            console.log("getCurrentPosition Success " + lat + lng) // logs position correctly
+            this.setState({
+                latitude: lat,
+                longitude: lng
+            })
+          },
+          (error) => {
+            // this.props.displayError("Error dectecting your location");
+            // console.error(JSON.stringify(error))
+            console.error(`ERROR(${error.code}): ${error.message}`);
+          },
+          {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+        // this.getDataInStorageAndChangeStage();
+        fetchGet('/adresse/find-district-part/all').then(data=>{
+            if(data!=null && data.length>=0){
+                this.setState({ dataDistrict: data });
+            }
+        });
+		fetchGet('/adresse/province/all').then(data=>{
+			if(data!=null){
+				this.setState({ listLieu: data });
+			}
+        });
+        fetchGet('/type-contact/list').then(data=>{
+			if(data!=null){
+				this.setState({ listTypeContact: data });
+			}
+        });
+        fetchGet('/professionnel/listSpecialite').then(data=>{
+            console.log(data);
+			if(data!=null){
+				this.setState({ listSpecialite: data });
+			}
+        });
+        fetchGet('/professionnel/listTypeOrdre').then(data=>{
+			if(data!=null){
+				this.setState({ listTypeOrdre: data });
+			}
+        });
+        fetchGet('/professionnel/listTypeConsultation').then(data=>{
+			if(data!=null){
+				this.setState({ listTypeConsultation: data });
+			}
+        });
+        fetchGet('/extra/langue/list').then(data=>{
+			if(data!=null){
+				this.setState({ listLangue: data });
+			}
+        });
+        fetchGet('/extra/paiement/list').then(data=>{
+			if(data!=null){
+				this.setState({ listPaiement: data });
+			}
+        });
+    }
+    generaterTabSelect = (min,max) =>{
+		const valeur = [];
+		for (let index = (min-1); index < max; index++) {
+			valeur.push({
+				label : utile.autocompleteZero((index+1),2)+' h',
+				value : (index+1)
+			})
+		}
+		return(
+            <>
+                <option value={-1}>--h</option>
+                {valeur.map((heure, i)=>{
+                    return <option key={i} value={heure.value}>{heure.label}</option>
+                })}
+            </>
+        );
+    }
     setSemaineEmploieDuTemps=(indice,event)=>{
         const data= this.state.emploiTemps;
         data[indice].activation= event.target.checked;
-        this.setState({emploiTemps: data});
+		this.setState({emploiTemps: data});
 	}
     setValueEmploieDuTemps(namesHeure,indice,event){
 		const valeur = utile.parseStringToInt(event.target.value);
@@ -439,202 +544,39 @@ export default class Compte extends React.Component{
         data[indice].idTypeConsultation= event.target.value;
 		this.setState({fraisConsultation: data});
     }
-    componentDidMount(){
-        fetchGetHandler('/professionnel/data').then(data=>{
-            console.log(data)
-            if(data!==null){
-                fetchGet('/adresse/find-province-by-id-district/'+data.personne.adresse[0].district.idDistrict).then(idProvince=>{
-                    this.setState({province:idProvince});
-                    fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(datas=>{
-                        if(datas!=null){
-                            this.setState({ listDistrict: datas });
-                        }
-                    });
-                });
-                // fetchGet('/adresse/find-district-part/all').then(data=>{
-                //     if(data!=null && data.length>=0){
-                //         this.setState({ dataDistrict: data });
-                //     }
-                // });
-                // fetchGet('/adresse/province/all').then(data=>{
-                //     if(data!=null){
-                //         this.setState({ listLieu: data });
-                //     }
-                // });
-                fetchGet('/type-contact/list').then(data=>{
-                    if(data!=null){
-                        this.setState({ listTypeContact: data });
-                    }
-                });
-                fetchGet('/professionnel/listSpecialite').then(data=>{
-                    console.log(data);
-                    if(data!=null){
-                        this.setState({ listSpecialite: data });
-                    }
-                });
-                fetchGet('/professionnel/listTypeOrdre').then(data=>{
-                    if(data!=null){
-                        this.setState({ listTypeOrdre: data });
-                    }
-                });
-                fetchGet('/professionnel/listTypeConsultation').then(data=>{
-                    if(data!=null){
-                        this.setState({ listTypeConsultation: data });
-                    }
-                });
-                fetchGet('/extra/langue/list').then(data=>{
-                    if(data!=null){
-                        this.setState({ listLangue: data });
-                    }
-                });
-                fetchGet('/extra/paiement/list').then(data=>{
-                    if(data!=null){
-                        this.setState({ listPaiement: data });
-                    }
-                });
-                // console.log("idProvince:  "+idProvince);
-                console.log(data)
-                const edt = data.emploiTemps;
-                const semaine = utile.getAllSemaine();
-                const dataEdt= [];
-                var exist = false;
-                var top1 = null;
-                var top2 = null;
-                var bot1 = null;
-                var bot2 = null;
-                for (let i = 0; i < semaine.length; i++) {
-                    exist = false;
-                    if(edt!==null){
-                        for (let j = 0; j < edt.length; j++) {
-                            if(edt[j].timeStartBottom!==undefined && edt[j].timeStartBottom!==null && edt[j].timeStartBottom!=="")
-                                bot1 = edt[j].timeStartBottom.split(':')[0]*1;
-                            if(edt[j].timeStopBottom!==undefined && edt[j].timeStopBottom!==null && edt[j].timeStopBottom!=="")
-                                bot2 = edt[j].timeStopBottom.split(':')[0]*1;
-                            if(edt[j].timeStartTop!==undefined && edt[j].timeStartTop!==null && edt[j].timeStartTop!=="")
-                                top1 = edt[j].timeStartTop.split(':')[0]*1;
-                            if(edt[j].timeStopTop!==undefined && edt[j].timeStopTop!==null && edt[j].timeStopTop!=="")
-                                top2 = edt[j].timeStopTop.split(':')[0]*1;
-                            if(edt[j].jour===i){
-                                exist = true;
-                                dataEdt.push({
-                                    names : semaine[i],
-                                    activation : true,
-                                    jour : i,
-                                    topStart : top1,
-                                    topStop : top2,
-                                    bottomStart : bot1,
-                                    bottomStop : bot2,
-                                })
-                            }
-                        }
-                    }
-                    if(!exist){
-                        dataEdt.push({
-                            names : semaine[i],
-                            activation : false,
-                            jour : i,
-                            topStart : null,
-                            topStop : null,
-                            bottomStart : null,
-                            bottomStop : null,
-                        })
-                    }
-                }
-                const contact = data.personne.contact;
-                // const ids = data.identifiant;
-                var mail = "";
-                var phone = "";
-                // for(let i = 0; i < contact.length; i++){
-                //     for(let j = 0; j < ids.length; j++){
-                //         if(ids[j].identifiant===contact[i].contact){
-                //             if(contact[i].typeContact.idTypeContact===1){
-                //                 phone = contact[i].contact;
-                //                 this.setState({phoneIndice:i});
-                //             }
-                //             if(contact[i].typeContact.idTypeContact===2){
-                //                 mail = contact[i].contact;
-                //                 this.setState({mailIndice:i});
-                //             }
-                //         }
-                //     }
-                // }
-				this.setState({
-                    idUser:data.idUser,
-                    idAdresse:data.personne.adresse[0].idAdresse,
-                    nom:data.personne.nom,
-                    prenoms:data.personne.prenoms,
-                    sexe:data.personne.sexe,
-                    dateNaissance:data.personne.dateNaissance,
-                    lieuNaissance:data.personne.lieuNaissance,
-                    presentation:data.informationMedecin,
-                    typeOrdre:data.typeOrdre.idTypeOrdre,
-                    specialite:data.specialite.idSpecialite,
-                    infoAcces:data.personne.adresse[0].informationAcces,
-                    nbSalle:data.nbSalle,
-                    listContact:data.personne.contact,
-                    adresse:data.personne.adresse[0].informationAdresse,
-                    latitude:data.personne.adresse[0].latitude,
-                    longitude:data.personne.adresse[0].longitude,
-                    emploiTemps:dataEdt,
-                    phone:data.personne.user.phone,
-                    mail:data.personne.user.email,
-                    experiences:data.experiences,
-                    diplomes:data.diplomes,
-                    fraisConsultation:data.fraisConsultation,
-                    // file:null,
-                    // fileName:'',
-                    // mdp:'',
-                    // province:idProv,
-                    district:data.personne.adresse[0].district.idDistrict,
-                    numOrdre:data.numeroOrdre,
-                    duree:data.dureeConsultation
-                });
-			}
-        });
-		fetchGet('/adresse/province/all').then(data=>{
-			if(data!=null){
-				this.setState({ listLieu: data });
-			}
-        });
-        fetchGet('/type-contact/list').then(data=>{
-			if(data!=null){
-				this.setState({ listTypeContact: data });
-			}
-        });
-    }
     render(){
+        // let position = [this.state.latitude?this.state.latitude:-18.0, this.state.longitude?this.state.longitude:47.0];
         return(
-            <div className="compte-container">
+            <div className="inscription-centre-container">
                 <div className="row">
-                    <div className="centre-banner-titre col-md-12 row">
-                        <h4 className="card-title col-md-6">Profil du centre</h4>
-                        {this.state.update?
-                        <a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUndoAlt}/> Annuler</a>
-                        :<a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUserEdit}/> Modifier</a>
-                        }
+                    <div className="row marginBottomHeaderInscription">
+                        <div className="col-md-12 col-sm-12">
+                            <h1 className="titleH1Login"><b>Rejoignez le !</b></h1>
+                            <p className="titlePLogin">C'est le moment de créer votre compte!</p>
+                        </div>
                     </div>
-                    <div className="col-md-12">
-                        <form className="row" onSubmit={this.modificationCompte.bind(this)}>
-                        <div className="col-md-7 col-sm-12">
+                    <div className="col-md-12" style={{marginTop:'5vh'}}>
+                        <form className="row" onSubmit={this.inscriptionUserMedecin.bind(this)}>
+                            <div className="col-md-7 col-sm-12">
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Nom</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.nom} onChange={this.handleChange.bind(this,"nom")} placeholder="" />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" value={this.state.nom} onChange={this.handleChange.bind(this,"nom")} placeholder="" />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Prénom(s)</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.prenoms} onChange={this.handleChange.bind(this,"prenoms")} placeholder="" />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" value={this.state.prenoms} onChange={this.handleChange.bind(this,"prenoms")} placeholder="" />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Sexe</span>
-                                        <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
+                                        <select className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                             <option value=''>Sélectionner</option>
-                                            <option disabled={!this.state.update} value={1}>Homme</option>
-                                            <option disabled={!this.state.update} value={2}>Femme</option>
+                                            <option value={1}>Homme</option>
+                                            <option value={2}>Femme</option>
                                         </select>
                                     </div>
                                 </div>
@@ -642,10 +584,10 @@ export default class Compte extends React.Component{
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Langue(s)</span>
                                         <Select onChange={this.handleChange.bind(this,"langue")} className="col-7" isClearable={true} isMulti placeholder="" options={this.state.listLangue} />
-                                        {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
+                                        {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                             { this.state.listLangue.map((langue,i) => {
                                                 return(
-                                                <option disabled={!this.state.update} value={langue.idLangue} key={i}>
+                                                <option value={langue.idLangue} key={i}>
                                                     {langue.libelle}
                                                 </option>
                                                 )
@@ -656,29 +598,29 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Date de naissance</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="date" disabled={!this.state.update} value={this.state.dateNaissance} onChange={this.handleChange.bind(this,"dateNaissance")}  placeholder=""  />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="date" value={this.state.dateNaissance} onChange={this.handleChange.bind(this,"dateNaissance")}  placeholder=""  />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Lieu de naissance</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.lieuNaissance} onChange={this.handleChange.bind(this,"lieuNaissance")}  placeholder=""  />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" value={this.state.lieuNaissance} onChange={this.handleChange.bind(this,"lieuNaissance")}  placeholder=""  />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     {/* <div className="input-group"> */}
                                         <span className="form-control inscription-label col-12">Présentation</span>
-                                        <textarea rows="4" className="inscription-input form-control" disabled={!this.state.update} value={this.state.presentation} onChange={this.handleChange.bind(this,"presentation")} placeholder="Texte de présentation qui apparaîtra sur votre profil (facultatif)"></textarea>
+                                        <textarea rows="4" className="inscription-input form-control" value={this.state.presentation} onChange={this.handleChange.bind(this,"presentation")} placeholder="Texte de présentation qui apparaîtra sur votre profil (facultatif)"></textarea>
                                     {/* </div> */}
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Ordre</span>
-                                        <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.typeOrdre} onChange={this.handleChange.bind(this,"typeOrdre")}  >
+                                        <select className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.typeOrdre} onChange={this.handleChange.bind(this,"typeOrdre")}  >
                                             <option value=''></option>
                                             { this.state.listTypeOrdre.map((ordre,i) => {
                                                     return(
-                                                    <option disabled={!this.state.update} value={ordre.idTypeOrdre} key={i}>
+                                                    <option value={ordre.idTypeOrdre} key={i}>
                                                         {ordre.libelle}
                                                     </option>
                                                     )
@@ -690,17 +632,17 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Numéro ordre</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.numOrdre} onChange={this.handleChange.bind(this,"numOrdre")}  placeholder=""  />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" value={this.state.numOrdre} onChange={this.handleChange.bind(this,"numOrdre")}  placeholder=""  />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Spécialité</span>
-                                        <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.specialite} onChange={this.handleChange.bind(this,"specialite")}  >
+                                        <select className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.specialite} onChange={this.handleChange.bind(this,"specialite")}  >
                                             <option value=''></option>
                                             { this.state.listSpecialite.map((spec,i) => {
                                                     return(
-                                                    <option disabled={!this.state.update} value={spec.idSpecialite} key={i}>
+                                                    <option value={spec.idSpecialite} key={i}>
                                                         {spec.libelle}
                                                     </option>
                                                     )
@@ -712,13 +654,13 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Durée de consultation (minutes)</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7 " required={true} disabled={!this.state.update} value={this.state.duree} type="number" onChange={this.handleChange.bind(this,"duree")} placeholder="en minutes"/>
+                                        <input className="form-control inscription-input inscription-inputV12 col-7 " required={true} value={this.state.duree} type="number" onChange={this.handleChange.bind(this,"duree")} placeholder="en minutes"/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Adresse</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.adresse} type="text" onChange={this.handleChange.bind(this,"adresse")}  placeholder=""  />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" onChange={this.handleChange.bind(this,"adresse")}  placeholder=""  />
                                     </div>
                                 </div>
                                 <div className="form-group row">
@@ -734,7 +676,7 @@ export default class Compte extends React.Component{
                                             <option value=''></option>
                                             { this.state.listLieu.map((lieu,i) => {
                                                     return(
-                                                    <option disabled={!this.state.update} value={lieu.idProvince} key={i}>
+                                                    <option value={lieu.idProvince} key={i}>
                                                         {lieu.nomProvince}
                                                     </option>
                                                     )
@@ -753,7 +695,7 @@ export default class Compte extends React.Component{
                                                     <option value=''></option>
                                                     { this.state.listDistrict.map((lieu,i) => {
                                                         return(
-                                                        <option disabled={!this.state.update} value={lieu.idDistrict} key={i}>
+                                                        <option value={lieu.idDistrict} key={i}>
                                                             {lieu.nomDistrict}
                                                         </option>
                                                         )
@@ -766,17 +708,17 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     {/* <div className="input-group"> */}
                                         <span className="form-control inscription-label col-12">Information d'accès</span>
-                                        <textarea rows="4" className="inscription-input form-control" disabled={!this.state.update} value={this.state.infoAcces} onChange={this.handleChange.bind(this,"infoAcces")} placeholder="Décrire les différentes informations pour faciliter votre localisation (facultatif)"></textarea>
+                                        <textarea rows="4" className="inscription-input form-control" value={this.state.infoAcces} onChange={this.handleChange.bind(this,"infoAcces")} placeholder="Décrire les différentes informations pour faciliter votre localisation (facultatif)"></textarea>
                                     {/* </div> */}
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Moyen(s) de paiement</span>
                                         <Select onChange={this.handleChange.bind(this,"paiement")} className="col-7" isClearable={true} isMulti placeholder="" options={this.state.listPaiement} />
-                                        {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
+                                        {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                             { this.state.listLangue.map((langue,i) => {
                                                 return(
-                                                <option disabled={!this.state.update} value={langue.idLangue} key={i}>
+                                                <option value={langue.idLangue} key={i}>
                                                     {langue.libelle}
                                                 </option>
                                                 )
@@ -787,19 +729,19 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">E-mail</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" type="email" disabled={!this.state.update} value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}  placeholder=""  />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" type="email" value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}  placeholder=""  />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">N° téléphone</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="tel " disabled={!this.state.update} value={this.state.phone} onChange={this.handleChange.bind(this,"phone")} placeholder=""  />
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="tel " value={this.state.phone} onChange={this.handleChange.bind(this,"phone")} placeholder=""  />
                                     </div>
                                 </div>
                                 <div className="form-group row formgroupCssInscriptionMedecin">
                                     <div className="input-group" data-tip data-for="registerTip">
                                         <span className="form-control inscription-label col-5">Mot de passe</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.mdp} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder=""/>
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.mdp} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder=""/>
                                         <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
                                         
                                     </div>
@@ -810,7 +752,7 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Confirmation</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7 " required={true} disabled={!this.state.update} value={this.state.confirmationMdp} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder=""/>
+                                        <input className="form-control inscription-input inscription-inputV12 col-7 " required={true} value={this.state.confirmationMdp} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder=""/>
                                     </div>
                                     <div className="input-group" hidden={!this.getVerificationMdp()}>
                                         <span className="inscription-label-success col-12">Mot de passe confirmé</span>
@@ -860,21 +802,21 @@ export default class Compte extends React.Component{
                                             return (
                                             <div className="col-md-12 row each-line-experience" key={j}>
                                                 <label className="col-md-2">De</label>
-                                                <select className="col-md-5" disabled={!this.state.update} value={exp.anneeDebut} onChange={this.changeExperienceAnneeDebut.bind(this,j)}>
+                                                <select className="col-md-5" value={exp.anneeDebut} onChange={this.changeExperienceAnneeDebut.bind(this,j)}>
                                                     <option>début</option>
                                                     {utile.createTableauNumberSelect(1920,utile.getYearFromActual()).map((year,i)=>{
-                                                        return <option key={i} disabled={!this.state.update} value={year.value}>{year.label}</option>
+                                                        return <option key={i} value={year.value}>{year.label}</option>
                                                     })}
                                                 </select>
                                                 <label className="col-md-1"> à </label>
-                                                <select className="col-md-3" disabled={!this.state.update} value={exp.anneeFin} onChange={this.changeExperienceAnneeFin.bind(this,j)}>
+                                                <select className="col-md-3" value={exp.anneeFin} onChange={this.changeExperienceAnneeFin.bind(this,j)}>
                                                     <option>fin</option>
                                                     {utile.createTableauNumberSelect(exp.anneeDebut!==null?exp.anneeDebut:0,utile.getYearFromActual()).map((year,i)=>{
-                                                        return <option key={i} disabled={!this.state.update} value={year.value}>{year.label}</option>
+                                                        return <option key={i} value={year.value}>{year.label}</option>
                                                     })}
                                                 </select>
-                                                <input type="text" className="col-md-12" placeholder="Institut de travail" disabled={!this.state.update} value={exp.nomEntite} onChange={this.changeExperienceNomEntite.bind(this,j)}/>
-                                                <textarea rows="2" className="col-md-12" disabled={!this.state.update} value={exp.description} onChange={this.changeExperienceDescription.bind(this,j)} placeholder="Description du poste occupé"></textarea>
+                                                <input type="text" className="col-md-12" placeholder="Institut de travail" value={exp.nomEntite} onChange={this.changeExperienceNomEntite.bind(this,j)}/>
+                                                <textarea rows="2" className="col-md-12" value={exp.description} onChange={this.changeExperienceDescription.bind(this,j)} placeholder="Description du poste occupé"></textarea>
                                                 <a href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeExperience(j)}>Supprimer</a>
                                             </div>)
                                         })}
@@ -887,13 +829,13 @@ export default class Compte extends React.Component{
                                             return (
                                             <div className="col-md-12 row each-line-experience" key={j}>
                                                 <label className="col-md-8">Année d'obtention du diplôme</label>
-                                                <select className="col-md-4" disabled={!this.state.update} value={diplome.anneeObtention} onChange={this.changeDiplomeAnneeObtention.bind(this,j)}>
+                                                <select className="col-md-4" value={diplome.anneeObtention} onChange={this.changeDiplomeAnneeObtention.bind(this,j)}>
                                                     {utile.createTableauNumberSelect(1920,utile.getYearFromActual()).map((year,i)=>{
-                                                        return <option key={i} disabled={!this.state.update} value={year.value}>{year.label}</option>
+                                                        return <option key={i} value={year.value}>{year.label}</option>
                                                     })}
                                                 </select>
-                                                <input type="text" className="col-md-12" placeholder="Titre du diplôme" disabled={!this.state.update} value={diplome.libelleDiplome} onChange={this.changeDiplomeLibelleDiplome.bind(this,j)}/>
-                                                <textarea rows="2" className="col-md-12" disabled={!this.state.update} value={diplome.description} onChange={this.changeDiplomeDescription.bind(this,j)} placeholder="Description du diplôme"></textarea>
+                                                <input type="text" className="col-md-12" placeholder="Titre du diplôme" value={diplome.libelleDiplome} onChange={this.changeDiplomeLibelleDiplome.bind(this,j)}/>
+                                                <textarea rows="2" className="col-md-12" value={diplome.description} onChange={this.changeDiplomeDescription.bind(this,j)} placeholder="Description du diplôme"></textarea>
                                                 <a href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeDiplome(j)}>Supprimer</a>
                                             </div>)
                                         })}
@@ -905,12 +847,12 @@ export default class Compte extends React.Component{
                                         {this.state.fraisConsultation.map((frais,j)=>{
                                             return (
                                             <div className="col-md-12 row each-line-contact" key={j}>
-                                                <select className="col-md-6" disabled={!this.state.update} value={frais.idTypeConsultation} onChange={this.changeFraisTypeConsultation.bind(this,j)}>
+                                                <select className="col-md-6" value={frais.idTypeConsultation} onChange={this.changeFraisTypeConsultation.bind(this,j)}>
                                                     {this.state.listTypeConsultation.map((typeConsultation,i)=>{
-                                                        return <option key={i} disabled={!this.state.update} value={typeConsultation.idTypeConsultation}>{typeConsultation.libelle}</option>
+                                                        return <option key={i} value={typeConsultation.idTypeConsultation}>{typeConsultation.libelle}</option>
                                                     })}
                                                 </select>
-                                                <input type="number" className="col-md-4" placeholder="Frais de consultation" disabled={!this.state.update} value={frais.frais} onChange={this.changeFraisValeur.bind(this,j)}/>
+                                                <input type="number" className="col-md-4" placeholder="Frais de consultation" value={frais.frais} onChange={this.changeFraisValeur.bind(this,j)}/>
                                                 <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeFrais(j)}>Supprimer</a>
                                             </div>)
                                         })}
@@ -922,12 +864,12 @@ export default class Compte extends React.Component{
                                         {this.state.listContact.map((contact,j)=>{
                                             return (
                                             <div className="col-md-12 row each-line-contact" key={j}>
-                                                <select className="col-md-4" disabled={!this.state.update} value={contact.typeContact.idTypeContact} onChange={this.changeContactType.bind(this,j)}>
+                                                <select className="col-md-4" value={contact.typeContact.idTypeContact} onChange={this.changeContactType.bind(this,j)}>
                                                     {this.state.listTypeContact.map((typeContact,i)=>{
-                                                        return <option key={i} disabled={!this.state.update} value={typeContact.idTypeContact}>{typeContact.libelle}</option>
+                                                        return <option key={i} value={typeContact.idTypeContact}>{typeContact.libelle}</option>
                                                     })}
                                                 </select>
-                                                <input type="text" className="col-md-6" disabled={!this.state.update} value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/>
+                                                <input type="text" className="col-md-6" value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/>
                                                 <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeContact(j)}>Supprimer</a>
                                             </div>)
                                         })}
@@ -943,15 +885,15 @@ export default class Compte extends React.Component{
                                             <div className="col-md-12 each-line-week row" key={i}>
                                                 <div className="col-md-4">
                                                     <label className="switch">
-                                                        <input type="checkbox" disabled={!this.state.update} checked={this.state.emploiTemps[i].activation} onChange={this.setSemaineEmploieDuTemps.bind(this,i)}/>
+                                                        <input type="checkbox" checked={this.state.emploiTemps[i].activation} onChange={this.setSemaineEmploieDuTemps.bind(this,i)}/>
                                                         <span className="slider"></span>
                                                     </label> {data.names}
                                                 </div>
                                                 <div className="col-md-4" hidden={!this.state.emploiTemps[i].activation}>
-                                                    <span>Matin de <select disabled={!this.state.update} value={this.state.emploiTemps[i].topStart} onChange={(e)=>this.setValueEmploieDuTemps('topStart',i,e)}>{this.generaterTabSelect(0,12)}</select>  &nbsp;&nbsp;à <select disabled={!this.state.update} value={this.state.emploiTemps[i].topStop} onChange={(e)=>this.setValueEmploieDuTemps('topStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].topStart,12)}</select></span>
+                                                    <span>Matin de <select value={this.state.emploiTemps[i].topStart} onChange={(e)=>this.setValueEmploieDuTemps('topStart',i,e)}>{this.generaterTabSelect(0,12)}</select>  &nbsp;&nbsp;à <select value={this.state.emploiTemps[i].topStop} onChange={(e)=>this.setValueEmploieDuTemps('topStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].topStart,12)}</select></span>
                                                 </div>
                                                 <div className="col-md-4" hidden={!this.state.emploiTemps[i].activation}>
-                                                    <span>Midi de <select disabled={!this.state.update} value={this.state.emploiTemps[i].bottomStart} onChange={(e)=>this.setValueEmploieDuTemps('bottomStart',i,e)}>{this.generaterTabSelect(12,23)}</select>  &nbsp;&nbsp;à <select disabled={!this.state.update} value={this.state.emploiTemps[i].bottomStop} onChange={(e)=>this.setValueEmploieDuTemps('bottomStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].bottomStart!==null?this.state.emploiTemps[i].bottomStart:12,23)}</select></span>
+                                                    <span>Midi de <select value={this.state.emploiTemps[i].bottomStart} onChange={(e)=>this.setValueEmploieDuTemps('bottomStart',i,e)}>{this.generaterTabSelect(12,23)}</select>  &nbsp;&nbsp;à <select value={this.state.emploiTemps[i].bottomStop} onChange={(e)=>this.setValueEmploieDuTemps('bottomStop',i,e)}>{this.generaterTabSelect(this.state.emploiTemps[i].bottomStart!==null?this.state.emploiTemps[i].bottomStart:12,23)}</select></span>
                                                 </div>
                                             </div>
                                         );
@@ -960,14 +902,10 @@ export default class Compte extends React.Component{
                                 </div>
                             </div>
                             <div className="form-group col-md-12 row">
-                                {this.state.update?
-                                <div className="input-group" data-tip data-for="registerTip">
-                                    <span className="form-control compte-label col-5">Mot de passe Actuel</span>
-                                    <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.oldMdp} disabled={!this.state.update} type="password" onChange={this.handleChange.bind(this,"oldMdp")}  placeholder="Tapez le mot de passe actuel pour confirmer la modification"/>        
-                                </div>:""}
                                 <div hidden={!this.state.erreurEtat} className="textDePreventionInscriptionMedecin">{this.state.erreurMessage}</div>
+                                <div className="textDePreventionInscriptionMedecin" hidden={this.state.erroruser<=1}>{this.state.errorusersms} <a href="/login-meddoc" hidden={this.state.erroruser!==2}>sinon connectez vous on cliquant ici</a></div>
                                 <div className="boutonConnecterLogin row colDivSupplementaireInscriptionMedecin">
-                                    {this.state.update?<button className="bouton-solid-reg col-md-6 popup-with-move-anim a1" hidden={this.state.disableButton} id="sonboutonConnecter" disabled={!this.state.update} type="submit">Enregistrer</button>:""}
+                                    <button className="bouton-solid-reg col-md-6 popup-with-move-anim a1" hidden={this.state.disableButton} id="sonboutonConnecter" type="submit">S'inscrire</button>
                                     <div hidden={!this.state.disableButton} className="login-loader"></div>
                                 </div>
                             </div>

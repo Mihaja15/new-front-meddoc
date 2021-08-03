@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.css';
-import {fetchPost} from '../../services/global.service';
+import {fetchPost, fetchPostNotLogged} from '../../services/global.service';
 import {Modal,Button} from 'react-bootstrap';
 import details1officeworker from '../../assets/img/details-1-office-worker.svg';
 import { Cookies } from 'react-cookie';
@@ -71,7 +71,7 @@ class Connexion extends Component{
         const dataIdentification = this.state.identification;const dataMdp = this.state.mdp;
         if(dataIdentification.etat === 2 && dataIdentification.etat === 2 ){
             const userAuth = {identification: dataIdentification.valuesText,mdp: dataMdp.valuesText}
-            fetchPost('/users/login',userAuth).then(response=>{
+            fetchPostNotLogged('/users/login',userAuth).then(response=>{
                 console.log(response)
                 if(response.statut===200){
                     if(response.role.toLowerCase()==="patient"){

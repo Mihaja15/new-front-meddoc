@@ -19,6 +19,9 @@ function userLogged(){
     }
     return user;
 }
+function isLogged(){
+    return getCookie('token')!=="";
+}
 function get(value){
     if(getCookie(value)!=="")
         return getCookie(value);
@@ -72,5 +75,6 @@ export const userSession={
     getCookie,
     setCookie,
     userLogout,
-    removeCookie
+    removeCookie,
+    isLogged
 }
