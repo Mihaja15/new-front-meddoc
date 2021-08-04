@@ -125,8 +125,8 @@ function handleResponse(response) {
                     window.location.replace('/connexion');
                 else if(role==='Professionnel santé')
                     window.location.replace('/connexion-centre');
-                else
-                    window.location.replace('/');
+                // else
+                //     window.location.replace('/');
             }
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
