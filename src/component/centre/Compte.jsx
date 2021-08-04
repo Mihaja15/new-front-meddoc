@@ -9,8 +9,7 @@ import { fetchGet, fetchGetHandler, fetchPostHeader } from '../../services/globa
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { utile } from '../../services/utile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faUndoAlt, faUserEdit } from '@fortawesome/free-solid-svg-icons';
-import { userSession } from '../../services/userSession';
+import {  faUndoAlt, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import Select from 'react-select';
 function MyComponent(props) {
 	useMapEvent('click', (e) => {
@@ -540,10 +539,10 @@ export default class Compte extends React.Component{
                         })
                     }
                 }
-                const contact = data.personne.contact;
+                //const contact = data.personne.contact;
                 // const ids = data.identifiant;
-                var mail = "";
-                var phone = "";
+                //var mail = "";
+                //var phone = "";
                 // for(let i = 0; i < contact.length; i++){
                 //     for(let j = 0; j < ids.length; j++){
                 //         if(ids[j].identifiant===contact[i].contact){
@@ -963,7 +962,7 @@ export default class Compte extends React.Component{
                                 {this.state.update?
                                 <div className="input-group" data-tip data-for="registerTip">
                                     <span className="form-control compte-label col-5">Mot de passe Actuel</span>
-                                    <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.oldMdp} disabled={!this.state.update} type="password" onChange={this.handleChange.bind(this,"oldMdp")}  placeholder="Tapez le mot de passe actuel pour confirmer la modification"/>        
+                                    <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.oldMdp} type="password" onChange={this.handleChange.bind(this,"oldMdp")}  placeholder="Tapez le mot de passe actuel pour confirmer la modification"/>        
                                 </div>:""}
                                 <div hidden={!this.state.erreurEtat} className="textDePreventionInscriptionMedecin">{this.state.erreurMessage}</div>
                                 <div className="boutonConnecterLogin row colDivSupplementaireInscriptionMedecin">

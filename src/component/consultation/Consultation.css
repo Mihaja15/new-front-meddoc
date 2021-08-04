@@ -1,0 +1,90 @@
+.principal_container_in_page_consultatio{
+    background-color: white;
+    min-height: 850px;
+    width: 98%;
+    margin: 1%;
+    overflow: hidden;
+}
+.son_principal_container_in_page_consultatio{
+    width: 98%;
+    min-height: 850px;
+    background-color: #1b7895;
+    margin: 1%;
+    padding: 1%;
+    border-radius: 12px;
+}
+.son_of_son_son_principal_container_in_page_consultatio{
+    width: 98%;
+    margin: 1%;
+    border: 2px solid white;
+    border-radius: 12px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.label_son_principal_container_in_page_consultatio{
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+.title_son_of_son_son_principal_container_in_page_consultatio{
+    font-size: 32px;
+    font-weight: 900;
+    text-align: center;
+    color: #39c3ef;
+}
+.identite_son_principal_container_in_page_consultatio{
+    width: 97%;
+    margin: 1%;
+    background-color: white;
+    padding: 1%;
+    border-radius: 12px;
+}
+.title_identite_son_principal_container_in_page_consultatio{
+    font-size: 20px;
+    font-weight: 900;
+}
+.data_identite_son_principal_container_in_page_consultatio{
+    font-size: 18px;
+    font-weight: 600;
+}
+.select_search_in_consultation{
+
+}
+.ul_champs_containt_consultation{
+    display: flex;
+    width: 100%;
+    padding: 0;
+}
+.li_1_ul_champs_containt_consultation{
+    list-style: none;
+    width: 80%;
+}
+.li_2_ul_champs_containt_consultation{
+    list-style: none;
+    width: 19%;
+    margin-left: 1%;
+}
+.button_add_data_in_consultation{
+    height: 36px;
+    width: 100%;
+    border-radius: 3px;
+}
+.class_add_symptome_in_consultation{
+    width: 100%;
+    margin: 0;
+    border: 2px solid white;
+    border-radius: 12px;
+    padding: 1%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+.son_class_add_symptome_in_consultation{
+    margin: 0;
+    padding: 2px;
+}
+.demo-editor{
+    background-color: white;
+}
+.fin_in_page_consultation{
+    margin-bottom: 5%;
+}

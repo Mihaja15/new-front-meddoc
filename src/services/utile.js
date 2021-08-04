@@ -226,6 +226,26 @@ function getYearFromActual(add){
 function valueToLink(value){
     return value.trim().replace(/\s+/g, '-').toLowerCase();
 }
+function crypteId(valeur){
+    if(valeur!==undefined && valeur !==null && valeur!==''){
+        let date = new Date();
+        return ''+date.getFullYear()+'_'+date.getMonth()+'_'+date.getDate()+'_'+valeur;
+    }
+    return '';
+}
+function decrypteId(valeur){
+    let val = valeur.split('_');
+    if(val.length === 4){
+        return ''+val[3];
+    }
+    return '';
+}
+function verifString(valeur){
+    if(valeur !== null && valeur !==undefined && valeur!=='' && valeur!==' '){
+        return true;
+    }
+    return false;
+}
 export const utile = {
     getAllMois,
     getNamesMois,
@@ -262,5 +282,8 @@ export const utile = {
     numStr,
     hasValue,
     getYearFromActual,
-    valueToLink
+    valueToLink,
+    crypteId,
+    decrypteId,
+    verifString
 };

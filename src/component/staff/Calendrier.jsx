@@ -1,7 +1,8 @@
 import React from 'react';
 import './Calendrier.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import { utile } from '../../services/utile';
-import {fetchPost, fetchPostHeader} from '../../services/global.service';
+import {fetchGet, fetchPost, fetchPostHeader} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
@@ -35,6 +36,8 @@ export default class Calendrier extends React.Component{
             totalElement:0,
             ordre:'desc',
             colonne:'dateHeureRdv',
+            activeSms : false,
+            sms : ''
         }
     }
     getScroll(numberStart, numberStop){
@@ -151,21 +154,11 @@ export default class Calendrier extends React.Component{
             annee : this.state.anneeSelected
         }
         fetchPostHeader('/professionnel/agenda-centre',data).then(dataTmp=>{
-            console.log(dataTmp)
+            console.log(dataTmp);
             this.setState({calendrier : dataTmp});
         });
     }
-    componentDidMount(){
-        console.log(this.props.id+"  "+this.props.type);
-        if(userSession.isLogged()){
-            this.setState({idEntite:this.props.id,typeEntite:this.props.type},function(){
-                this.getAgenda();
-                this.getRdv();
-            });
-        }
-        // if(this.props.type!==null&&this.props.type!==undefined&&this.props.type!=="")
-        //     this.setState({typeEntite:this.props.type});
-    }
+    
     isToday(date){
         if(utile.isEqualJourDate(dateNow,new Date(date)))
             return " case-now";
@@ -193,6 +186,32 @@ export default class Calendrier extends React.Component{
             return <td><FontAwesomeIcon style={{color:'#1b7895'}} incon={faExclamationCircle}/></td>
         else
             return <FontAwesomeIcon incon={faExclamationCircle}/>
+    }
+    comparateurDate(valeur){
+        let date = new Date(valeur);
+        let now = new Date();
+        if(date.getFullYear()<=now.getFullYear() && date.getMonth()<= now.getMonth() && date.getDate() < now.getDate()) return false;
+        return true;    
+    }
+    rejeterRdv=(id)=>{
+        if(window.confirm('Voulez vous vraiment le rejeter')){
+            fetchGet('/professionnel/rejeter-rdv/'+id).then(data=>{
+                console.log('rejeter : ', data);
+                this.selectDate(this.state.dateSelected);
+                this.setState({activeSms : true,sms: data.message});
+            });
+        }
+    }
+    componentDidMount(){
+        console.log(this.props.id+"  "+this.props.type);
+        if(userSession.isLogged()){
+            this.setState({idEntite:this.props.id,typeEntite:this.props.type},function(){
+                this.getAgenda();
+                this.getRdv();
+            });
+        }
+        // if(this.props.type!==null&&this.props.type!==undefined&&this.props.type!=="")
+        //     this.setState({typeEntite:this.props.type});
     }
     render(){
         return(
@@ -273,6 +292,9 @@ export default class Calendrier extends React.Component{
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="alert alert-warning alert-dismissable fade in" hidden ={!this.state.activeSms}>
+                                    <strong>Attention !</strong> {this.state.sms}
+                                </div>
                                 <div className="centre-agenda-right">
                                     <h5 className="col-md-12">Liste des rendez-vous {utile.isEqualJourDate(dateNow,this.state.dateSelected)?"aujourd'hui":"du "+utile.getDateComplet(this.state.dateSelected)}</h5>
                                     <table className="tableau-rdv col-md-12">
@@ -283,10 +305,12 @@ export default class Calendrier extends React.Component{
                                                 <th>Patient</th>
                                                 <th>Motif</th>
                                                 <th>Etat</th>
+                                                <th hidden={!this.comparateurDate(this.state.dateSelected)}>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {this.state.listRdv.content!==undefined?this.state.listRdv.content.map((rdv, i)=>{
+                                                console.log(rdv);
                                                 return(
                                                     rdv.statut!==null?
                                                     rdv.statut.idStatut===101?
@@ -299,9 +323,28 @@ export default class Calendrier extends React.Component{
                                                             <FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/>
                                                             <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous déjà pris</ReactTooltip>
                                                         </td>
+                                                        <td hidden={(!this.comparateurDate(this.state.dateSelected)) && (rdv.statut.idStatut!==102)}>
+                                                            <button className="btn btn-success">Consulter</button>
+                                                            <button className="btn btn-danger">Rejeter</button>
+                                                        </td>
                                                     </tr>
                                                     :rdv.statut.idStatut===100?
-                                                    <tr key={i} onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo))}>
+                                                    <tr key={i}>
+                                                        <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
+                                                        <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
+                                                        <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
+                                                        <td>{rdv.motif}</td>
+                                                        <td data-tip data-for={"line-rdv"+i}>
+                                                            <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
+                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
+                                                        </td>    
+                                                        <td   hidden={(!this.comparateurDate(this.state.dateSelected)) || (rdv.statut.idStatut===102)}>
+                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv))}>Consulter</button>
+                                                            <button className="btn btn-danger btn_classe_in_calendrie_staff" onClick={()=>this.rejeterRdv(rdv.idRdv)}>Rejeter</button>
+                                                        </td>
+                                                    </tr>
+                                                    // :<tr key={i} onClick={()=>{this.props.setPatient(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient,"vaccination",rdv.dateHeureRdv);}}>
+                                                    :<tr key={i}>
                                                         <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
                                                         <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
                                                         <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
@@ -310,16 +353,9 @@ export default class Calendrier extends React.Component{
                                                             <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
                                                             <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
                                                         </td>
-                                                    </tr>
-                                                    // :<tr key={i} onClick={()=>{this.props.setPatient(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient,"vaccination",rdv.dateHeureRdv);}}>
-                                                    :<tr key={i} onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo))}>
-                                                        <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
-                                                        <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
-                                                        <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
-                                                        <td>{rdv.motif}</td>
-                                                        <td data-tip data-for={"line-rdv"+i}>
-                                                            <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
-                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
+                                                        <td  hidden={(!this.comparateurDate(this.state.dateSelected)) || (rdv.statut.idStatut===102)}>
+                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv))}>Consulter</button>
+                                                            <button className="btn btn-danger btn_classe_in_calendrie_staff" onClick={()=>this.rejeterRdv(rdv.idRdv)}>Rejeter</button>
                                                         </td>
                                                     </tr>
                                                     :<tr key={i}>
@@ -330,6 +366,10 @@ export default class Calendrier extends React.Component{
                                                         <td data-tip data-for={"line-rdv"+i}>
                                                             <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
                                                             <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
+                                                        </td>
+                                                        <td  hidden={(!this.comparateurDate(this.state.dateSelected)) || (rdv.statut.idStatut===102)}>
+                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv))}>Consulter</button>
+                                                            <button className="btn btn-danger btn_classe_in_calendrie_staff" onClick={()=>this.rejeterRdv(rdv.idRdv)}>Rejeter</button>
                                                         </td>
                                                     </tr>
                                                 )

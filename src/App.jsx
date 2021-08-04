@@ -14,7 +14,6 @@ import Inscription from './component/inscription/Inscription';
 import LeftMenu from './component/left/LeftMenu';
 import MotDePasse from './component/motDePasse/MotDePasse';
 import UserProfil from './component/profils/UserProfil';
-import RightMenu from './component/right/RightMenu';
 import SuiviMedicals from './component/suivi-medicals/SuiviMedical';
 import Vaccin from './component/vaccin/Vaccin';
 import history from './history';
@@ -23,7 +22,7 @@ import Centre from './component/centre/Centre';
 import { withCookies } from 'react-cookie';
 import PatientProfil from './component/patient/PatientProfil';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import ProfessionnalProfil from './component/profil-professionnel/ProfessionnalProfil';
 import ProfessionnelSanteDashboard from './component/professionnel-sante/ProfessionnelSanteDashboard';
 import Consultation from './component/consultation/Consultation';
@@ -127,7 +126,7 @@ class App extends React.Component {
             {/* <Route path="/profil-staff" render={() => {return  this.contentShowWithLeft(<ProfilStaff/>,<Header cookies={this.props.cookies}/>,<LeftMenu type={1}/>,null);}}/> */}
             <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header cookies={this.props.cookies}/>);}}/>
             <Route exact path="/:lieu/:specialite/:professionnel" render={() => {return  this.contentShow(<ProfessionnalProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
-            <Route exact path="/consultation/patient/:specialite/:userConsultation" render={() => {return  this.contentShow(<Consultation/>,<Header cookies={this.props.cookies}/>);}}/>
+            <Route exact path="/consultation/patient/:specialite/:userConsultation/:aaa" render={() => {return  this.contentShow(<Consultation/>,<Header cookies={this.props.cookies}/>);}}/>
           </Switch>
         </Router>
     );
