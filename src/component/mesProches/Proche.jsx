@@ -1,9 +1,10 @@
 import React from 'react';
 import './Proche.css';
-import { fetchGet, fetchPostHeader } from '../../services/global.service';
+import { fetchGet, fetchPostHeader, fetchGetHandler } from '../../services/global.service';
 import { faEdit, faEye, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userSession } from '../../services/userSession';
+import { utile } from '../../services/utile';
 
 export default class Proche extends React.Component{
     constructor(props){
@@ -26,7 +27,7 @@ export default class Proche extends React.Component{
             numCin:'',
             dateCin:new Date(),
             lieuCin:'',
-            idAdresse:null,
+            dateAdresse:null,
             adresse:'',
             lien:'',
             viewType:0,
@@ -44,7 +45,7 @@ export default class Proche extends React.Component{
         // console.log(this.state.listUser)
         // this.setState({listUser:})
         this.setState({idUser:userSession.get('token')},function(){
-            fetchGet('/users/proche/'+this.state.idUser+'/'+this.state.page+'/'+this.state.size).then(data=>{
+            fetchGetHandler('/users/proche/'+this.state.idUser+'/'+this.state.page+'/'+this.state.size).then(data=>{
                 if(data!=null){
                     this.setState({ list: data });
                     console.log(data)
@@ -114,8 +115,8 @@ export default class Proche extends React.Component{
                 numCin:data[indice].proche.numCin,
                 dateCin:data[indice].proche.dateCin,
                 lieuCin:data[indice].proche.lieuCin,
-                adresse:data[indice].proche.adresse[0].addrValue,
-                idAdresse:data[indice].proche.adresse[0].idAdresse,
+                adresse:data[indice].proche.adresse[0].informationAdresse,
+                dateAdresse:data[indice].proche.adresse[0].dateDebut,
                 // district:data[indice].proche.adresse[0].district.idDistrict,
                 indice: indice,
                 lien:data[indice].lien
@@ -145,8 +146,8 @@ export default class Proche extends React.Component{
                 numCin:data[indice].proche.numCin,
                 dateCin:data[indice].proche.dateCin,
                 lieuCin:data[indice].proche.lieuCin,
-                adresse:data[indice].proche.adresse[0].addrValue,
-                idAdresse:data[indice].proche.adresse[0].idAdresse,
+                adresse:data[indice].proche.adresse[0].informationAdresse,
+                dateAdresse:data[indice].proche.adresse[0].dateDebut,
                 // district:data[indice].proche.adresse[0].district.idDistrict,
                 viewType:0,
                 indice: indice,
@@ -188,15 +189,16 @@ export default class Proche extends React.Component{
     }
     enregistrer=()=>{
         var adresse = [{
-            addrValue:this.state.adresse,
+            informationAdresse:this.state.adresse,
             district:{
                 idDistrict: this.state.district
             }
         }];
-        if(this.state.typeShow!==0 && this.state.idAdresse!==null){
+        if(this.state.typeShow!==0 && this.state.dateAdresse!==null && this.state.idProche!==null){
             adresse = [{
-                idAdresse: this.state.idAdresse,
-                addrValue:this.state.adresse,
+                idUser:this.state.idProche,
+                dateDebut: this.state.dateAdresse,
+                informationAdresse:this.state.adresse,
                 district:{
                     idDistrict: this.state.district
                 }
@@ -204,23 +206,27 @@ export default class Proche extends React.Component{
         }
         const user = {
             idUser: this.state.idProche,
+            typeUser:{
+                idTypeUser: 1
+            }
+        }
+        const proche = {
+            idUser: this.state.idProche,
             nom: this.state.nom,
             prenoms: this.state.prenoms,
             sexe:this.state.sexe,
             dateNaissance:this.state.dateNaissance,
             lieuNaissance:this.state.lieuNaissance,
             numCin:this.state.numCin,
-            dateCin:this.state.dateCin,
+            dateCin:utile.hasValue(this.state.numCin)&&utile.hasValue(this.state.lieuCin)?this.state.dateCin:null,
             lieuCin:this.state.lieuCin,
             adresse:adresse,
-            typeUser:{
-                idTypeUser: 1
-            }
+            user: user
         }
         const data = {
             // user: {idUser:this.state.idUser},
             lien: this.state.lien,
-            proche: user
+            proche: proche
         }
         fetchPostHeader('/users/ajout-proche',data).then(result=>{
             if(result.etat === "0"){
@@ -363,8 +369,9 @@ export default class Proche extends React.Component{
                                     </>:""}
                                 </div>:
                                 <>
-                                    <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-5">Annuler</button>
-                                    <button onClick={()=>this.supprimer()} className="enregistrer col-md-5">Supprimer</button>
+                                    <p style={{textAlign:"center"}}>Vouler-vous vraiment supprimer ce proche?</p>
+                                    <button onClick={()=>{this.setState({show:false});this.clearData()}} className="annuler col-md-6">Annuler</button>
+                                    <button onClick={()=>this.supprimer()} className="enregistrer col-md-6">Supprimer</button>
                                 </>}
                             </div>
                         </div>

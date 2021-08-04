@@ -61,6 +61,7 @@ textarea.inscription-input::placeholder{
 }
 .mapsLocalisationInscriptionMedecin{
     height: 250px;
+    z-index:500;
 }
 .switch {
   position: relative;

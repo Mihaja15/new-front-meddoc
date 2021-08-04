@@ -10,12 +10,14 @@ import Dashboard from '../centre/Dashboard';
 import { userSession } from '../../services/userSession';
 import Causette from '../chat/Causette';
 import PdfForm from '../pdf/PdfForm';
+import ToDoList from './ToDoList';
 
 export default class ProfessionnelSanteDashboard extends React.Component{
     constructor(props){
         super();
         this.state={
-            show:"1"
+            show:"1",
+            showToDoList:true
         }
     }
     componentDidMount(){
@@ -36,7 +38,7 @@ export default class ProfessionnelSanteDashboard extends React.Component{
                             <li onClick={()=> this.setState({show:"9"})} className={this.state.show==="9"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faFileSignature}/>&nbsp; E-trames</li>
                             {/* <li onClick={()=> this.setState({show:"4"})} className={this.state.show==="4"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserPlus}/>&nbsp; Ressources humaines</li>
                             <li onClick={()=> this.setState({show:"5"})} className={this.state.show==="5"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faBoxes}/>&nbsp;&nbsp; Gestion de stock</li> */}
-                            <li onClick={()=> this.setState({show:"6"})} className={this.state.show==="6"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faThList}/>&nbsp;&nbsp;&nbsp; To do List</li>
+                            <li onClick={()=> this.setState({showToDoList:!this.state.showToDoList})} className={this.state.show==="6"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faThList}/>&nbsp;&nbsp;&nbsp; To do List</li>
                             <li onClick={()=> this.setState({show:"7"})} className={this.state.show==="7"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faInfo}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Besoin d'aide?</li>
                         </ul>
                     </div>
@@ -66,6 +68,9 @@ export default class ProfessionnelSanteDashboard extends React.Component{
                             }
                             {/* </div> */}
                         {/* </div> */}
+                    </div>
+                    <div className="profil-centre-fixed col-md-9">
+                        <ToDoList show={this.state.showToDoList}/>
                     </div>
                 </div>
             // </div>

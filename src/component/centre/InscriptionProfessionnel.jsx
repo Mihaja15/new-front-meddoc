@@ -774,7 +774,7 @@ export default class InscriptionProfessionnel extends React.Component{
                                 <div className="form-group col-md-12">
                                     <span className="form-control inscription-label-other col-12">Localisation</span>
                                     <div className="mapsLocalisationInscriptionMedecin">
-                                        <MapContainer center={[this.state.latitude,this.state.longitude]} zoom={15} scrollWheelZoom={true}>
+                                        <MapContainer center={[this.state.latitude,this.state.longitude]} style={{zIndex:"-1"}} zoom={15} scrollWheelZoom={true}>
                                             <MyComponent dataCenter={this.setDataCenter} />
                                             <TileLayer
                                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

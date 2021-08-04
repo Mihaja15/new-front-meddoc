@@ -1,0 +1,78 @@
+.to-do-list-container{
+    width:87%;
+    height:100vh;
+    /* overflow-y: scroll; */
+    background-color: #42424283;
+    padding-top: 10vh;
+    position: fixed;
+    overflow: visible;
+    z-index: 999;
+}
+a.close-to-do-list{
+    position: absolute;
+    top: 15px;
+    right: 150px;
+    color: #ffd0d0;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 23px;
+    z-index: 700;
+}
+a.add-to-do-list{
+    position: absolute;
+    top: 15px;
+    left: 50px;
+    color: #ffd0d0;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 23px;
+    z-index: 700;
+}
+.single-to-do-list{
+    /* width: 100%; */
+    /* background-color: blueviolet; */
+    display: block;
+    /* margin: 0 auto; */
+    margin-top: 5px;
+    z-index: 999;
+    /* position: relative; */
+}
+.single-to-do-list input{
+    display: block;
+    margin: 0 auto;
+    outline: none;
+    width: 100%;
+    border: none;
+    text-align: center;
+    /* border-bottom: 1px solid black; */
+    font-weight: 700;
+    background-color: #1b7895;
+    color: #fff;
+    /* border-top-left-radius: 50%;
+    border-top-right-radius: 50%; */
+}
+.single-to-do-list textarea{
+    display: block;
+    margin: 0 auto;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+}
+a.delete-to-do-list{
+    position: absolute;
+    top: 2px;
+    right: 25px;
+    color: #fff;
+    text-decoration: none;
+}
+a.lock-to-do-list{
+    position: absolute;
+    top: 2px;
+    right: 45px;
+    color: #fff;
+    text-decoration: none;
+}
