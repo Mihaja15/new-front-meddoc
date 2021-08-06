@@ -21,7 +21,7 @@ class Footer extends React.Component{
 
                     <div className="col-md-12 footer-front row">
 
-                        <div className="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+                        <div className="col-md-3 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
 
                             <div><img src={meddoc} alt="icon meddoc" className="imageFooter" /></div>
 
@@ -58,7 +58,7 @@ class Footer extends React.Component{
 
                         <hr className="clearfix w-100 d-md-none"/>
 
-                        <div className="col-md-4 col-lg-4 mx-auto my-md-4 my-0 mt-4 mb-1">
+                        <div className="col-md-3 col-lg-4 mx-auto my-md-4 my-0 mt-4 mb-1">
 
                             <h5 className="font-weight-bold text-uppercase mb-4 titleH5Footer">Adresse</h5>
                             <hr className="hrFooter"/>
