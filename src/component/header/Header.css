@@ -28,9 +28,9 @@
 .logo-place{
     height: 15vh;
     display: flex;
-    align-items: left;
+    align-items: center;
     
-    padding-left: 5%;
+    padding-left: 2%;
     /* justify-content: center; */
     /* background-color: #1b7895; */
 }

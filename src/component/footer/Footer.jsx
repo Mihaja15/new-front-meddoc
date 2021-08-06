@@ -21,12 +21,12 @@ class Footer extends React.Component{
 
                     <div className="col-md-12 footer-front row">
 
-                        <div className="col-md-3 col-lg-3">
+                        <div className="col-md-3 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
 
                             <div><img src={meddoc} alt="icon meddoc" className="imageFooter" /></div>
 
                         </div>
-                        <div className="col-md-3 col-lg-3">
+                        <div className="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
 
                             <h5 className="font-weight-bold text-uppercase mb-4 titleH5Footer">A propos</h5>
                             <hr className="hrFooter"/>
@@ -56,9 +56,9 @@ class Footer extends React.Component{
 
                         </div>
 
-                        {/* <hr className="clearfix w-100 d-md-none"/> */}
+                        <hr className="clearfix w-100 d-md-none"/>
 
-                        <div className="col-md-4 col-lg-4">
+                        <div className="col-md-3 col-lg-4 mx-auto my-md-4 my-0 mt-4 mb-1">
 
                             <h5 className="font-weight-bold text-uppercase mb-4 titleH5Footer">Adresse</h5>
                             <hr className="hrFooter"/>
@@ -75,9 +75,9 @@ class Footer extends React.Component{
                             </ul>
 
                         </div>
-                        {/* <hr className="clearfix w-100 d-md-none"/> */}
+                        <hr className="clearfix w-100 d-md-none"/>
 
-                        <div className="col-md-2 col-lg-2 text-center">
+                        <div className="col-md-2 col-lg-2 text-center mx-auto my-4">
 
                             <h5 className="font-weight-bold text-uppercase mb-4 titleH5Footer">Nous suivre</h5>
                             <hr className="hrFooter"/>
@@ -105,7 +105,7 @@ class Footer extends React.Component{
                         </div>
 
                     </div>
-                    {/* <div className="col-md-12 footer-back"></div> */}
+                    <div className="col-md-12 footer-back"></div>
                 </div>
                 <div className="footer-copyright text-center py-3">Copyright  ©  {this.state.copyright.getFullYear()} <span className="copyrightFooter"><b>MEDDoC</b></span></div>
                 {/* <div className="row">
