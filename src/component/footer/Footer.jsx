@@ -17,7 +17,7 @@ class Footer extends React.Component{
         return(
             <div className="page-footer footer-area">
 
-                <div className="footer-container row">
+                <div className="footer-container">
 
                     <div className="col-md-12 footer-front row">
 
@@ -105,7 +105,7 @@ class Footer extends React.Component{
                         </div>
 
                     </div>
-                    <div className="col-md-12 footer-back"></div>
+                    {/* <div className="col-md-12 footer-back"></div> */}
                 </div>
                 <div className="footer-copyright text-center py-3">Copyright  ©  {this.state.copyright.getFullYear()} <span className="copyrightFooter"><b>MEDDoC</b></span></div>
                 {/* <div className="row">

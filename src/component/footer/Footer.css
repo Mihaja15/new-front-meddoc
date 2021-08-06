@@ -21,18 +21,18 @@
     }
 }
 .footer-container{
-	position: relative;
+	/* position: relative; */
 	width: 100%;
 	display: inline-block;
-	margin: 0 auto;
+	/* margin: 0 auto; */
 	/* background-color: #1b7895; */
 }
 .footer-front{
-	position: relative;
+	/* position: relative; */
 	width: 100%;
 	display: inline-block;
-	margin: 0 auto;
-	border-top-right-radius: 50vh;
+	/* margin: 0 auto; */
+	/* border-top-right-radius: 50vh; */
 	/* background-color: #1b7895; */
 }
 /* .footer-area .container{
