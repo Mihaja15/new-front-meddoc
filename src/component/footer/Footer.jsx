@@ -56,7 +56,7 @@ class Footer extends React.Component{
 
                         </div>
 
-                        <hr className="clearfix w-100 d-md-none"/>
+                        {/* <hr className="clearfix w-100 d-md-none"/> */}
 
                         <div className="col-md-4 col-lg-4">
 
@@ -75,7 +75,7 @@ class Footer extends React.Component{
                             </ul>
 
                         </div>
-                        <hr className="clearfix w-100 d-md-none"/>
+                        {/* <hr className="clearfix w-100 d-md-none"/> */}
 
                         <div className="col-md-2 col-lg-2 text-center">
 
@@ -105,7 +105,7 @@ class Footer extends React.Component{
                         </div>
 
                     </div>
-                    <div className="col-md-12 footer-back"></div>
+                    {/* <div className="col-md-12 footer-back"></div> */}
                 </div>
                 <div className="footer-copyright text-center py-3">Copyright  ©  {this.state.copyright.getFullYear()} <span className="copyrightFooter"><b>MEDDoC</b></span></div>
                 {/* <div className="row">
