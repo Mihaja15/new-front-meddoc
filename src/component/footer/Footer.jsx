@@ -1,5 +1,5 @@
 import React from 'react';
-import './Footer.css';
+// import './Footer.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import meddoc from '../../assets/logo/MEDDOC.png';
