@@ -122,7 +122,7 @@ class App extends React.Component {
             <Route path="/profil-patient" render={() => {return  this.contentShow(<PatientProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             {/* <Route path="/profil-centre" render={() => {return  this.contentShowWithLeft(<Profil/>,<Header cookies={this.props.cookies}/>,<LeftMenu type={0}/>,null);}}/> */}
             <Route path="/profil-centre" render={() => {return  this.contentShow(<Profil/>,<Header cookies={this.props.cookies}/>);}}/>
-            <Route exact path="/professionnel/:name" render={() => {return  this.contentShow(<ProfessionnelSanteDashboard/>,<Header cookies={this.props.cookies}/>);}}/>
+            <Route exact path="/professionnel/:name/:panel/:date" render={() => {return  this.contentShow(<ProfessionnelSanteDashboard/>,<Header cookies={this.props.cookies}/>);}}/>
             {/* <Route path="/profil-staff" render={() => {return  this.contentShowWithLeft(<ProfilStaff/>,<Header cookies={this.props.cookies}/>,<LeftMenu type={1}/>,null);}}/> */}
             <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header cookies={this.props.cookies}/>);}}/>
             <Route exact path="/:lieu/:specialite/:professionnel" render={() => {return  this.contentShow(<ProfessionnalProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>

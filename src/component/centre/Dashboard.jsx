@@ -123,19 +123,19 @@ export default class Dashboard extends React.Component{
                             <span className="col-md-3">Axe horizontal:</span>
                             <span className="col-md-3">
                                 <label className="special-radio" htmlFor="jour">Jour
-                                    <input type="radio" id="jour" checked={this.state.affichage==="jour"} value="jour" name="radio"/>
+                                    <input type="radio" id="jour" checked={this.state.affichage==="jour"} value="jour" name="radio" onChange={this.handleChange.bind(this, 'affichage')}/>
                                     <span className="special-radio-checkmark"></span>
                                 </label>
                             </span>
                             <span className="col-md-3">
                                 <label className="special-radio" htmlFor="mois">Mois
-                                    <input type="radio" id="mois" checked={this.state.affichage==="mois"} value="mois" name="radio"/>
+                                    <input type="radio" id="mois" checked={this.state.affichage==="mois"} value="mois" name="radio" onChange={this.handleChange.bind(this, 'affichage')}/>
                                     <span className="special-radio-checkmark"></span>
                                 </label>
                             </span>
                             <span className="col-md-3">
                                 <label className="special-radio" htmlFor="annee">Année
-                                    <input type="radio" id="annee" checked={this.state.affichage==="annee"} value="annee" name="radio"/>
+                                    <input type="radio" id="annee" checked={this.state.affichage==="annee"} value="annee" name="radio" onChange={this.handleChange.bind(this, 'affichage')}/>
                                     <span className="special-radio-checkmark"></span>
                                 </label>
                             </span>

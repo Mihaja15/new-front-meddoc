@@ -12,6 +12,9 @@ import { instanceOf } from "prop-types";
 
 import {userSession} from '../../services/userSession';
 import ValidationCompte from './ValidationCompte';
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
+import CaptchaButton from './CaptchaButton';
+import { utile } from '../../services/utile';
 
 class Connexion extends Component{
     static propTypes = {
@@ -37,6 +40,7 @@ class Connexion extends Component{
             disableButton:false
         }
         this.setValue = this.setValue.bind(this);
+        this.setToken = this.setToken.bind(this);
     }
     setValueCode(names, event){
         const valeur = event.target.value;
@@ -67,9 +71,9 @@ class Connexion extends Component{
         console.log(this.props.cookies);
     }
     loginConnexion = () => {
-        this.setState({disableButton:true,error:{activation:false}});
         const dataIdentification = this.state.identification;const dataMdp = this.state.mdp;
         if(dataIdentification.etat === 2 && dataIdentification.etat === 2 ){
+            this.setState({disableButton:true,error:{activation:false}});
             const userAuth = {identification: dataIdentification.valuesText,mdp: dataMdp.valuesText}
             fetchPostNotLogged('/users/login',userAuth).then(response=>{
                 console.log(response)
@@ -132,9 +136,49 @@ class Connexion extends Component{
         }
     }
     keyPressed=(e)=>{
-        if(e.keyCode===13)
-            this.loginConnexion();
+        // if(e.keyCode===13)
+        //     this.loginConnexion();
     }
+    setToken(value){
+       const dataIdentification = this.state.identification;const dataMdp = this.state.mdp;
+        if(dataIdentification.etat === 2 && dataMdp.etat === 2 && value!==null){
+            this.setState({disableButton:true,error:{activation:false}});
+            const userAuth = {identification: dataIdentification.valuesText,mdp: dataMdp.valuesText, captchaToken:value}
+            fetchPostNotLogged('/users/login',userAuth).then(response=>{
+                console.log(response)
+                if(response.statut===200){
+                    if(response.role.toLowerCase()==="patient"){
+                        userSession.userLogin(response.data.username,
+                            (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
+                            response.token,
+                            response.role);
+                        window.location.pathname = "/profil-patient";
+                    }else{
+                        throw new Error("Erreur de connexion");
+                    }
+                }else if(response.statut===201){
+                    this.setState({toShow : 2, disableButton:false});
+                }else if(response.statut===400){
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
+                }else{
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
+                }
+            }).catch(error=>{
+                this.setState({disableButton:false,error : {message : error,activation: true}});
+            });
+        }
+    }
+    // handleVerifyRecaptcha = async () => {
+    //     const { executeRecaptcha } = IWithGoogleReCaptchaProps.googleReCaptchaProps;
+    
+    //     if (!executeRecaptcha) {
+    //       console.log('Recaptcha has not been loaded');
+    
+    //       return;
+    //     }
+    
+    //     const token = await executeRecaptcha('homepage');
+    //   };
     render(){
         return (
             <div className="logginAllMeddoc">
@@ -162,8 +206,13 @@ class Connexion extends Component{
                                 </div>
                                 <a className="motDePasseOublieLogin" href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
                             </div>
+                            {/* <p>{"Token==>"+this.state.identification.valuesText}</p> */}
                             <div className="boutonConnecterLogin">
-                                <a className="bouton-solid-reg popup-with-move-anim a1" hidden={this.state.disableButton} id="sonboutonConnecter" href="#details-lightbox-1" onClick={this.loginConnexion}>Se connecter</a>
+                                <GoogleReCaptchaProvider className="g-recaptcha" reCaptchaKey="6LclRt8bAAAAAFWdHWX7Tu1q8C00ptadzT4yeG45">
+                                    <CaptchaButton setCaptchaToken={this.setToken} hiddenButton={this.state.disableButton} disableButton={!(utile.hasValue(this.state.identification.valuesText)&&utile.hasValue(this.state.mdp.valuesText))}/>
+                                    {/* <GoogleReCaptcha onVerify={this.handleVerifyRecaptcha}/> */}
+                                </GoogleReCaptchaProvider>
+                                {/* <a className="bouton-solid-reg popup-with-move-anim a1" aria-disabled={this.state.token===null} hidden={this.state.disableButton} id="sonboutonConnecter" href="#details-lightbox-1" onClick={this.loginConnexion}>Se connecter</a> */}
                                 <div hidden={!this.state.disableButton} className="login-loader"></div>
                             </div>
                             <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div>

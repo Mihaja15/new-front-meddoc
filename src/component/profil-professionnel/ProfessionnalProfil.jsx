@@ -400,7 +400,7 @@ class ProfessionnalProfil extends Component{
                                             {
                                                 this.state.listProche.map((proche,i)=>{
                                                     return(
-                                                        <option key={i} value={proche.proche.idUser}>{proche.proche.nom+" "+proche.proche.prenoms}</option>
+                                                        <option key={i} value={proche.proche.idUser}>{proche.proche.nom+" "+proche.proche.prenoms+" "+proche.proche.idUser}</option>
                                                     )
                                                 })
                                             }

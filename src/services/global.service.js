@@ -18,15 +18,11 @@ export function fetchGet(url){
     // }).catch(error=>{
     //     console.log('global service '+error)
     // });
-    return fetch(urlConf()+url).then(response=>handleResponse(response)).catch(error=>{
-        console.log('global service '+error)
-    });
+    return fetch(urlConf()+url).then(response=>handleResponse(response));
 }
 export function fetchGetHandler(url){
     console.log('url : '+urlConf()+url);
-    return fetch(urlConf()+url, { headers: authHeader() }).then(response=>handleResponse(response)).catch(error=>{
-        console.log('global service '+error)
-    });
+    return fetch(urlConf()+url, { headers: authHeader() }).then(response=>handleResponse(response));
 }
 
 function postData(url, dataSend){
@@ -37,9 +33,7 @@ function postData(url, dataSend){
         body: JSON.stringify(dataSend)
     };
     // return fetch(urlConf()+url, requestOptions).then(handleResponse);
-    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
-        console.log('global service '+error)
-    });
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response));
 }
 
 export function fetchPost(url, dataSend){
@@ -52,9 +46,7 @@ export function fetchPost(url, dataSend){
     // return fetch(urlConf()+url, requestOptions).then(response=>response.json()).then(data=>{
     //     return data;
     // });
-    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
-        console.log('global service '+error)
-    });
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response));
 }
 export function fetchPostNotLogged(url, dataSend){
     const requestOptions = {
@@ -65,9 +57,7 @@ export function fetchPostNotLogged(url, dataSend){
     // return fetch(urlConf()+url, requestOptions).then(response=>response.json()).then(data=>{
     //     return data;
     // });
-    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
-        console.log('global service '+error)
-    });
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response));
 }
 export function fetchPostHeader(url, dataSend){
     const requestOptions = {
@@ -76,9 +66,7 @@ export function fetchPostHeader(url, dataSend){
         body: JSON.stringify(dataSend)
     };
     // return fetch(urlConf()+url, requestOptions).then(handleResponse);
-    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response)).catch(error=>{
-        console.log('global service '+error)
-    });
+    return fetch(urlConf()+url, requestOptions).then(response=>handleResponse(response));
 }
 export function fetchPostV2(url, dataSend){
     const requestOptions = {

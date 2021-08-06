@@ -43,6 +43,7 @@ textarea.inscription-input::placeholder{
     text-align: center;
     font-weight: 600;
     font-size: 17px;
+    margin-top: 5vh;
 }
 .centre-banner-titre{
     /* display: inline; */

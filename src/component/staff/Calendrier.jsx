@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { utile } from '../../services/utile';
 import {fetchGet, fetchPost, fetchPostHeader} from '../../services/global.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faExclamationCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import Pagination from "react-js-pagination";
 import { userSession } from '../../services/userSession';
@@ -190,8 +190,13 @@ export default class Calendrier extends React.Component{
     comparateurDate(valeur){
         let date = new Date(valeur);
         let now = new Date();
-        if(date.getFullYear()<=now.getFullYear() && date.getMonth()<= now.getMonth() && date.getDate() < now.getDate()) return false;
-        return true;    
+        now.setHours(0);
+        now.setMinutes(0);
+        now.setSeconds(0);
+        now.setMilliseconds(0);
+        return date.getTime()<now.getTime();
+        // if(date.getFullYear()<=now.getFullYear() && date.getMonth()<= now.getMonth() && date.getDate() < now.getDate()) return false;
+        // return true;    
     }
     rejeterRdv=(id)=>{
         if(window.confirm('Voulez vous vraiment le rejeter')){
@@ -292,7 +297,7 @@ export default class Calendrier extends React.Component{
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="alert alert-warning alert-dismissable fade in" hidden ={!this.state.activeSms}>
+                                <div className="alert alert-warning alert-dismissable fade in" hidden ={!this.state.activeSms}>
                                     <strong>Attention !</strong> {this.state.sms}
                                 </div>
                                 <div className="centre-agenda-right">
@@ -314,7 +319,7 @@ export default class Calendrier extends React.Component{
                                                 return(
                                                     rdv.statut!==null?
                                                     rdv.statut.idStatut===101?
-                                                    <tr key={i} onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo))}>
+                                                    <tr key={i} onClick={()=>window.location.pathname='/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)}>
                                                         <td>{this.dateToHour(rdv.dateHeureRdv)}</td>
                                                         <td>{rdv.professionnel.personne.nom+" "+rdv.professionnel.personne.prenoms}</td>
                                                         <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
@@ -323,7 +328,7 @@ export default class Calendrier extends React.Component{
                                                             <FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/>
                                                             <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous déjà pris</ReactTooltip>
                                                         </td>
-                                                        <td hidden={(!this.comparateurDate(this.state.dateSelected)) && (rdv.statut.idStatut!==102)}>
+                                                        <td hidden={this.comparateurDate(this.state.dateSelected) || rdv.statut.idStatut===102 || rdv.statut.idStatut===101}>
                                                             <button className="btn btn-success">Consulter</button>
                                                             <button className="btn btn-danger">Rejeter</button>
                                                         </td>
@@ -338,8 +343,8 @@ export default class Calendrier extends React.Component{
                                                             <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
                                                             <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
                                                         </td>    
-                                                        <td   hidden={(!this.comparateurDate(this.state.dateSelected)) || (rdv.statut.idStatut===102)}>
-                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv))}>Consulter</button>
+                                                        <td   hidden={this.comparateurDate(this.state.dateSelected) || rdv.statut.idStatut===102 || rdv.statut.idStatut===101}>
+                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.pathname='/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv)}>Consulter</button>
                                                             <button className="btn btn-danger btn_classe_in_calendrie_staff" onClick={()=>this.rejeterRdv(rdv.idRdv)}>Rejeter</button>
                                                         </td>
                                                     </tr>
@@ -350,11 +355,11 @@ export default class Calendrier extends React.Component{
                                                         <td>{this.inList(rdv.personnePatient.idUser!==undefined?rdv.personnePatient.idUser:rdv.patient)}</td>
                                                         <td>{rdv.motif}</td>
                                                         <td data-tip data-for={"line-rdv"+i}>
-                                                            <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
-                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
+                                                            <FontAwesomeIcon style={{color:'red'}} icon={faExclamationTriangle}/>
+                                                            <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous annulé</ReactTooltip>
                                                         </td>
-                                                        <td  hidden={(!this.comparateurDate(this.state.dateSelected)) || (rdv.statut.idStatut===102)}>
-                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv))}>Consulter</button>
+                                                        <td  hidden={this.comparateurDate(this.state.dateSelected) || rdv.statut.idStatut===102 || rdv.statut.idStatut===101}>
+                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.pathname='/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv)}>Consulter</button>
                                                             <button className="btn btn-danger btn_classe_in_calendrie_staff" onClick={()=>this.rejeterRdv(rdv.idRdv)}>Rejeter</button>
                                                         </td>
                                                     </tr>
@@ -367,8 +372,8 @@ export default class Calendrier extends React.Component{
                                                             <FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/>
                                                             <ReactTooltip id={"line-rdv"+i} place="top" effect="solid">Rendez-vous non pris</ReactTooltip>
                                                         </td>
-                                                        <td  hidden={(!this.comparateurDate(this.state.dateSelected)) || (rdv.statut.idStatut===102)}>
-                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.replace('/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv))}>Consulter</button>
+                                                        <td  hidden={this.comparateurDate(this.state.dateSelected) || rdv.statut.idStatut===102 || rdv.statut.idStatut===101}>
+                                                            <button className="btn btn-success btn_classe_in_calendrie_staff" onClick={()=>window.location.pathname='/consultation/patient/'+utile.valueToLink(rdv.specialite.libelle)+'/'+utile.valueToLink(rdv.personnePatient.user.pseudo)+'/'+utile.crypteId(''+rdv.idRdv)}>Consulter</button>
                                                             <button className="btn btn-danger btn_classe_in_calendrie_staff" onClick={()=>this.rejeterRdv(rdv.idRdv)}>Rejeter</button>
                                                         </td>
                                                     </tr>

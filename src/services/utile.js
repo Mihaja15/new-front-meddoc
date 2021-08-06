@@ -131,6 +131,11 @@ function formatDate(date){
         return "";
     return autocompleteZero(date.getDate(),2)+'/'+autocompleteZero(date.getMonth()+1,2)+'/'+date.getFullYear();
 }
+function formatDateDash(date){
+    if(date===null||date===undefined||date==="null")
+        return "";
+    return autocompleteZero(date.getDate(),2)+'-'+autocompleteZero(date.getMonth()+1,2)+'-'+date.getFullYear();
+}
 function formatDateText(date){
     if(date===null||date===undefined||date==="null")
         return "";
@@ -217,6 +222,9 @@ function numStr(a, b) {
 function hasValue(data){
     return data!==undefined&&data!==null&&data!=="";
 }
+function noValue(data){
+    return data===undefined||data===null||data==="";
+}
 function getYearFromActual(add){
     const today = new Date();
     var year = today.getFullYear();
@@ -224,7 +232,10 @@ function getYearFromActual(add){
     else return year;
 }
 function valueToLink(value){
-    return value.trim().replace(/\s+/g, '-').toLowerCase();
+    if(hasValue(value))
+        return value.trim().replace(/\s+/g, '-').toLowerCase();
+    else
+        return "";
 }
 function crypteId(valeur){
     if(valeur!==undefined && valeur !==null && valeur!==''){
@@ -265,6 +276,7 @@ export const utile = {
     getDateCompletAbrev,
     getDateCompletWithHoureAndMinute,
     formatDate,
+    formatDateDash,
     formatDateText,
     formatDateTextWithTime,
     autocompleteZero,
@@ -281,6 +293,7 @@ export const utile = {
     getPercent,
     numStr,
     hasValue,
+    noValue,
     getYearFromActual,
     valueToLink,
     crypteId,

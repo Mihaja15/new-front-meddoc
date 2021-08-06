@@ -67,7 +67,7 @@ class Header extends React.Component{
         this.setState({way:chemin});
         if(cookies.get('pseudo')!==null && cookies.get('pseudo')!==undefined && cookies.get('token')!==null && cookies.get('token')!==undefined && cookies.get('role')!==null && cookies.get('role')!==undefined){
             if(cookies.get('role').toLowerCase()==='centre'){
-                if(chemin==='profil-patient'||chemin==='profil-staff'){
+                if(chemin==='profil-patient'||chemin==='professionnel'){
                     alert('Vous n\'êtes pas autororisé à accéder ce lien');
                     window.location.replace('/profil-centre/1');
                 }
@@ -78,7 +78,7 @@ class Header extends React.Component{
                 // this.setState({type:'centre', pseudo:localStorage.getItem('pseudo'), photo: localStorage.getItem('photo')});
                 this.setState({initial: utile.getInitial(cookies.get('pseudo')),photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
             }else if(cookies.get('role').toLowerCase()==='patient'){
-                if(chemin==='profil-centre'||chemin==='profil-staff'){
+                if(chemin==='profil-centre'||chemin==='professionnel'){
                     alert('Vous n\'êtes pas autororisé à accéder ce lien');
                     window.location.replace('/');
                 }
@@ -91,22 +91,22 @@ class Header extends React.Component{
             }else if(cookies.get('role').toLowerCase()==='professionnel santé'){
                 if(chemin==='profil-patient'||chemin==='profil-centre'){
                     alert('Vous n\'êtes pas autororisé à accéder ce lien');
-                    window.location.replace('/profil-staff/1');
+                    window.location.replace('/professionnel/'+utile.valueToLink(cookies.get('pseudo'))+'/dashboard/'+utile.formatDateDash(new Date()));
                 }
                 if(chemin==='connexion-centre' || chemin==='inscription-centre' || chemin==='connexion' || chemin==='inscription'){
                     alert('Vous êtes déjà connecté');
-                    window.location.replace('/profil-staff/1');
+                    window.location.replace('/professionnel/'+utile.valueToLink(cookies.get('pseudo'))+'/dashboard/'+utile.formatDateDash(new Date()));
                 }
                 // this.setState({type:'professionnel santé', pseudo:localStorage.getItem('pseudo'), photo: 'profile.png'});
                 this.setState({initial: utile.getInitial(cookies.get('pseudo')),photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
             }else{
-                if(chemin==='profil-patient'||chemin==='profil-centre'||chemin==='profil-staff'){
+                if(chemin==='profil-patient'||chemin==='profil-centre'||chemin==='professionnel'){
                     alert('Vous devez vous connecté');
                     window.location.replace('/');
                 }
             }
         }else{
-            if(chemin==='profil-patient'||chemin==='profil-centre'||chemin==='profil-staff'){
+            if(chemin==='profil-patient'||chemin==='profil-centre'||chemin==='professionnel'){
                 alert('Vous devez vous connecté');
                 window.location.replace('/');
             }
@@ -114,12 +114,12 @@ class Header extends React.Component{
         // alert(chemin)
         // const isConnected = localStorage.getItem('connected');
         // if(centreData===null && userData===null && staffData===null){
-        //     if(chemin==='profil'||chemin==='profil-centre'||chemin==='profil-staff'){
+        //     if(chemin==='profil'||chemin==='profil-centre'||chemin==='professionnel'){
         //         alert('Vous n\'êtes pas autororisé à accéder ce lien');
         //         window.location.replace('/');
         //     }
         // }else if(centreData!==null && userData===null && staffData===null){
-        //     if(chemin==='profil'||chemin==='profil-staff'){
+        //     if(chemin==='profil'||chemin==='professionnel'){
         //         alert('Vous n\'êtes pas autororisé à accéder ce lien');
         //         window.location.replace('/profil-centre/1');
         //     }
@@ -129,7 +129,7 @@ class Header extends React.Component{
         //     }
         //     this.setState({type:'centre', pseudo:localStorage.getItem('pseudo'), photo: localStorage.getItem('photo')});
         // }else if(centreData===null && userData!==null && staffData===null){
-        //     if(chemin==='profil-centre'||chemin==='profil-staff'){
+        //     if(chemin==='profil-centre'||chemin==='professionnel'){
         //         alert('Vous n\'êtes pas autororisé à accéder ce lien');
         //         window.location.replace('/');
         //     }
@@ -141,11 +141,11 @@ class Header extends React.Component{
         // }else if(centreData===null && userData===null && staffData!==null){
         //     if(chemin==='profil'||chemin==='profil-centre'){
         //         alert('Vous n\'êtes pas autororisé à accéder ce lien');
-        //         window.location.replace('/profil-staff/1');
+        //         window.location.replace('/professionnel/1');
         //     }
         //     if(chemin==='connexion-centre' || chemin==='inscription-centre' || chemin==='connexion' || chemin==='inscription'){
         //         alert('Vous êtes déjà connecté');
-        //         window.location.replace('/profil-staff/1');
+        //         window.location.replace('/professionnel/1');
         //     }
         //     this.setState({type:'professionnel santé', pseudo:localStorage.getItem('pseudo'), photo: 'profile.png'});
         // }
@@ -216,7 +216,7 @@ class Header extends React.Component{
             if(this.state.way!=='professionnel'){
                 return(
                     <>
-                        <li onClick={()=>{window.location.replace("/professionnel/"+utile.valueToLink(userSession.get('pseudo')))}}>Compte <FontAwesomeIcon icon={faUser}/></li>
+                        <li onClick={()=>{window.location.replace("/professionnel/"+utile.valueToLink(userSession.get('pseudo'))+'/dashboard/'+utile.formatDateDash(new Date()))}}>Compte <FontAwesomeIcon icon={faUser}/></li>
                         <li onClick={()=>{this.logout(); window.location.replace("/connexion-centre")}}>Déconnexion <FontAwesomeIcon icon={faSignOutAlt}/></li>
                     </>
                 )

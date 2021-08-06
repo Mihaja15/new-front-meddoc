@@ -2,11 +2,12 @@ import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './ConnexionCentre.css';
-import {fetchPost, fetchPostNotLogged} from '../../services/global.service';
+import {fetchPostNotLogged} from '../../services/global.service';
 import bgLogin from '../../assets/background/centre.jpg';
-
 import {userSession} from '../../services/userSession';
 import { utile } from '../../services/utile';
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
+import CaptchaButton from './CaptchaButton';
 
 export default class ConnexionCentre extends React.Component{
     constructor(props){
@@ -17,13 +18,14 @@ export default class ConnexionCentre extends React.Component{
             mdp:'',
             disableButton:false
         }
+        this.setToken = this.setToken.bind(this);
     }
     handleChange = (param, e) => {
         this.setState({ [param]: e.target.value })
     }
     keyPressed=(e)=>{
-        if(e.keyCode===13)
-            this.loginConnexion();
+        // if(e.keyCode===13)
+        //     this.loginConnexion();
     }
     loginConnexion = () => {
         this.setState({disableButton:true,error:{activation:false}});
@@ -37,7 +39,7 @@ export default class ConnexionCentre extends React.Component{
                             (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
                             response.token,
                             response.role);
-                        window.location.replace('/professionnel/'+utile.valueToLink(response.data.username));
+                        window.location.replace('/professionnel/'+utile.valueToLink(response.data.username)+'/dashboard/'+utile.formatDateDash(new Date()));
                     } else if(response.role.toLowerCase()==='structure santé'){
                         userSession.userLogin(response.data.username,
                             (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile-centre.png",
@@ -55,6 +57,42 @@ export default class ConnexionCentre extends React.Component{
             }).catch(error=>{
                 console.log(error)
                 this.setState({disableButton:false,error : {message : error.message,activation: true}});
+            });
+        }
+    }
+    setToken(value){
+        const dataIdentification = this.state.login;const dataMdp = this.state.mdp;
+         if(utile.hasValue(dataIdentification) && utile.hasValue(dataMdp) && value!==null){
+             this.setState({disableButton:true,error:{activation:false}});
+             const userAuth = {identification: dataIdentification,mdp: dataMdp, captchaToken:value}
+             fetchPostNotLogged('/users/login',userAuth).then(response=>{
+                console.log(response)
+                if(response.statut===200){
+                    if(response.role.toLowerCase()==='professionnel santé'){
+                        userSession.userLogin(response.data.username,
+                            (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
+                            response.token,
+                            response.role);
+                        window.location.replace('/professionnel/'+utile.valueToLink(response.data.username)+'/dashboard/'+utile.formatDateDash(new Date()));
+                    } else if(response.role.toLowerCase()==='structure santé'){
+                        userSession.userLogin(response.data.username,
+                            (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile-centre.png",
+                            response.token,
+                            response.role);
+                        window.location.replace('/profil-centre/1');
+                    }else{
+                        throw new Error("Erreur de connexion");
+                    }
+                }else if(response.statut===201){
+                    this.setState({toShow : 2, disableButton:false});
+                }else if(response.statut===400){
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
+                }else{
+                    this.setState({disableButton:false,error : {message : response.message,activation: true}});
+                }
+            }).catch(error=>{
+                console.log(error)
+                this.setState({disableButton:false,error : {message : error,activation: true}});
             });
         }
     }
@@ -80,7 +118,11 @@ export default class ConnexionCentre extends React.Component{
                             <a className="col-md-12" href="/mot-de-passe">Mot de passe oublié ?</a>
                             <div className="form-group row col-md-12">
                                 <div className="input-group row">
-                                    <a className="bouton-solid-reg popup-with-move-anim a1" style={{textAlign:'center'}} hidden={this.state.disableButton} id="sonboutonConnecter" href="#0" onClick={this.loginConnexion}>Se connecter</a>
+                                <GoogleReCaptchaProvider className="g-recaptcha" reCaptchaKey="6LclRt8bAAAAAFWdHWX7Tu1q8C00ptadzT4yeG45">
+                                    <CaptchaButton setCaptchaToken={this.setToken} hiddenButton={this.state.disableButton} disableButton={!(utile.hasValue(this.state.login)&&utile.hasValue(this.state.mdp))}/>
+                                    {/* <GoogleReCaptcha onVerify={this.handleVerifyRecaptcha}/> */}
+                                </GoogleReCaptchaProvider>
+                                    {/* <a className="bouton-solid-reg popup-with-move-anim a1" style={{textAlign:'center'}} hidden={this.state.disableButton} id="sonboutonConnecter" href="#0" onClick={this.loginConnexion}>Se connecter</a> */}
                                     <div hidden={!this.state.disableButton} className="login-loader"></div>
                                 </div>
                                 <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div>
