@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/js/bootstrap.js';
 import meddoc from '../../assets/logo/MEDDOC.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeOpen, faHome, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
