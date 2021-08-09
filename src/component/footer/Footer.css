@@ -1,73 +1,36 @@
-.footer-area{
+.footer-content{
 	background-color:#1b7895;
-	background-size:cover;
-	background-repeat:no-repeat;
+	/* background-size:cover;
+	background-repeat:no-repeat; */
 	width: 100%;
 	/* border-top-right-radius: 60vh; */
 	padding-bottom: 1%;
 	padding-top: 1%;
 	/* padding-right: 15%; */
-	z-index: 999;
+	z-index: 900;
 	color: white;
-	display: inline-block;
+	display: block;
 	margin: 0 auto;
 	position: relative;
 	font-family: 'Montserrat',sans-serif;
 }
-@media (max-width: 575px){
-	.footer-area{
-		padding:1%;
-		z-index: 100;
-    }
-}
-.footer-container{
-	/* position: relative; */
-	width: 100%;
-	display: inline-block;
-	/* margin: 0 auto; */
-	/* background-color: #1b7895; */
-}
-.footer-front{
-	/* position: relative; */
-	width: 100%;
-	display: inline-block;
-	/* margin: 0 auto; */
-	/* border-top-right-radius: 50vh; */
-	/* background-color: #1b7895; */
-}
-/* .footer-area .container{
-	margin-left: 0%;
-}
-.footer-area .container .row .col{
-	margin-right: 20%;
-} */
-.lienImage{
-	color: white;
-}
-.img-logo-meddoc{
-	width: 100%;
-}
-.divAProposFooter{
-	width: 100%;
-}
-.textAproposMeddoc{
-	font-size : 2.5625rem;
-	color: white;
-}
-.divMeddocNaturel{
-	text-align: center;;
-}
-.iconColoSmFooter{
-	margin-top: 10%;
-	padding-bottom: 8%;
-}
-.titleH5Footer{
-	color: white;
+.imageFooter{
+    margin-left: -10vh;
+	width: 230px;
+    object-fit: contain;
 }
 .rowDivIconFooter{
 	background-color: #1b7895;
 	border-radius: 12px;
 	border: 2px solid #1b7895;
+}
+.fabDesignIconFooter:hover , .fabLinkDimDesignIconFooter:hover, .fabYoutubeDesignIconFooter:hover, .fbiconFooter:hover {
+	transform: rotate(360deg) scale(1);
+    -webkit-transform: scale(1.1);
+}
+.iconColoSmFooter{
+	margin-bottom: 10%;
+	/* padding-bottom: 8%; */
 }
 @media (max-width: 575px){
     .fabDesignIconFooter{
@@ -155,14 +118,6 @@
 		border-radius: 25px;
 		padding-top: 16%;
 	}
-  }
-
-.fabDesignIconFooter:hover , .fabLinkDimDesignIconFooter:hover, .fabYoutubeDesignIconFooter:hover, .fbiconFooter:hover {
-	transform: rotate(360deg) scale(1);
-    -webkit-transform: scale(1.1);
-}
-.imageFooter{
-	width: 230px;
 }
 .pListeFooter{
 	color: white;
