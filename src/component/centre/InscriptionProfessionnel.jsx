@@ -132,7 +132,15 @@ export default class InscriptionProfessionnel extends React.Component{
                     idTypeContact: 2
                 }
             })
-        this.setState({listContact:contacts});
+        this.setState({listContact:contacts},function(){
+            for(let i =0; i < this.state.listContact.length; i++){
+                if((this.state.listContact[i].idTypeContact===4||this.state.listContact[i].idTypeContact===5||this.state.listContact[i].idTypeContact===6||this.state.listContact[i].idTypeContact===7)&&utile.isValidURL(this.state.listContact[i])){
+                   alert('La valeur du champs doit être un url :'+this.state.listContact[i].valeurContact);
+                   return;
+                }
+            }
+        });
+        
         const dataCentre = {
             personne:{
                 nom:this.state.nom,
@@ -415,6 +423,7 @@ export default class InscriptionProfessionnel extends React.Component{
     }
     changeContactType=(indice, event)=>{
         const data= this.state.listContact;
+        data[indice].idTypeContact= event.target.value;
         data[indice].typeContact= {idTypeContact:event.target.value};
 		this.setState({listContact: data});
     }
@@ -869,7 +878,7 @@ export default class InscriptionProfessionnel extends React.Component{
                                                         return <option key={i} value={typeContact.idTypeContact}>{typeContact.libelle}</option>
                                                     })}
                                                 </select>
-                                                <input type="text" className="col-md-6" value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/>
+                                                <input type={contact.idTypeContact===4||contact.idTypeContact===5||contact.idTypeContact===6?"url":"text"} className="col-md-6" value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/>
                                                 <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeContact(j)}>Supprimer</a>
                                             </div>)
                                         })}

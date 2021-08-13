@@ -76,7 +76,7 @@ class Header extends React.Component{
                     window.location.replace('/profil-centre/1');
                 }
                 // this.setState({type:'centre', pseudo:localStorage.getItem('pseudo'), photo: localStorage.getItem('photo')});
-                this.setState({initial: utile.getInitial(cookies.get('pseudo')),photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
+                this.setState({initial: utile.getFullInitial(cookies.get('pseudo')),photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
             }else if(cookies.get('role').toLowerCase()==='patient'){
                 if(chemin==='profil-centre'||chemin==='professionnel'){
                     alert('Vous n\'êtes pas autororisé à accéder ce lien');
@@ -87,7 +87,7 @@ class Header extends React.Component{
                     window.location.replace('/profil-patient');
                 }
                 // this.setState({type:'patient', pseudo:userData.username, photo: userData.profilPicture});
-                this.setState({initial: utile.getInitial(cookies.get('pseudo')), photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
+                this.setState({initial: utile.getFullInitial(cookies.get('pseudo')), photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
             }else if(cookies.get('role').toLowerCase()==='professionnel santé'){
                 if(chemin==='profil-patient'||chemin==='profil-centre'){
                     alert('Vous n\'êtes pas autororisé à accéder ce lien');
@@ -98,7 +98,7 @@ class Header extends React.Component{
                     window.location.replace('/professionnel/'+utile.valueToLink(cookies.get('pseudo'))+'/dashboard/'+utile.formatDateDash(new Date()));
                 }
                 // this.setState({type:'professionnel santé', pseudo:localStorage.getItem('pseudo'), photo: 'profile.png'});
-                this.setState({initial: utile.getInitial(cookies.get('pseudo')),photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
+                this.setState({initial: utile.getFullInitial(cookies.get('pseudo')),photo:cookies.get('photo'), pseudo: cookies.get('pseudo'), type: cookies.get('role')});
             }else{
                 if(chemin==='profil-patient'||chemin==='profil-centre'||chemin==='professionnel'){
                     alert('Vous devez vous connecté');
@@ -279,7 +279,7 @@ class Header extends React.Component{
                                 
                                 <ul className="connected-menu">
                                     <li className="sign-in-link">
-                                        <a href="#0"><span className='initial-icon'>{this.state.initial}</span>&nbsp;&nbsp;{this.state.pseudo} <FontAwesomeIcon style={{fontSize:'15px'}} icon={faCaretDown}/></a>
+                                        <a href="#0" className="signed-link"><span className='initial-icon'>{this.state.initial}</span>&nbsp;&nbsp;{this.state.pseudo} <FontAwesomeIcon style={{fontSize:'15px'}} icon={faCaretDown}/></a>
                                         <ul className="dropdown-menu-compte" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
                                             {/* <li onClick={()=>window.location.replace('/inscription')}>Inscription</li>
                                             <li onClick={()=>window.location.replace('/connexion')}>Connexion</li> */}

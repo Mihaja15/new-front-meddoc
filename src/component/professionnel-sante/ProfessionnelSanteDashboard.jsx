@@ -2,7 +2,7 @@ import React from 'react';
 // import Calendrier from './Calendrier';
 import '../centre/Profil.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxes, faCalendarAlt, faCertificate, faChartPie, faCommentMedical, faFileSignature, faInfo, faThList, faUserEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBoxes, faCalendarAlt, faCertificate, faChartPie, faCommentMedical, faFileSignature, faHospitalUser, faInfo, faThList, faUserEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Calendrier from '../staff/Calendrier';
 import Compte from '../centre/Compte';
 import RessourcesHumaines from '../centre/RessourcesHumaines';
@@ -12,7 +12,8 @@ import Causette from '../chat/Causette';
 import PdfForm from '../pdf/PdfForm';
 import ToDoList from './ToDoList';
 import { utile } from '../../services/utile';
-const indexLink = ['dashboard','agenda','compte','causette','e-trames','assistance']
+import MesPatients from '../profil-professionnel/MesPatients';
+const indexLink = ['dashboard','agenda','compte','causette','e-trames','assistance','patients']
 export default class ProfessionnelSanteDashboard extends React.Component{
     constructor(props){
         super();
@@ -44,7 +45,8 @@ export default class ProfessionnelSanteDashboard extends React.Component{
     linkInMenu=(link)=>{
         this.setState({show:indexLink.indexOf(link)},function(){
             console.log(userSession.get('pseudo'))
-           window.history.pushState("object or string", "Title", "/professionnel/"+utile.hasValue(userSession.get('pseudo'))+"/"+link+'/'+utile.formatDateDash(new Date()));
+           window.history.pushState("object or string", "Title", "/professionnel/"+(utile.hasValue(userSession.get('pseudo'))?userSession.get('pseudo'):"profil")+"/"+link+'/'+utile.formatDateDash(new Date()));
+        //    window.location.pathname="/professionnel/"+(utile.hasValue(userSession.get('pseudo'))?userSession.get('pseudo'):"profil")+"/"+link+'/'+utile.formatDateDash(new Date());
         });
     }
     render(){
@@ -54,13 +56,14 @@ export default class ProfessionnelSanteDashboard extends React.Component{
                     <div className="profil-centre-left-menu">
                         <ul className="col-md-12">
                             <li onClick={()=> this.linkInMenu('dashboard')} className={this.state.show===0?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faChartPie}/>&nbsp; Tableau de bord</li>
+                            <li onClick={()=> this.linkInMenu('patients')} className={this.state.show===6?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faHospitalUser}/>&nbsp; Mes patients</li>
                             <li onClick={()=> this.linkInMenu('agenda')} className={this.state.show===1?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faCalendarAlt}/>&nbsp;&nbsp; Agenda</li>
                             <li onClick={()=> this.linkInMenu('compte')} className={this.state.show===2?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserEdit}/>&nbsp; Compte</li>
                             <li onClick={()=> this.linkInMenu('causette')} className={this.state.show===3?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faCommentMedical}/>&nbsp; Causette</li>
                             <li onClick={()=> this.linkInMenu('e-trames')} className={this.state.show===4?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faFileSignature}/>&nbsp; E-trames</li>
                             {/* <li onClick={()=> this.setState({show:"4"})} className={this.state.show==="4"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserPlus}/>&nbsp; Ressources humaines</li>
                             <li onClick={()=> this.setState({show:"5"})} className={this.state.show==="5"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faBoxes}/>&nbsp;&nbsp; Gestion de stock</li> */}
-                            <li onClick={()=> this.openAndCloseTodoList()} className={this.state.show===6?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faThList}/>&nbsp;&nbsp;&nbsp; To do List</li>
+                            <li onClick={()=> this.openAndCloseTodoList()} className={"col-md-12"}><FontAwesomeIcon icon={faThList}/>&nbsp;&nbsp;&nbsp; To do List</li>
                             <li onClick={()=> this.linkInMenu('assistance')} className={this.state.show===5?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faInfo}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Besoin d'aide?</li>
                         </ul>
                     </div>
@@ -84,6 +87,8 @@ export default class ProfessionnelSanteDashboard extends React.Component{
                                 <Causette/>
                                 :this.state.show===4?
                                 <PdfForm/>
+                                :this.state.show===6?
+                                <MesPatients/>
                                 // :this.state.show==="4"?
                                 // <RessourcesHumaines/>
                                 :<Dashboard/>

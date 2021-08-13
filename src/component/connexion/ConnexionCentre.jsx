@@ -84,7 +84,7 @@ export default class ConnexionCentre extends React.Component{
                         throw new Error("Erreur de connexion");
                     }
                 }else if(response.statut===201){
-                    this.setState({toShow : 2, disableButton:false});
+                    this.setState({toShow : 2, disableButton:false,error : {message : response.message,activation: true}});
                 }else if(response.statut===400){
                     this.setState({disableButton:false,error : {message : response.message,activation: true}});
                 }else{

@@ -49,18 +49,20 @@ export default class ToDoList extends React.Component{
     removeToDo=(indice)=>{
         const data = this.state.listToDo;
         if(!data[indice].locked){
-            if(utile.hasValue(data[indice])&&utile.hasValue(data[indice].idToDoList)){
-                var id = data[indice].idToDoList;
-                data.splice(indice, 1);
-                fetchGetHandler('/extra/toDoList/delete/'+id).then(data=>{
-                    console.log(data)
-                    if(utile.hasValue(data))
-                        this.setState({listToDo: data});
-                });
-            }
-            else{
-                data.splice(indice, 1);
-                this.setState({listToDo: data});
+            if(window.confirm('Voulez vous vraiment supprimer? il n\'y aura pas de sauvegarde.')){
+                if(utile.hasValue(data[indice])&&utile.hasValue(data[indice].idToDoList)){
+                    var id = data[indice].idToDoList;
+                    data.splice(indice, 1);
+                    fetchGetHandler('/extra/toDoList/delete/'+id).then(data=>{
+                        console.log(data)
+                        if(utile.hasValue(data))
+                            this.setState({listToDo: data});
+                    });
+                }
+                else{
+                    data.splice(indice, 1);
+                    this.setState({listToDo: data});
+                }
             }
         }
     }

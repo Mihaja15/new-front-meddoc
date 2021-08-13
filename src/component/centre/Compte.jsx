@@ -9,7 +9,7 @@ import { fetchGet, fetchGetHandler, fetchPostHeader } from '../../services/globa
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { utile } from '../../services/utile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faUndoAlt, faUserEdit } from '@fortawesome/free-solid-svg-icons';
+import {  faTrash, faUndoAlt, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import Select from 'react-select';
 function MyComponent(props) {
 	useMapEvent('click', (e) => {
@@ -22,31 +22,6 @@ export default class Compte extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            // idProfessionnel:null,
-            // idAdresse:null,
-            // latitude:-18.41106708060209,
-            // longitude:47.516397059313796,
-            // listLieu:[],
-            // listDistrict:[],
-            // listContact:[],
-            // listTypeContact:[],
-            // nomCentre:'',
-            // presentation:'',
-            // infoAcces:'',
-            // nbSalle:0,
-            // adresse:'',
-            // emploiTemps:utile.createSemaineEmploieDuTemps(),
-            // phone:'',
-            // mail:'',
-            // file:null,
-            // fileName:'',
-            // mdp:'',
-            // oldMdp:'',
-            // province:'',
-            // district:'',
-            // duree:0,
-            // percentageMdp:0,
-            // confirmationMdp:'',
             update:false,
             // mailIndice:null,
             // phoneIndice:null,
@@ -55,8 +30,6 @@ export default class Compte extends React.Component{
             // erreurEtat:false
             latitude:-18.41106708060209,
             longitude:47.516397059313796,
-            // latitude:0,
-            // longitude:0,
             listLieu:[],
             listDistrict:[],
             dataDistrict:[],
@@ -86,16 +59,23 @@ export default class Compte extends React.Component{
             mail:'',
             file:null,
             langue:[],
+            langues:[],
             paiement:[],
+            paiements:[],
             fileName:'',
             mdp:'',
+            oldMdp:'',
             district:'',
+            districtValue:{value:'',label:''},
             duree:0,
             percentageMdp:0,
-            confirmationMdp:'',
+            confirmationMdp:null,
             disableButton:false,
             erreurMessage:'',
-            erreurEtat:false
+            erreurEtat:false,
+            idUser:null,
+            idMeddoc:null,
+            professionnelData:null,
         }
     }
     getColorPourcentage(pourcentage){
@@ -116,36 +96,107 @@ export default class Compte extends React.Component{
         event.preventDefault();
         this.setState({disableButton:true});
 		// const data = new FormData(event.target);
-        const dataCentre = {
-            idCentre:this.state.idCentre,
-            nomCentre:this.state.nomCentre,
-            presentation:this.state.presentation,
-            infoAcces:this.state.infoAcces,
-            nbSalle:this.state.nbSalle,
-            adresse:[{
-                idAdresse: this.state.idAdresse,
-                addrValue:this.state.adresse,
-                latitude : this.state.latitude,
-                longitude : this.state.longitude,
+        // const dataCentre = {
+        //     idCentre:this.state.idCentre,
+        //     nomCentre:this.state.nomCentre,
+        //     presentation:this.state.presentation,
+        //     infoAcces:this.state.infoAcces,
+        //     nbSalle:this.state.nbSalle,
+        //     adresse:[{
+        //         idAdresse: this.state.idAdresse,
+        //         addrValue:this.state.adresse,
+        //         latitude : this.state.latitude,
+        //         longitude : this.state.longitude,
+        //         district:{
+        //             idDistrict: this.state.district
+        //         }
+        //     }],
+        //     identifiant:[{
+        //         identifiant: this.state.mail.trim()
+        //     },{
+        //         identifiant: this.state.phone.trim()
+        //     }],
+        //     emploiTemps:this.getEmploiDuTemps(),
+        //     contact:this.state.listContact,
+        //     dureeVaccination:this.state.duree
+        // }
+        var exist = false;
+        const adresses = this.state.professionnelData.personne.adresse;
+        for(let i =0; i < adresses.length; i++){
+             if(adresses[i].informationAdresse.trim().toLowerCase()===this.state.adresse.trim().toLocaleLowerCase()){
+                exist=true;
+                break;
+             }
+        }
+        if(!exist){
+            for(let i =0; i < adresses.length; i++){
+                adresses[i].dateFin=new Date();
+           }
+            adresses.push({
+                idUser:this.state.idUser,
+                dateDebut:new Date(),
+                informationAdresse:this.state.adresse,
+                informationAcces:this.state.infoAcces,
+                latitude:this.state.latitude,
+                longitude:this.state.longitude,
                 district:{
-                    idDistrict: this.state.district
+                    idDistrict:this.state.district
                 }
-            }],
-            identifiant:[{
-                identifiant: this.state.mail.trim()
-            },{
-                identifiant: this.state.phone.trim()
-            }],
+            })
+        }
+        for(let i =0; i < this.state.listContact.length; i++){
+            if((this.state.listContact[i].idTypeContact===4||this.state.listContact[i].idTypeContact===5||this.state.listContact[i].idTypeContact===6||this.state.listContact[i].idTypeContact===7)&&utile.isValidURL(this.state.listContact[i])){
+               alert('La valeur du champs doit être un url :'+this.state.listContact[i].valeurContact);
+               return;
+            }
+        }
+        const dataCentre = {
+            idUser:this.state.idUser,
+            personne:{
+                idUser:this.state.idUser,
+                nom:this.state.nom,
+                prenoms:this.state.prenoms,
+                sexe:this.state.sexe,
+                langue:this.state.langue,
+                dateNaissance:this.state.dateNaissance,
+                lieuNaissance:this.state.lieuNaissance,
+                contact:this.state.listContact,
+                adresse:adresses,
+                user:{
+                    idUser:this.state.idUser,
+                    phone:this.state.phone,
+                    email:this.state.mail,
+                    password:utile.hasValue(this.state.mdp)?this.state.mdp:null,
+                    typeUser:{
+                        idTypeUser:2
+                    },
+                    statut:this.state.professionnelData.personne.user.statut,
+                    idMeddoc:this.state.professionnelData.personne.user.idMeddoc,
+                    dateAjout:this.state.professionnelData.personne.user.dateAjout,
+                    pseudo:this.state.professionnelData.personne.user.pseudo
+                }
+            },
+            informationMedecin:this.state.presentation,
             emploiTemps:this.getEmploiDuTemps(),
-            contact:this.state.listContact,
-            dureeVaccination:this.state.duree
+            dureeConsultation:this.state.duree,
+            numeroOrdre:this.state.numOrdre,
+            typeOrdre:{
+                idTypeOrdre:this.state.typeOrdre
+            },
+            specialite:{
+                idSpecialite:this.state.specialite
+            },
+            modePaiement:this.state.paiement,
+            fraisConsultation:this.state.fraisConsultation,
+            diplomes:this.state.diplomes,
+            experiences:this.state.experiences
         }
         const dataSend = {
             centre: JSON.stringify(dataCentre),
             mdp: this.state.oldMdp
         }
         console.log(dataCentre);
-        fetchPostHeader('/covid/edition-centre',dataSend).then(result=>{
+        fetchPostHeader('/professionnel/edition-centre',dataSend).then(result=>{
             if(result.etat === "0"){
                 alert(result.message);
                 this.setState({disableButton:false,update:false});
@@ -160,30 +211,70 @@ export default class Compte extends React.Component{
             this.setState({percentageMdp:verificationMotDePasseEnPourcentage(e.target.value)});
         }
         if(param==="province"){
-            fetchGet('/adresse/find-district-by-id-province/'+e.target.value).then(data=>{
+            fetchGet('/adresse/find-district-part/all').then(data=>{
                 if(data!=null){
                     this.setState({ listDistrict: data });
                 }
             });
         }
-        if(param==="phone"){
-            if(this.state.phoneIndice!==null){
-                const data = this.state.listContact;
-                data[this.state.phoneIndice].contact = e.target.value;
-                this.setState({listContact: data});
-                // this.state.listContact[this.state.phoneIndice].contact=e.target.value;
+        if(param==="langue"){
+            if(e!==null){
+                const lang = [];
+                const langs = [];
+                console.log(e)
+                for(let i=0;i<e.length;i++){
+                    lang.push({
+                        idLangue:e[i].value,
+                    })
+                    langs.push({
+                        value:e[i].value,
+                        label:e[i].label,
+                    })
+                }
+                this.setState({ [param]: lang,langues:langs });
+            }else
+                this.setState({ [param]: null,langues:null });
+        }else if(param==="paiement"){
+            if(e!==null){
+                const lang = [];
+                const langs = [];
+                for(let i=0;i<e.length;i++){
+                    lang.push({
+                        idModePaiement:e[i].value
+                    })
+                    langs.push({
+                        value:e[i].value,
+                        label:e[i].label,
+                    })
+                }
+                this.setState({ [param]: lang,paiements:langs });
+            }else
+                this.setState({ [param]: null,paiements:null});
+        }else if(param==="district"){
+            if(e!==null)
+                this.setState({ [param]: e.value, districtValue:{value:e.value,label:e.label}});
+            else
+                this.setState({ [param]: '', districtValue:{value:'',label:''}});
+        }else{
+            if(param==="phone"){
+                if(this.state.phoneIndice!==null){
+                    const data = this.state.listContact;
+                    data[this.state.phoneIndice].contact = e.target.value;
+                    this.setState({listContact: data});
+                    // this.state.listContact[this.state.phoneIndice].contact=e.target.value;
+                }
+                    
             }
-                
-        }
-        if(param==="mail"){
-            if(this.state.mailIndice!==null){
-                const data = this.state.listContact;
-                data[this.state.mailIndice].contact = e.target.value;
-                this.setState({listContact: data});
+            if(param==="mail"){
+                if(this.state.mailIndice!==null){
+                    const data = this.state.listContact;
+                    data[this.state.mailIndice].contact = e.target.value;
+                    this.setState({listContact: data});
+                }
+                    // this.state.listContact[this.state.mailIndice].contact=e.target.value;
             }
-                // this.state.listContact[this.state.mailIndice].contact=e.target.value;
+            this.setState({ [param]: e.target.value })
         }
-        this.setState({ [param]: e.target.value })
     }
     generaterTabSelect = (min,max) =>{
 		const valeur = [];
@@ -213,17 +304,28 @@ export default class Compte extends React.Component{
         var bot1 = null;
         var bot2 = null;
 		for (let i = 0; i < data.length; i++) {
+            top1 = null;
+            top2 = null;
+            bot1 = null;
+            bot2 = null;
 			if(data[i].activation){
-                if(data[i].topStart!==null && data[i].topStop!==null){
+                if(data[i].topStart!==-1 && data[i].topStop!==-1){
                     top1=utile.autocompleteZero(data[i].topStart,2)+":00:00";
                     top2=utile.autocompleteZero(data[i].topStop,2)+":00:00";
+                }else if(data[i].topStart!==-1 && data[i].topStop===-1){
+                    top1=utile.autocompleteZero(data[i].topStart,2)+":00:00";
+                    top2=utile.autocompleteZero(data[i].topStart,2)+":00:00";
                 }
-                if(data[i].bottomStart!==null && data[i].bottomStop!==null){
+                if(data[i].bottomStart!==-1 && data[i].bottomStop!==-1){
                     bot1=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
                     bot2=utile.autocompleteZero(data[i].bottomStop,2)+":00:00";
+                }else if(data[i].bottomStart!==-1 && data[i].bottomStop===-1){
+                    bot1=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
+                    bot2=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
                 }
                 if(top1!==null || bot1!==null){
                     newData.push({
+                        idUser:this.state.idUser,
                         timeStartBottom: bot1,
                         timeStopBottom: bot2,
                         jour: data[i].jour,
@@ -233,6 +335,7 @@ export default class Compte extends React.Component{
                 }
 			}
 		}
+        // alert(JSON.stringify(newData))
 		return newData;
 	}
     setSemaineEmploieDuTemps=(indice,event)=>{
@@ -242,8 +345,9 @@ export default class Compte extends React.Component{
 	}
     setValueEmploieDuTemps(namesHeure,indice,event){
 		const valeur = utile.parseStringToInt(event.target.value);
-		if(valeur >=0){
-			const data= this.state.emploiTemps;
+		// alert(valeur)
+        if(valeur >=0){
+            const data= this.state.emploiTemps;
 			if(namesHeure === 'topStart'){
                 data[indice].topStart=valeur;
                 if(data[indice].topStop===undefined || data[indice].topStop===null || data[indice].topStop==="")
@@ -275,7 +379,26 @@ export default class Compte extends React.Component{
 			this.setState({emploiTemps: data},function(){
                 console.log(this.state.emploiTemps)
             });
-		}
+		}else{
+            const data= this.state.emploiTemps;
+			if(namesHeure === 'topStart'){
+                data[indice].topStart=valeur;
+                data[indice].topStop = valeur;
+            }
+			if(namesHeure === 'topStop'){
+                data[indice].topStop=valeur;
+            }
+			if(namesHeure === 'bottomStart'){
+                data[indice].bottomStart=valeur;
+                data[indice].bottomStop=valeur;
+            }
+			if(namesHeure === 'bottomStop'){
+                data[indice].bottomStop=valeur;
+            }
+			this.setState({emploiTemps: data},function(){
+                console.log(this.state.emploiTemps)
+            });
+        }
 	}
     onChangeImage(event) {
         const picture = event.target.files;
@@ -290,6 +413,8 @@ export default class Compte extends React.Component{
     addContact=()=>{
         const data = this.state.listContact;
         data.push({
+            idUser:this.state.idUser,
+            idTypeContact:0,
             typeContact:{
                 idTypeContact:0
             },
@@ -309,6 +434,7 @@ export default class Compte extends React.Component{
     }
     changeContactType=(indice, event)=>{
         const data= this.state.listContact;
+        data[indice].idTypeContact= event.target.value;
         data[indice].typeContact= {idTypeContact:event.target.value};
 		this.setState({listContact: data});
     }
@@ -316,6 +442,7 @@ export default class Compte extends React.Component{
     addExperience=()=>{
         const data = this.state.experiences;
         data.push({
+            idUser:this.state.idUser,
             anneeDebut:null,
             anneeFin:null,
             nomEntite:null,
@@ -352,36 +479,7 @@ export default class Compte extends React.Component{
     addDiplome=()=>{
         const data = this.state.diplomes;
         data.push({
-            anneeObtention:null,
-            libelleDiplome:null,
-            description:null
-        });
-        this.setState({diplomes: data});
-    }
-    removeDiplome=(indice)=>{
-        const data = this.state.diplomes;
-        data.splice(indice, 1);
-        this.setState({diplomes: data});
-    }
-    changeDiplomeAnneeObtention=(indice, event)=>{
-        const data= this.state.diplomes;
-        data[indice].anneeObtention= event.target.value;
-		this.setState({diplomes: data});
-    }
-    changeDiplomeLibelleDiplome=(indice, event)=>{
-        const data= this.state.diplomes;
-        data[indice].libelleDiplome= event.target.value;
-		this.setState({diplomes: data});
-    }
-    changeDiplomeDescription=(indice, event)=>{
-        const data= this.state.diplomes;
-        data[indice].description= event.target.value;
-		this.setState({diplomes: data});
-    }
-    //diplomes
-    addDiplome=()=>{
-        const data = this.state.diplomes;
-        data.push({
+            idUser:this.state.idUser,
             anneeObtention:null,
             libelleDiplome:null,
             description:null
@@ -412,6 +510,7 @@ export default class Compte extends React.Component{
     addFrais=()=>{
         const data = this.state.fraisConsultation;
         data.push({
+            idUser:this.state.idUser,
             idTypeConsultation:0,
             dateDebut:new Date(),
             frais:null
@@ -441,15 +540,34 @@ export default class Compte extends React.Component{
     componentDidMount(){
         fetchGetHandler('/professionnel/data').then(data=>{
             console.log(data)
-            if(data!==null){
-                fetchGet('/adresse/find-province-by-id-district/'+data.personne.adresse[0].district.idDistrict).then(idProvince=>{
-                    this.setState({province:idProvince});
-                    fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(datas=>{
+            if(utile.hasValue(data)){
+                this.setState({professionnelData:data})
+                const langues = [];
+                for(let i=0;i<data.personne.langue.length;i++){
+                    langues.push({
+                        value:data.personne.langue[i].idLangue,
+                        label:data.personne.langue[i].libelle
+                    });
+                }
+                console.log(langues)
+                this.setState({langues:langues});
+                const paiements = [];
+                for(let i=0;i<data.modePaiement.length;i++){
+                    paiements.push({
+                        value:data.modePaiement[i].idModePaiement,
+                        label:data.modePaiement[i].libelle
+                    });
+                }
+                console.log(paiements)
+                this.setState({paiements:paiements});
+                // fetchGet('/adresse/find-province-by-id-district/'+data.personne.adresse[0].district.idDistrict).then(idProvince=>{
+                //     this.setState({province:idProvince});
+                    fetchGet('/adresse/find-district-part/all').then(datas=>{
                         if(datas!=null){
                             this.setState({ listDistrict: datas });
                         }
                     });
-                });
+                // });
                 // fetchGet('/adresse/find-district-part/all').then(data=>{
                 //     if(data!=null && data.length>=0){
                 //         this.setState({ dataDistrict: data });
@@ -505,6 +623,10 @@ export default class Compte extends React.Component{
                     exist = false;
                     if(edt!==null){
                         for (let j = 0; j < edt.length; j++) {
+                            top1 = -1;
+                            top2 = -1;
+                            bot1 = -1;
+                            bot2 = -1;
                             if(edt[j].timeStartBottom!==undefined && edt[j].timeStartBottom!==null && edt[j].timeStartBottom!=="")
                                 bot1 = edt[j].timeStartBottom.split(':')[0]*1;
                             if(edt[j].timeStopBottom!==undefined && edt[j].timeStopBottom!==null && edt[j].timeStopBottom!=="")
@@ -532,10 +654,10 @@ export default class Compte extends React.Component{
                             names : semaine[i],
                             activation : false,
                             jour : i,
-                            topStart : null,
-                            topStop : null,
-                            bottomStart : null,
-                            bottomStop : null,
+                            topStart : -1,
+                            topStop : -1,
+                            bottomStart : -1,
+                            bottomStop : -1,
                         })
                     }
                 }
@@ -580,11 +702,14 @@ export default class Compte extends React.Component{
                     experiences:data.experiences,
                     diplomes:data.diplomes,
                     fraisConsultation:data.fraisConsultation,
+                    langue:data.personne.langue,
+                    paiement:data.modePaiement,
                     // file:null,
                     // fileName:'',
-                    // mdp:'',
+                    // oldMdp:data.personne.user.password,
                     // province:idProv,
                     district:data.personne.adresse[0].district.idDistrict,
+                    districtValue:{value:data.personne.adresse[0].district.idDistrict,label:data.personne.adresse[0].district.nomDistrict+' / '+data.personne.adresse[0].district.region.nomRegion},
                     numOrdre:data.numeroOrdre,
                     duree:data.dureeConsultation
                 });
@@ -606,7 +731,7 @@ export default class Compte extends React.Component{
             <div className="compte-container">
                 <div className="row">
                     <div className="centre-banner-titre col-md-12 row">
-                        <h4 className="card-title col-md-6">Profil du centre</h4>
+                        <h4 className="card-title col-md-6">Profil d'utilisateur</h4>
                         {this.state.update?
                         <a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUndoAlt}/> Annuler</a>
                         :<a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUserEdit}/> Modifier</a>
@@ -640,7 +765,7 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Langue(s)</span>
-                                        <Select onChange={this.handleChange.bind(this,"langue")} className="col-7" isClearable={true} isMulti placeholder="" options={this.state.listLangue} />
+                                        <Select onChange={this.handleChange.bind(this,"langue")} className="col-7" isClearable={true} isMulti placeholder="" isDisabled={!this.state.update} closeMenuOnSelect={false} value={this.state.langues} options={this.state.listLangue} />
                                         {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                             { this.state.listLangue.map((langue,i) => {
                                                 return(
@@ -723,7 +848,7 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">District</span>
-                                        <Select onChange={this.handleChange.bind(this,"district")} className="col-7" isClearable={true} placeholder="District" options={this.state.dataDistrict} />
+                                        <Select onChange={this.handleChange.bind(this,"district")} className="col-7" isClearable={true} isDisabled={!this.state.update} value={this.state.districtValue} placeholder="District" options={this.state.listDistrict} />
                                     </div>
                                 </div>
                                 {/* <div className="form-group row">
@@ -771,7 +896,7 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Moyen(s) de paiement</span>
-                                        <Select onChange={this.handleChange.bind(this,"paiement")} className="col-7" isClearable={true} isMulti placeholder="" options={this.state.listPaiement} />
+                                        <Select onChange={this.handleChange.bind(this,"paiement")} className="col-7" isClearable={true} isMulti placeholder="" isDisabled={!this.state.update} closeMenuOnSelect={false} value={this.state.paiements} options={this.state.listPaiement} />
                                         {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                             { this.state.listLangue.map((langue,i) => {
                                                 return(
@@ -798,7 +923,7 @@ export default class Compte extends React.Component{
                                 <div className="form-group row formgroupCssInscriptionMedecin">
                                     <div className="input-group" data-tip data-for="registerTip">
                                         <span className="form-control inscription-label col-5">Mot de passe</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.mdp} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder=""/>
+                                        <input className="form-control inscription-input inscription-inputV12 col-7" disabled={!this.state.update} value={this.state.mdp} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder=""/>
                                         <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
                                         
                                     </div>
@@ -809,7 +934,7 @@ export default class Compte extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Confirmation</span>
-                                        <input className="form-control inscription-input inscription-inputV12 col-7 " required={true} disabled={!this.state.update} value={this.state.confirmationMdp} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder=""/>
+                                        <input className="form-control inscription-input inscription-inputV12 col-7 " disabled={!this.state.update} value={this.state.confirmationMdp} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder=""/>
                                     </div>
                                     <div className="input-group" hidden={!this.getVerificationMdp()}>
                                         <span className="inscription-label-success col-12">Mot de passe confirmé</span>
@@ -853,7 +978,7 @@ export default class Compte extends React.Component{
                                     </div>
                                 </div>
                                 <div className="form-group col-md-12">
-                                    <span className="form-control inscription-label-other col-md-12">Expérience(s) <a href="#ajout-experience" className="add-button-contact" onClick={()=>this.addExperience()}>Ajouter</a></span>
+                                    <span className="form-control inscription-label-other col-md-12">Expérience(s) <a hidden={!this.state.update} href="#ajout-experience" className="add-button-contact" onClick={()=>this.addExperience()}>Ajouter</a></span>
                                     <div className = "col-md-12 contact-group">
                                         {this.state.experiences.map((exp,j)=>{
                                             return (
@@ -874,13 +999,13 @@ export default class Compte extends React.Component{
                                                 </select>
                                                 <input type="text" className="col-md-12" placeholder="Institut de travail" disabled={!this.state.update} value={exp.nomEntite} onChange={this.changeExperienceNomEntite.bind(this,j)}/>
                                                 <textarea rows="2" className="col-md-12" disabled={!this.state.update} value={exp.description} onChange={this.changeExperienceDescription.bind(this,j)} placeholder="Description du poste occupé"></textarea>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeExperience(j)}>Supprimer</a>
+                                                <a hidden={!this.state.update} href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeExperience(j)}>Supprimer</a>
                                             </div>)
                                         })}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-12">
-                                    <span className="form-control inscription-label-other col-md-12">Diplôme(s) <a href="#ajout-experience" className="add-button-contact" onClick={()=>this.addDiplome()}>Ajouter</a></span>
+                                    <span className="form-control inscription-label-other col-md-12">Diplôme(s) <a hidden={!this.state.update} href="#ajout-experience" className="add-button-contact" onClick={()=>this.addDiplome()}>Ajouter</a></span>
                                     <div className = "col-md-12 contact-group">
                                         {this.state.diplomes.map((diplome,j)=>{
                                             return (
@@ -893,41 +1018,42 @@ export default class Compte extends React.Component{
                                                 </select>
                                                 <input type="text" className="col-md-12" placeholder="Titre du diplôme" disabled={!this.state.update} value={diplome.libelleDiplome} onChange={this.changeDiplomeLibelleDiplome.bind(this,j)}/>
                                                 <textarea rows="2" className="col-md-12" disabled={!this.state.update} value={diplome.description} onChange={this.changeDiplomeDescription.bind(this,j)} placeholder="Description du diplôme"></textarea>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeDiplome(j)}>Supprimer</a>
+                                                <a hidden={!this.state.update} href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeDiplome(j)}>Supprimer</a>
                                             </div>)
                                         })}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-12">
-                                    <span className="form-control inscription-label-other col-md-12">Frais de consultation<a href="#ajout-experience" className="add-button-contact" onClick={()=>this.addFrais()}>Ajouter</a></span>
+                                    <span className="form-control inscription-label-other col-md-12">Frais de consultation<a hidden={!this.state.update} href="#ajout-experience" className="add-button-contact" onClick={()=>this.addFrais()}>Ajouter</a></span>
                                     <div className = "row col-md-12 contact-group">
                                         {this.state.fraisConsultation.map((frais,j)=>{
                                             return (
                                             <div className="col-md-12 row each-line-contact" key={j}>
-                                                <select className="col-md-6" disabled={!this.state.update} value={frais.idTypeConsultation} onChange={this.changeFraisTypeConsultation.bind(this,j)}>
+                                                <select className="col-md-5" disabled={!this.state.update} value={frais.idTypeConsultation} onChange={this.changeFraisTypeConsultation.bind(this,j)}>
                                                     {this.state.listTypeConsultation.map((typeConsultation,i)=>{
                                                         return <option key={i} disabled={!this.state.update} value={typeConsultation.idTypeConsultation}>{typeConsultation.libelle}</option>
                                                     })}
                                                 </select>
-                                                <input type="number" className="col-md-4" placeholder="Frais de consultation" disabled={!this.state.update} value={frais.frais} onChange={this.changeFraisValeur.bind(this,j)}/>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeFrais(j)}>Supprimer</a>
+                                                <input type="number" className="col-md-5" placeholder="Frais de consultation" disabled={!this.state.update} value={frais.frais} onChange={this.changeFraisValeur.bind(this,j)}/>
+                                                <a hidden={!this.state.update} href="#ajout-contact" className="remove-button-contact col-md-1" onClick={()=>this.removeFrais(j)}><FontAwesomeIcon icon={faTrash}/></a>
                                             </div>)
                                         })}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-12">
-                                    <span className="form-control inscription-label-other col-md-12">Autres contacts <a href="#ajout-contact" className="add-button-contact" onClick={()=>this.addContact()}>Ajouter</a></span>
+                                    <span className="form-control inscription-label-other col-md-12">Autres contacts <a hidden={!this.state.update} href="#ajout-contact" className="add-button-contact" onClick={()=>this.addContact()}>Ajouter</a></span>
                                     <div className = "row col-md-12 contact-group">
                                         {this.state.listContact.map((contact,j)=>{
                                             return (
                                             <div className="col-md-12 row each-line-contact" key={j}>
-                                                <select className="col-md-4" disabled={!this.state.update} value={contact.typeContact.idTypeContact} onChange={this.changeContactType.bind(this,j)}>
+                                                <select className="col-md-5" disabled={!this.state.update} value={contact.typeContact.idTypeContact} onChange={this.changeContactType.bind(this,j)}>
                                                     {this.state.listTypeContact.map((typeContact,i)=>{
                                                         return <option key={i} disabled={!this.state.update} value={typeContact.idTypeContact}>{typeContact.libelle}</option>
                                                     })}
                                                 </select>
-                                                <input type="text" className="col-md-6" disabled={!this.state.update} value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeContact(j)}>Supprimer</a>
+                                                {/* <input type={contact.typeContact.idTypeContact===4||contact.typeContact.idTypeContact===5||contact.typeContact.idTypeContact===6||contact.typeContact.idTypeContact===7?"url":"text"} className="col-md-5" disabled={!this.state.update} value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/> */}
+                                                <textarea rows={1} type={contact.typeContact.idTypeContact===4||contact.typeContact.idTypeContact===5||contact.typeContact.idTypeContact===6||contact.typeContact.idTypeContact===7?"url":"text"} className="col-md-5" disabled={!this.state.update} value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}></textarea>
+                                                <a hidden={!this.state.update} href="#ajout-contact" className="remove-button-contact col-md-1" onClick={()=>this.removeContact(j)}><FontAwesomeIcon icon={faTrash}/></a>
                                             </div>)
                                         })}
                                     </div>

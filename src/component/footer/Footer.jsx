@@ -24,12 +24,12 @@ export default class Footer extends React.Component{
                                 <h5 className="font-weight-bold text-uppercase mb-4 titleH5Footer">A propos</h5>
                                 <hr className="hrFooter"/>
                                 <ul className="list-unstyled">
-                                    <li className="pListeFooter">
+                                    {/* <li className="pListeFooter">
                                         <a href="/inscription-professionnel-sante">Inscription centre de vaccination</a>
                                     </li>
                                     <li className="pListeFooter">
                                         <a href="/connexion-centre">Connexion centre de vaccination</a>
-                                    </li>
+                                    </li> */}
                                     <li className="pListeFooter">
                                         <a href="/landing-page">Qui sommes-nous ?</a>
                                     </li>

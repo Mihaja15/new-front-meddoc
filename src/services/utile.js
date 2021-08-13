@@ -95,6 +95,12 @@ function getDateCompletWithHoureAndMinute(dateString){
     const dates= new Date(dateString);
     return ""+this.getNamesSemaine(dates.getDay())+", <br/> "+dates.getDate()+" "+this.getNamesMois(dates.getMonth())+" "+dates.getFullYear()+" à "+completChiffre(dates.getHours())+'h'+completChiffre(dates.getMinutes());
 }
+function getDateHourComplet(dateString){
+    if(dateString===null||dateString===undefined||dateString==="null")
+        return "";
+    const dates= new Date(dateString);
+    return ""+this.getNamesSemaine(dates.getDay())+", "+autocompleteZero(dates.getDate(),2)+" "+this.getNamesMois(dates.getMonth())+" "+dates.getFullYear()+" à "+completChiffre(dates.getHours())+'h'+completChiffre(dates.getMinutes());
+}
 
 function getNbJoursMois(mois, annee) {
     var lgMois = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -199,6 +205,16 @@ function getInitial(complete){
     }
     return init;
 }
+function getFullInitial(complete){
+    const initials = complete.trim().split(' ');
+    var init = '';
+    for(let i = 0; i < initials.length; i++){
+        // if(i!=0)
+        //     init+=' ';
+        init+=initials[i][0].toUpperCase();
+    }
+    return init;
+}
 function getPercent(value, total){
     if(total===null || total===0)
         return 0;
@@ -257,6 +273,15 @@ function verifString(valeur){
     }
     return false;
 }
+function isValidURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+}
 export const utile = {
     getAllMois,
     getNamesMois,
@@ -275,6 +300,7 @@ export const utile = {
     getAllMoisBreviationV2,
     getDateCompletAbrev,
     getDateCompletWithHoureAndMinute,
+    getDateHourComplet,
     formatDate,
     formatDateDash,
     formatDateText,
@@ -290,6 +316,7 @@ export const utile = {
     calculateAge,
     checkEligibility,
     getInitial,
+    getFullInitial,
     getPercent,
     numStr,
     hasValue,
@@ -298,5 +325,6 @@ export const utile = {
     valueToLink,
     crypteId,
     decrypteId,
-    verifString
+    verifString,
+    isValidURL
 };

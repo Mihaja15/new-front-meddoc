@@ -4,8 +4,13 @@
     /* overflow-y: scroll; */
     background-color: #42424283;
     padding-top: 10vh;
-    position: fixed;
-    overflow: visible;
+    /* position: fixed; */
+    /* top: 0; */
+    /* bottom:0; */
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    padding-bottom: 20vh;
     z-index: 999;
 }
 a.close-to-do-list{

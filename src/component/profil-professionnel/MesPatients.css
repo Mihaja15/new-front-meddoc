@@ -1,0 +1,68 @@
+.mes-patients-container{
+    width: 100%;
+}
+.mes-patients-container table{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+.mes-patients-container tbody{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.mes-patients-container h3{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 5vh;
+}
+.mes-patients-container tr{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #f0f0f0;
+}
+.mes-patients-container tbody{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.mes-patients-container td{
+    text-align: center;
+    padding-top: 0;
+    padding-bottom: 0;
+    /* background-color: cadetblue; */
+    /* padding-right: 0;
+    padding-left: 0; */
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    justify-self: center;
+    justify-content: center;
+    /* border: 1px solid #f0f0f0; */
+}
+.patient-initial{
+    border-radius: 100%;
+    border: 1px solid #2b3a3b;
+    background-color: #2b3a3b;
+    font-size: 90%;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 40px;
+    height: 40px;
+    /* position: relative; */
+}
+.patient-name{
+    /* font-size: 90%; */
+    width: 100%;
+    font-weight: 600;
+    color: #004369;
+}
+/* style={{backgroundColor:'#25d58e',textAlign:'center',display:'flex',alignItems:'center',justifyContent:'center',alignSelf:'center'}} */
