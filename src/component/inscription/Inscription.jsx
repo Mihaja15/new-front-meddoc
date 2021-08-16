@@ -295,7 +295,7 @@ class Inscription extends Component{
                 code : this.state.code1+''+this.state.code2+''+this.state.code3+''+this.state.code4
             }
             //this.setState({erreurMessage : "",erreurEtat: false});
-            fetchPost('/users/validation-compte-patient',dataTmp).then(response=>{
+            fetchPostNotLogged('/users/validation-compte-patient',dataTmp).then(response=>{
                 console.log(response)
                 if(response.statut===200){
                     if(response.role.toLowerCase()==="patient"){

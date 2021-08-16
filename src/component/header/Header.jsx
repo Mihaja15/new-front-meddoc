@@ -319,8 +319,8 @@ class Header extends React.Component{
                             <ul>
                                 <li>Accueil</li>
                                 <li>Nos services</li>
-                                <li>Inscription</li>
-                                <li>Connexion</li>
+                                <li ><a href="/inscription">Inscription</a></li>
+                                <li ><a href="/connexion">Connexion</a></li>
                             </ul>
                         </div>
                     </div>

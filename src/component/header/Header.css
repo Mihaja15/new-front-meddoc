@@ -318,6 +318,7 @@ li.nav-menu-link:hover{
     display: block;
     margin: 0 auto;
     padding: 0;
+    z-index: 999;
 }
 .bar-menu-phone li{
     text-align: center;
@@ -328,6 +329,7 @@ li.nav-menu-link:hover{
     font-weight: 700;
     cursor: pointer;
     border-bottom: 2px solid #fff;
+    z-index: 999;
     /* background-color: aqua; */
 }
 .bar-menu-phone li:hover{
