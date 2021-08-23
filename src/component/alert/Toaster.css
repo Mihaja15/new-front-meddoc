@@ -1,0 +1,18 @@
+
+.croix-toast{
+    position:absolute;
+    right:5px;
+    top:5px;
+    color:#fff;
+    cursor:pointer;
+}
+.croix-toast:hover{
+    transform: scale(1.2);
+    transition: ease-in-out 0.5s;
+}
+.toaster-container{
+    position:fixed;
+    right:10vh;
+    top:20vh;
+    z-index:999
+}

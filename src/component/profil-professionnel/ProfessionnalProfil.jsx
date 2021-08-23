@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../centre/DetailCentre.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faInfo, faCompass, faBusinessTime, faAddressCard, faChevronRight, faCalendarCheck, faCoins, faGraduationCap, faLevelUpAlt, faLanguage, faCreditCard, faLink, faEnvelope, faPhone, faPhoneAlt} from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faInfo, faCompass, faBusinessTime, faAddressCard, faChevronRight, faCalendarCheck, faCoins, faGraduationCap, faLevelUpAlt, faLanguage, faCreditCard, faLink, faEnvelope, faPhone, faPhoneAlt, faExclamationTriangle, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -9,6 +9,7 @@ import { fetchGet, fetchGetHandler, fetchPost } from '../../services/global.serv
 import blueIcon from '../../assets/icon/marker-icon-2x-blue.png';
 import { utile } from '../../services/utile';
 import {userSession} from '../../services/userSession';
+import Toaster from '../alert/Toaster';
 
 class ProfessionnalProfil extends Component{
     constructor(props){
@@ -34,7 +35,8 @@ class ProfessionnalProfil extends Component{
             error:false,
             beneficiaire:'',
             idUser:'',
-            proData:null
+            proData:null,
+            showA:false
         }
     }
     componentDidUpdate(prevProps,prevState){
@@ -163,7 +165,8 @@ class ProfessionnalProfil extends Component{
                 if(utile.hasValue(this.state.typeRdv)&&utile.hasValue(this.state.motifRdv)){
                     this.setState({dateRdv:date,heureRdv:heure,showConfirmation:true});   
                 }else{
-                    alert('Tous les champs sont obligatoires!');
+                     this.setState({showA:true});
+                    // alert('Tous les champs sont obligatoires!');
                 }
             }else{
                 alert('Vous devez vous connecter!');
@@ -201,6 +204,9 @@ class ProfessionnalProfil extends Component{
             });
         }
     }
+    changeShow=(value)=>{
+        this.setState({showA:value});
+    }
     render(){
         return(
             <div className="detail-medecin-container">
@@ -219,6 +225,7 @@ class ProfessionnalProfil extends Component{
                         </div>
                     </div>
                 </div>
+                {this.state.showA?<Toaster type={'warning'} bodyMsg={'Tous les champs sont obligatoires!'} isShow={this.state.showA} toggleShow={this.changeShow}/>:''}
                 {/* <div className="confirmation-content" style={{display:this.state.showConfirmation?"block":"none"}}>
                     <div className="dialog-box">
                         <div className="confirmation-header" style={{backgroundColor:"#1b7895"}}>

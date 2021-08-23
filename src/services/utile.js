@@ -273,6 +273,13 @@ function verifString(valeur){
     }
     return false;
 }
+function generateUUID() {
+    return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      var r = (Math.random() * 16) | 0,
+        v = c == 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+}
 function isValidURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
@@ -326,5 +333,6 @@ export const utile = {
     crypteId,
     decrypteId,
     verifString,
-    isValidURL
+    isValidURL,
+    generateUUID
 };

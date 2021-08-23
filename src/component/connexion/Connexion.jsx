@@ -15,6 +15,7 @@ import ValidationCompte from './ValidationCompte';
 import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
 import CaptchaButton from './CaptchaButton';
 import { utile } from '../../services/utile';
+import Toaster from '../alert/Toaster';
 
 class Connexion extends Component{
     static propTypes = {
@@ -82,7 +83,8 @@ class Connexion extends Component{
                         userSession.userLogin(response.data.username,
                             (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
                             response.token,
-                            response.role);
+                            response.role,
+                            response.data.idMeddoc);
                         window.location.pathname = "/profil-patient";
                     }else{
                         throw new Error("Erreur de connexion");
@@ -151,7 +153,8 @@ class Connexion extends Component{
                         userSession.userLogin(response.data.username,
                             (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",
                             response.token,
-                            response.role);
+                            response.role,
+                            response.data.idMeddoc);
                         window.location.pathname = "/profil-patient";
                     }else{
                         throw new Error("Erreur de connexion");
@@ -179,6 +182,9 @@ class Connexion extends Component{
     
     //     const token = await executeRecaptcha('homepage');
     //   };
+    changeShow=(value)=>{
+        this.setState({error : {message : '',activation: value}});
+    }
     render(){
         return (
             <div className="logginAllMeddoc">
@@ -215,7 +221,8 @@ class Connexion extends Component{
                                 {/* <a className="bouton-solid-reg popup-with-move-anim a1" aria-disabled={this.state.token===null} hidden={this.state.disableButton} id="sonboutonConnecter" href="#details-lightbox-1" onClick={this.loginConnexion}>Se connecter</a> */}
                                 <div hidden={!this.state.disableButton} className="login-loader"></div>
                             </div>
-                            <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div>
+                            {this.state.error.activation?<Toaster type={'error'} bodyMsg={this.state.error.message} isShow={this.state.error.activation} toggleShow={this.changeShow}/>:''}
+                            {/* <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div> */}
                         </div>}
                      </div>
                      <div className="col-md-6 col-sm-12 sonlogginAllMeddoc">

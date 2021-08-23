@@ -26,6 +26,7 @@ import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import ProfessionnalProfil from './component/profil-professionnel/ProfessionnalProfil';
 import ProfessionnelSanteDashboard from './component/professionnel-sante/ProfessionnelSanteDashboard';
 import Consultation from './component/consultation/Consultation';
+import UploadFile from './component/dynamics/UploadFile';
 
 class App extends React.Component {
   constructor(props){
@@ -106,7 +107,7 @@ class App extends React.Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" render={() => {return  this.contentShow(<Home/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
-            <Route exact path="/suivi-medical" render={() => { return this.contentShowWithLeft(<SuiviMedicals/>,<Header cookies={this.props.cookies}/>,<LeftMenu/>,<Footer/>); }}/>
+            <Route exact path="/upload-file" render={() => { return this.contentShow(<UploadFile/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             {/* <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<Footer/>); }}/> */}
             <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/inscription-professionnel-sante" render={() => {return  this.contentShow(<InscriptionProfessionnel/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>

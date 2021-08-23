@@ -9,6 +9,7 @@ import L from 'leaflet';
 import { utile } from '../../services/utile';
 import redIcon from '../../assets/icon/marker-icon-2x-red.png';
 import Select from 'react-select';
+import UploadFile from '../dynamics/UploadFile';
 function MyComponent(props) {
 	useMapEvent('click', (e) => {
 		props.dataCenter(e.latlng.lat, e.latlng.lng);
@@ -24,6 +25,8 @@ export default class InscriptionProfessionnel extends React.Component{
             longitude:47.516397059313796,
             // latitude:0,
             // longitude:0,
+            files:[],
+            selectedFiles:[],
             listLieu:[],
             listDistrict:[],
             dataDistrict:[],
@@ -91,17 +94,28 @@ export default class InscriptionProfessionnel extends React.Component{
         var bot1 = null;
         var bot2 = null;
 		for (let i = 0; i < data.length; i++) {
+			top1 = null;
+            top2 = null;
+            bot1 = null;
+            bot2 = null;
 			if(data[i].activation){
-                if(data[i].topStart!==null && data[i].topStop!==null){
+                if((data[i].topStart!==-1&&data[i].topStart!==null) && (data[i].topStop!==-1&&data[i].topStop!==null)){
                     top1=utile.autocompleteZero(data[i].topStart,2)+":00:00";
                     top2=utile.autocompleteZero(data[i].topStop,2)+":00:00";
+                }else if((data[i].topStart!==-1&&data[i].topStart!==null) && (data[i].topStop===-1||data[i].topStop===null)){
+                    top1=utile.autocompleteZero(data[i].topStart,2)+":00:00";
+                    top2=utile.autocompleteZero(data[i].topStart,2)+":00:00";
                 }
-                if(data[i].bottomStart!==null && data[i].bottomStop!==null){
+                if((data[i].bottomStart!==-1&&data[i].bottomStart!==null) && (data[i].bottomStop!==-1&&data[i].bottomStop!==null)){
                     bot1=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
                     bot2=utile.autocompleteZero(data[i].bottomStop,2)+":00:00";
+                }else if((data[i].bottomStart!==-1&&data[i].bottomStart!==null) && (data[i].bottomStop===-1||data[i].bottomStop===null)){
+                    bot1=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
+                    bot2=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
                 }
                 if(top1!==null || bot1!==null){
                     newData.push({
+                        idUser:this.state.idUser,
                         timeStartBottom: bot1,
                         timeStopBottom: bot2,
                         jour: data[i].jour,
@@ -113,10 +127,9 @@ export default class InscriptionProfessionnel extends React.Component{
 		}
 		return newData;
 	}
-    inscriptionUserMedecin(event) {
+    inscriptionUserMedecin=(event)=>{
 		event.preventDefault();
         this.setState({disableButton:true});
-		const data = new FormData(event.target);
         const contacts = this.state.listContact;
         if(this.state.phone!=='')
             contacts.push({
@@ -187,18 +200,34 @@ export default class InscriptionProfessionnel extends React.Component{
             experiences:this.state.experiences
         }
         console.log(dataCentre);
-        localStorage.setItem("tempForm",dataCentre);
-        // if(this.state.file!==null){
+        const data = new FormData(event.target);
+        data.set('uuid',utile.generateUUID());
+        this.state.selectedFiles.forEach(file=>{
+            data.append("filesUpload", file);
+          });
+        if(this.state.selectedFiles.length>0){
+            fetchPostV2('http://localhost:5000/fichier',data).then((res)=>{ 
+                if(res.status){
+                    fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
+                        if(result.statut === 200){
+                            this.setState({disableButton:false});
+                            window.location.replace('/connexion-centre');
+                        }else{
+                            this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
+                        }
+                    }).catch(error=>{
+                        console.log(error)
+                        this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
+                    });
+                }
+            }).catch(error=>{
+                console.log(error)
+            });
+        }else{
             fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
                 if(result.statut === 200){
-                    // fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{
-                        // console.log(mm);
-                        this.setState({disableButton:false});
-                        window.location.replace('/connexion-centre');
-                    // }).catch(error=>{
-                    //     console.log(error);
-                    //     this.setState({disableButton:false});
-                    // });
+                    this.setState({disableButton:false});
+                    window.location.replace('/connexion-centre');
                 }else{
                     this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
                 }
@@ -206,31 +235,7 @@ export default class InscriptionProfessionnel extends React.Component{
                 console.log(error)
                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
             });
-        // }
-        // if(dataUser!==null && this.state.file!=null){
-        //     dataUser.profilPicture=''+this.state.fileName;
-        //     console.log('dataUser : ',dataUser);
-        //     fetchPost('/medecin/insertionMedecin',dataUser).then(resultatTmp=>{
-        //         if(resultatTmp.status === 200){
-        //             fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{});console.log("resultatTmp.codeValidation : "+resultatTmp.codeValidation);
-        //             //fetch('http://localhost:5000/photo', {method: 'POST',body: data})//
-        //             this.setState({fileName:''+date.getDate()+''+date.getMonth()+''+date.getFullYear()+''+this.state.fileName,erreurMessage : "",erreurEtat: false,codeValidation : resultatTmp.codeValidation,etatMenu : 2});
-        //             localStorage.setItem('tel',''+this.state.telephone.valuesText);
-        //             localStorage.setItem('nom',''+this.state.nom.valuesText);
-        //             localStorage.setItem('prenom',''+this.state.prenom.valuesText);
-        //             localStorage.setItem('niveau','meddocInscriptionNiveauConfirmation');
-        //             window.location.reload(true);
-        //         }else if(resultatTmp.status === 300){
-        //             this.setState({errorusersms : resultatTmp.message,erroruser: 2});
-        //             this.setState({disableButton:false});
-        //         }else{
-        //             this.setState({errorusersms : resultatTmp.message,erroruser: 3});
-        //             this.setState({disableButton:false});
-        //         }
-        //     });
-        // }else{
-        //     this.setState({erreurMessage : "Verifiez votre champs si il n'y a un champs vide ou une erreur",erreurEtat: true})
-        // }
+        }
     }
     handleChange = (param, e) => {
         if(param==="mdp"){
@@ -389,7 +394,26 @@ export default class InscriptionProfessionnel extends React.Component{
 			this.setState({emploiTemps: data},function(){
                 console.log(this.state.emploiTemps)
             });
-		}
+		}else{
+            const data= this.state.emploiTemps;
+			if(namesHeure === 'topStart'){
+                data[indice].topStart=valeur;
+                data[indice].topStop = valeur;
+            }
+			if(namesHeure === 'topStop'){
+                data[indice].topStop=valeur;
+            }
+			if(namesHeure === 'bottomStart'){
+                data[indice].bottomStart=valeur;
+                data[indice].bottomStop=valeur;
+            }
+			if(namesHeure === 'bottomStop'){
+                data[indice].bottomStop=valeur;
+            }
+			this.setState({emploiTemps: data},function(){
+                console.log(this.state.emploiTemps)
+            });
+        }
 	}
     onChangeImage(event) {
         const picture = event.target.files;
@@ -553,6 +577,16 @@ export default class InscriptionProfessionnel extends React.Component{
         data[indice].idTypeConsultation= event.target.value;
 		this.setState({fraisConsultation: data});
     }
+    setPhotos=(value)=>{
+        this.setState({files:utile.hasValue(value)?value:[]},function(){
+            console.log('files: '+this.state.files);
+        });
+    }
+    setSelectedPhotos=(value)=>{
+        this.setState({selectedFiles:utile.hasValue(value)?value:[]},function(){
+            console.log('selectedFiles: '+this.state.selectedFiles);
+        });
+    }
     render(){
         // let position = [this.state.latitude?this.state.latitude:-18.0, this.state.longitude?this.state.longitude:47.0];
         return(
@@ -592,7 +626,7 @@ export default class InscriptionProfessionnel extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Langue(s)</span>
-                                        <Select onChange={this.handleChange.bind(this,"langue")} className="col-7" isClearable={true} isMulti placeholder="" options={this.state.listLangue} />
+                                        <Select onChange={this.handleChange.bind(this,"langue")} className="col-7" isClearable={true} isMulti placeholder="" closeMenuOnSelect={false} options={this.state.listLangue} />
                                         {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                             { this.state.listLangue.map((langue,i) => {
                                                 return(
@@ -723,7 +757,7 @@ export default class InscriptionProfessionnel extends React.Component{
                                 <div className="form-group row">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Moyen(s) de paiement</span>
-                                        <Select onChange={this.handleChange.bind(this,"paiement")} className="col-7" isClearable={true} isMulti placeholder="" options={this.state.listPaiement} />
+                                        <Select onChange={this.handleChange.bind(this,"paiement")} className="col-7" isClearable={true} isMulti placeholder="" closeMenuOnSelect={false} options={this.state.listPaiement} />
                                         {/* <select className="form-control inscription-input inscription-inputV12 col-7" required={true} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                             { this.state.listLangue.map((langue,i) => {
                                                 return(
@@ -909,6 +943,10 @@ export default class InscriptionProfessionnel extends React.Component{
                                     })
                                 }
                                 </div>
+                            </div>
+                            <div className="form-group col-md-12 row">
+                                <span className="form-control inscription-label-other col-md-12" style={{textAlign:'center'}}>Photos de diplômes ou du cabinet</span>
+                                <div className="col-md-12 emploi-temps-content row"><UploadFile setFiles={this.setPhotos} setSelectedFiles={this.setSelectedPhotos}/></div>
                             </div>
                             <div className="form-group col-md-12 row">
                                 <div hidden={!this.state.erreurEtat} className="textDePreventionInscriptionMedecin">{this.state.erreurMessage}</div>

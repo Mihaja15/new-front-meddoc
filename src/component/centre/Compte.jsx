@@ -345,8 +345,7 @@ export default class Compte extends React.Component{
 	}
     setValueEmploieDuTemps(namesHeure,indice,event){
 		const valeur = utile.parseStringToInt(event.target.value);
-		// alert(valeur)
-        if(valeur >=0){
+		if(valeur >=0){
             const data= this.state.emploiTemps;
 			if(namesHeure === 'topStart'){
                 data[indice].topStart=valeur;

@@ -3,6 +3,7 @@ function userLogged(){
     var photo = null;
     var token = null;
     var role = null;
+    var uuid = null;
     if(getCookie('pseudo')!=="")
         pseudo = getCookie('pseudo');
     if(getCookie('role')!=="")
@@ -11,11 +12,14 @@ function userLogged(){
         photo = getCookie('photo');
     if(getCookie('token')!=="")
         token = getCookie('token');
+    if(getCookie('uuid')!=="")
+        uuid = getCookie('uuid');
     const user = {
         pseudo:pseudo,
         photo:photo,
         token:token,
-        role:role
+        role:role,
+        uuid:uuid
     }
     return user;
 }
@@ -28,7 +32,7 @@ function get(value){
     else
         return null;
 }
-function userLogin(pseudo, photo, token, role){
+function userLogin(pseudo, photo, token, role, idMeddoc){
     if(pseudo!==null&&pseudo!==undefined&&pseudo!=="")
         setCookie('pseudo',pseudo);
     if(photo!==null&&photo!==undefined&&photo!=="")
@@ -37,12 +41,15 @@ function userLogin(pseudo, photo, token, role){
         setCookie('token',token);
     if(role!==null&&role!==undefined&&role!=="")
         setCookie('role',role);
+    if(idMeddoc!==null&&idMeddoc!==undefined&&idMeddoc!=="")
+        setCookie('uuid',idMeddoc);
 }
 function userLogout(){
     removeCookie('pseudo');
     removeCookie('photo');
     removeCookie('token');
     removeCookie('role');
+    removeCookie('uuid');
 }
 function getCookie(cname) {
     var name = cname + "=";
