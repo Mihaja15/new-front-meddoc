@@ -3,13 +3,15 @@ import './Inscription.css';
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import {fetchGet, fetchPost, fetchPostNotLogged} from '../../services/global.service';
-import details2officeworker from '../../assets/img/details-2-office-team-work.svg';
 import { authUser } from '../../services/authUser';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import ReactTooltip from 'react-tooltip';
 import bienvenue from '../../assets/img/bienvenue.jpg';
 import {userSession} from '../../services/userSession';
 import Select from 'react-select';
+import Toaster from '../alert/Toaster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 class Inscription extends Component{
     constructor(props){
@@ -49,7 +51,9 @@ class Inscription extends Component{
             etatMenu : 1,
             codeCompte : '',
             disableButton:false,
-            validCgu:false
+            validCgu:false,
+            etatMotDePasseShow : false,
+            etatMotDePasseShowConf : false
         }
         this.nomText = this.nomText.bind(this);
         this.prenomsText = this.prenomsText.bind(this);
@@ -197,12 +201,12 @@ class Inscription extends Component{
                 // }
                 this.setState({etatMenu:2})
             }else if(response.statut === 100){
-                this.setState({message : response.message,etatMessage: 1, disableButton:false});
+                this.setState({message : response.message,etatMessage: 1,erreurMessage: response.message, erreurEtat:true, disableButton:false});
             }else{
-                this.setState({message : ''+response.message, etatMessage: 1, disableButton:false,error : {message : response.message,activation: true}});
+                this.setState({message : ''+response.message, etatMessage: 1, disableButton:false,erreurMessage: response.message, erreurEtat:true,error : {message : response.message,activation: true}});
             }
         }).catch(erreur=>{
-            this.setState({disableButton:false,error : {message : erreur,activation: true}});
+            this.setState({disableButton:false,erreurMessage: erreur, erreurEtat:true,error : {message : erreur,activation: true}});
         });
     }
     seConnecter=()=>{
@@ -317,45 +321,49 @@ class Inscription extends Component{
             this.setState({erreurMessage : "Erreur de connexion.",erreurEtat: true});
         }
     }
+    changeShow=(value)=>{
+        this.setState({erreurEtat:value});
+        
+    }
     //data html
     getDataHtmlInscription(){
         return (
             <div className="row">
-                <div className="col-md-12 col-sm-12">
-                    <h1 className="titleH1Login"><b>Voulez-vous prendre un rendez-vous pour la vaccination?<br/>Alors, inscrivez-vous!</b></h1>
-                    <p className="titlePLogin">Vous avez déjà un compte? <a className="titleALogin" href="/connexion"> Connectez-vous</a> </p>
+                <div className="col-md-12 col-sm-12 container_inscription_dataInscripion_div">
+                    <h1 className="titleH1Login"><b>Voulez-vous prendre un rendez-vous avec un médecin ?<br/>Alors, inscrivez-vous!</b></h1>
+                    <p className="titleTmpInscription">Vous avez déjà un compte? <a className="titleALogin" href="/connexion"> Connectez-vous</a> </p>
                     <div className="inputInscriptionPatient">
                         <Container>
                             {/* <div className="singin-content"> */}
                                 <Row>
                                     <Col lg={12}>
                                             <Row>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Nom *:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <input className="form-control" value={this.state.nom} onChange={this.nomText} name="nom" id="nom" type="text"  placeholder=""/>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Pr&eacute;nom(s):</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <input className="form-control" value={this.state.prenoms} onChange={this.prenomsText} name="prenoms" id="prenoms" type="text" placeholder =""/>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Sexe *:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <select className="form-control" value={this.state.sexe} onChange={this.sexeText} name="sexe" id="sexe">
                                                             <option value=''>Sélectionner</option>
@@ -364,43 +372,43 @@ class Inscription extends Component{
                                                         </select>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Date de naissance *:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <input className="form-control" value={this.state.dateNaissance} onChange={this.dateNaissText} name="dateNaissance" id="dateNaissance" type="date"  placeholder="Date de Naissance"/>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Lieu de naissance:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <input className="form-control" value={this.state.lieuNaissance} onChange={this.lieuNaissText} name="lieuNaissance" id="lieuNaissance" type="text" placeholder =""/>
                                                     </div>
                                                 </Col>                                                          
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Adresse *:</p>
                                                     </div>
                                                 </Col>                                               
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <input className="form-control" value={this.state.adresse} onChange={this.adresseText} name="adresse" id="adresse" type="text" placeholder =""/>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         {/* <p className="textInscriptionPatient">Province *:</p> */}
                                                         <p className="textInscriptionPatient">District *:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <Select onChange={this.districtChange} className="selectNewProfil" clearable placeholder="District" options={this.state.dataDistrict} />
                                                         {/* <select className="form-control" value={this.state.provinceVal} onChange={this.provinceChange}>
@@ -476,57 +484,64 @@ class Inscription extends Component{
                                                         </select>
                                                     </div>
                                                 </Col> */}
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">E-mail *:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <input className="form-control" value={this.state.email} onChange={this.emailText} name="email" id="email" type="email"  placeholder=""/>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Téléphone*:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
                                                         <input className="form-control" value={this.state.phone} onChange={this.phoneText} name="phone" id="phone" type="tel" placeholder =""/>
                                                         <p hidden={!this.state.showId}>Numéro déjà pris</p>
                                                         <p hidden={(this.state.phone.length===0)}>{(this.state.phone.length!==10)? 'Le numéro doit contenir 10 chiffres':''}</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Mot de passe *:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group" data-tip data-for="registerTip">
-                                                        <input className="form-control" value={this.state.mdp} onChange={this.mdpText} name="" id="mdp1" type="password"  placeholder=""/>
+                                                        <ul className="container_inscription_dataInscription_div_row_col_ul">
+                                                            <li className="container_inscription_dataInscription_div_row_col_ul_li_1"><input className="form-control container_inscription_dataInscription_div_row_col_ul_li_1_input" value={this.state.mdp} onChange={this.mdpText} name="" id="mdp1" type={(this.state.etatMotDePasseShow)?"text":"password"}  placeholder=""/></li>
+                                                            <li className="container_inscription_dataInscription_div_row_col_ul_li_2"><button className="container_inscription_dataInscription_div_row_col_ul_li_2_button" onClick={()=>{this.setState({etatMotDePasseShow:!this.state.etatMotDePasseShow})}} ><FontAwesomeIcon icon={(!this.state.etatMotDePasseShow)?faEyeSlash:faEye} /></button></li>
+                                                        </ul>
                                                         <span className=" col-12 progressBarSonOfChildLoggin"><ProgressBar variant={this.getColorPourcentage(this.state.percentageMdp)} now={this.state.percentageMdp} /></span>
                                                         <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
                                                     </div>
                                                 </Col>
-                                                <Col sm={5}>
+                                                <Col sm={3}>
                                                     <div className="form-group">
                                                         <p className="textInscriptionPatient">Confirmation:</p>
                                                     </div>
                                                 </Col>
-                                                <Col sm={7}>
+                                                <Col sm={9}>
                                                     <div className="form-group">
-                                                        <input className={this.state.mdpCorrect? "form-control success": "form-control error"} value={this.state.mdpC} onChange={this.mdpCText} name="mdp" id="mdp2" placeholder="Confirmation mot de passe" type="password" />
+                                                        <ul className="container_inscription_dataInscription_div_row_col_ul">
+                                                            <li className="container_inscription_dataInscription_div_row_col_ul_li_1"><input className="form-control container_inscription_dataInscription_div_row_col_ul_li_1_input" value={this.state.mdpC} onChange={this.mdpCText} name="" id="mdp1" type={(this.state.etatMotDePasseShowConf)?"text":"password"}  placeholder=""/></li>
+                                                            <li className="container_inscription_dataInscription_div_row_col_ul_li_2"><button className="container_inscription_dataInscription_div_row_col_ul_li_2_button" onClick={()=>{this.setState({etatMotDePasseShowConf:!this.state.etatMotDePasseShowConf})}} ><FontAwesomeIcon icon={(!this.state.etatMotDePasseShowConf)?faEyeSlash:faEye} /></button></li>
+                                                        </ul>
+                                                        {/* <input className={this.state.mdpCorrect? "form-control success": "form-control error"} value={this.state.mdpC} onChange={this.mdpCText} name="mdp" id="mdp2" placeholder="Confirmation du mot de passe" type="password" /> */}
                                                     </div>
                                                 </Col>
                                             </Row>
                                             <Row>
                                                 <Col lg={12} md={12} sm={12}>
-                                                    <div className="form-group mt-3">
+                                                    <div className="form-group mt-3 container_inscription_dataInscription_div_row_col_checkbox">
                                                         <label className='col-md-12' htmlFor='cgu'>
                                                             <input type='checkbox' checked={this.state.validCgu} onChange={this.validChange} name='validation' style={{color:'blue'}} className='' id='cgu'/>
-                                                            J'accepte les <a href="/conditions-generales-d-utilisation-de-MEDDoC">Conditions Générales d'Utilisation</a>
+                                                            &nbsp;&nbsp;J'accepte les <a href="/conditions-generales-d-utilisation-de-MEDDoC" style={{color:'#29b6f6'}}>conditions générales d'utilisation</a>
                                                         </label>
                                                     </div>
                                                 </Col>
@@ -540,6 +555,7 @@ class Inscription extends Component{
                                                         <div className="errorInscriptionPatient">{this.state.message}</div>
                                                     </div>
                                                 </Col>
+                                                {this.state.erreurEtat?<Toaster type={'error'} bodyMsg={this.state.message} isShow={this.state.erreurEtat} toggleShow={this.changeShow}/>:''}
                                                 <Col lg={12} md={12} sm={12}  hidden={this.state.etatMessage===2}>
                                                     <div className="form-group mt-3">
                                                         <button className="boutonInscriptionPatient" disabled={!this.state.validCgu} hidden={this.state.disableButton} onClick={()=> this.signinSubmit()}>S'inscrire</button>
@@ -623,25 +639,23 @@ class Inscription extends Component{
                             </div>
                         </div>
                     ): (
-                        <div className="row">
-                            <div className="col-md-6 col-sm-12" id="sonV2logginAllMeddoc">
-                                <div className="row">
-                                    {
-                                        (this.state.etatMenu === 1)?
-                                        this.getDataHtmlInscription()
-                                        :(this.state.etatMenu === 2)?
-                                        this.getDataHtmlValidationCompte()
-                                        :(<div></div>)
-                                    }
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-12 col-sm-12" id="sonV2logginAllMeddoc">
+                                    <div className="row">
+                                        {
+                                            (this.state.etatMenu === 1)?
+                                            this.getDataHtmlInscription()
+                                            :(this.state.etatMenu === 2)?
+                                            this.getDataHtmlValidationCompte()
+                                            :(<div></div>)
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-md-6 col-sm-12 sonlogginAllMeddoc">
-                                <img className="img-fluid imgSizeLoginMeddoc" src={details2officeworker} alt="alternative"/>
                             </div>
                         </div>
                     )
                 }
-                
             </div>
             
         )

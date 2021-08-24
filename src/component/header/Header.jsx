@@ -288,8 +288,12 @@ class Header extends React.Component{
                             </>
                             :<>
                                 <ul className="home-menu">
-                                    <li className="nav-menu-link">Accueil</li>
-                                    <li className="nav-menu-link">Nos services</li>
+                                    <li className="nav-menu-link sign-in-link" id="drop-down-menu-link">Nos services <FontAwesomeIcon icon={faCaretDown}/>
+                                        <ul id="drop-down-menu-sublink">
+                                            <li>Prise de rendez-vous en ligne</li>
+                                            <li>Pharmaclic</li>
+                                        </ul>
+                                    </li>
                                     <li className="nav-menu-link" id="drop-down-menu-link">Vous êtes <FontAwesomeIcon icon={faCaretDown}/>
                                         <ul id="drop-down-menu-sublink">
                                             <li>Un professionnel de santé?</li>
@@ -299,7 +303,7 @@ class Header extends React.Component{
                                 </ul>
                                 <ul className="account-menu">
                                     <li className="sign-in-link">
-                                        <a href="#0"><FontAwesomeIcon style={{fontSize:'25px', color:'#fff'}} icon={faUserCircle}/>&nbsp;Compte&nbsp;<FontAwesomeIcon style={{fontSize:'15px', color:'#fff'}} icon={faCaretDown}/></a>
+                                        <a href="#0"><FontAwesomeIcon style={{fontSize:'25px', color:'#fff',paddingTop : '5%'}} icon={faUserCircle}/>&nbsp;Compte&nbsp;<FontAwesomeIcon style={{fontSize:'15px', color:'#fff'}} icon={faCaretDown}/></a>
                                         <ul className="dropdown-menu-compte" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
                                             {/* <li onClick={()=>window.location.replace('/inscription')}><a href="/inscription">Inscription</a></li> */}
                                             <li ><a href="/inscription">Inscription</a></li>

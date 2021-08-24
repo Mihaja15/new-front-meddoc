@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import './MotDePasse.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelopeOpen, faKey, faLock, faPhoneAlt, faUserLock } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeOpen, faEye, faEyeSlash, faKey, faLock, faPhoneAlt, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import 'bootstrap/dist/css/bootstrap.css';
-import mdpoublie from '../../assets/mdpoublie.jpg';
 import { fetchPost } from '../../services/global.service';
 import ReactTooltip from 'react-tooltip';
 import { ProgressBar} from 'react-bootstrap';
@@ -13,7 +12,7 @@ class MotDePasse extends Component{
     constructor(props){
         super();
         this.state = {
-            etatShow : 1,
+            etatShow : 2,
             identification : {valuesText : '',etat : 1},
             mdp : {valuesText : '',etat : 1},
             confirmer : {valuesText : '',etat : 1},
@@ -24,6 +23,8 @@ class MotDePasse extends Component{
             codeBase : 0,
             idUser : 0,
             change : false,
+            etatMotDePasseShow : false,
+            etatMotDePasseShowConf : false
         }
     }
     setStateByNameState(name,valeur,etatChamps){
@@ -83,22 +84,18 @@ class MotDePasse extends Component{
     }
     getDataHtmlIdentifient(){
         return (
-            <div className="row">
+            <div className="mot_de_passe_oublie_meddoc_container">
                 <div className="col-md-12 col-sm-12">
                     <h1 className="titleH1Login"><b>Mot de passe oublié ?</b></h1>
                     <p className="titlePLogin" id="titleMotDePasseOublie">Renseignez votre adresse email ou votre numéro d' <br/> identification afin de recevoir les instructions de <br/> réinitialisation de votre mot de passe </p>
-                    <div className="form-group row descenteLogin">
-                        <div className="input-group">
-                            <span className="form-control spanSonOfChildLoggins col-1"><FontAwesomeIcon style={{textAlign : "center"}} icon={faEnvelopeOpen} /> </span>
-                            <span className="form-control spanSonOfChildLoggins col-1">/</span>
-                            <span className="form-control spanSonOfChildLoggins col-1"><FontAwesomeIcon style={{textAlign : "center"}} icon={faPhoneAlt} /> </span>
-                            <input className="form-control inputSonOfChildLoggins col-9" onChange={(e) => this.setValue('identification', e)} type="text" placeholder="Identification"/>
-                        </div>
-                    </div>
+                    <ul className="mot_de_passe_input_identifient_ul">
+                        <li className="mot_de_passe_input_identifient_ul_li_1"><div className="mot_de_passe_input_identifient_ul_li_1_div"><FontAwesomeIcon style={{textAlign : "center"}} icon={faEnvelopeOpen} /> &nbsp;/ &nbsp;<FontAwesomeIcon style={{textAlign : "center"}} icon={faPhoneAlt} /></div></li>
+                        <li className="mot_de_passe_input_identifient_ul_li_2"><input className="form-control inputSonOfChildLoggins" id="mot_de_passe_input_identifient_ul_li_2_input" onChange={(e) => this.setValue('identification', e)} type="text" placeholder="Identification"/></li>
+                    </ul>
                 </div>
                 {this.getDataHtmlErreur(this.state.erreur,this.state.etatErreur)}
                 <div className="boutonConnecterLogin">
-                    <a className="bouton-solid-reg popup-with-move-anim a1" id="sonboutonConnecter" onClick={()=>this.verificationIdentiteUser()} href="#details-lightbox-1">Envoyer</a>
+                    <button className="mot_de_passe_input_identifient_bouton_envoyer" onClick={()=>this.verificationIdentiteUser()}>Envoyer</button>
                 </div>
             </div>
         )
@@ -132,14 +129,18 @@ class MotDePasse extends Component{
     }
     getDataHtmlNouveauMotDePasse(){
         return (
-            <div className="row">
+            <div className="mot_de_passe_oublie_meddoc_container_reinitialisation">
                 <div className="col-md-12 col-sm-12">
                     <h1 className="titleH1Login"><b>Mot de passe oublié ?</b></h1>
                     <p className="titlePLogin" id="titleMotDePasseOublie">Renseignez votre adresse email et votre numéro d' <br/> identification afin de recevoir les instructions de <br/> réinitialisation de votre mot de passe </p>
+                    
                     <div className="form-group row">
                         <div className="input-group">
-                            <span className="form-control spanSonOfChildLoggins col-2"><FontAwesomeIcon icon={faUserLock} /></span>
-                            <input className="form-control inputSonOfChildLoggins col-10" onChange={(e) => this.setValue('mdp', e)} type="password" placeholder="Nouveau mot de passe"/>
+                            <span className="form-control spanSonOfChildLoggin col-2" id="logginAllMeddoc_container_row_span_spanSonOfChildLoggins"><FontAwesomeIcon icon={faUserLock} /></span>
+                            <ul className="col-10 container_inscription_dataInscription_div_row_col_ul">
+                                <li className="container_inscription_dataInscription_div_row_col_ul_li_1"><input onChange={(e) => this.setValue('mdp', e)} className="form-control inputSonOfChildLoggin" placeholder="Nouveau mot de passe" id="logginAllMeddoc_container_row_inputSonOfChildLoggins_v2" required={true} type={(this.state.etatMotDePasseShow)?"text":"password"} /></li>
+                                <li className="container_inscription_dataInscription_div_row_col_ul_li_2"><button className="container_connexion_dataInscription_div_row_col_ul_li_2_button" onClick={()=>{this.setState({etatMotDePasseShow:!this.state.etatMotDePasseShow})}}><FontAwesomeIcon icon={(!this.state.etatMotDePasseShow)?faEyeSlash:faEye} /></button></li>
+                            </ul>
                             <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
                             <div className="col-12" data-tip data-for="registerTip">
                                 <span className=" col-12 progressBarSonOfChildLoggin"><ProgressBar variant={this.getColorPourcentage(this.state.percentageMdp)} now={this.state.percentageMdp} /></span>
@@ -148,21 +149,26 @@ class MotDePasse extends Component{
                     </div>
                     <div className="form-group row">
                         <div className="input-group">
-                            <span className="form-control spanSonOfChildLoggins col-2"><FontAwesomeIcon icon={faLock} /></span>
-                            <input className="form-control inputSonOfChildLoggins col-10" onChange={(e) => this.setValue('confirmer', e)} type="password" placeholder="Confirmer votre mot de passe"/>
+                            <span className="form-control spanSonOfChildLoggin col-2" id="logginAllMeddoc_container_row_span_spanSonOfChildLoggins"><FontAwesomeIcon icon={faLock} /></span>
+                            <ul className="col-10 container_inscription_dataInscription_div_row_col_ul">
+                                <li className="container_inscription_dataInscription_div_row_col_ul_li_1"><input onChange={(e) => this.setValue('confirmer', e)} className="form-control inputSonOfChildLoggin" placeholder="Confirmer votre mot de passe" id="logginAllMeddoc_container_row_inputSonOfChildLoggins_v2" required={true} type={(this.state.etatMotDePasseShowConf)?"text":"password"} /></li>
+                                <li className="container_inscription_dataInscription_div_row_col_ul_li_2"><button className="container_connexion_dataInscription_div_row_col_ul_li_2_button" onClick={()=>{this.setState({etatMotDePasseShowConf:!this.state.etatMotDePasseShowConf})}}><FontAwesomeIcon icon={(!this.state.etatMotDePasseShowConf)?faEyeSlash:faEye} /></button></li>
+                            </ul>
                         </div>
                     </div>
-                    <div className="form-group row">
+                    <div className="form-group row descenteLogin">
                         <div className="input-group">
-                            <span className="form-control spanSonOfChildLoggins col-2"><FontAwesomeIcon icon={faKey} /></span>
-                            <input className="form-control inputSonOfChildLoggins col-10" onChange={(e) => this.setValue('code', e)} type="text" placeholder="code de validation"/>
+                            <span className="form-control spanSonOfChildLoggin col-2" id="logginAllMeddoc_container_row_span_spanSonOfChildLoggins"><FontAwesomeIcon style={{textAlign : "center"}} icon={faKey} /></span>
+                            <input className="form-control inputSonOfChildLoggin col-10" id="logginAllMeddoc_container_row_inputSonOfChildLoggins" required={true} type="text" onChange={(e) => this.setValue('code', e)} placeholder="Code de validation"/>
                         </div>
+                        
                     </div>
                 </div>
                 {this.getDataHtmlErreur(this.state.erreur,this.state.etatErreur,this.state.change)}
                 <p hidden={!this.state.change}>Votre mot de passe a été modifier. Vous pouvez vous connectez <a href="/connexion">ici</a></p>
+
                 <div className="boutonConnecterLogin">
-                    <a className="bouton-solid-reg popup-with-move-anim a1" id="sonboutonConnecter" onClick={()=>this.setMdpUser()} href="#details-lightbox-1">Reinitialiser</a>
+                    <button className="mot_de_passe_input_identifient_bouton_reinitialiser" onClick={()=>this.setMdpUser()}>Reinitialiser</button>
                 </div>
             </div>
         )
@@ -170,14 +176,7 @@ class MotDePasse extends Component{
     render(){
         return (
             <div className="logginAllMeddoc">
-                <div className="row">
-                     <div className="col-md-5 col-sm-12 sonV2logginAllMeddocs">
-                        { (this.state.etatShow ===2)?this.getDataHtmlNouveauMotDePasse():this.getDataHtmlIdentifient()}
-                     </div>
-                     <div className="col-md-7 col-sm-12 sonlogginAllMeddocs">
-                        <img className="img-fluid imgSizeLoginMeddoc" src={mdpoublie} alt="alternative"/>
-                     </div>
-                </div>
+                { (this.state.etatShow ===2)?this.getDataHtmlNouveauMotDePasse():this.getDataHtmlIdentifient()}
             </div>
             
         )

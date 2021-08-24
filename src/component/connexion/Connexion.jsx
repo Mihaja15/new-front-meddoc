@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import './Connexion.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.css';
 import {fetchPost, fetchPostNotLogged} from '../../services/global.service';
 import {Modal,Button} from 'react-bootstrap';
-import details1officeworker from '../../assets/img/details-1-office-worker.svg';
 import { Cookies } from 'react-cookie';
 import { instanceOf } from "prop-types";
 
@@ -38,7 +37,8 @@ class Connexion extends Component{
             nonValider : false,
             status : 0,
             toShow : 1,
-            disableButton:false
+            disableButton:false,
+            etatMotDePasseShow : false
         }
         this.setValue = this.setValue.bind(this);
         this.setToken = this.setToken.bind(this);
@@ -188,47 +188,45 @@ class Connexion extends Component{
     render(){
         return (
             <div className="logginAllMeddoc">
-                <div className="row">
-                     <div className="col-md-6 col-sm-12 sonVlogginAllMeddoc">
-                        {this.state.toShow===2?<ValidationCompte identification={this.state.identification.valuesText} password={this.state.mdp.valuesText}/>:
-                        <div className="row">
-                            <div className="col-md-12 col-sm-12">
-                                <h1 className="titleH1Login"><b>Connexion</b></h1>
-                                <p className="titlePLogin">Pas encore de compte ? <a className="titleALogin" href="/inscription"> Créer mon compte</a></p>
-                                <div className="form-group row descenteLogin">
-                                    <div className="input-group">
-                                        <span className="form-control spanSonOfChildLoggin col-2" id="spanSonOfChildLoggins"><FontAwesomeIcon style={{textAlign : "center"}} icon={faUser} /></span>
-                                        <input className="form-control inputSonOfChildLoggin col-10" id="inputSonOfChildLoggins" required={true} type="text" value={this.state.identification.valuesText} onChange={(e) => this.setValue("identification", e)} placeholder="E-mail ou numéro de téléphone" name="identification"/>
-                                        {this.getErrorMessage(this.state.identification.etat,'Le champs identification est obligatoire')}
-                                    </div>
+                <div className="logginAllMeddoc_container">
+                    {this.state.toShow===2?<ValidationCompte identification={this.state.identification.valuesText} password={this.state.mdp.valuesText}/>:
+                    <div className="row">
+                        <div className="col-md-12 col-sm-12">
+                            <h1 className="logginAllMeddoc_container_row_titleH1Login"><b>Connexion</b></h1>
+                            <p className="logginAllMeddoc_container_row_titleH1Login_titlePLogin">Pas encore de compte ? <a className="titleALogin" href="/inscription"> Créer mon compte</a></p>
+                            <div className="form-group row descenteLogin">
+                                <div className="input-group">
+                                    <span className="form-control spanSonOfChildLoggin col-2" id="logginAllMeddoc_container_row_span_spanSonOfChildLoggins"><FontAwesomeIcon style={{textAlign : "center"}} icon={faUser} /></span>
+                                    <input className="form-control inputSonOfChildLoggin col-10" id="logginAllMeddoc_container_row_inputSonOfChildLoggins" required={true} type="text" value={this.state.identification.valuesText} onChange={(e) => this.setValue("identification", e)} placeholder="E-mail ou numéro de téléphone" name="identification"/>
+                                    {this.getErrorMessage(this.state.identification.etat,'Entrez votre identifiant')}
+                                </div>
+                                
+                            </div>
+                            <div className="form-group row">
+                                <div className="input-group">
+                                    <span className="form-control spanSonOfChildLoggin col-2" id="logginAllMeddoc_container_row_span_spanSonOfChildLoggins"><FontAwesomeIcon icon={faLock} /></span>
+                                    <ul className="col-10 container_inscription_dataInscription_div_row_col_ul">
+                                        <li className="container_inscription_dataInscription_div_row_col_ul_li_1"><input onKeyDown={this.keyPressed.bind(this)} className="form-control inputSonOfChildLoggin" id="logginAllMeddoc_container_row_inputSonOfChildLoggins_v2" required={true} type={(this.state.etatMotDePasseShow)?"text":"password"} value={this.state.mdp.valuesText} onChange={(e) => this.setValue("mdp", e)} placeholder="Mot de passe" name="mdp"/></li>
+                                        <li className="container_inscription_dataInscription_div_row_col_ul_li_2"><button className="container_connexion_dataInscription_div_row_col_ul_li_2_button" onClick={()=>{this.setState({etatMotDePasseShow:!this.state.etatMotDePasseShow})}}><FontAwesomeIcon icon={(!this.state.etatMotDePasseShow)?faEyeSlash:faEye} /></button></li>
+                                    </ul>
                                     
+                                    {this.getErrorMessage(this.state.mdp.etat,'Vérifiez votre mot de passe')}
                                 </div>
-                                <div className="form-group row">
-                                    <div className="input-group">
-                                        <span className="form-control spanSonOfChildLoggin col-2" id="spanSonOfChildLoggins"><FontAwesomeIcon icon={faLock} /></span>
-                                        <input onKeyDown={this.keyPressed.bind(this)} className="form-control inputSonOfChildLoggin col-10" id="inputSonOfChildLoggins" required={true} type="password" value={this.state.mdp.valuesText} onChange={(e) => this.setValue("mdp", e)} placeholder="Mot de passe" name="mdp"/>
-                                        {this.getErrorMessage(this.state.mdp.etat,'Le champs mot de passe est obligatoire')}
-                                    </div>
-                                </div>
-                                <a className="motDePasseOublieLogin" href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
                             </div>
-                            {/* <p>{"Token==>"+this.state.identification.valuesText}</p> */}
-                            <div className="boutonConnecterLogin">
-                                <GoogleReCaptchaProvider className="g-recaptcha" reCaptchaKey="6LclRt8bAAAAAFWdHWX7Tu1q8C00ptadzT4yeG45">
-                                    <CaptchaButton setCaptchaToken={this.setToken} hiddenButton={this.state.disableButton} disableButton={!(utile.hasValue(this.state.identification.valuesText)&&utile.hasValue(this.state.mdp.valuesText))}/>
-                                    {/* <GoogleReCaptcha onVerify={this.handleVerifyRecaptcha}/> */}
-                                </GoogleReCaptchaProvider>
-                                {/* <a className="bouton-solid-reg popup-with-move-anim a1" aria-disabled={this.state.token===null} hidden={this.state.disableButton} id="sonboutonConnecter" href="#details-lightbox-1" onClick={this.loginConnexion}>Se connecter</a> */}
-                                <div hidden={!this.state.disableButton} className="login-loader"></div>
-                            </div>
-                            {this.state.error.activation?<Toaster type={'error'} bodyMsg={this.state.error.message} isShow={this.state.error.activation} toggleShow={this.changeShow}/>:''}
-                            {/* <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div> */}
-                        </div>}
-                     </div>
-                     <div className="col-md-6 col-sm-12 sonlogginAllMeddoc">
-                        <img className="img-fluid imgSizeLoginMeddoc" src={details1officeworker} alt="alternative"/>
-                        {/* <div className="shadowImg"></div> */}
-                     </div>
+                            <div className="logginAllMeddoc_container_row_titleH1Login_mot_de_passe_oublie"><a className="motDePasseOublieLogin" href="/mot-de-passe-oublie">Mot de passe oublié ?</a></div>
+                        </div>
+                        {/* <p>{"Token==>"+this.state.identification.valuesText}</p> */}
+                        <div className="boutonConnecterLogin">
+                            <GoogleReCaptchaProvider className="g-recaptcha" reCaptchaKey="6LclRt8bAAAAAFWdHWX7Tu1q8C00ptadzT4yeG45">
+                                <CaptchaButton setCaptchaToken={this.setToken} hiddenButton={this.state.disableButton} disableButton={!(utile.hasValue(this.state.identification.valuesText)&&utile.hasValue(this.state.mdp.valuesText))}/>
+                                {/* <GoogleReCaptcha onVerify={this.handleVerifyRecaptcha}/> */}
+                            </GoogleReCaptchaProvider>
+                            {/* <a className="bouton-solid-reg popup-with-move-anim a1" aria-disabled={this.state.token===null} hidden={this.state.disableButton} id="sonboutonConnecter" href="#details-lightbox-1" onClick={this.loginConnexion}>Se connecter</a> */}
+                            <div hidden={!this.state.disableButton} className="login-loader"></div>
+                        </div>
+                        {this.state.error.activation?<Toaster type={'error'} bodyMsg={this.state.error.message} isShow={this.state.error.activation} toggleShow={this.changeShow}/>:''}
+                        {/* <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div> */}
+                    </div>}
                 </div>
                 {/*<button className="btn btn-primary" onClick={()=>this.openModalValidation()}>Open</button>*/}
                 {/* Modal validation compte */}

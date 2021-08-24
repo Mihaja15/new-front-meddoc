@@ -37,7 +37,7 @@ class App extends React.Component {
   }
   contentShow(content,header,footer){
     return(
-      <div id="root-container">
+      <div className="container-fluid" id="root-container">
         <header className="col-md-12">{header}</header>
         <main className="col-md-12">{content}</main>
         <footer className="col-md-12">{footer}</footer>

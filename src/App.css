@@ -79,8 +79,8 @@ body::-webkit-scrollbar-thumb {
   background-image: -webkit-gradient(linear,
                      left bottom,
                      left top,
-                     color-stop(0.5, #38a3a5),
-                     color-stop(0.5, #38a3a5));
+                     color-stop(0.5, #1b7895),
+                     color-stop(0.5, #1b7895));
 }
 
 /* Handle on hover */
@@ -88,8 +88,8 @@ body::-webkit-scrollbar-thumb {
   background-image: -webkit-gradient(linear,
                      left bottom,
                      left top,
-                     color-stop(0.5, #38a3a5),
-                     color-stop(0.5, #38a3a5));
+                     color-stop(0.5, #1b7895),
+                     color-stop(0.5, #1b7895));
 }
 li{
   list-style: none;
