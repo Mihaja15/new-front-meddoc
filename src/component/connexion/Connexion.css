@@ -103,6 +103,11 @@
 	font-weight: 600;
     color: #8895A7;
 }
+.logginAllMeddoc_container_row_titleH1Login_titlePLogin{
+	text-align: center;
+	font-weight: 600;
+    color: #8895A7;
+}
 .titleALogin{
 	font-weight: bold;
 	color: #01bbc6;
@@ -159,6 +164,10 @@
     border-radius: 12px;
 } */
 .labelErrors{
+	margin-left: 16.5%;
+    margin-top: 1%;
+    font-size: 15px;
+    font-weight: 900;
 	color: #dc3545;
 }
 .titleModalValidationLoginMeddoc{
@@ -176,4 +185,68 @@
 .inputSonOfChildLogginV12V5{
 	background-color: #f1f4f5;
     border: 2px solid #ffffff;
+}
+.logginAllMeddoc_container_row_titleH1Login{
+	font-size: 35px;
+    color: #01bbc6;
+    width: 100%;
+    text-align: center;
+}
+.logginAllMeddoc_container{
+	width: 600px;
+    margin: 0 auto;
+    margin-top: 6%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+    padding: 2%;
+    height: 50vh;
+    border-radius: 12px;
+}
+.logginAllMeddoc_container_row_titleH1Login_mot_de_passe_oublie{
+	width: 100%;
+    text-align: right;
+}
+#logginAllMeddoc_container_row_span_spanSonOfChildLoggins{
+	border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: #00bfd8;
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #00bfd8;
+}
+#logginAllMeddoc_container_row_inputSonOfChildLoggins{
+	border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: 2px solid #00bfd8;
+}
+#logginAllMeddoc_container_row_inputSonOfChildLoggins::placeholder{
+	color: #1b7895;
+	font-weight: 400;
+}
+#logginAllMeddoc_container_row_inputSonOfChildLoggins_v2{
+	border-radius: 0;
+    border: 2px solid #00bfd8;
+	border-right: none;
+}
+#logginAllMeddoc_container_row_inputSonOfChildLoggins_v2::placeholder{
+	color: #1b7895;
+	font-weight: 400;
+}
+#logginAllMeddoc_container_row_inputSonOfChildLoggins_v2:focus{
+    outline: none !important;
+    border: 2px solid #00bfd8;
+    box-shadow: none;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: none;
+}
+.container_connexion_dataInscription_div_row_col_ul_li_2_button{
+	width: 100%;
+    height: 38px;
+    border: 2px solid #00bfd8;
+    background-color: white;
+    border-left: none;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+	color: #1b789585;
 }

@@ -1,31 +1,21 @@
 import React from 'react';
 import './Home.css';
-// import OwlCarousel from 'react-owl-carousel';  
 import 'owl.carousel/dist/assets/owl.carousel.css';  
 import 'owl.carousel/dist/assets/owl.theme.default.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faClinicMedical, faFileMedical, faPhone, faSearch, faStoreAlt, faVirus } from '@fortawesome/free-solid-svg-icons';
-import vaccin from '../../assets/img/vaccin.png';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import im1 from '../../assets/img/im1.png';
 import im2 from '../../assets/img/im2.png';
 import im3 from '../../assets/img/im3.png';
 import im4 from '../../assets/img/im4.png';
-import calendar from '../../assets/img/calendar-left.png';
-import csn from '../../assets/img/csn-right.png';
-import hospital from '../../assets/img/hospital-left.png';
-import drugStore from '../../assets/img/drug-store-right.png';
-import home from '../../assets/background/home.png';
-import deviceRh from '../../assets/background/device-rh.png';
-import details1officeworker from '../../assets/img/details-1-office-worker.svg';
-import details2officeworker from '../../assets/img/details-2-office-team-work.svg';
-import img1 from '../../assets/img/discussion.png';
-import egm from '../../assets/partenaire/egm.png';
-import mnsp from '../../assets/partenaire/mnsp.png';
-import presidence from '../../assets/partenaire/presidence.png';
 import '../../assets/fonts/Font.css';
 import { fetchGet } from '../../services/global.service';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCartPlus, faCartArrowDown, faHandHoldingMedical, faClipboardList, faReceipt, faShoppingBasket, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import imgrdv from '../../assets/background/imgrdv.jpg';
+import pharmatie from '../../assets/background/pharmatie.jpg';
+import africa from '../../assets/africa.png';
+import ofab from '../../assets/partenaire/ofab.png';
+import usaid from '../../assets/partenaire/shops-plus.png';
+import zafy_tody from '../../assets/partenaire/zafy_tody.png';
 
 class Home extends React.Component{
     constructor(props){
@@ -53,51 +43,26 @@ class Home extends React.Component{
     }
     render(){
         return(
-            <div className="home-container">
+            <div className="container-fluid home-container">
                 <div className="row col-md-12 banner-top">
-                    <div className="col-md-12 overlay row">
-                        <div className="col-md-6 home-text">
+                    <div className="col-md-12 overlay row home_container_title">
+                        <div className="col-md-12 home-text">
                             <div className="search-bar">
-                                {/* <div>MEDD<span>o</span>C</div>
-                                <p>s'engage pour la campagne de vaccination contre la Covid-19 à Madagascar</p> */}
-                                <h1>Trouvez un <br/><b>professionnel de santé</b><br/> le plus tôt et le plus près de chez vous!</h1>
-                                <p className="">Simple, gratuit et sécurisé</p>
-                                {/* <form> */}
-                                    <input type="text" className="" value={this.state.textFind} placeholder="Rechercher un professionel de santé" onChange={this.handleChange.bind(this,"textFind")}/>
-                                    {/* <select className="" value={this.state.selectFind} onChange={this.handleChange.bind(this,"selectFind")}>
-                                        <option value="">Votre District</option>
-                                        { 
-                                            this.state.listDistrict.map((data,i)=>{
-                                                return <option value={data.idDistrict} key={i}>{data.nomDistrict}</option>
-                                            })
-                                        }
-                                    </select> */}
-                                    {/* <Select styles={customStyles} isClearable className="" options={this.state.listDistrict} onChange={this.handleChange.bind(this,"selectFind")}/> */}
-                                    <button type="submit"><FontAwesomeIcon icon={faSearch} onClick={()=>{window.location.pathname='/recherche-centre/'+this.state.textFind+'/0'}}/></button>
-                                {/* </form> */}
+                                <h1>Prenez rendez-vous <br/>avec <b>un médecin</b> le plus<br/> tôt et le plus près de chez vous!</h1>
+                                <ul className="home_container_search_bar_ul">
+                                    <li className="home_container_search_bar_ul_li_v1"><input type="text" className="home_container_search_bar_ul_li_v1_input" value={this.state.textFind} placeholder="Spécialité, médecin, établissement ..." onChange={this.handleChange.bind(this,"textFind")}/></li>
+                                    <li className="home_container_search_bar_ul_li_v2"><input type="text" className="home_container_search_bar_ul_li_v2_input" value={this.state.textFind} placeholder="Où ?" onChange={this.handleChange.bind(this,"textFind")}/></li>
+                                    <li className="home_container_search_bar_ul_li_v3"><button type="submit" className="home_container_search_bar_ul_li_v3_button"><FontAwesomeIcon icon={faSearch} onClick={()=>{window.location.pathname='/recherche-centre/'+this.state.textFind+'/0'}}/></button></li>
+                                </ul>
                             </div>
                         </div>
-                        {/* <div className="col-md-6 home-background"><img src={home} alt="background"/></div> */}
-                        <div className="col-md-6 home-background">
-                            {/* <svg xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 350">
-                                <path fill="#1b7895" d="M156.4,339.5c31.8-2.5,59.4-26.8,80.2-48.5c28.3-29.5,40.5-47,56.1-85.1c14-34.3,20.7-75.6,2.3-111  c-18.1-34.8-55.7-58-90.4-72.3c-11.7-4.8-24.1-8.8-36.8-11.5l-0.9-0.9l-0.6,0.6c-27.7-5.8-56.6-6-82.4,3c-38.8,13.6-64,48.8-66.8,90.3c-3,43.9,17.8,88.3,33.7,128.8c5.3,13.5,10.4,27.1,14.9,40.9C77.5,309.9,111,343,156.4,339.5z"/>
-                            </svg> */}
-                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#1b7895" d="M39.7,-45.3C55.3,-34.3,74.4,-25.4,82.7,-9.9C91,5.6,88.5,27.6,78.6,46C68.7,64.3,51.4,79,31.7,85.4C12,91.9,-10.1,90.2,-29.6,82.5C-49.1,74.9,-66.1,61.4,-66.4,45.7C-66.8,29.9,-50.5,11.9,-46.1,-7.3C-41.7,-26.5,-49.1,-46.9,-43.4,-59.6C-37.7,-72.3,-18.8,-77.2,-3.4,-73.2C12.1,-69.2,24.2,-56.2,39.7,-45.3Z" transform="translate(100 100)" />
+                        <div class="custom-shape-divider-bottom-1629768645">
+                            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
                             </svg>
-                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#1b7895" d="M39.7,-45.3C55.3,-34.3,74.4,-25.4,82.7,-9.9C91,5.6,88.5,27.6,78.6,46C68.7,64.3,51.4,79,31.7,85.4C12,91.9,-10.1,90.2,-29.6,82.5C-49.1,74.9,-66.1,61.4,-66.4,45.7C-66.8,29.9,-50.5,11.9,-46.1,-7.3C-41.7,-26.5,-49.1,-46.9,-43.4,-59.6C-37.7,-72.3,-18.8,-77.2,-3.4,-73.2C12.1,-69.2,24.2,-56.2,39.7,-45.3Z" transform="translate(100 100)" />
-                            </svg>
-                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#1b7895" d="M39.7,-45.3C55.3,-34.3,74.4,-25.4,82.7,-9.9C91,5.6,88.5,27.6,78.6,46C68.7,64.3,51.4,79,31.7,85.4C12,91.9,-10.1,90.2,-29.6,82.5C-49.1,74.9,-66.1,61.4,-66.4,45.7C-66.8,29.9,-50.5,11.9,-46.1,-7.3C-41.7,-26.5,-49.1,-46.9,-43.4,-59.6C-37.7,-72.3,-18.8,-77.2,-3.4,-73.2C12.1,-69.2,24.2,-56.2,39.7,-45.3Z" transform="translate(100 100)" />
-                            </svg>
-                            <img src={calendar} alt="background"/>
-                            <img src={csn} alt="background"/>
-                            <img src={hospital} alt="background"/>
-                            <img src={drugStore} alt="background"/>
-                            <img src={deviceRh} alt="background"/>
                         </div>
                     </div>
+                    
                     <div className="col-md-12 back-overlay"></div>
                     {/* <div className="col-md-12" id="pulsing">
                         <div className="col-md-12 heart-oscil">
@@ -141,89 +106,151 @@ class Home extends React.Component{
                     </div>
                     <div className="col-md-12 back-why-meddoc"></div>
                 </div>
-                <div className="col-md-12 nos-services">
-                    <div className="row">
-                        <h2 className="col-md-12 section-titles">Nous vous proposons</h2>
-                        <div className="col-md-4 all-single-service">
-                            <div className="col-md-12 single-service">
-                                <h6 className="col-md-12 subtitle-img">Prise de rendez-vous</h6>
-                                <svg className="col-md-12 single-background" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="#005569" d="M39.7,-45.3C55.3,-34.3,74.4,-25.4,82.7,-9.9C91,5.6,88.5,27.6,78.6,46C68.7,64.3,51.4,79,31.7,85.4C12,91.9,-10.1,90.2,-29.6,82.5C-49.1,74.9,-66.1,61.4,-66.4,45.7C-66.8,29.9,-50.5,11.9,-46.1,-7.3C-41.7,-26.5,-49.1,-46.9,-43.4,-59.6C-37.7,-72.3,-18.8,-77.2,-3.4,-73.2C12.1,-69.2,24.2,-56.2,39.7,-45.3Z" transform="translate(100 100)" />
-                                </svg>
-                                <span className="col-md-12 "><FontAwesomeIcon icon={faClinicMedical}/></span>
-                            </div>
-                            {/* <p className="col-md-12">Prenez votre rendez-vous où vous voulez.</p> */}
-                        </div>
-                        <div className="col-md-4 all-single-service">
-                            <div className="col-md-12 single-service">
-                                <h6 className="col-md-12 subtitle-img">Click & Collect</h6>
-                                <svg className="col-md-12 single-background" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="#82a64e" d="M39.7,-45.3C55.3,-34.3,74.4,-25.4,82.7,-9.9C91,5.6,88.5,27.6,78.6,46C68.7,64.3,51.4,79,31.7,85.4C12,91.9,-10.1,90.2,-29.6,82.5C-49.1,74.9,-66.1,61.4,-66.4,45.7C-66.8,29.9,-50.5,11.9,-46.1,-7.3C-41.7,-26.5,-49.1,-46.9,-43.4,-59.6C-37.7,-72.3,-18.8,-77.2,-3.4,-73.2C12.1,-69.2,24.2,-56.2,39.7,-45.3Z" transform="translate(100 100)" />
-                                </svg>
-                                <span className="col-md-12 "><FontAwesomeIcon icon={faStoreAlt}/></span>
-                            </div>
-                            {/* <p className="col-md-12">Faites votre commande de médicament et passez le prendre sans faire la queue.</p> */}
-                        </div>
-                        <div className="col-md-4 all-single-service">
-                            <div className="col-md-12 single-service">
-                                <h6 className="col-md-12 subtitle-img">Suivi médical</h6>
-                                <svg className="col-md-12 single-background" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="#fa9397" d="M39.7,-45.3C55.3,-34.3,74.4,-25.4,82.7,-9.9C91,5.6,88.5,27.6,78.6,46C68.7,64.3,51.4,79,31.7,85.4C12,91.9,-10.1,90.2,-29.6,82.5C-49.1,74.9,-66.1,61.4,-66.4,45.7C-66.8,29.9,-50.5,11.9,-46.1,-7.3C-41.7,-26.5,-49.1,-46.9,-43.4,-59.6C-37.7,-72.3,-18.8,-77.2,-3.4,-73.2C12.1,-69.2,24.2,-56.2,39.7,-45.3Z" transform="translate(100 100)" />
-                                </svg>
-                                <span className="col-md-12 "><FontAwesomeIcon icon={faFileMedical}/></span>
-                            </div>
-                            {/* <p className="col-md-12">Accédez à votre dossier médical à tout moment.</p> */}
-                        </div>
-                    </div>
-                </div>
                 <div className="row col-md-12 rowHelperTemporaireAcceuil">
+                    
+                    <div className="col-lg-12 col-sm-12 nos-services"><h2 className="col-md-12 section-titles">Nos services</h2></div>
+
                     <div className="col-lg-6 col-sm-12 textHelperAcceuil textAuMilieu">
                         <h2 className="h2m turquoise turquoiseTmp" id="prise-rdv-titre">Prenez rendez-vous avec vos professionnels de santé à tout moment</h2>
                         <div className="textHelperTemporaireAcceuil">
                         En cabinet ou à domicile, consultez votre docteur, médecin généraliste,
-                        spécialiste (dentiste, dermatologue, gynécologue, cardiologue,pédiatre,
-                        ophtalmologue...) ou professionnel paramédical (kinésithérapeute,
-                        orthophoniste, orthoptiste, ostéopathe, diététicien, podologue...).
+                        spécialiste ou professionnel paramédical).
                         Prenez rendez-vous pour faire vos analyses (biologiques…)
                         et vos radiologies (IRM, scanner, échographie…)</div>
-                        <a id="prise-rdv-btn" href="/recherche-medecin">Prendre rendez-vous</a>
+                        <div className="textHelperTemporaireAcceuil_div_button"><button className="home_container_prise_rdv_btn_button"><a className="home_container_prise_rdv_btn_button_a" href="/recherche-medecin">Prendre rendez-vous</a></button></div>
                     </div> 
                     <div className="col-lg-6 col-sm-12">
                         <div className="image-container newInspirationDominiceAcceuille">
-                            <img className="img-fluid newImageInspirationDominiceAcceuille" src={details1officeworker} alt="alternative"/>
+                            <img className="img-fluid newImageInspirationDominiceAcceuille" src={imgrdv} alt="alternative"/>
                         </div>
                     </div>
                 </div>
-                <div className="row col-md-12 rowHelperTemporaireAcceuil">
+                <div className="row col-md-12 rowHelperTemporaireAcceuil_v2">
                     <div className="col-lg-6 col-sm-12">
                         <div className="image-container newInspirationDominiceAcceuille">
-                            <img className="img-fluid newImageInspirationDominiceAcceuille" src={details2officeworker} alt="alternative"/>
+                            <img className="img-fluid newImageInspirationDominiceAcceuille newImageInspirationDominiceAcceuille_v2" src={pharmatie} alt="alternative"/>
                         </div>
                     </div>
                     <div className="col-lg-6 col-sm-12 textAuMilieu">
-                        <h2 className="h2m turquoise turquoiseTmp" id="click-collect-titre">Click & collect</h2>
+                        <h2 className="h2m turquoise turquoiseTmp" id="click-collect-titre">PHARMACLIC, la parapharmacie en ligne</h2>
                         <div className="textHelperTemporaireAcceuil">
-                            Faites vos achats ou partagez vos ordonnances avec votre pharmacien et récupérez rapidement vos médicaments.
+                            Découvrez tous les produits de paraharmacie, au meilleur prix dans les pharmacies à proximité dans toutes les catégories: soins du visage,
+                            bébé, enfants et maternité, soins du corps, bouche et dents, matériel médical,
+                            cheveux, santé, sexualité....
                         </div>
-                        <a id="click-collect-btn" href="/inscription-patient">Trouver une pharmacie</a>
+                        <div className="textHelperTemporaireAcceuil_div_button"><button className="home_container_prise_rdv_btn_button"><a className="home_container_prise_rdv_btn_button_a" href="/inscription-patient">Faites vos achats</a></button></div>
                     </div>
                 </div>
-                <div className="row col-md-12 rowHelperTemporaireAcceuil finHelperTemporaireAcceuil">
-                    <div className="col-lg-6 col-sm-12 textAuMilieu">
-                        <h2 className="h2m turquoise turquoiseTmp" id="suivi-medical-titre">Votre carnet de santé numérique (CSN), toujours avec vous</h2>
-                        <div className="textHelperTemporaireAcceuil">
-                            Confidentiel et sécurisé, il vous permet de les partager avec votre médecin traitant
-                            et avec  tous les professionnels de santé qui vous prennent en charge, on retrouve
-                            dans un même endroit vos antécédents médicaux, vos résultats d’examens,
-                            vos comptes rendus d’hospitalisations, vos historiques de soins…
+                <div className="col-md-12">
+                    <section id="services" className="why row">
+                        <div className="overlay-two">
+                            {/* <span></span>
+                            <span></span> */}
                         </div>
-                        <a id="suivi-medical-btn" href="/inscription-patient">Créer votre carnet</a>
-                    </div>
-                    <div className="col-lg-6 col-sm-12">
-                        <div className="image-container newInspirationDominiceAcceuille">
-                            <img className="img-fluid newImageInspirationDominiceAcceuille" src={details2officeworker} alt="alternative"/>
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-3 col-xs-3">
+                                            <div className="services-item text-center">
+                                                <div className="icon">
+                                                    <i className="lni-emoji-smile"></i>
+                                                </div>
+                                                <h4>Simple</h4>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-3 col-md-3 col-xs-3">
+                                            <div className="services-item text-center">
+                                                <div className="icon">
+                                                    <i className="lni-sun"></i>
+                                                </div>
+                                                <h4>Gratuit</h4>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-3 col-md-3 col-xs-3">
+                                            <div className="services-item text-center">
+                                                <div className="icon">
+                                                    <i className="lni-lock"></i>
+                                                </div>
+                                                <h4>Sécurisé</h4>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-3 col-md-3 col-xs-3">
+                                            <div className="services-item text-center">
+                                                <div className="icon">
+                                                    <i className="lni-timer"></i>
+                                                </div>
+                                                <h4>24h/7j</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </section>
+                    <section id="soutien" className="partenaire row">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="contact-text section-header text-center">  
+                                        <div>   
+                                            <h2 className="section-titles">Ils nous soutiennent</h2>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-lg-3 col-md-6 col-xs-12">
+                                    <div className="single-team">
+                                        <div className="team-thumb">
+                                            <a href="https://africabyincubme.com/" target="_blank"><img src={africa} style={{padding: '9%'}}  className="img-fluid" alt=""/></a>
+                                        </div>
+                                        <div className="team-details">
+                                            <div className="team-inner text-center">
+                                                <h5 className="team-title">AFRICA By IncubeMe</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-3 col-md-6 col-xs-12">
+                                    <div className="single-team">
+                                        <div className="team-thumb">
+                                            <a href="https://orangefab.mg/fr/" target="_blank"><img src={ofab} className="img-fluid" alt=""/></a>
+                                        </div>
+                                        <div className="team-details">
+                                            <div className="team-inner text-center">
+                                                <h5 className="team-title">Orange Fab Madagascar</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-3 col-md-6 col-xs-12">
+                                    <div className="single-team">
+                                        <div className="team-thumb">
+                                            <a href="https://www.shopsplusproject.org/where-we-work/africa/madagascar" target="_blank"><img src={usaid} className="img-fluid" alt=""/></a>
+                                        </div>
+                                        <div className="team-details">
+                                            <div className="team-inner text-center">
+                                                <h5 className="team-title">USAID - SHOPS Plus</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-3 col-md-6 col-xs-12">
+                                    <div className="single-team">
+                                        <div className="team-thumb">
+                                            <a href="https://zafytody.mg/" target="_blank"><img src={zafy_tody} className="img-fluid" alt=""/></a>
+                                        </div>
+                                        <div className="team-details">
+                                            <div className="team-inner text-center">
+                                                <h5 className="team-title">Zafy Tody</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         );
