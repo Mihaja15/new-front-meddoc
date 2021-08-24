@@ -2,33 +2,10 @@ import { faCheckCircle, faExclamationCircle, faExclamationTriangle, faInfoCircle
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 // import {Toast, Fade} from 'react-bootstrap/Toast';
-import {Collapse, Fade, Toast} from "react-bootstrap";
+import {Collapse, Toast} from "react-bootstrap";
 import './Toaster.css';
 
 const Toaster = ({ type, bodyMsg,isShow,toggleShow}) => {
-    // const [bgColor, setBgColor] = React.useState('#fff');
-    // const [bodyText, setBodyText] = React.useState('');
-    // const [headerText, setHeaderText] = React.useState('');
-    // const [show, setShow] = React.useState(false);
-    // React.useEffect(()=>{
-    //     setBodyText(bodyMsg);
-    //     setShow(isShow);
-    //     alert(isShow)
-    //     if(type.toLowerCase()==='success'){
-    //         setBgColor('#82a64e');
-    //         setHeaderText('Succès');
-    //     }else if(type.toLowerCase()==='error'){
-    //         setBgColor('#9a031e');
-    //         setHeaderText('Erreur');
-    //     }else if(type.toLowerCase()==='warning'){
-    //         setBgColor('#ff6c0a');
-    //         setHeaderText('Avertissement');
-    //     }else if(type.toLowerCase()==='info'){
-    //         setBgColor('#0065b3');
-    //         setHeaderText('Information');
-    //     }
-    //     toggleShow(false);
-    // },[]);
     function getHeaderText(){
         if(type.toLowerCase()==='success') return 'Succès';
         else if(type.toLowerCase()==='error') return 'Erreur';
@@ -49,7 +26,7 @@ const Toaster = ({ type, bodyMsg,isShow,toggleShow}) => {
     }
     return(
         <div className='toaster-container'>
-            <Toast show={isShow} style={{backgroundColor:getBackgroundColor()}} animation transition={Collapse} autohide={true} delay={5000} onClose={()=>toggleShow(false)} bg={'warning'}>
+            <Toast show={isShow} style={{backgroundColor:getBackgroundColor()}} animation transition={Collapse} autohide={true} delay={7000} onClose={()=>toggleShow(false)} bg={'warning'}>
                 <Toast.Header style={{backgroundColor:getBackgroundColor()}} closeButton={false}>
                     <strong style={{color:'#fff'}}>{getIcon()}{' '+getHeaderText()}</strong>
                     <span className='croix-toast' onClick={()=>toggleShow(false)}><FontAwesomeIcon icon={faTimes}/></span>

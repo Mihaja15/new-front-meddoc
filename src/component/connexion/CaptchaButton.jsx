@@ -16,7 +16,7 @@ const CaptchaButton = ({setCaptchaToken, disableButton, hiddenButton}) => {
             setCaptchaToken(token);
         }
         // Do whatever you want with the token
-    }, [executeRecaptcha]);
+    }, [executeRecaptcha,setCaptchaToken]);
   
     // You can use useEffect to trigger the verification as soon as the component being loaded
     useEffect(() => {

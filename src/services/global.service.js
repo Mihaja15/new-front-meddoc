@@ -73,7 +73,11 @@ export function fetchPostV2(url, dataSend){
         method: 'POST',
         body: dataSend
     };
+    // return fetch(url, requestOptions).then(response=>response.json()).then(data=>{
+    //     return data;
+    // });
     return fetch(url, requestOptions).then(response=>response.json()).then(data=>{
+        console.log(data);
         return data;
     });
 }

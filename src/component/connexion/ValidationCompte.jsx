@@ -1,6 +1,6 @@
 import React from 'react';
 import './ValidationCompte.css';
-import {fetchPost, fetchPostNotLogged} from '../../services/global.service';
+import { fetchPostNotLogged} from '../../services/global.service';
 import {userSession} from '../../services/userSession';
 
 export default class ValidationCompte extends React.Component{

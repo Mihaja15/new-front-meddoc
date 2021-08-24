@@ -4,14 +4,12 @@ import logo from '../../assets/logo/logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../../assets/fonts/Font.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faChevronCircleDown, faCaretDown, faSearch, faUserAlt, faUserCircle, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCaretDown, faUserCircle, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Cookies } from 'react-cookie';
 import { instanceOf } from "prop-types";
-import { fetchGet } from '../../services/global.service';
 import { utile } from '../../services/utile';
 
 import {userSession} from '../../services/userSession';
-import Select from 'react-select';
 
 class Header extends React.Component{
     static propTypes = {
@@ -239,30 +237,30 @@ class Header extends React.Component{
             this.setState({[param]:e.target.value});
     }
     render(){
-        const customStyles = {
-            option: (provided, state) => ({
-              ...provided,
-              borderBottom: '1px dotted pink',
-              color: state.isSelected ? '#fff' : '#1b7895'
-            }),
-            control: (provided) => ({
-              // none of react-select's styles are passed to <Control />
-                ...provided,
-                width: '100%',
-                height: '51px',
-                borderRadius: '0 !important',
-                backgroundColor: '#fff',
-                marginLeft: 0
-            }),
-            container: base => ({
-                ...base,
-                // flex: 1,
-                height:51,
-                padding:0
-                // margin:'0 auto',
+        // const customStyles = {
+        //     option: (provided, state) => ({
+        //       ...provided,
+        //       borderBottom: '1px dotted pink',
+        //       color: state.isSelected ? '#fff' : '#1b7895'
+        //     }),
+        //     control: (provided) => ({
+        //       // none of react-select's styles are passed to <Control />
+        //         ...provided,
+        //         width: '100%',
+        //         height: '51px',
+        //         borderRadius: '0 !important',
+        //         backgroundColor: '#fff',
+        //         marginLeft: 0
+        //     }),
+        //     container: base => ({
+        //         ...base,
+        //         // flex: 1,
+        //         height:51,
+        //         padding:0
+        //         // margin:'0 auto',
 
-              })
-        }
+        //       })
+        // }
         return(
             <div className="root-header" style={{ backgroundColor:this.state.nav?"#1b7895":"", transition:"all 1s"}}>
                 <div className="row">

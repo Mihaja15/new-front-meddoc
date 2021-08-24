@@ -1,7 +1,7 @@
 
 .croix-toast{
     position:absolute;
-    right:5px;
+    right:10px;
     top:5px;
     color:#fff;
     cursor:pointer;
@@ -14,5 +14,7 @@
     position:fixed;
     right:10vh;
     top:20vh;
+    min-width:250px;
+    min-height:175px;
     z-index:999
 }

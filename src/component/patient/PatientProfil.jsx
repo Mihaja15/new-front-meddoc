@@ -1,16 +1,15 @@
-import { faCalendarAlt, faCalendarCheck, faCommentMedical, faFileMedical, faFolderPlus, faSearch, faUserAlt, faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faCommentMedical, faFolderPlus, faSearch, faUserAlt, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './PatientProfil.css';
 import { userSession } from '../../services/userSession';
-import {fetchGet, fetchGetHandler} from '../../services/global.service';
+import {fetchGetHandler} from '../../services/global.service';
 import CarnetDeSante from '../carnetDeSante/CarnetDeSante';
 import Proche from '../mesProches/Proche';
 import Causette from '../chat/Causette';
 import Assistance from '../profils/Assistance';
 import Centre from '../centre/Centre';
 import ListeRdv from '../listeRdvPatient/ListeRdv';
-import ProfilPatient from '../profils/ProfilPatient';
 import DetailProfil from './DetailProfil';
 import { utile } from '../../services/utile';
 

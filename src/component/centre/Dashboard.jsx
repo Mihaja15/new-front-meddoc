@@ -1,6 +1,6 @@
 import React from 'react';
 import './Dashboard.css';
-import {DiscreteColorLegend,XYPlot, XAxis, YAxis, HorizontalGridLines,VerticalBarSeries, VerticalGridLines,Hint,MarkSeries, LineSeries, LineMarkSeries, AreaSeries, Crosshair} from 'react-vis';
+import {DiscreteColorLegend,XYPlot, XAxis, YAxis, HorizontalGridLines,VerticalBarSeries, VerticalGridLines,Hint} from 'react-vis';
 // import DiscreteColorLegend from 'legends/discrete-color-legend';
 import 'react-vis/dist/style.css';
 import 'react-vis/dist/dist.min.js';

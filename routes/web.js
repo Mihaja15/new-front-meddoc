@@ -31,8 +31,9 @@ router.post("/photo", upload.single('photo'), (req, res, next) => {
 
 router.post('/deleteFichier', async function (request, response) {
     try {
-      if(request.body.name!== undefined){
-        fs.unlinkSync('./public/assets/upload/'+request.body.name);
+      if(request.body.files!== undefined){
+        for(let i=0;i<request.body.files.length;i++)
+          fs.unlinkSync('./public/assets/upload/'+request.body.files[i]);
         response.status(200).json({'status': true, 'message': 'suppresion fichier avec succés'});
         console.log('suppresion fichier avec succés')
       }
@@ -46,14 +47,6 @@ router.post('/deleteFichier', async function (request, response) {
 router.post('/download', async function(req, res){
     try {
       if(req.body.name!== undefined){
-        
-        /*var file = fs.readFileSync(__dirname + '/public/uploads/'+req.body.name, 'binary');
-        res.setHeader('Content-Length', file.length);
-        res.write(file, 'binary');
-        res.end();*/
-        
-        /*var file = __dirname + '/public/uploads/'+req.body.name;
-        res.download(file);*/
         var file = __dirname + '/public/uploads/'+req.body.name;
         res.download(''+file, function(error){
             console.log("Error : ", error);
@@ -73,79 +66,46 @@ router.post('/download', async function(req, res){
 router.post('/fichier', async function (request, response) {
   let nameFinal = [];
   var increment = 1;
-  const dateNow = new Date();
   const storagevv2 = multer.diskStorage({
       destination: function (req, file, cb) {
           cb(null, './public/assets/upload/')
       },
       filename: function (req, file, cb) {
-          // console.log(file)
-          // let name = nameFinal+file.originalname;
-          // if(file.fieldname==='filesUpload'){
-          if(file.fieldname==='files'){
-            let name = ('_'+increment)+('_'+req.body.uuid)+('_'+dateNow.getTime())+path.extname(file.originalname);
+          if(file.fieldname==='filesUpload'&&req.body.uuid!==undefined){
+            let name = increment+('_'+req.body.uuid)+('_'+date.getTime())+path.extname(file.originalname);
             nameFinal.push(name);
-            console.log('name = '+name);
             increment++;
             cb(null,""+name);
           }
       }
   });
   var uploadV2 = multer({storage: storagevv2});
-
-  // const result = await new Promise(function (resolve) {
-  //   try {
-  //     // console.log(uploadV2.any('files'));
-  //     uploadV2.any('files')(request, response, function(err) {
-  //         const data = { valeur : 'ca marche', etat : 500}
-  //       resolve(data);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     resolve(undefined);
-  //     // reject("Invalid input");
-  //   }
-  // });
-  const result = await new Promise(function (resolve) {
-    try {
-      uploadV2.any('files')(request, response, function(err) {
-        if(err) {
-          console.log(err);
-          resolve(undefined);
-          return;
-        }
-        let data = [];
-        console.log(request)
-        for (let i = 0; i < request.files.length; i++) {
-          data[i] = {
+  try {
+    uploadV2.any('filesUpload')(request, response, function(err) {
+      if(err) {
+        console.log(err);
+        response.status(500).json({'status':false,'message': 'Il y a une erreur', 'code': ''});
+        return;
+      }
+      let data = [];
+      let indice = 0;
+      for (let i = 0; i < request.files.length; i++) {
+        if(!request.files[i].filename.includes('undefined')){
+          data[indice] = {
             'filename': request.files[i].filename,
             'resType': request.files[i].mimetype
           };
+          indice++;
         }
-        console.log(data)
-        resolve(data);
-      });
-    } catch (error) {
-      console.log(error);
-      resolve(undefined);
-    }
-  });
-  if (!result) {
-    response.status(500).json({'message': 'Il y a une erreur', 'code': ''});
-    // return response.send(500, { message: 'not ok' });
+      }
+      console.log(data);
+      response.status(200).json({'status':true,'message': 'Upload fichier avec succès', 'code': nameFinal});
+      return;
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({'status':false,'message': 'Il y a une erreur', 'code': ''});
     return;
   }
-  // return response.send(200, { message: 'ok' });
-  response.status(200).json({'message': 'Upload fichier avec succès', 'code': 'qsdq'});
 });
-
-
-
-
-
-
-
-
-
-
 module.exports = router;

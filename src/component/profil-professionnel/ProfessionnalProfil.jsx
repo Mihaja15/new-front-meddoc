@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../centre/DetailCentre.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faInfo, faCompass, faBusinessTime, faAddressCard, faChevronRight, faCalendarCheck, faCoins, faGraduationCap, faLevelUpAlt, faLanguage, faCreditCard, faLink, faEnvelope, faPhone, faPhoneAlt, faExclamationTriangle, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faInfo, faCompass, faBusinessTime, faAddressCard, faChevronRight, faCalendarCheck, faCoins, faGraduationCap, faLevelUpAlt, faLanguage, faCreditCard, faLink, faEnvelope, faPhoneAlt} from '@fortawesome/free-solid-svg-icons';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -44,7 +44,7 @@ class ProfessionnalProfil extends Component{
     }
     componentDidMount(){
         const pathValue=window.location.pathname.split('/');
-        if(pathValue.length==4){
+        if(pathValue.length===4){
             const url='/professionnel/'+decodeURI(pathValue[1]).replace('-',' ')+'/'+decodeURI(pathValue[2]).replace('-',' ')+'/'+decodeURI(pathValue[3]).replace('-',' ');
             fetchGet(url).then(data=>{
                 if(utile.hasValue(data)){
@@ -366,53 +366,72 @@ class ProfessionnalProfil extends Component{
                                     <h2><th className='icon-place'><FontAwesomeIcon icon={faAddressCard}/></th> <th>Contacts</th></h2>
                                     <table>
                                         <tbody>
-                                        {
+                                        <tr style={{display:'flex',justifyContent:'center'}}>
+                                                    {
                                             this.state.listContact.map((contact,i)=>{
                                                 return(
-                                                    <tr key={i}>
-                                                        <td>
-                                                            {contact.typeContact.libelle==='LinkedIn'?
-                                                            <a href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
-                                                                <svg className="fab" xmlns="http://www.w3.org/2000/svg" fill="#0E76A8" width="20" height="20" viewBox="0 0 24 24">
-                                                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                                                                </svg>
-                                                                {" "+contact.valeurContact}
-                                                            </a>
-                                                            :contact.typeContact.libelle==='Twitter'?
-                                                            <a type="button" href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="#00ACEE" width="20" height="20" viewBox="0 0 24 24">
-                                                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                                                                </svg>
-                                                                {" "+contact.valeurContact}
-                                                            </a>
-                                                            :contact.typeContact.libelle==='Facebook'?
-                                                            <a type="button" href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
-                                                                <svg fill="#3b5998" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 32" width="20" height="20">
-                                                                    <path d="M 19.253906 2 C 15.311906 2 13 4.0821719 13 8.8261719 L 13 13 L 8 13 L 8 18 L 13 18 L 13 30 L 18 30 L 18 18 L 22 18 L 23 13 L 18 13 L 18 9.671875 C 18 7.884875 18.582766 7 20.259766 7 L 23 7 L 23 2.2050781 C 22.526 2.1410781 21.144906 2 19.253906 2 z"/>
-                                                                </svg>
-                                                                {" "+contact.valeurContact}
-                                                            </a>
-                                                            :contact.typeContact.libelle==='Site web'?
-                                                            <a type="button" href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
-                                                                <FontAwesomeIcon icon={faLink}/>
-                                                                {" "+contact.valeurContact}
-                                                            </a>
-                                                            :contact.typeContact.libelle==='E-mail'?
-                                                            <a type="button" className="btn-floating btn-tw" href={"mailto:"+contact.valeurContact}>&nbsp;
-                                                                <FontAwesomeIcon icon={faEnvelope}/>
-                                                                {" "+contact.valeurContact}
-                                                            </a>
-                                                            :contact.typeContact.libelle==='Téléphone'?
-                                                            <a type="button" className="btn-floating btn-tw" href={"tel:"+contact.valeurContact}>&nbsp;
-                                                                <FontAwesomeIcon icon={faPhoneAlt}/>
-                                                                {" "+contact.valeurContact}
-                                                            </a>
-                                                            :contact.valeurContact}
-                                                        </td>
-                                                    </tr>
+                                                    
+                                                    <td key={i}>
+                                                        {contact.typeContact.libelle==='E-mail'?
+                                                        <a type="button" className="btn-floating btn-tw" href={"mailto:"+contact.valeurContact}>&nbsp;
+                                                            <FontAwesomeIcon icon={faEnvelope}/>
+                                                            {" "+contact.valeurContact}
+                                                        </a>
+                                                        :contact.typeContact.libelle==='Téléphone'?
+                                                        <a type="button" className="btn-floating btn-tw" href={"tel:"+contact.valeurContact}>&nbsp;
+                                                            <FontAwesomeIcon icon={faPhoneAlt}/>
+                                                            {" "+contact.valeurContact}
+                                                        </a>
+                                                        :null}
+                                                    </td>
                                                 )
                                             })
                                         }
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="col-md-12">
+                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faAddressCard}/></th> <th>Site web et réseaux sociaux</th></h2>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                        {
+                                            this.state.listContact.map((contact,i)=>{
+                                                return(
+                                                    <td key={i}>
+                                                        {contact.typeContact.libelle==='LinkedIn'?
+                                                        <a href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
+                                                            <svg className="fab" xmlns="http://www.w3.org/2000/svg" fill="#0E76A8" width="20" height="20" viewBox="0 0 24 24">
+                                                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                                            </svg>
+                                                            {/* {" "+contact.valeurContact} */}
+                                                        </a>
+                                                        :contact.typeContact.libelle==='Twitter'?
+                                                        <a type="button" href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="#00ACEE" width="20" height="20" viewBox="0 0 24 24">
+                                                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                                            </svg>
+                                                            {/* {" "+contact.valeurContact} */}
+                                                        </a>
+                                                        :contact.typeContact.libelle==='Facebook'?
+                                                        <a type="button" href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
+                                                            <svg fill="#3b5998" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 32" width="20" height="20">
+                                                                <path d="M 19.253906 2 C 15.311906 2 13 4.0821719 13 8.8261719 L 13 13 L 8 13 L 8 18 L 13 18 L 13 30 L 18 30 L 18 18 L 22 18 L 23 13 L 18 13 L 18 9.671875 C 18 7.884875 18.582766 7 20.259766 7 L 23 7 L 23 2.2050781 C 22.526 2.1410781 21.144906 2 19.253906 2 z"/>
+                                                            </svg>
+                                                            {/* {" "+contact.valeurContact} */}
+                                                        </a>
+                                                        :contact.typeContact.libelle==='Site web'?
+                                                        <a type="button" href="#!" onClick={()=> window.open(contact.valeurContact, "_blank")} className="btn-floating btn-tw">
+                                                            <FontAwesomeIcon icon={faLink}/>
+                                                            {/* {" "+contact.valeurContact} */}
+                                                        </a>
+                                                        :null}
+                                                    </td>
+                                                )
+                                            })
+                                        }
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>

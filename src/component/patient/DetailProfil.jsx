@@ -1,6 +1,6 @@
 import React from 'react';
 import './DetailProfil.css';
-import {fetchGet, fetchPost} from '../../services/global.service';
+import {fetchGet} from '../../services/global.service';
 import { utile } from '../../services/utile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -59,10 +59,10 @@ export default class DetailProfil extends React.Component{
     componentDidMount(){
         if(this.props.dataUser!==null && this.props.dataUser!==undefined){
             console.log(this.props.dataUser);
-            const contact = this.props.dataUser.contact;
-            const ids = this.props.dataUser.identifiant;
-            var mailValue = "";
-            var phoneValue = "";
+            // const contact = this.props.dataUser.contact;
+            // const ids = this.props.dataUser.identifiant;
+            // var mailValue = "";
+            // var phoneValue = "";
             // for(let i = 0; i < contact.length; i++){
             //     for(let j = 0; j < ids.length; j++){
             //         if(ids[j].identifiant===contact[i].contact){

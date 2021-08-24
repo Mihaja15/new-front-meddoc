@@ -1,21 +1,21 @@
 import React from 'react';
-import { fetchGet, fetchGetHandler, fetchPostHeader } from '../../services/global.service';
+import { fetchGetHandler, fetchPostHeader } from '../../services/global.service';
 import { utile } from '../../services/utile';
 import './Consultation.css';
 import Select from 'react-select';
-import { convertFromRaw } from 'draft-js';
+// import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faCheck, faPlus, faPills, faBan } from '@fortawesome/free-solid-svg-icons';
 import { userSession } from '../../services/userSession';
 
-const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+// const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
 export default class Consultation extends React.Component{
     constructor(props){
         super();
-        const contentState = convertFromRaw(content);
+        // const contentState = convertFromRaw(content);
         this.state={
             idRdv : 0,
             rdv : null,
@@ -42,7 +42,6 @@ export default class Consultation extends React.Component{
             maladies : [],
             medicaments : [],
             prochainRdv:'',
-            rdv:'',
             diag:'',
             temperature:0,
             poids:0,

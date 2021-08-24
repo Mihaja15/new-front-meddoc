@@ -1,6 +1,6 @@
 import React from 'react';
 import Calendrier from './Calendrier';
-import { fetchGet, fetchGetHandler } from '../../services/global.service';
+import { fetchGetHandler } from '../../services/global.service';
 import './ProfilStaff.css';
 import SuiviMedical from '../suivi-medicals/SuiviMedical';
 import { utile } from '../../services/utile';

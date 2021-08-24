@@ -1,5 +1,5 @@
 .upload-file-container{
-    padding: 10vh;
+    padding: 5vh;
     width: 100%;
 }
 .preview-upload{
@@ -10,7 +10,7 @@
 }
 .file-content{
     background-color: #f1f1f1;
-    margin-bottom: 15vh;
+    /* margin-bottom: 15vh; */
     padding: 5vh;
 }
 .single-file{

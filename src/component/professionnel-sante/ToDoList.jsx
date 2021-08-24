@@ -1,4 +1,4 @@
-import { faCheckCircle, faCross, faExclamationTriangle, faLock, faLockOpen, faPlusCircle, faSave, faTimes, faTimesCircle, faTrash, faTrashAlt, faUnlock } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faExclamationTriangle, faLock, faLockOpen, faPlusCircle, faSave, faTimesCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { fetchGetHandler, fetchPostHeader } from '../../services/global.service';
@@ -114,8 +114,8 @@ export default class ToDoList extends React.Component{
     render(){
         return(
             <div className="to-do-list-container" hidden={this.props.show}>
-                <a href="#" className="add-to-do-list" onClick={()=>this.addToDo()}><FontAwesomeIcon icon={faPlusCircle}/> Ajouter</a>
-                <a href="#" className="close-to-do-list" onClick={()=>this.props.optionShow()}><FontAwesomeIcon icon={faTimesCircle}/> Fermer</a>
+                <a href="#add" className="add-to-do-list" onClick={()=>this.addToDo()}><FontAwesomeIcon icon={faPlusCircle}/> Ajouter</a>
+                <a href="#clos" className="close-to-do-list" onClick={()=>this.props.optionShow()}><FontAwesomeIcon icon={faTimesCircle}/> Fermer</a>
                 <div className="row col-md-12">
                     {
                         this.state.listToDo.map((one,i)=>{
@@ -123,9 +123,9 @@ export default class ToDoList extends React.Component{
                                 <div className="single-to-do-list col-md-4 row" key={i}>
                                     <div className="header-to-do-list col-md-12">
                                         <FontAwesomeIcon style={{color:one.saved||utile.noValue(one.saved)?"green":"red"}} icon={one.saved||utile.noValue(one.saved)?faCheckCircle:faExclamationTriangle}/>
-                                        <a href="#" className="save-to-do-list" onClick={()=>this.saveToDo(i)}><FontAwesomeIcon icon={faSave}/></a>
-                                        <a href="#" className="lock-to-do-list" onClick={()=>this.changeToDoLocked(i)}><FontAwesomeIcon icon={one.locked?faLock:faLockOpen}/></a>
-                                        <a href="#" className="delete-to-do-list" onClick={()=>this.removeToDo(i)}><FontAwesomeIcon icon={faTrashAlt}/></a>
+                                        <a href="#save" className="save-to-do-list" onClick={()=>this.saveToDo(i)}><FontAwesomeIcon icon={faSave}/></a>
+                                        <a href="#lock" className="lock-to-do-list" onClick={()=>this.changeToDoLocked(i)}><FontAwesomeIcon icon={one.locked?faLock:faLockOpen}/></a>
+                                        <a href="#delete" className="delete-to-do-list" onClick={()=>this.removeToDo(i)}><FontAwesomeIcon icon={faTrashAlt}/></a>
                                     </div>
                                     <div className="title-to-do-list col-md-12">
                                         <input type="text" name={"titre"+i} value={one.titre} onChange={this.changeToDoTitre.bind(this,i)}/>

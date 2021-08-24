@@ -2,7 +2,7 @@ import React from 'react';
 import { ProgressBar } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import './InscriptionCentre.css';
-import { fetchGet, fetchPost,fetchPostNotLogged,fetchPostV2 } from '../../services/global.service';
+import { fetchGet, fetchPostNotLogged,fetchPostV2, fetchPostV3 } from '../../services/global.service';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
@@ -10,6 +10,7 @@ import { utile } from '../../services/utile';
 import redIcon from '../../assets/icon/marker-icon-2x-red.png';
 import Select from 'react-select';
 import UploadFile from '../dynamics/UploadFile';
+import Toaster from '../alert/Toaster';
 function MyComponent(props) {
 	useMapEvent('click', (e) => {
 		props.dataCenter(e.latlng.lat, e.latlng.lng);
@@ -65,7 +66,9 @@ export default class InscriptionProfessionnel extends React.Component{
             confirmationMdp:'',
             disableButton:false,
             erreurMessage:'',
-            erreurEtat:false
+            erreurEtat:false,
+            ouvrages:[],
+            tags:[]
         }
     }
     getColorPourcentage(pourcentage){
@@ -127,7 +130,7 @@ export default class InscriptionProfessionnel extends React.Component{
 		}
 		return newData;
 	}
-    inscriptionUserMedecin=(event)=>{
+    inscriptionUserMedecin(event){
 		event.preventDefault();
         this.setState({disableButton:true});
         const contacts = this.state.listContact;
@@ -153,7 +156,6 @@ export default class InscriptionProfessionnel extends React.Component{
                 }
             }
         });
-        
         const dataCentre = {
             personne:{
                 nom:this.state.nom,
@@ -163,6 +165,7 @@ export default class InscriptionProfessionnel extends React.Component{
                 dateNaissance:this.state.dateNaissance,
                 lieuNaissance:this.state.lieuNaissance,
                 contact:this.state.listContact,
+                photos:[],
                 adresse:[{
                     informationAdresse:this.state.adresse,
                     informationAcces:this.state.infoAcces,
@@ -197,31 +200,42 @@ export default class InscriptionProfessionnel extends React.Component{
             modePaiement:this.state.paiement,
             fraisConsultation:this.state.fraisConsultation,
             diplomes:this.state.diplomes,
-            experiences:this.state.experiences
+            experiences:this.state.experiences,
+            tags:this.state.tags,
+            ouvrages:this.state.ouvrages
         }
         console.log(dataCentre);
         const data = new FormData(event.target);
         data.set('uuid',utile.generateUUID());
         this.state.selectedFiles.forEach(file=>{
             data.append("filesUpload", file);
-          });
+        });
         if(this.state.selectedFiles.length>0){
-            fetchPostV2('http://localhost:5000/fichier',data).then((res)=>{ 
+            fetchPostV2('http://localhost:5000/fichier',data).then(res=>{
                 if(res.status){
+                    for(let i=0; i <res.code.length;i++){
+                        dataCentre.personne.photos.push({
+                            photo:res.code[i]
+                        })
+                    }
                     fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
                         if(result.statut === 200){
                             this.setState({disableButton:false});
                             window.location.replace('/connexion-centre');
                         }else{
+                            const data = {files:res.code};
+                            fetchPostV3('http://localhost:5000/deleteFichier',data);
                             this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
                         }
                     }).catch(error=>{
                         console.log(error)
                         this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
                     });
+                }else{
                 }
             }).catch(error=>{
                 console.log(error)
+                this.setState({disableButton:false, erreurEtat: true, erreurMessage: 'Problème de serveur'});
             });
         }else{
             fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
@@ -277,6 +291,9 @@ export default class InscriptionProfessionnel extends React.Component{
                 this.setState({ [param]: '' });
         }else
             this.setState({ [param]: e.target.value });
+    }
+    changeShow=(value)=>{
+        this.setState({erreurEtat:value});
     }
     componentDidMount(){
         navigator.geolocation.getCurrentPosition((position) => {
@@ -587,6 +604,54 @@ export default class InscriptionProfessionnel extends React.Component{
             console.log('selectedFiles: '+this.state.selectedFiles);
         });
     }
+    //tags
+    addTag=()=>{
+        const data = this.state.tags;
+        data.push({
+            motCle:''
+        });
+        this.setState({tags: data});
+    }
+    removeTag=(indice)=>{
+        const data = this.state.tags;
+        data.splice(indice, 1);
+        this.setState({tags: data});
+    }
+    changeTagMotCle=(indice, event)=>{
+        const data= this.state.tags;
+        data[indice].motCle= event.target.value;
+		this.setState({tags: data});
+    }
+    //ouvrages
+    addOuvrage=()=>{
+        const data = this.state.ouvrages;
+        data.push({
+            datePublication:'',
+            titre:'',
+            lien:''
+        });
+        this.setState({ouvrages: data});
+    }
+    removeOuvrage=(indice)=>{
+        const data = this.state.ouvrages;
+        data.splice(indice, 1);
+        this.setState({ouvrages: data});
+    }
+    changeOuvrageTitre=(indice, event)=>{
+        const data= this.state.ouvrages;
+        data[indice].titre= event.target.value;
+		this.setState({ouvrages: data});
+    }
+    changeOuvrageLien=(indice, event)=>{
+        const data= this.state.ouvrages;
+        data[indice].lien= event.target.value;
+		this.setState({ouvrages: data});
+    }
+    changeOuvrageDatePublication=(indice, event)=>{
+        const data= this.state.ouvrages;
+        data[indice].datePublication= event.target.value;
+		this.setState({ouvrages: data});
+    }
     render(){
         // let position = [this.state.latitude?this.state.latitude:-18.0, this.state.longitude?this.state.longitude:47.0];
         return(
@@ -599,7 +664,8 @@ export default class InscriptionProfessionnel extends React.Component{
                         </div>
                     </div>
                     <div className="col-md-12" style={{marginTop:'5vh'}}>
-                        <form className="row" onSubmit={this.inscriptionUserMedecin.bind(this)}>
+                        <form className="row" method='POST' onSubmit={this.inscriptionUserMedecin.bind(this)}>
+                        {/* <form className="row" onSubmit={(event)=>this.inscriptionUserMedecin.bind(event)}> */}
                             <div className="col-md-7 col-sm-12">
                                 <div className="form-group row">
                                     <div className="input-group">
@@ -860,13 +926,13 @@ export default class InscriptionProfessionnel extends React.Component{
                                                 </select>
                                                 <input type="text" className="col-md-12" placeholder="Institut de travail" value={exp.nomEntite} onChange={this.changeExperienceNomEntite.bind(this,j)}/>
                                                 <textarea rows="2" className="col-md-12" value={exp.description} onChange={this.changeExperienceDescription.bind(this,j)} placeholder="Description du poste occupé"></textarea>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeExperience(j)}>Supprimer</a>
+                                                <a href="#delete-experience" className="remove-button-contact col-md-12" onClick={()=>this.removeExperience(j)}>Supprimer</a>
                                             </div>)
                                         })}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-12">
-                                    <span className="form-control inscription-label-other col-md-12">Diplôme(s) <a href="#ajout-experience" className="add-button-contact" onClick={()=>this.addDiplome()}>Ajouter</a></span>
+                                    <span className="form-control inscription-label-other col-md-12">Diplôme(s) <a href="#ajout-diplome" className="add-button-contact" onClick={()=>this.addDiplome()}>Ajouter</a></span>
                                     <div className = "col-md-12 contact-group">
                                         {this.state.diplomes.map((diplome,j)=>{
                                             return (
@@ -879,13 +945,13 @@ export default class InscriptionProfessionnel extends React.Component{
                                                 </select>
                                                 <input type="text" className="col-md-12" placeholder="Titre du diplôme" value={diplome.libelleDiplome} onChange={this.changeDiplomeLibelleDiplome.bind(this,j)}/>
                                                 <textarea rows="2" className="col-md-12" value={diplome.description} onChange={this.changeDiplomeDescription.bind(this,j)} placeholder="Description du diplôme"></textarea>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-12" onClick={()=>this.removeDiplome(j)}>Supprimer</a>
+                                                <a href="#delete-diplome" className="remove-button-contact col-md-12" onClick={()=>this.removeDiplome(j)}>Supprimer</a>
                                             </div>)
                                         })}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-12">
-                                    <span className="form-control inscription-label-other col-md-12">Frais de consultation<a href="#ajout-experience" className="add-button-contact" onClick={()=>this.addFrais()}>Ajouter</a></span>
+                                    <span className="form-control inscription-label-other col-md-12">Frais de consultation<a href="#ajout-frais" className="add-button-contact" onClick={()=>this.addFrais()}>Ajouter</a></span>
                                     <div className = "row col-md-12 contact-group">
                                         {this.state.fraisConsultation.map((frais,j)=>{
                                             return (
@@ -896,7 +962,7 @@ export default class InscriptionProfessionnel extends React.Component{
                                                     })}
                                                 </select>
                                                 <input type="number" className="col-md-4" placeholder="Frais de consultation" value={frais.frais} onChange={this.changeFraisValeur.bind(this,j)}/>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeFrais(j)}>Supprimer</a>
+                                                <a href="#delete-frais" className="remove-button-contact col-md-2" onClick={()=>this.removeFrais(j)}>Supprimer</a>
                                             </div>)
                                         })}
                                     </div>
@@ -913,7 +979,34 @@ export default class InscriptionProfessionnel extends React.Component{
                                                     })}
                                                 </select>
                                                 <input type={contact.idTypeContact===4||contact.idTypeContact===5||contact.idTypeContact===6?"url":"text"} className="col-md-6" value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeContact(j)}>Supprimer</a>
+                                                <a href="#delete-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeContact(j)}>Supprimer</a>
+                                            </div>)
+                                        })}
+                                    </div>
+                                </div>
+                                <div className="form-group col-md-12">
+                                    <span className="form-control inscription-label-other col-md-12">Tag(s) <a href="#ajout-tag" className="add-button-contact" onClick={()=>this.addTag()}>Ajouter</a></span>
+                                    <div className = "col-md-12 contact-group">
+                                        {this.state.tags.map((tag,j)=>{
+                                            return (
+                                            <div className="col-md-12 row each-line-experience" key={j}>
+                                                <input type="text" className="col-md-8" placeholder="Mot clé" value={tag.motCle} onChange={this.changeTagMotCle.bind(this,j)}/>
+                                                <a href="#delete-tag" className="remove-button-contact col-md-4" onClick={()=>this.removeTag(j)}>Supprimer</a>
+                                            </div>)
+                                        })}
+                                    </div>
+                                </div>
+                                <div className="form-group col-md-12">
+                                    <span className="form-control inscription-label-other col-md-12">Travaux et/ou publications <a href="#ajout-ouvrages" className="add-button-contact" onClick={()=>this.addOuvrage()}>Ajouter</a></span>
+                                    <div className = "col-md-12 contact-group">
+                                        {this.state.ouvrages.map((ouvrage,j)=>{
+                                            return (
+                                            <div className="col-md-12 row each-line-experience" key={j}>
+                                                <label className="col-md-6">Date de publication</label>
+                                                <input type="date" className="col-md-6" placeholder="Date de publication" value={ouvrage.datePublication} onChange={this.changeOuvrageDatePublication.bind(this,j)}/>
+                                                <input type="text" className="col-md-12" placeholder="Titre" value={ouvrage.titre} onChange={this.changeOuvrageTitre.bind(this,j)}/>
+                                                <input type="url" className="col-md-12" placeholder="Lien vers votre publication" value={ouvrage.lien} onChange={this.changeOuvrageLien.bind(this,j)}/>
+                                                <a href="#delete-ouvrage" className="remove-button-contact col-md-12" onClick={()=>this.removeOuvrage(j)}>Supprimer</a>
                                             </div>)
                                         })}
                                     </div>
@@ -946,10 +1039,11 @@ export default class InscriptionProfessionnel extends React.Component{
                             </div>
                             <div className="form-group col-md-12 row">
                                 <span className="form-control inscription-label-other col-md-12" style={{textAlign:'center'}}>Photos de diplômes ou du cabinet</span>
-                                <div className="col-md-12 emploi-temps-content row"><UploadFile setFiles={this.setPhotos} setSelectedFiles={this.setSelectedPhotos}/></div>
+                                <div className="col-md-12"><UploadFile setFiles={this.setPhotos} setSelectedFiles={this.setSelectedPhotos}/></div>
                             </div>
                             <div className="form-group col-md-12 row">
-                                <div hidden={!this.state.erreurEtat} className="textDePreventionInscriptionMedecin">{this.state.erreurMessage}</div>
+                                {/* <div hidden={!this.state.erreurEtat} className="textDePreventionInscriptionMedecin">{this.state.erreurMessage}</div> */}
+                                {this.state.erreurEtat?<Toaster type={'error'} bodyMsg={this.state.erreurMessage} isShow={this.state.erreurEtat} toggleShow={this.changeShow}/>:''}
                                 <div className="textDePreventionInscriptionMedecin" hidden={this.state.erroruser<=1}>{this.state.errorusersms} <a href="/login-meddoc" hidden={this.state.erroruser!==2}>sinon connectez vous on cliquant ici</a></div>
                                 <div className="boutonConnecterLogin row colDivSupplementaireInscriptionMedecin">
                                     <button className="bouton-solid-reg col-md-6 popup-with-move-anim a1" hidden={this.state.disableButton} id="sonboutonConnecter" type="submit">S'inscrire</button>

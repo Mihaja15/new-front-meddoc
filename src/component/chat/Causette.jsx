@@ -6,7 +6,6 @@ import 'bootstrap/dist/js/bootstrap.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faSearch, faEdit,faInbox} from '@fortawesome/free-solid-svg-icons';
 import { fetchGetHandler } from '../../services/global.service';
-import { authUser } from '../../services/authUser';
 import { utile } from '../../services/utile';
 import urlConf from '../../config';
 import {userSession} from '../../services/userSession';
