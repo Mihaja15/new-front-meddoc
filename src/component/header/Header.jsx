@@ -4,7 +4,7 @@ import logo from '../../assets/logo/logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../../assets/fonts/Font.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faCaretDown, faUserCircle, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCaretDown, faUserCircle, faSignOutAlt, faUser, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Cookies } from 'react-cookie';
 import { instanceOf } from "prop-types";
 import { utile } from '../../services/utile';
@@ -306,9 +306,9 @@ class Header extends React.Component{
                                         <a href="#0"><FontAwesomeIcon style={{fontSize:'25px', color:'#fff',paddingTop : '5%'}} icon={faUserCircle}/>&nbsp;Compte&nbsp;<FontAwesomeIcon style={{fontSize:'15px', color:'#fff'}} icon={faCaretDown}/></a>
                                         <ul className="dropdown-menu-compte" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
                                             {/* <li onClick={()=>window.location.replace('/inscription')}><a href="/inscription">Inscription</a></li> */}
-                                            <li ><a href="/inscription">Inscription</a></li>
+                                            <li><a href="/inscription">Inscription</a></li>
                                             {/* <li onClick={()=>window.location.replace('/connexion')}><a href="/connexion">Connexion</a></li> */}
-                                            <li ><a href="/connexion">Connexion</a></li>
+                                            <li><a href="/connexion">Connexion</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -316,15 +316,22 @@ class Header extends React.Component{
                         }
                     </div>
                     <div className="col-md-8 col-sm-8 col-xs-8 col-8 user-icon-phone">
-                        <a href="#0" className="cold-md-12 bar-menu"><FontAwesomeIcon icon={faBars}/> </a>
-                        <div className="bar-menu-phone">
-                            <ul>
-                                <li>Accueil</li>
-                                <li>Nos services</li>
-                                <li ><a href="/inscription">Inscription</a></li>
-                                <li ><a href="/connexion">Connexion</a></li>
-                            </ul>
-                        </div>
+                        <ul>
+                            <li id="bar-menu">
+                                <a href="#menu" onClick={()=>this.setState({showMenu:!this.state.showMenu})} className="cold-md-12"><FontAwesomeIcon icon={this.state.showMenu?faTimes:faBars}/> </a>
+                                <ul id="bar-menu-phone" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
+                                    <li>Prise de rendez-vous en ligne</li>
+                                    <li>Pharmaclic</li>
+                                    <li>Un professionnel de santé?</li>
+                                    <li>Une pharmacie?</li>
+                                    <li><a href="/inscription">Inscription</a></li>
+                                    <li><a href="/connexion">Connexion</a></li>
+                                                
+                                    {/* <li ><a href="/inscription">Inscription</a></li>
+                                    <li ><a href="/connexion">Connexion</a></li> */}
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 {/* <div className="searchbar-header" style={{display:this.state.way==="sprofil-patient"?"block":"none"}}>

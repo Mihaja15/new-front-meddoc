@@ -3,6 +3,9 @@
 	width: 100%;
 	padding-bottom: 1%;
 	padding-top: 1%;
+	padding-right: 1%;
+	padding-left: 1%;
+	padding: 3%;
 	z-index: 900;
 	color: white;
 	display: block;
@@ -14,10 +17,9 @@
 	margin: 0;
 	padding: 0;
 }
-
 .footer_content_container_fluid_row_col_h5{
 	text-align: left;
-    margin-left: 5%;
+    /* margin-left: 5%; */
     font-weight: bold;
     font-size: 21px;
     margin-bottom: 6%;
@@ -27,7 +29,7 @@
 	margin: 0;
     padding: 0;
     list-style: none;
-    padding-left: 5%;
+    /* padding-left: 5%; */
     font-weight: 200;
     cursor: pointer;
     font-size: 15px;
@@ -39,14 +41,15 @@
 	margin: 0;
     padding: 0;
     list-style: none;
-    padding-left: 5%;
+    /* padding-left: 5%; */
     font-weight: 200;
     cursor: pointer;
 	display: flex;
+	justify-content: center;
 	width: 100%;
 }
 .footer_content_container_fluid_row_col_ul_v2_li{
-	width: 23%;
+	width: 100%;
 }
 .footer_content_container_fluid_row_col_ul_v2_li_svg:hover{
 	width: 32px;
@@ -88,8 +91,13 @@
 	text-align: center;
 }
 .footer_content_container_fluid_ul{
-	display: flex;
+	/* display: flex; */
+	display: inline-flex;
 	width: 100%;
+	padding: 0;
+}
+.footer_content_container_fluid_ul>li{
+	padding: 0;
 }
 .footer_content_container_fluid_ul_li{
 	width: 20%;
@@ -121,7 +129,7 @@
 	}
 	.footer_content_container_fluid_row_col_h5{
 		text-align: center;
-		margin-left: 5%;
+		/* margin-left: 5%; */
 		font-weight: bold;
 		font-size: 21px;
 		margin-bottom: 2%;
@@ -136,17 +144,20 @@
 		margin: 0;
 		padding: 0;
 		list-style: none;
-		padding-left: 5%;
+		/* padding-left: 5%; */
 		font-weight: 200;
 		cursor: pointer;
 		display: flex;
-		width: 50%;
-    	margin-left: 31%;
+		justify-content: center;
+		width: 100%;
+    	/* margin-left: 31%; */
 	}
 	
 	.footer_content_container_fluid_row_col_h5_v3_divinput{
-		width: 50%;
-    	margin-left: 25%;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+    	/* margin-left: 25%; */
 	}
 	.footer_content_container_fluid_row_col_h5_v3_divtext{
 		margin-top: 1%;
