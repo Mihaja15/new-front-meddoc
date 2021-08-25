@@ -343,6 +343,11 @@ li.nav-menu-link:hover{
     color: #1b7895;
     background-color: #fff;
 }
+
+#bar-menu-phone li:hover a{
+    color: #1b7895;
+    text-decoration: none;
+}
 /* #bar-menu-phone li a{
     color: #fff;
     z-index: 999;

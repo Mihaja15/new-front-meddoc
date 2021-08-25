@@ -1,21 +1,21 @@
 .mot_de_passe_oublie_meddoc_container{
-	width: 600px;
+	/* width: 600px; */
     margin: 0 auto;
     margin-top: 6%;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
     padding: 2%;
-    height: 42vh;
+    min-height: 42vh;
     border-radius: 12px;
 }
 .mot_de_passe_oublie_meddoc_container_reinitialisation{
-	width: 600px;
+	/* width: 600px; */
     margin: 0 auto;
     margin-top: 6%;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
     padding: 2%;
-    height: 56vh;
+    min-height: 56vh;
     border-radius: 12px;
 }
 #titleMotDePasseOublie{

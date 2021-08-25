@@ -304,7 +304,7 @@ class Header extends React.Component{
                                 <ul className="account-menu">
                                     <li className="sign-in-link">
                                         <a href="#0"><FontAwesomeIcon style={{fontSize:'25px', color:'#fff',paddingTop : '5%'}} icon={faUserCircle}/>&nbsp;Compte&nbsp;<FontAwesomeIcon style={{fontSize:'15px', color:'#fff'}} icon={faCaretDown}/></a>
-                                        <ul className="dropdown-menu-compte" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
+                                        <ul className="dropdown-menu-compte">
                                             {/* <li onClick={()=>window.location.replace('/inscription')}><a href="/inscription">Inscription</a></li> */}
                                             <li><a href="/inscription">Inscription</a></li>
                                             {/* <li onClick={()=>window.location.replace('/connexion')}><a href="/connexion">Connexion</a></li> */}
@@ -319,7 +319,7 @@ class Header extends React.Component{
                         <ul>
                             <li id="bar-menu">
                                 <a href="#menu" onClick={()=>this.setState({showMenu:!this.state.showMenu})} className="cold-md-12"><FontAwesomeIcon icon={this.state.showMenu?faTimes:faBars}/> </a>
-                                <ul id="bar-menu-phone">
+                                <ul style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null} id="bar-menu-phone">
                                     <li>Prise de rendez-vous en ligne</li>
                                     <li>Pharmaclic</li>
                                     <li>Un professionnel de santé?</li>

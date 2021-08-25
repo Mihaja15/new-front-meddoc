@@ -12,7 +12,7 @@ class MotDePasse extends Component{
     constructor(props){
         super();
         this.state = {
-            etatShow : 2,
+            etatShow : 1,
             identification : {valuesText : '',etat : 1},
             mdp : {valuesText : '',etat : 1},
             confirmer : {valuesText : '',etat : 1},
@@ -129,7 +129,7 @@ class MotDePasse extends Component{
     }
     getDataHtmlNouveauMotDePasse(){
         return (
-            <div className="mot_de_passe_oublie_meddoc_container_reinitialisation">
+            <div className="mot_de_passe_oublie_meddoc_container_reinitialisation col-md-6 col-sm-12">
                 <div className="col-md-12 col-sm-12">
                     <h1 className="titleH1Login"><b>Mot de passe oublié ?</b></h1>
                     <p className="titlePLogin" id="titleMotDePasseOublie">Renseignez votre adresse email et votre numéro d' <br/> identification afin de recevoir les instructions de <br/> réinitialisation de votre mot de passe </p>
