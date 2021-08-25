@@ -188,9 +188,9 @@ class Connexion extends Component{
     render(){
         return (
             <div className="logginAllMeddoc">
-                <div className="logginAllMeddoc_container">
+                <div className="logginAllMeddoc_container col-md-6 col-sm-12">
                     {this.state.toShow===2?<ValidationCompte identification={this.state.identification.valuesText} password={this.state.mdp.valuesText}/>:
-                    <div className="row">
+                    <div className="">
                         <div className="col-md-12 col-sm-12">
                             <h1 className="logginAllMeddoc_container_row_titleH1Login"><b>Connexion</b></h1>
                             <p className="logginAllMeddoc_container_row_titleH1Login_titlePLogin">Pas encore de compte ? <a className="titleALogin" href="/inscription"> Créer mon compte</a></p>

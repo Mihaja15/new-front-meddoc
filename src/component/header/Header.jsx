@@ -319,7 +319,7 @@ class Header extends React.Component{
                         <ul>
                             <li id="bar-menu">
                                 <a href="#menu" onClick={()=>this.setState({showMenu:!this.state.showMenu})} className="cold-md-12"><FontAwesomeIcon icon={this.state.showMenu?faTimes:faBars}/> </a>
-                                <ul id="bar-menu-phone" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
+                                <ul id="bar-menu-phone">
                                     <li>Prise de rendez-vous en ligne</li>
                                     <li>Pharmaclic</li>
                                     <li>Un professionnel de santé?</li>

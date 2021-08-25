@@ -1,5 +1,7 @@
 .logginAllMeddoc{
-	min-height: 100vh;
+	min-height: 50vh;
+	padding: 5%;
+	padding-bottom: 10%;
 	width: 100%;
 	position: relative;
 	margin: 0 auto;
@@ -46,7 +48,7 @@
 	width: 100%;
 	min-height:100vh;
 	text-align: center;
-	padding-top: 5vh;
+	/* padding-top: 5vh; */
 	overflow: hidden;
 	/* padding: 5%; */
 }
@@ -134,7 +136,7 @@
 }
 .motDePasseOublieLogin{
 	text-align: center;
-    padding-top: 4%;
+    /* padding-top: 4%; */
     color: #8895A7;
 	font-weight: bold;
 }
@@ -142,7 +144,7 @@
 	text-decoration: none;
 }
 .boutonConnecterLogin{
-	margin-top: 6%;
+	margin-top: 5%;
     width: 100%;
 }
 .boutonConnecterLogin a{
@@ -193,18 +195,18 @@
     text-align: center;
 }
 .logginAllMeddoc_container{
-	width: 600px;
+	/* width: 600px; */
     margin: 0 auto;
-    margin-top: 6%;
+    /* margin-top: 5%; */
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
     padding: 2%;
-    height: 50vh;
+    min-height: 50vh;
     border-radius: 12px;
 }
 .logginAllMeddoc_container_row_titleH1Login_mot_de_passe_oublie{
 	width: 100%;
-    text-align: right;
+    text-align: center;
 }
 #logginAllMeddoc_container_row_span_spanSonOfChildLoggins{
 	border-top-left-radius: 12px;
