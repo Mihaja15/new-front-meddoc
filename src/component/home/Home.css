@@ -794,14 +794,16 @@ h2.section-titles{
 .service-section-text h2{
     font-size: 29px;
     padding-bottom: 5%;
-    padding-top: 15%;
+    padding-top: 10%;
     color: #FF6C0A;
     font-family: 'MontSerrat',sans-serif;
     font-weight: bold;
     text-align: center;
 }
 .service-section-text p{
-    text-align: center;
+    text-align: justify;
+    line-height: 35px;
+    margin-bottom: 35px;
 }
 .service-section-text a{
     display: block;
