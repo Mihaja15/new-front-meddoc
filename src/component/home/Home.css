@@ -335,6 +335,8 @@ h2.section-titles{
     margin-top: 4%;
     z-index: 50;
     font-weight: 900;
+    padding:0;
+    /* margin-left: -10%; */
 }
 .why-meddoc img{
     width: 200px;
@@ -775,4 +777,61 @@ h2.section-titles{
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
+}
+.services-sections{
+    display: block;
+    margin: 0 auto;
+}
+.section-contents{
+    margin: 0 auto;
+    padding: 2%;
+    width: 100%;
+    height: fit-content;
+}
+.service-section-text{
+    width: 100%;
+}
+.service-section-text h2{
+    font-size: 29px;
+    padding-bottom: 5%;
+    padding-top: 15%;
+    color: #FF6C0A;
+    font-family: 'MontSerrat',sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+.service-section-text p{
+    text-align: center;
+}
+.service-section-text a{
+    display: block;
+    margin: 0 auto; 
+    background-color: #39c3ef;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 800;
+    padding: 5px;
+    text-align: center;
+    border-radius: 17px;
+    font-family: 'MontSerrat',sans-serif;
+    border: 2px solid #39c3ef;
+    width: 40%;
+    transition: ease-in-out 0.2s;
+}
+.service-section-text a:hover{
+    background-color: #fff;
+    color: #39c3ef;
+    border: 2px solid #39c3ef;
+    width: 40%;
+}
+.service-section-img{
+   width: 100%;
+   display: block;
+   margin: 0 auto;
+}
+.service-section-img img{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    object-fit: scale-down;
+}

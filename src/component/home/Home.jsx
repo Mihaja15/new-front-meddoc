@@ -106,39 +106,36 @@ class Home extends React.Component{
                     </div>
                     <div className="col-md-12 back-why-meddoc"></div>
                 </div>
-                <div className="row col-md-12 rowHelperTemporaireAcceuil">
-                    
-                    <div className="col-lg-12 col-sm-12 nos-services"><h2 className="col-md-12 section-titles">Nos services</h2></div>
-
-                    <div className="col-lg-6 col-md-6 col-sm-12 textHelperAcceuil textAuMilieu">
-                        <h2 className="h2m turquoise turquoiseTmp" id="prise-rdv-titre">Prenez rendez-vous avec vos médecins à tout moment</h2>
-                        <div className="textHelperTemporaireAcceuil">
-                        En cabinet ou à domicile, consultez votre docteur, médecin généraliste,
-                        spécialiste ou professionnel paramédical).
-                        Prenez rendez-vous pour faire vos analyses (biologiques…)
-                        et vos radiologies (IRM, scanner, échographie…)</div>
-                        <div className="textHelperTemporaireAcceuil_div_button"><button className="home_container_prise_rdv_btn_button"><a className="home_container_prise_rdv_btn_button_a" href="/recherche-medecin">Prendre rendez-vous</a></button></div>
-                    </div> 
-                    <div className="col-lg-6 col-md-6 col-sm-12 textAuMilieu">
-                        <div className="image-container newInspirationDominiceAcceuille">
-                            <img className="img-fluid newImageInspirationDominiceAcceuille" src={imgrdv} alt="alternative"/>
+                <div className='col-12 services-sections'>
+                    <h2 className="col-12 section-titles">Nos services</h2>
+                    <div className='col-12 row section-contents'>
+                        <div className="col-lg-6 col-md-6 col-sm-12 service-section-text">
+                            <h2 className="">Prenez rendez-vous avec vos médecins à tout moment</h2>
+                            <p className="">
+                                En cabinet ou à domicile, consultez votre docteur, médecin généraliste,
+                                spécialiste ou professionnel paramédical).
+                                Prenez rendez-vous pour faire vos analyses (biologiques…)
+                                et vos radiologies (IRM, scanner, échographie…)
+                            </p>
+                            <a className="" href="/recherche-medecin">Prendre rendez-vous</a>
+                        </div> 
+                        <div className="col-lg-6 col-md-6 col-sm-12 service-section-img">
+                            <img className="" src={imgrdv} alt="meddoc illustration"/>
                         </div>
                     </div>
-                </div>
-                <div className="row col-md-12 rowHelperTemporaireAcceuil_v2">
-                    <div className="col-lg-6 col-sm-12">
-                        <div className="image-container newInspirationDominiceAcceuille">
-                            <img className="img-fluid newImageInspirationDominiceAcceuille newImageInspirationDominiceAcceuille_v2" src={pharmatie} alt="alternative"/>
+                    <div className='col-12 row section-contents'>
+                        <div className="col-lg-6 col-md-6 col-sm-12 service-section-img">
+                            <img className="" src={pharmatie} alt="pharmaclic illustration"/>
                         </div>
-                    </div>
-                    <div className="col-lg-6 col-sm-12 textAuMilieu">
-                        <h2 className="h2m turquoise turquoiseTmp" id="prise-rdv-titre">PHARMACLIC, la parapharmacie en ligne</h2>
-                        <div className="textHelperTemporaireAcceuil">
-                            Découvrez tous les produits de paraharmacie, au meilleur prix dans les pharmacies à proximité dans toutes les catégories: soins du visage,
-                            bébé, enfants et maternité, soins du corps, bouche et dents, matériel médical,
-                            cheveux, santé, sexualité....
+                        <div className="col-lg-6 col-md-6 col-sm-12 service-section-text">
+                            <h2 className="">PHARMACLIC, la parapharmacie en ligne</h2>
+                            <p className="">
+                                Découvrez tous les produits de paraharmacie, au meilleur prix dans les pharmacies à proximité dans toutes les catégories: soins du visage,
+                                bébé, enfants et maternité, soins du corps, bouche et dents, matériel médical,
+                                cheveux, santé, sexualité....
+                            </p>
+                            <a className="" href="/inscription-patient">Découvrez nos produits</a>
                         </div>
-                        <div className="textHelperTemporaireAcceuil_div_button"><button className="home_container_prise_rdv_btn_button"><a className="home_container_prise_rdv_btn_button_a" href="/inscription-patient">Découvrez nos produits</a></button></div>
                     </div>
                 </div>
                 <div className="col-md-12">
