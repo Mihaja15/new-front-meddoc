@@ -30,7 +30,7 @@
     /* padding: 50px; */
     position: relative;
     width: 100%;
-    min-height: 90vh;
+    min-height: 85vh;
     /* margin-top: 2%; */
     display: block;
     border-bottom-left-radius: 40%;
@@ -149,12 +149,17 @@
         display: none;
     }
     .home_container_search_bar_ul_li_v1_input{
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
+        /* border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px; */
+        border-radius: 10px;
+    }
+    .home_container_search_bar_ul_li_v2_input{
+        border-radius: 10px;
     }
     .home_container_search_bar_ul_li_v3_button{
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
+        /* border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px; */
+        border-radius: 10px;
     }
 }
 .banner-top{
@@ -389,6 +394,7 @@ h2.section-titles{
 #prise-rdv-titre{
     font-size: 29px;
     padding-bottom: 5%;
+    padding-top: 15%;
     line-height: 100%;
     color: #FF6C0A;
     font-family: 'MontSerrat',sans-serif;
@@ -421,14 +427,17 @@ h2.section-titles{
     font-weight: 700;
 }
 .rowHelperTemporaireAcceuil{
+    display: flex;
+    justify-content: center;
 	margin-top: 0;
-	padding-left: 5%;
-	padding-right: 5%;
+	padding-left: 10%;
+	/* padding-right: 5%; */
 }
 .rowHelperTemporaireAcceuil_v2{
-	margin-top: 3%;
-	padding-left: 5%;
-	padding-right: 5%;
+    display: flex;
+    justify-content: center;
+	margin-top: 0;
+	padding-left: 10%;
 }
 .finHelperTemporaireAcceuil{
 	margin-bottom: 10%;
@@ -437,9 +446,8 @@ h2.section-titles{
     display: block;
     margin: 0 auto;
     height: fit-content;
-
-    /* padding-bottom: 10%; */
-    margin-top: 5%;
+    /* padding-top: 10%; */
+    /* margin-top: 5%; */
 }
 .home_container_prise_rdv_btn_button{
     background-color: #39c3ef;
@@ -468,6 +476,8 @@ h2.section-titles{
     color: white;
 }
 .nos-services{
+    display: block;
+    text-align: center;
     margin: 0 auto;
     margin-top: 0;
     /* margin-bottom: 7vh; */

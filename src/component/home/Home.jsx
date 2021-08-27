@@ -110,7 +110,7 @@ class Home extends React.Component{
                     
                     <div className="col-lg-12 col-sm-12 nos-services"><h2 className="col-md-12 section-titles">Nos services</h2></div>
 
-                    <div className="col-lg-6 col-sm-12 textHelperAcceuil textAuMilieu">
+                    <div className="col-lg-6 col-md-6 col-sm-12 textHelperAcceuil textAuMilieu">
                         <h2 className="h2m turquoise turquoiseTmp" id="prise-rdv-titre">Prenez rendez-vous avec vos médecins à tout moment</h2>
                         <div className="textHelperTemporaireAcceuil">
                         En cabinet ou à domicile, consultez votre docteur, médecin généraliste,
@@ -119,7 +119,7 @@ class Home extends React.Component{
                         et vos radiologies (IRM, scanner, échographie…)</div>
                         <div className="textHelperTemporaireAcceuil_div_button"><button className="home_container_prise_rdv_btn_button"><a className="home_container_prise_rdv_btn_button_a" href="/recherche-medecin">Prendre rendez-vous</a></button></div>
                     </div> 
-                    <div className="col-lg-6 col-sm-12">
+                    <div className="col-lg-6 col-md-6 col-sm-12 textAuMilieu">
                         <div className="image-container newInspirationDominiceAcceuille">
                             <img className="img-fluid newImageInspirationDominiceAcceuille" src={imgrdv} alt="alternative"/>
                         </div>
