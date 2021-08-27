@@ -45,7 +45,8 @@ class ProfessionnalProfil extends Component{
     componentDidMount(){
         const pathValue=window.location.pathname.split('/');
         if(pathValue.length===4){
-            const url='/professionnel/'+decodeURI(pathValue[1]).replace('-',' ')+'/'+decodeURI(pathValue[2]).replace('-',' ')+'/'+decodeURI(pathValue[3]).replace('-',' ');
+            const url='/professionnel/'+decodeURI(pathValue[1]).replaceAll('_',' ')+'/'+decodeURI(pathValue[2]).replaceAll('_',' ')+'/'+decodeURI(pathValue[3]).replaceAll('_',' ');
+            console.log(url)
             fetchGet(url).then(data=>{
                 if(utile.hasValue(data)){
                     console.log(data);
@@ -246,7 +247,7 @@ class ProfessionnalProfil extends Component{
                         <div className="col-md-12 medecin-top-container">
                             <div className="col-md-12 banner-background"></div>
                             <div className="col-md-12 banner-img">
-                                {/* <button onClick={()=>this.props.setStateShow(1)}><FontAwesomeIcon icon={faChevronLeft}/></button> */}
+                                <button onClick={()=>window.history.back()}><FontAwesomeIcon icon={faChevronLeft}/></button>
                                 {/* <img src={'/uploads/profile.jpg'} alt={(utile.hasValue(this.state.proData)?this.state.proData.personne.user.pseudo:'')}/> */}
                                 <h1>{(utile.hasValue(this.state.proData)?this.state.proData.personne.user.pseudo:'')}</h1>
                             </div>

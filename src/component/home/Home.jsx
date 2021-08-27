@@ -48,22 +48,22 @@ class Home extends React.Component{
                     <div className="col-md-12 overlay row home_container_title">
                         <div className="col-md-12 home-text">
                             <div className="search-bar">
-                                <h1>Prenez rendez-vous <br/>avec <b>un médecin</b> le plus<br/> tôt et le plus près de chez vous!</h1>
-                                <ul className="home_container_search_bar_ul">
-                                    <li className="home_container_search_bar_ul_li_v1"><input type="text" className="home_container_search_bar_ul_li_v1_input" value={this.state.textFind} placeholder="Spécialité, médecin, établissement ..." onChange={this.handleChange.bind(this,"textFind")}/></li>
-                                    <li className="home_container_search_bar_ul_li_v2"><input type="text" className="home_container_search_bar_ul_li_v2_input" value={this.state.textFind} placeholder="Où ?" onChange={this.handleChange.bind(this,"textFind")}/></li>
-                                    <li className="home_container_search_bar_ul_li_v3"><button type="submit" className="home_container_search_bar_ul_li_v3_button"><FontAwesomeIcon icon={faSearch} onClick={()=>{window.location.pathname='/recherche-centre/'+this.state.textFind+'/0'}}/></button></li>
+                                <h1>Prenez rendez-vous <br/>avec <b>un médecin</b> proche de chez vous!</h1>
+                                <ul className="home_container_search_bar_ul col-md-12 row">
+                                    <li className="home_container_search_bar_ul_li_v1 col-md-6 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v1_input" value={this.state.textFind} placeholder="Spécialité, médecin, établissement ..." onChange={this.handleChange.bind(this,"textFind")}/></li>
+                                    <li className="home_container_search_bar_ul_li_v2 col-md-4 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v2_input" value={this.state.textFind} placeholder="Où ?" onChange={this.handleChange.bind(this,"textFind")}/></li>
+                                    <li className="home_container_search_bar_ul_li_v3 col-md-2 col-sm-12"><button type="submit" className="home_container_search_bar_ul_li_v3_button"><FontAwesomeIcon icon={faSearch} onClick={()=>{window.location.pathname='/recherche-centre/'+this.state.textFind+'/0'}}/></button></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="custom-shape-divider-bottom-1629768645">
+                        <div className="custom-shape-divider-bottom-1629768645">
                             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
                             </svg>
                         </div>
                     </div>
                     
-                    <div className="col-md-12 back-overlay"></div>
+                    {/* <div className="col-md-12 back-overlay"></div> */}
                     {/* <div className="col-md-12" id="pulsing">
                         <div className="col-md-12 heart-oscil">
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="750px" height="150px" viewBox="0 0 150 73" enableBackground="new 0 0 150 73" xmlSpace="preserve">
@@ -111,7 +111,7 @@ class Home extends React.Component{
                     <div className="col-lg-12 col-sm-12 nos-services"><h2 className="col-md-12 section-titles">Nos services</h2></div>
 
                     <div className="col-lg-6 col-sm-12 textHelperAcceuil textAuMilieu">
-                        <h2 className="h2m turquoise turquoiseTmp" id="prise-rdv-titre">Prenez rendez-vous avec vos professionnels de santé à tout moment</h2>
+                        <h2 className="h2m turquoise turquoiseTmp" id="prise-rdv-titre">Prenez rendez-vous avec vos médecins à tout moment</h2>
                         <div className="textHelperTemporaireAcceuil">
                         En cabinet ou à domicile, consultez votre docteur, médecin généraliste,
                         spécialiste ou professionnel paramédical).
@@ -132,13 +132,13 @@ class Home extends React.Component{
                         </div>
                     </div>
                     <div className="col-lg-6 col-sm-12 textAuMilieu">
-                        <h2 className="h2m turquoise turquoiseTmp" id="click-collect-titre">PHARMACLIC, la parapharmacie en ligne</h2>
+                        <h2 className="h2m turquoise turquoiseTmp" id="prise-rdv-titre">PHARMACLIC, la parapharmacie en ligne</h2>
                         <div className="textHelperTemporaireAcceuil">
                             Découvrez tous les produits de paraharmacie, au meilleur prix dans les pharmacies à proximité dans toutes les catégories: soins du visage,
                             bébé, enfants et maternité, soins du corps, bouche et dents, matériel médical,
                             cheveux, santé, sexualité....
                         </div>
-                        <div className="textHelperTemporaireAcceuil_div_button"><button className="home_container_prise_rdv_btn_button"><a className="home_container_prise_rdv_btn_button_a" href="/inscription-patient">Faites vos achats</a></button></div>
+                        <div className="textHelperTemporaireAcceuil_div_button"><button className="home_container_prise_rdv_btn_button"><a className="home_container_prise_rdv_btn_button_a" href="/inscription-patient">Découvrez nos produits</a></button></div>
                     </div>
                 </div>
                 <div className="col-md-12">

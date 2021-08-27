@@ -386,6 +386,10 @@
     color: #2e3860;
     margin-top: -5px;
     width: 200px;
+    outline: none;
+}
+.list-users-discussion input::placeholder{
+    color: #00000075;
 }
 .users-list{
     width: 200px;

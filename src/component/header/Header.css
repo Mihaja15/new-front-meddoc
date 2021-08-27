@@ -126,6 +126,10 @@
 }
 .account-menu .dropdown-menu-compte li a{
     color: #fff;
+    width: 126px!important;
+    height: auto;
+    padding: 15px;
+    /* background-color: #c5305f; */
 }
 .account-menu .dropdown-menu-compte li:hover a{
     color: #39c3ef;
@@ -348,19 +352,11 @@ li.nav-menu-link:hover{
     color: #1b7895;
     text-decoration: none;
 }
-/* #bar-menu-phone li a{
-    color: #fff;
-    z-index: 999;
-} */
 #bar-menu{
-    /* padding-top: 55% !important; */
     color: #fff;
     font-weight: 700;
     font-size: 30px;
-    /* line-height: 20px; */
-    /* align-self: flex-end; */
     vertical-align: middle;
-    /* display: flex; */
 }
 #bar-menu a{
     color: #fff;

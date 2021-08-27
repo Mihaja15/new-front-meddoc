@@ -13,7 +13,6 @@ import Home from './component/home/Home';
 import Inscription from './component/inscription/Inscription';
 import LeftMenu from './component/left/LeftMenu';
 import MotDePasse from './component/motDePasse/MotDePasse';
-import UserProfil from './component/profils/UserProfil';
 import SuiviMedicals from './component/suivi-medicals/SuiviMedical';
 import Vaccin from './component/vaccin/Vaccin';
 import history from './history';
@@ -26,7 +25,9 @@ import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import ProfessionnalProfil from './component/profil-professionnel/ProfessionnalProfil';
 import ProfessionnelSanteDashboard from './component/professionnel-sante/ProfessionnelSanteDashboard';
 import Consultation from './component/consultation/Consultation';
-import UploadFile from './component/dynamics/UploadFile';
+// import UploadFile from './component/dynamics/UploadFile';
+// import Loader from './component/alert/Loader';
+import Error404 from './component/alert/Error404';
 
 class App extends React.Component {
   constructor(props){
@@ -107,11 +108,11 @@ class App extends React.Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" render={() => {return  this.contentShow(<Home/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
-            <Route exact path="/upload-file" render={() => { return this.contentShow(<UploadFile/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
+            <Route exact path="/404" render={() => { return this.contentShow(<Error404/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             {/* <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<Footer/>); }}/> */}
             <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/inscription-professionnel-sante" render={() => {return  this.contentShow(<InscriptionProfessionnel/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
-            <Route exact path="/connexion-centre" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/connexion-professionnel-sante" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/connexion" render={() => {return  this.contentShow(<Connexion cookies={this.props.cookies}/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/suivi-medical" render={() => { return this.contentShowV2(<SuiviMedicals/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShowV2(<Actualites/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
@@ -119,7 +120,7 @@ class App extends React.Component {
             <Route exact path="/mot-de-passe-oublie" render={() => { return this.contentShowV2(<MotDePasse/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route path="/mes-vaccins" render={() => {return  this.contentShowWithLeft(<Vaccin/>,<Header cookies={this.props.cookies}/>,<LeftMenu/>,<Footer/>);}}/>
             <Route path="/recherche" render={() => {return  this.contentShow(<div style={{marginTop:'15vh'}}><Centre dataFind={this.setProps()}/></div>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
-            <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            {/* <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/> */}
             <Route path="/profil-patient" render={() => {return  this.contentShow(<PatientProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             {/* <Route path="/profil-centre" render={() => {return  this.contentShowWithLeft(<Profil/>,<Header cookies={this.props.cookies}/>,<LeftMenu type={0}/>,null);}}/> */}
             <Route path="/profil-centre" render={() => {return  this.contentShow(<Profil/>,<Header cookies={this.props.cookies}/>);}}/>
@@ -128,6 +129,7 @@ class App extends React.Component {
             <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header cookies={this.props.cookies}/>);}}/>
             <Route exact path="/:lieu/:specialite/:professionnel" render={() => {return  this.contentShow(<ProfessionnalProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/consultation/patient/:specialite/:userConsultation/:aaa" render={() => {return  this.contentShow(<Consultation/>,<Header cookies={this.props.cookies}/>);}}/>
+            <Route exact path="*" render={() => {return  this.contentShow(<Error404/>,<Header cookies={this.props.cookies}/>,<Footer/>);}} />
           </Switch>
         </Router>
     );

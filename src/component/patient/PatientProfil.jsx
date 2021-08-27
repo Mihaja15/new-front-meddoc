@@ -12,6 +12,7 @@ import Centre from '../centre/Centre';
 import ListeRdv from '../listeRdvPatient/ListeRdv';
 import DetailProfil from './DetailProfil';
 import { utile } from '../../services/utile';
+import Loader from '../alert/Loader';
 
 const indexLink = ['recherche','compte','rendez-vous','carnet-de-sante','causette','proches','actu','assistance']
 export default class PatientProfil extends React.Component{
@@ -69,12 +70,17 @@ export default class PatientProfil extends React.Component{
     }
     showComponentProfil(valeur){
         if(valeur!==null && valeur!==undefined)
-            // return <ProfilPatient dataUser ={valeur} />
             return <DetailProfil dataUser ={valeur} />
+        else
+            return <div style={{marginTop:'25vh'}}><Loader/></div>
+
+        
     }
     showComponentRdv(valeur){
         if(valeur!==null && valeur!==undefined)
             return <ListeRdv id={valeur.idUser}/>
+        else
+            return <div style={{marginTop:'25vh'}}><Loader/></div>
     }
     render(){
         return(

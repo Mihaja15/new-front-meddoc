@@ -3,6 +3,7 @@ import './SuiviMedicalPatient.css';
 import { Editor } from 'react-draft-wysiwyg';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import im1 from "../../assets/img/im1.png";
+import ComingSoon from '../alert/ComingSoon';
 
 class SuiviMedicalPatient extends Component{
     constructor(props){
@@ -121,7 +122,7 @@ class SuiviMedicalPatient extends Component{
     render(){
         return (
            <div className="div-suivi-medical-patient">
-               <div className="div-suivi-medical-patient-menu">
+               {/* <div className="div-suivi-medical-patient-menu">
                    <ul className="div-suivi-medical-patient-menu-ul">
                        <li><button className="div-suivi-medical-patient-menu-ul-li-button" id={'bouton-menu-smp1'} onClick={()=>{this.setState({etatShow : 1});this.setStyleMenu(1);}}><span className="div-suivi-medical-patient-menu-ul-li-button-label">Données médicales</span></button></li>
                        <li><button className="div-suivi-medical-patient-menu-ul-li-button" id={'bouton-menu-smp2'} onClick={()=>{this.setState({etatShow : 2});this.setStyleMenu(2);}}><span className="div-suivi-medical-patient-menu-ul-li-button-label">Vaccination</span ></button></li>
@@ -129,6 +130,11 @@ class SuiviMedicalPatient extends Component{
                    </ul>
                    <div className="component-suivi-medical-patient">
                         {this.getDataHtmlContenue(this.state.etatShow)}
+                   </div>
+               </div> */}
+               <div className='row'>
+                   <div className='col-12'>
+                       <ComingSoon/>
                    </div>
                </div>
            </div>

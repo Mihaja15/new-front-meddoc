@@ -249,7 +249,13 @@ function getYearFromActual(add){
 }
 function valueToLink(value){
     if(hasValue(value))
-        return value.trim().replace(/\s+/g, '-').toLowerCase();
+        return value.trim().replaceAll(/\s+/g, '_').toLowerCase();
+    else
+        return "";
+}
+function linkToValue(value){
+    if(hasValue(value))
+        return value.trim().replaceAll('_', ' ').toLowerCase();
     else
         return "";
 }
@@ -330,6 +336,7 @@ export const utile = {
     noValue,
     getYearFromActual,
     valueToLink,
+    linkToValue,
     crypteId,
     decrypteId,
     verifString,

@@ -5,6 +5,7 @@ import { faEdit, faEye, faPlusCircle, faTrash } from '@fortawesome/free-solid-sv
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { userSession } from '../../services/userSession';
 import { utile } from '../../services/utile';
+import Loader from '../alert/Loader';
 
 export default class Proche extends React.Component{
     constructor(props){
@@ -38,16 +39,17 @@ export default class Proche extends React.Component{
             district:'',
             indice:null,
             show:false,
-            showD:false
+            showD:false,
+            showResult:false
         }
     }
     componentDidMount(){
         // console.log(this.state.listUser)
-        // this.setState({listUser:})
+        this.setState({showResult:false})
         this.setState({idUser:userSession.get('token')},function(){
             fetchGetHandler('/users/proche/'+this.state.idUser+'/'+this.state.page+'/'+this.state.size).then(data=>{
-                if(data!=null){
-                    this.setState({ list: data });
+                if(utile.hasValue(data)){
+                    this.setState({ list: data , showResult:true});
                     console.log(data)
                 }else{
                     
@@ -263,7 +265,11 @@ export default class Proche extends React.Component{
                                 </div>
                             </div>
                             <div className="list-content col-md-12">
-                                {this.state.list.map((one, i)=>{
+                                {!this.state.showResult?
+                                    <div className="each-line-list col-md-12 row"><Loader/></div>
+                                :(this.state.showResult&&this.state.list.length===0)?
+                                <div className="each-line-list col-md-12 row">Aucun proche</div>
+                                :this.state.list.map((one, i)=>{
                                     return(
                                     <div className="each-line-list row col-md-12" key={i}>
                                         <div className="col-md-4">{one.proche.nom+" "+one.proche.prenoms}</div>

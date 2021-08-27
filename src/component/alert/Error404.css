@@ -1,0 +1,50 @@
+.Error404-container{
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh;
+    /* width: 100vw; */
+    /* height: 85vh; */
+    /* background-color: aqua; */
+}
+.Error404-container>div{
+  padding: 0;
+  position:relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 5vh; */
+}
+.Error404-container img{
+  margin-top: -20vh;
+  padding: 0;
+  width: 90vh;
+  height: 100vh;
+  object-fit:scale-down;
+}
+i.first{
+  font-size: 100px;
+  color: #1b7895;
+  font-weight: 900;
+}
+i.second{
+  font-size: 90px;
+  color: #2b3a3b;
+  font-weight: 900;
+}
+i.third{
+  font-size: 100px;
+  color: #39c3ef;
+  font-weight: 900;
+}
+.error-404-text{
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  /* color: #2b3a3b; */
+  color: #1b7895;
+  z-index: 999;
+}

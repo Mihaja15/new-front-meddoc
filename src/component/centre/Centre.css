@@ -1,6 +1,7 @@
 .search-centre-container{
     width: 100%;
     min-height: 100vh;
+    padding: 5vh;
     padding-bottom: 20vh;
     /* overflow-y: scroll;
     overflow-x: hidden; */
@@ -675,6 +676,7 @@
     font-weight: 600;
     color: #0e1011;
     margin-bottom: 5vh;
+    text-align: center;
 }
 span.initial-centre-icon{
     width:75px;

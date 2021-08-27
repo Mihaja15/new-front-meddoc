@@ -15,6 +15,8 @@ import { fetchGet } from '../../services/global.service';
 import EmploiTemps from './EmploiTemps';
 import DetailCentre from './DetailCentre';
 import Select from 'react-select';
+import Loader from '../alert/Loader';
+import { utile } from '../../services/utile';
 
 export default class Centre extends React.Component{
     constructor(props){
@@ -43,7 +45,7 @@ export default class Centre extends React.Component{
                 return <img src={"/assets/upload/"+photo} alt="image_profile" className="photo-centre-search"/>
             }
         } catch (error) { }
-        return <img src={"/assets/upload/profile-centre.png"} alt="image_profile" className="photo-centre-search"/>
+        return <img src={"/assets/upload/profile-centre.jpg"} alt="image_profile" className="photo-centre-search"/>
     }
     getDataHtmlResultatRecherche(listResultSearch){
         // console.log(listResultSearch)
@@ -61,7 +63,7 @@ export default class Centre extends React.Component{
                                         </div>
                                         <p className="">{data.adresse.informationAdresse}</p>
                                         {/* <a href='#0' onClick={()=>this.setState({professionnelDetail:data,stateShow:2})}>{data.pseudo}</a> */}
-                                        <a href={`/${data.adresse.district.nomDistrict.trim().replace(/\s+/g, '-').toLowerCase()+'/'+data.specialite.trim().replace(/\s+/g, '-').toLowerCase()+'/'+data.pseudo.trim().replace(/\s+/g, '-').toLowerCase()}`}>{data.pseudo}</a>
+                                        <a href={`/${utile.valueToLink(data.adresse.district.nomDistrict.toLowerCase())+'/'+utile.valueToLink(data.specialite.toLowerCase())+'/'+utile.valueToLink(data.pseudo.toLowerCase())}`}>{data.pseudo}</a>
                                         {/* <a href='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}></a> */}
                                         {/* <div className="adresseMedecinRechercheMedecin">{data.medecinData.user.adresse.addrValue}</div> */}
                                         {/* <div className="buttonMedecinRechercheMedecin"><a className=" popup-with-move-anim a1" href="#0" onClick={()=>this.setState({medecinDetail:data.medecinData,stateShow:2,medecinEdt:data.emploiDuTemps})}>Prendre rendez-vous</a></div> */}
@@ -94,7 +96,7 @@ export default class Centre extends React.Component{
                 </>
             )
         }else
-            return <div>Aucun résultat trouvé</div>
+            return <div style={{textAlign:"center", width:"100%"}}>Aucun résultat trouvé</div>
     }//info medecin
     getMap(listResultSearch){
         if(listResultSearch.length>0){
@@ -330,15 +332,15 @@ export default class Centre extends React.Component{
                         </div>
                     </div>
                     <div className="row">
-                        {!this.state.showResult?<div style={{textAlign:"center", width:"100%"}}>Chargement . . .</div>:<>
+                        {!this.state.showResult?<div style={{textAlign:"center", width:"100%"}}><Loader/></div>:<>
                             <div className="col-md-4 col-sm-12 fathermapsRechercheMedecin">
                             {/* style={{position : `${this.state.nav}`,top:`${this.state.tops}`,width:'400px'}} */}
                                 <div hidden={this.state.hiddenMap} className="mapsRechercheMedecin">
                                     {this.getMap(this.state.listResultSearch)}
                                 </div>
                             </div>
-                            <div className="col-md-7 col-sm-12 listeMedecinRechercheMedecin">
-                                <span className="ccol-md-12 text-before-list">Prenez rendez-vous en ligne dans un centre de vaccination partout à Madagascar</span>
+                            <div className="col-md-8 col-sm-12 listeMedecinRechercheMedecin">
+                                <span className="ccol-md-12 text-before-list" hidden={this.state.hiddenMap}>Prenez rendez-vous en ligne avec un médecin partout à Madagascar</span>
                                 {this.getDataHtmlResultatRecherche(this.state.listResultSearch)}
                                 
                             </div>

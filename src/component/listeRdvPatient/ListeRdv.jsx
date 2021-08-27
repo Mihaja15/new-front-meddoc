@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { utile } from '../../services/utile';
 import {  faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import Pagination from "react-js-pagination";
+import Loader from '../alert/Loader';
 
 class ListeRdv extends Component{
     constructor(props){
@@ -22,13 +23,15 @@ class ListeRdv extends Component{
             list:[],
             idEntite:null,
             type:null,
-            listUserName:[]
+            listUserName:[],
+            showResult:false
         }
     }
     inList=(value)=>{
         return this.state.listUserName.find(element => element.indice === value).value;
     }
     handlePageChange=(pageNumber)=> {
+        this.setState({ showResult:false});
         const data= {
             id : this.state.idEntite,
             colonne : this.state.colonne,
@@ -38,24 +41,26 @@ class ListeRdv extends Component{
             ordre : this.state.ordre
         }
         fetchPost('/professionnel/rdv-patient',data).then(data=>{
-            var userName = [];
-            console.log('dataTmp dataTmp :',data);
-            for(let i=0; i <data.content.length; i++){
-                if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
-                    userName.push({
-                        value:data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms,
-                        indice: data.content[i].personnePatient.idUser
-                    })
+            if(utile.hasValue(data.content)){
+                var userName = [];
+                console.log('dataTmp dataTmp :',data);
+                for(let i=0; i <data.content.length; i++){
+                    if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
+                        userName.push({
+                            value:data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms,
+                            indice: data.content[i].personnePatient.idUser
+                        })
+                    }
                 }
+                console.log(userName)
+                // this.setState({ list: data.content ,page : data.number, listUserName: userName});
+                this.setState({ showResult:true, list: data.content ,page : (data.number+1),nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
             }
-            console.log(userName)
-            // this.setState({ list: data.content ,page : data.number, listUserName: userName});
-            this.setState({ list: data.content ,page : (data.number+1),nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
         });
         
     }
     componentDidMount() {
-
+        this.setState({ showResult:false});
         if(this.props.id!== null){
             this.setState({idEntite:this.props.id},function(){
                 const data= {
@@ -67,7 +72,7 @@ class ListeRdv extends Component{
                     ordre : this.state.ordre
                 }
                 fetchPost('/professionnel/rdv-patient',data).then(data=>{
-                    if(data!==null && data!==undefined){
+                    if(utile.hasValue(data.content)){
                         var userName = [];
                         console.log('dataTmp dataTmp :',data);
                         for(let i=0; i <data.content.length; i++){
@@ -79,7 +84,7 @@ class ListeRdv extends Component{
                             }
                         }
                         console.log(userName)
-                        this.setState({ list: data.content ,page : (data.number+1), nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
+                        this.setState({ showResult:true, list: data.content ,page : (data.number+1), nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
                     }
                     
                 });
@@ -88,8 +93,8 @@ class ListeRdv extends Component{
     }
     render(){
         return (
-            <div className="tousRendezVous">
-                <div className="divTableaListeRendezVous">
+            <div className="tousRendezVous col-md-12">
+                <div className="divTableaListeRendezVous col-md-12 row">
                     <div className="full-rdv-container col-md-12 row">
                         <div className="header-rdv-patient col-md-12 row">
                             <span className="col-md-3">Patient</span>
@@ -98,18 +103,22 @@ class ListeRdv extends Component{
                             <span className="col-md-3">Lieu de RDV</span>
                             <span className="col-md-2">Statut</span>
                         </div>
-                        {this.state.list.map((one, i)=>{
-                            return(
-                            <div className="container-rdv-patient col-md-12 row" key={i}>
-                                <span className="col-md-3">{this.inList(one.personnePatient.idUser!==undefined?one.personnePatient.idUser:one.patient)}</span>
-                                <span className="col-md-3">{utile.getDateComplet(one.dateHeureRdv)}</span>
-                                <span className="col-md-1">{utile.dateToHour(one.dateHeureRdv)}</span>
-                                <span className="col-md-3">{utile.hasValue(one.structure)?one.structure.raisonSociale+","+one.structure.adresse[0].addrValue:""}</span>
-                                {one.statut.idStatut===101?
-                                    <span className="rdv-list-statut col-md-2">Déjà fait&nbsp;&nbsp;<FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/></span>
-                                    :<span className="rdv-list-statut col-md-2">A venir&nbsp;&nbsp;<FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/></span>
-                                }
-                            </div>)
+                        {!this.state.showResult?
+                            <div className="container-rdv-patient col-md-12 row"><Loader/></div>
+                            :(this.state.showResult&&this.state.list.length===0)?
+                            <div className="container-rdv-patient col-md-12 row">Aucun rendez-vous</div>
+                            :this.state.list.map((one, i)=>{
+                                return(
+                                <div className="container-rdv-patient col-md-12 row" key={i}>
+                                    <span className="col-md-3">{this.inList(one.personnePatient.idUser!==undefined?one.personnePatient.idUser:one.patient)}</span>
+                                    <span className="col-md-3">{utile.getDateComplet(one.dateHeureRdv)}</span>
+                                    <span className="col-md-1">{utile.dateToHour(one.dateHeureRdv)}</span>
+                                    <span className="col-md-3">{utile.hasValue(one.structure)?one.structure.raisonSociale+","+one.structure.adresse[0].addrValue:""}</span>
+                                    {one.statut.idStatut===101?
+                                        <span className="rdv-list-statut col-md-2">Déjà fait&nbsp;&nbsp;<FontAwesomeIcon style={{color:'#82a64e'}} icon={faCheckCircle}/></span>
+                                        :<span className="rdv-list-statut col-md-2">A venir&nbsp;&nbsp;<FontAwesomeIcon style={{color:'#ffca3a'}} icon={faExclamationCircle}/></span>
+                                    }
+                                </div>)
                         })}
                         <div className="footer-rdv-patient col-md-12">
                             <div className='divPagination'>

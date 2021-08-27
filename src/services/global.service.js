@@ -116,7 +116,7 @@ function handleResponse(response) {
                 if(role==='Patient')
                     window.location.replace('/connexion');
                 else if(role==='Professionnel santé')
-                    window.location.replace('/connexion-centre');
+                    window.location.replace('/connexion-professionnel-sante');
                 // else
                 //     window.location.replace('/');
             }

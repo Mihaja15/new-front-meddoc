@@ -293,7 +293,7 @@ class Causette extends Component{
                                     <div className='col-md-12 row'>
                                         <div className="input-group">
                                             <label className='col-md-4'>Envoyer à:</label>
-                                            <input className='col-md-8' value={this.state.toInput} onChange={this.handleChange.bind(this,'toInput')} onKeyUp={this.searchUserKeyPressed.bind(this)} name='toInput'/>
+                                            <input className='col-md-8' value={this.state.toInput} onChange={this.handleChange.bind(this,'toInput')} placeholder='Rechercher un destinataire' onKeyUp={this.searchUserKeyPressed.bind(this)} name='toInput'/>
                                         </div>
                                         <div className="users-list" style={{display:this.state.listToInput.length!==0?'block':'none'}}>
                                             <ul>

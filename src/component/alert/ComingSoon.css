@@ -1,0 +1,113 @@
+.ComingSoon-container{
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh;
+    /* width: 100vw; */
+    /* height: fit-content; */
+    /* background-color: aqua; */
+}
+.ComingSoon-container>div{
+  position:relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 5vh; */
+}
+.cog-container{
+  display: block;
+  position: relative;
+  overflow:hidden;
+  width: 170px;
+  height: 280px;
+  /* margin-bottom: 5vh;
+  padding-bottom: 5vh; */
+  /* background-color: blueviolet; */
+}
+i svg{
+  /* display: block; */
+  position: absolute;
+}
+i.first svg{
+  top: 0px;
+  left: 0px;
+  color:#1b7895;
+  font-size: 100px;
+  -webkit-animation: barrelRoll 5s infinite linear;
+  animation: barrelRoll 5s infinite linear;
+}
+i.second svg{
+  top: 66px;
+  left: 67px;
+  color: #2b3a3b;
+  font-size: 100px;
+  -webkit-animation: invertBarrelRoll 5s infinite linear;
+  animation: invertBarrelRoll 5s infinite linear;
+}
+i.third svg{
+  top: 132px;
+  left: 1px;
+  color:#39c3ef;
+  font-size: 100px;
+  -webkit-animation: barrelRoll 5s infinite linear;
+  animation: barrelRoll 5s infinite linear;
+}
+@-webkit-keyframes barrelRoll {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes barrelRoll {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes invertBarrelRoll {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(-360deg); }
+}
+@keyframes invertBarrelRoll {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(-360deg); }
+}
+.coming-soon-text{
+  margin-left: 5vh;
+  position: relative;
+  /* overflow-y: hidden;
+  overflow-x: auto; */
+  /* overflow-wrap: break-word; */
+}
+.coming-soon-text p{
+  /* text-align: center; */
+  color: #2b3a3b;
+  font-size: 30px;
+}
+.coming-soon-text span{
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  animation: textHidderH 10s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+  /* animation-delay: 20s; */
+}
+@keyframes textHidderH {
+  0%{
+    transform: translate3D(0,0,0);
+  }
+  100%{
+    transform: translate3D(100%,0,0);
+  }
+}
+@keyframes textHidderV {
+  0%{
+    transform: translate3D(0,0,0);
+  }
+  100%{
+    transform: translate3D(0,100%,0);
+  }
+}
+@media (max-width:576px) {
+  .coming-soon-text span{
+    animation: textHidderV 10s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+  }
+}

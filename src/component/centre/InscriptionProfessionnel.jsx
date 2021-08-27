@@ -221,7 +221,7 @@ export default class InscriptionProfessionnel extends React.Component{
                     fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
                         if(result.statut === 200){
                             this.setState({disableButton:false});
-                            window.location.replace('/connexion-centre');
+                            window.location.replace('/connexion-professionnel-sante');
                         }else{
                             const data = {files:res.code};
                             fetchPostV3('http://localhost:5000/deleteFichier',data);
@@ -241,7 +241,7 @@ export default class InscriptionProfessionnel extends React.Component{
             fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
                 if(result.statut === 200){
                     this.setState({disableButton:false});
-                    window.location.replace('/connexion-centre');
+                    window.location.replace('/connexion-professionnel-sante');
                 }else{
                     this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
                 }

@@ -1,0 +1,102 @@
+
+.Loader-container{
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+}
+.loading {
+    display: block;
+    margin: 0 auto;
+}
+.loading span{
+    color: #c5305f;
+    font-size: 17px;
+    font-weight: 500;
+    margin-left: 13px;
+    margin-right: 11px;
+}
+.loading svg{
+    margin-top: 6px;
+    transform: scale(2);
+}
+.loading svg polyline {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.loading svg polyline#back {
+    stroke: #1b789550;
+}
+.loading svg polyline#front {
+    stroke: #1b7895;
+    stroke-dasharray: 12, 36;
+    stroke-dashoffset: 48;
+    animation: dash 1s linear infinite;
+}
+@-moz-keyframes dash {
+    62.5% {
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+@-webkit-keyframes dash {
+    62.5% {
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+@-o-keyframes dash {
+    62.5% {
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+@keyframes dash {
+  62.5% {
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@-moz-keyframes flash {
+    62.5% {
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+@-webkit-keyframes flash {
+    62.5% {
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+@-o-keyframes flash {
+    62.5% {
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+@keyframes flash {
+    62.5% {
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}

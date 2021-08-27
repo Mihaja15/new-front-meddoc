@@ -11,6 +11,7 @@ import { authUser } from '../../services/authUser';
 import {fetchGet} from '../../services/global.service';
 import { utile } from '../../services/utile';
 import ReactTooltip from 'react-tooltip';
+import ComingSoon from '../alert/ComingSoon';
 
 class CarnetDeSante extends Component{
     constructor(props){
@@ -298,7 +299,7 @@ class CarnetDeSante extends Component{
     render(){
         return (
            <div>
-                <div className="allContentPatient">
+                {/* <div className="allContentPatient">
                     { 
                         (!this.state.newEtat) ? this.getMenuPrincipaleCarnetSante()
                         :(<div>
@@ -313,7 +314,12 @@ class CarnetDeSante extends Component{
                     
                     }
 
-                </div>                            
+                </div>                             */}
+                <div className='row'>
+                   <div className='col-12'>
+                       <ComingSoon/>
+                   </div>
+               </div>
            </div>
         )
     }
