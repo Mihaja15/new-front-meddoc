@@ -1,5 +1,5 @@
 .to-do-list-container{
-    width:87%;
+    width:100%;
     height:100vh;
     /* overflow-y: scroll; */
     background-color: #42424283;
@@ -8,6 +8,8 @@
     /* top: 0; */
     /* bottom:0; */
     position:fixed;
+    display: flex;
+    justify-content: center;
     overflow-y:scroll;
     overflow-x:hidden;
     padding-bottom: 20vh;

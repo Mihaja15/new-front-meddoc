@@ -1,12 +1,7 @@
 .Error404-container{
     position:relative;
-    display: flex;
+    margin: 0 auto;
     justify-content: center;
-    align-items: center;
-    padding: 5vh;
-    /* width: 100vw; */
-    /* height: 85vh; */
-    /* background-color: aqua; */
 }
 .Error404-container>div{
   padding: 0;
@@ -14,31 +9,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 5vh; */
-}
-.Error404-container img{
-  margin-top: -20vh;
-  padding: 0;
-  width: 90vh;
-  height: 100vh;
-  object-fit:scale-down;
-}
-i.first{
-  font-size: 100px;
-  color: #1b7895;
-  font-weight: 900;
-}
-i.second{
-  font-size: 90px;
-  color: #2b3a3b;
-  font-weight: 900;
-}
-i.third{
-  font-size: 100px;
-  color: #39c3ef;
-  font-weight: 900;
+  padding: 5vh;
 }
 .error-404-text{
+  padding: 0;
+  /* color: #2b3a3b; */
+  color: #1b7895;
+  z-index: 999;
+}
+.error-404-text p{
   padding: 0;
   display: flex;
   justify-content: center;
@@ -46,5 +25,33 @@ i.third{
   font-size: 30px;
   /* color: #2b3a3b; */
   color: #1b7895;
+  z-index: 900;
+}
+.error-404-text a{
+  color: #c5305f;
   z-index: 999;
+  text-decoration: none;
+}
+.error-404-text a.error-back{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.error-404-text a.error-home{
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  padding: 0;
+}
+.error-404-img{
+  display: flex;
+  justify-content: center;
+}
+.error-404-img img{
+  margin-top: -20vh;
+  padding: 0;
+  width: 90vh;
+  height: 100vh;
+  object-fit:contain;
 }

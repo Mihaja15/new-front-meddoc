@@ -8,6 +8,7 @@ import {userSession} from '../../services/userSession';
 import { utile } from '../../services/utile';
 import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
 import CaptchaButton from './CaptchaButton';
+import Toaster from '../alert/Toaster';
 
 export default class ConnexionCentre extends React.Component{
     constructor(props){
@@ -81,7 +82,8 @@ export default class ConnexionCentre extends React.Component{
                             response.role);
                         window.location.replace('/profil-centre/1');
                     }else{
-                        throw new Error("Erreur de connexion");
+                        // throw new Error("Erreur de connexion");
+                        this.setState({disableButton:false,error : {message : 'Vous n\'êtes pas autorisés à connecter à ce lien',activation: true}});
                     }
                 }else if(response.statut===201){
                     this.setState({toShow : 2, disableButton:false,error : {message : response.message,activation: true}});
@@ -95,6 +97,9 @@ export default class ConnexionCentre extends React.Component{
                 this.setState({disableButton:false,error : {message : error,activation: true}});
             });
         }
+    }
+    changeShow=(value)=>{
+        this.setState({error : {message : '',activation: value}});
     }
     render(){
         return(
@@ -125,7 +130,8 @@ export default class ConnexionCentre extends React.Component{
                                     {/* <a className="bouton-solid-reg popup-with-move-anim a1" style={{textAlign:'center'}} hidden={this.state.disableButton} id="sonboutonConnecter" href="#0" onClick={this.loginConnexion}>Se connecter</a> */}
                                     <div hidden={!this.state.disableButton} className="login-loader"></div>
                                 </div>
-                                <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div>
+                                {this.state.error.activation?<Toaster type={'error'} bodyMsg={this.state.error.message} isShow={this.state.error.activation} toggleShow={this.changeShow}/>:''}
+                                {/* <div className="textDePreventionInscriptionMedecin" hidden={!this.state.error.activation}>{this.state.error.message} <a onClick={()=>this.openModalValidation()} href="#valider-mon-compte" hidden={!this.state.nonValider}>Valider mon compte</a></div> */}
                             </div>
                         </div>
                     </div>

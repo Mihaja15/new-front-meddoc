@@ -41,7 +41,7 @@ class App extends React.Component {
       <div className="container-fluid" id="root-container">
         <header className="col-md-12">{header}</header>
         <main className="col-md-12">{content}</main>
-        <footer className="col-md-12">{footer}</footer>
+        {footer!==null?<footer className="col-md-12">{footer}</footer>:''}
           <a href="#0" onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
             {/* <i className="lni-chevron-up"></i> */}
             <FontAwesomeIcon icon={faArrowUp}/>

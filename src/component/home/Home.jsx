@@ -16,6 +16,23 @@ import africa from '../../assets/africa.png';
 import ofab from '../../assets/partenaire/ofab.png';
 import usaid from '../../assets/partenaire/shops-plus.png';
 import zafy_tody from '../../assets/partenaire/zafy_tody.png';
+//icon banner
+import iconWhite1 from '../../assets/banner/icon/icon-white-1.png';
+import iconBlue1 from '../../assets/banner/icon/icon-blue-1.png';
+import iconWhite2 from '../../assets/banner/icon/icon-white-2.png';
+import iconBlue2 from '../../assets/banner/icon/icon-blue-2.png';
+import iconWhite3 from '../../assets/banner/icon/icon-white-3.png';
+import iconBlue3 from '../../assets/banner/icon/icon-blue-3.png';
+import iconWhite4 from '../../assets/banner/icon/icon-white-4.png';
+import iconBlue4 from '../../assets/banner/icon/icon-blue-4.png';
+import iconWhite5 from '../../assets/banner/icon/icon-white-5.png';
+import iconBlue5 from '../../assets/banner/icon/icon-blue-5.png';
+import iconWhite6 from '../../assets/banner/icon/icon-white-6.png';
+import iconBlue6 from '../../assets/banner/icon/icon-blue-6.png';
+import iconWhite7 from '../../assets/banner/icon/icon-white-7.png';
+import iconBlue7 from '../../assets/banner/icon/icon-blue-7.png';
+import iconWhite8 from '../../assets/banner/icon/icon-white-8.png';
+import iconBlue8 from '../../assets/banner/icon/icon-blue-8.png';
 
 class Home extends React.Component{
     constructor(props){
@@ -54,6 +71,16 @@ class Home extends React.Component{
                                     <li className="home_container_search_bar_ul_li_v2 col-md-4 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v2_input" value={this.state.textFind} placeholder="Où ?" onChange={this.handleChange.bind(this,"textFind")}/></li>
                                     <li className="home_container_search_bar_ul_li_v3 col-md-2 col-sm-12"><button type="submit" className="home_container_search_bar_ul_li_v3_button"><FontAwesomeIcon icon={faSearch} onClick={()=>{window.location.pathname='/recherche-centre/'+this.state.textFind+'/0'}}/></button></li>
                                 </ul>
+                            </div>
+                            <div className="icons-banner">
+                                <i id='icon1'></i>
+                                <i id='icon2'></i>
+                                <i id='icon3'></i>
+                                <i id='icon4'></i>
+                                <i id='icon5'></i>
+                                <i id='icon6'></i>
+                                <i id='icon7'></i>
+                                <i id='icon8'></i>
                             </div>
                         </div>
                         <div className="custom-shape-divider-bottom-1629768645">
@@ -204,7 +231,7 @@ class Home extends React.Component{
                                         </div>
                                         <div className="team-details">
                                             <div className="team-inner text-center">
-                                                <h5 className="team-title">AFRICA By IncubeMe</h5>
+                                                <h5 className="team-title"><a href="https://africabyincubme.com/" rel="noopener noreferrer" target="_blank">AFRICA By IncubeMe</a></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -216,7 +243,7 @@ class Home extends React.Component{
                                         </div>
                                         <div className="team-details">
                                             <div className="team-inner text-center">
-                                                <h5 className="team-title">Orange Fab Madagascar</h5>
+                                                <h5 className="team-title"><a href="https://orangefab.mg/fr/" rel="noopener noreferrer" target="_blank">Orange Fab Madagascar</a></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -228,7 +255,7 @@ class Home extends React.Component{
                                         </div>
                                         <div className="team-details">
                                             <div className="team-inner text-center">
-                                                <h5 className="team-title">USAID - SHOPS Plus</h5>
+                                                <h5 className="team-title"><a href="https://www.shopsplusproject.org/where-we-work/africa/madagascar" rel="noopener noreferrer" target="_blank">USAID - SHOPS Plus</a></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -240,7 +267,7 @@ class Home extends React.Component{
                                         </div>
                                         <div className="team-details">
                                             <div className="team-inner text-center">
-                                                <h5 className="team-title">Zafy Tody</h5>
+                                                <h5 className="team-title"><a href="https://zafytody.mg/" rel="noopener noreferrer" target="_blank">Zafy Tody</a></h5>
                                             </div>
                                         </div>
                                     </div>
