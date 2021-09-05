@@ -9,7 +9,12 @@
 
     /* position: absolute; */
 
-}.qsn-content>h1{
+}
+.qsn-content{
+    display: flex;
+    justify-content: center;
+}
+.qsn-content>h1{
     display: inline-flex;
     justify-content: center;
 }
@@ -23,10 +28,11 @@
     /* background-color: lightcoral;
     margin-top: 5px; */
     display: flex;
-    justify-content: center;
+    /* justify-content: flex-start; */
     align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-radius: 12px;
 }
 .qsn-content ul{
     padding: 0;
@@ -70,4 +76,7 @@
     max-width: 250px;
     border-radius: 12px;
     background-color: #1b789550;
+}
+.first-paraph,.third-paraph,.fifth-paraph{
+    background-color: #1b789510;
 }

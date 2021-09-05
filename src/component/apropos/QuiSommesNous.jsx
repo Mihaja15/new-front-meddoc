@@ -4,6 +4,8 @@ import meddoc from '../../assets/logo/MEDDOC.png';
 import conviction from '../../assets/img/convictions.jpg';
 import team from '../../assets/img/teams.jpg';
 import value from '../../assets/img/values.jpg';
+import contact from '../../assets/img/contacts.jpg';
+import ContactUs from '../contact-us/ContactUs';
 
 class QuiSommesNous extends React.Component{
     constructor(props){
@@ -93,6 +95,15 @@ class QuiSommesNous extends React.Component{
                                     <br/>Excellence
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                    <div className="col-md-12 row fifth-paraph">
+                        <div className="col-md-8 qsn-text-content">
+                            <h2>Nous contacter</h2>
+                            <ContactUs/>
+                        </div>
+                        <div className="col-md-4 qsn-img-content">
+                            <img src={contact} alt="Notre équipe dévouée"/>
                         </div>
                     </div>
                 </div>
