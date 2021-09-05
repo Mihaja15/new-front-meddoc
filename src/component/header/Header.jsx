@@ -1,5 +1,6 @@
 import React from 'react';
 import './Header.css';
+import {Link} from 'react-router-dom';
 import logo from '../../assets/logo/logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../../assets/fonts/Font.css';
@@ -132,22 +133,6 @@ class Header extends React.Component{
                 )
             }
         }
-        // else if((this.state.type).toLowerCase()==='patient'){
-        //     if(this.state.way!=='profil'){
-        //         return(
-        //             <>
-        //                 <li onClick={()=>{window.location.replace("/profil")}}>Compte</li>
-        //                 <li onClick={()=>{this.logout(); window.location.replace("/connexion")}}>Déconnexion</li>
-        //             </>
-        //         )
-        //     }else{
-        //         return(
-        //             <>
-        //                 <li onClick={()=>{this.logout(); window.location.replace("/connexion")}}>Déconnexion</li>
-        //             </>
-        //         )
-        //     }
-        // }
         else if((this.state.type).toLowerCase()==='professionnel santé'){
             if(this.state.way!=='professionnel'){
                 return(
@@ -204,7 +189,7 @@ class Header extends React.Component{
                 <div className="row">
                     <div className="col-md-4 col-sm-4 col-xs-4 col-4 logo-place">
                         <div className="col-md-12">
-                            <a href="/" className="col-md-8"><img src={logo} alt="logo meddoc"/></a>
+                            <Link to="/" className="col-md-8"><img src={logo} alt="logo meddoc"/></Link>
                             {/* <div className="col-md-12"></div> */}
                         </div>
                     </div>
@@ -215,7 +200,7 @@ class Header extends React.Component{
                                 
                                 <ul className="connected-menu">
                                     <li className="sign-in-link">
-                                        <a href="#0" className="signed-link"><span className='initial-icon'>{this.state.initial}</span>&nbsp;&nbsp;{this.state.pseudo} <FontAwesomeIcon style={{fontSize:'15px'}} icon={faCaretDown}/></a>
+                                        <Link to="#0" className="signed-link"><span className='initial-icon'>{this.state.initial}</span>&nbsp;&nbsp;{this.state.pseudo} <FontAwesomeIcon style={{fontSize:'15px'}} icon={faCaretDown}/></Link>
                                         <ul className="dropdown-menu-compte" style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null}>
                                             {/* <li onClick={()=>window.location.replace('/inscription')}>Inscription</li>
                                             <li onClick={()=>window.location.replace('/connexion')}>Connexion</li> */}
@@ -241,12 +226,12 @@ class Header extends React.Component{
                                 </ul>
                                 <ul className="account-menu">
                                     <li className="sign-in-link">
-                                        <a href="#0"><FontAwesomeIcon style={{fontSize:'25px', color:'#fff',paddingTop : '5%'}} icon={faUserCircle}/>&nbsp;Compte&nbsp;<FontAwesomeIcon style={{fontSize:'15px', color:'#fff'}} icon={faCaretDown}/></a>
+                                        <Link to="#0"><FontAwesomeIcon style={{fontSize:'25px', color:'#fff',paddingTop : '5%'}} icon={faUserCircle}/>&nbsp;Compte&nbsp;<FontAwesomeIcon style={{fontSize:'15px', color:'#fff'}} icon={faCaretDown}/></Link>
                                         <ul className="dropdown-menu-compte">
-                                            {/* <li onClick={()=>window.location.replace('/inscription')}><a href="/inscription">Inscription</a></li> */}
-                                            <li><a href="/inscription">Inscription</a></li>
-                                            {/* <li onClick={()=>window.location.replace('/connexion')}><a href="/connexion">Connexion</a></li> */}
-                                            <li><a href="/connexion">Connexion</a></li>
+                                            {/* <li onClick={()=>window.location.replace('/inscription')}><Link to="/inscription">Inscription</a></li> */}
+                                            <li><Link to="/inscription">Inscription</Link></li>
+                                            {/* <li onClick={()=>window.location.replace('/connexion')}><Link to="/connexion">Connexion</a></li> */}
+                                            <li><Link to="/connexion">Connexion</Link></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -256,17 +241,21 @@ class Header extends React.Component{
                     <div className="col-md-8 col-sm-8 col-xs-8 col-8 user-icon-phone">
                         <ul>
                             <li id="bar-menu">
-                                <a href="#menu" onClick={()=>this.setState({showMenu:!this.state.showMenu})} className="cold-md-12"><FontAwesomeIcon icon={this.state.showMenu?faTimes:faBars}/> </a>
+                                <Link to="#menu" onClick={()=>this.setState({showMenu:!this.state.showMenu})} className="cold-md-12"><FontAwesomeIcon icon={this.state.showMenu?faTimes:faBars}/> </Link>
                                 <ul style={this.state.showMenu?{display:"block",opacity:"1",visibility:"visible",zIndex:"999"}:null} id="bar-menu-phone">
-                                    <li>Prise de rendez-vous en ligne</li>
-                                    <li>Pharmaclic</li>
-                                    <li>Un professionnel de santé?</li>
-                                    <li>Une pharmacie?</li>
-                                    <li><a href="/inscription">Inscription</a></li>
-                                    <li><a href="/connexion">Connexion</a></li>
-                                                
-                                    {/* <li ><a href="/inscription">Inscription</a></li>
-                                    <li ><a href="/connexion">Connexion</a></li> */}
+                                    {!utile.hasValue(this.state.pseudo)?
+                                    <>
+                                        <li>Prise de rendez-vous en ligne</li>
+                                        <li>Pharmaclic</li>
+                                        <li>Un professionnel de santé?</li>
+                                        <li>Une pharmacie?</li>
+                                        <li><Link to="/inscription">Inscription</Link></li>
+                                        <li><Link to="/connexion">Connexion</Link></li>
+                                    </>:<>
+                                        {this.getLink()}
+                                    </> }           
+                                    {/* <li ><Link to="/inscription">Inscription</a></li>
+                                    <li ><Link to="/connexion">Connexion</a></li> */}
                                 </ul>
                             </li>
                         </ul>

@@ -32,13 +32,13 @@ export default class ValidationCompte extends React.Component{
                     password: this.props.password,
                     code : this.state.code1+''+this.state.code2+''+this.state.code3+''+this.state.code4
                 }
-                console.log(dataTmp);
+                //console.log(dataTmp);
                 //this.setState({erreurMessage : "",erreurEtat: false});
                 fetchPostNotLogged('/users/validation-compte-patient',dataTmp).then(response=>{
-                    console.log(response)
+                    //console.log(response)
                     if(response.statut){
                         if(response.statut===200){
-                            console.log(response);
+                            //console.log(response);
                             if(response.role.toLowerCase()==="patient"){
                                 userSession.userLogin(response.data.username,
                                     (response.data.profilPicture!==null&&response.data.profilPicture!==undefined&&response.data.profilPicture!=="")?response.data.profilPicture:"profile.png",

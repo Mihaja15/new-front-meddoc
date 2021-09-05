@@ -39,7 +39,7 @@ class Chat extends Component{
     deconnection () {
         if(stompClient){
             stompClient.disconnect = (callback, headers) => {
-                console.log("deconnecter stomp");
+                //console.log("deconnecter stomp");
                 //stompDisconnect(callback, headers);
                 //SockJS. close();
             }
@@ -86,7 +86,7 @@ class Chat extends Component{
                 etatMessage : 1
             };
             // send public message
-            console.log( 'chatMessage : ' , chatMessage)
+            //console.log( 'chatMessage : ' , chatMessage)
             stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));
             this.setState({text : ''});write = false;this.onWrite(false,this.state.dataUser.idUser,this.state.userDiscusion.user.idUser);
         }else{
@@ -99,16 +99,16 @@ class Chat extends Component{
         if(message !==null && message!==undefined && this.state.dataUser !==null && this.state.dataUser!==undefined){
             if(''+message.idUserSend === ''+this.state.dataUser.idUser || ''+message.idUserReceved === ''+this.state.dataUser.idUser){
                 data.push(message);
-                console.log('---------------------------------------------------------');
-                console.log('tous les messages : ',data);
-                console.log('---------------------------------------------------------');
+                //console.log('---------------------------------------------------------');
+                //console.log('tous les messages : ',data);
+                //console.log('---------------------------------------------------------');
                 this.setState({listMessage : data});
                 /*fetchGet('/discussion/lsitDiscussion/'+authUser.getToken()+'/'+message.idUserSend+'/0').then(data=>{
                     //this.setState({listMessage : data.reverse()});
                     fetchGet('/discussion/nombreDeDiscussion/'+authUser.getToken()+'/'+message.idUserSend).then(dataV2=>{
                         if(utile.parseStringToInt(''+dataV2)>0){
                             this.setState({nombreDeMessage : dataV2-5});
-                            console.log('nombreDeMessage :',dataV2-5)
+                            //console.log('nombreDeMessage :',dataV2-5)
                         }
                     }); 
                 });*/
@@ -145,7 +145,7 @@ class Chat extends Component{
                     list.push(broad);
                 }
                 this.setState({listBroadcast : list});
-                console.log('broadCast : ',list);
+                //console.log('broadCast : ',list);
             }
         }
     }
@@ -189,7 +189,7 @@ class Chat extends Component{
                 }
             }
         }
-        console.log('broadCast : ',list);
+        //console.log('broadCast : ',list);
         return <div></div>
     }
     getUrlPhotos(photo){
@@ -308,7 +308,7 @@ class Chat extends Component{
         let count = this.state.countMessage;count=count+5;
         let nombreDeMessage= this.state.nombreDeMessage-5;
         fetchGet('/discussion/lsitDiscussion/'+authUser.getToken()+'/'+userDiscusion.user.idUser+'/'+count).then(data=>{
-            console.log('listTouslesMessageV2 : ',data); const dataTmp = data.reverse();
+            //console.log('listTouslesMessageV2 : ',data); const dataTmp = data.reverse();
             const list =this.state.listMessage;let size= list.length;
             for(let i = 0; i < size; i++){
                 dataTmp.push(list[i]);
@@ -321,12 +321,12 @@ class Chat extends Component{
     }
     getDataMessageUserAndUserRecevedMessage=(dataReceved)=>{
         fetchGet('/discussion/lsitDiscussion/'+authUser.getToken()+'/'+dataReceved.user.idUser+'/0').then(data=>{
-            console.log('listTouslesMessage : ',data);
+            //console.log('listTouslesMessage : ',data);
             this.setState({userDiscusion : dataReceved,listMessage : data.reverse()});
             fetchGet('/discussion/nombreDeDiscussion/'+authUser.getToken()+'/'+dataReceved.user.idUser).then(dataV2=>{
                 if(utile.parseStringToInt(''+dataV2)>0){
                     this.setState({nombreDeMessage : dataV2-5});
-                    console.log('nombreDeMessage :',dataV2-5);
+                    //console.log('nombreDeMessage :',dataV2-5);
                     if(stompClient && this.state.dataUser!==null && this.state.dataUser!==undefined) {
                         const data = {
                             idUserSender : this.state.dataUser.idUser,
@@ -344,23 +344,23 @@ class Chat extends Component{
         /*fetchGet('/discussion/vueDiscussion/'+authUser.getToken()+'/'+dataReceved.user.idUser).then(data=>{
             if(data.resultat){
                 fetchGet('/discussion/lsitDiscussion/'+authUser.getToken()+'/'+dataReceved.user.idUser+'/0').then(data=>{
-                    console.log('listTouslesMessage : ',data);
+                    //console.log('listTouslesMessage : ',data);
                     this.setState({userDiscusion : dataReceved,listMessage : data.reverse()});
                     fetchGet('/discussion/nombreDeDiscussion/'+authUser.getToken()+'/'+dataReceved.user.idUser).then(dataV2=>{
                         if(utile.parseStringToInt(''+dataV2)>0){
                             this.setState({nombreDeMessage : dataV2-5});
-                            console.log('nombreDeMessage :',dataV2-5)
+                            //console.log('nombreDeMessage :',dataV2-5)
                         }
                     }); 
                 });
             }else{
                 fetchGet('/discussion/lsitDiscussion/'+authUser.getToken()+'/'+dataReceved.user.idUser+'/0').then(data=>{
-                    console.log('listTouslesMessage : ',data);
+                    //console.log('listTouslesMessage : ',data);
                     this.setState({userDiscusion : dataReceved,listMessage : data.reverse()});
                     fetchGet('/discussion/nombreDeDiscussion/'+authUser.getToken()+'/'+dataReceved.user.idUser).then(dataV2=>{
                         if(utile.parseStringToInt(''+dataV2)>0){
                             this.setState({nombreDeMessage : dataV2-5});
-                            console.log('nombreDeMessage :',dataV2-5)
+                            //console.log('nombreDeMessage :',dataV2-5)
                         }
                     }); 
                 });
@@ -370,7 +370,7 @@ class Chat extends Component{
     getAllMedecin(){
         fetchGet('/medecin/allConsultedMedecin/'+authUser.getToken()).then(data=>{
             if(data!=null){
-                console.log('list medecin ',data)
+                //console.log('list medecin ',data)
                 this.setState({ listUserChat: data });
             }
         });
@@ -386,12 +386,12 @@ class Chat extends Component{
     
     componentDidMount(){
         fetchGet('/users/dataUser/'+authUser.getToken()).then(data=>{
-            console.log('type-medecin/list : ',data);
+            //console.log('type-medecin/list : ',data);
             this.setState({ dataUser: data }); 
         });
         this.getAllMedecin();
         this.connect();
-        console.log('props : ', this.props)
+        //console.log('props : ', this.props)
     }
     handleChange = (param, e) => {
         this.setState({ [param]: e.target.value })

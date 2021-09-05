@@ -143,8 +143,8 @@ class Medecin extends Component{
                                         <div className="PresentationProfilMedecinPrendreRdvMedecin" >
                                             <h3 className="titreProfilMedecinPrendreRdvMedecin">Présentation</h3>
                                             <p className= {(this.state.voirPlus)?'textV2PresentationProfilMedecinPrendreRdvMedecin':'textV3PresentationProfilMedecinPrendreRdvMedecin'} >{dataMedecin.medecinData.infoMedecin}</p>
-                                            <div className="divShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlus}><a href="#ee" onClick={()=>this.setState({voirPlus : !this.state.voirPlus})}><FontAwesomeIcon icon={faChevronDown}/></a></div>
-                                            <div className="divShowMoreDesciptionPrendrezRdvMedecin" hidden={!this.state.voirPlus}><a href="#ee" onClick={()=>this.setState({voirPlus : !this.state.voirPlus})}><FontAwesomeIcon icon={faChevronUp}/></a></div>
+                                            <div className="divShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlus}><Link to="#ee" onClick={()=>this.setState({voirPlus : !this.state.voirPlus})}><FontAwesomeIcon icon={faChevronDown}/></a></div>
+                                            <div className="divShowMoreDesciptionPrendrezRdvMedecin" hidden={!this.state.voirPlus}><Link to="#ee" onClick={()=>this.setState({voirPlus : !this.state.voirPlus})}><FontAwesomeIcon icon={faChevronUp}/></a></div>
                                         </div>
                                     ):(<div></div>)
                                 }
@@ -168,8 +168,8 @@ class Medecin extends Component{
                                                 </tbody>                          
                                             </table>
                                             <div className="divNewTextShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlusExp}>Voir tous mes experiences</div>
-                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlusExp}><a href="#ee" onClick={()=>this.setState({voirPlusExp : !this.state.voirPlusExp})}><FontAwesomeIcon icon={faChevronDown}/></a></div>
-                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={!this.state.voirPlusExp}><a href="#ee" onClick={()=>this.setState({voirPlusExp : !this.state.voirPlusExp})}><FontAwesomeIcon icon={faChevronUp}/></a></div>
+                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlusExp}><Link to="#ee" onClick={()=>this.setState({voirPlusExp : !this.state.voirPlusExp})}><FontAwesomeIcon icon={faChevronDown}/></a></div>
+                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={!this.state.voirPlusExp}><Link to="#ee" onClick={()=>this.setState({voirPlusExp : !this.state.voirPlusExp})}><FontAwesomeIcon icon={faChevronUp}/></a></div>
                                         </div>
                                     ):(<div></div>)
                                 }
@@ -192,8 +192,8 @@ class Medecin extends Component{
                                                 </tbody>                          
                                             </table>
                                             <div className="divNewTextShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlusDiplome}>Voir tous mes diplômes</div>
-                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlusDiplome}><a href="#ee" onClick={()=>this.setState({voirPlusDiplome : !this.state.voirPlusDiplome})}><FontAwesomeIcon icon={faChevronDown}/></a></div>
-                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={!this.state.voirPlusDiplome}><a href="#ee" onClick={()=>this.setState({voirPlusDiplome : !this.state.voirPlusDiplome})}><FontAwesomeIcon icon={faChevronUp}/></a></div>
+                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={this.state.voirPlusDiplome}><Link to="#ee" onClick={()=>this.setState({voirPlusDiplome : !this.state.voirPlusDiplome})}><FontAwesomeIcon icon={faChevronDown}/></a></div>
+                                            <div className="divV2ShowMoreDesciptionPrendrezRdvMedecin" hidden={!this.state.voirPlusDiplome}><Link to="#ee" onClick={()=>this.setState({voirPlusDiplome : !this.state.voirPlusDiplome})}><FontAwesomeIcon icon={faChevronUp}/></a></div>
                                         </div>
                                     ):(<div></div>)
                                 }
@@ -221,7 +221,7 @@ class Medecin extends Component{
                                 <div className="col-md-6 col-sm-12 mapPrendreRdvMedecin">
                                     <MapContainer center={[dataMedecin.medecinData.user.adresse.latitude,dataMedecin.medecinData.user.adresse.longitude]} zoom={15} scrollWheelZoom={true}>
                                         <TileLayer
-                                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                        attribution='&copy; <Link to="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
                                         <Marker position={[dataMedecin.medecinData.user.adresse.latitude,dataMedecin.medecinData.user.adresse.longitude]}  icon={new L.Icon({
@@ -272,7 +272,7 @@ class Medecin extends Component{
                     if(log && data.typeUser === 'Patient'){
                         this.setState({dataAuthUser : authUser.verificationIfUserIsLogged()})
                     }else{
-                        console.log('log : '+log+"   :=> ",data);
+                        //console.log('log : '+log+"   :=> ",data);
                         localStorage.clear();
                         this.setState({error : {message : "Il y a une erreur d'information ou vous n'etez pas un(e) patient .",activation: true}})
                     }
@@ -286,8 +286,8 @@ class Medecin extends Component{
         if(dataMedecin!==null && dataMedecin !==undefined){
             return (
                 <div className="container ProfilMedecinPrendreRdvMedecin">
-                    <div hidden={this.state.voirSemaine}>Pour voir mes disponibilités par semaine, veuille cliquer <a href="#ee" onClick={()=>this.setState({voirSemaine : !this.state.voirSemaine})}>ici</a></div>
-                    <div hidden={!this.state.voirSemaine}>Pour déplie mes disponibilités, veuille cliquer <a href="#ee" onClick={()=>this.setState({voirSemaine : !this.state.voirSemaine})}>ici</a></div>
+                    <div hidden={this.state.voirSemaine}>Pour voir mes disponibilités par semaine, veuille cliquer <Link to="#ee" onClick={()=>this.setState({voirSemaine : !this.state.voirSemaine})}>ici</a></div>
+                    <div hidden={!this.state.voirSemaine}>Pour déplie mes disponibilités, veuille cliquer <Link to="#ee" onClick={()=>this.setState({voirSemaine : !this.state.voirSemaine})}>ici</a></div>
                     <div>
                         <table className="table table-hover" hidden={!this.state.voirSemaine}>
                             <thead>
@@ -366,7 +366,7 @@ class Medecin extends Component{
     prendreRdv=()=>{
        if(this.state.consultation.etat===2 && this.state.heureConsultation.etat===2 && this.state.description.etat===2 && this.state.dataMedecin.medecinData.idMedecin!==null && this.state.dataMedecin.medecinData.idMedecin!==undefined){
            let dateTmp = this.state.dateRdv;let idTypeMed = this.findIdTypeMedecin(this.state.consultation.valuesText);
-           if(this.state.dateConsultation.etat===2){dateTmp = new Date(this.state.dateConsultation.valuesText); console.log('dadadad : '+this.state.dateConsultation.valuesText)}
+           if(this.state.dateConsultation.etat===2){dateTmp = new Date(this.state.dateConsultation.valuesText); //console.log('dadadad : '+this.state.dateConsultation.valuesText)}
            if(idTypeMed>=0){
                 const data = { 
                     jour : dateTmp.getDate(),
@@ -379,7 +379,7 @@ class Medecin extends Component{
                     idTypeMedecin : idTypeMed,
                     token : authUser.getToken()
                 };
-                console.log('prendre rdv : ',data);
+                //console.log('prendre rdv : ',data);
                 fetchPost('/rendez-vous/addRDV',data).then(result=>{
                     if(result.status === 200){
                         alert(''+result.message);
@@ -458,7 +458,7 @@ class Medecin extends Component{
             fetchGet('/medecin/dataMedecinSpeciale/'+this.props.dataMedecin.idMedecin).then(data=>{
                 if(data!=null){
                     this.setState({ dataMedecin: data });
-                    console.log('data med :',data)
+                    //console.log('data med :',data)
                 }
             });
         }

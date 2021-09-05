@@ -43,9 +43,9 @@ class PdfForm extends Component{
         this.radioButtonChange = this.radioButtonChange.bind(this);
     }
     handleChange = (param, e) => {
-        console.log(e.target.value);
+        //console.log(e.target.value);
         this.setState({ [param]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }, function(){
-            console.log(this.state.civilite)
+            //console.log(this.state.civilite)
         });
         this.setState({data:{
             nomSujet:this.state.nomSujet,
@@ -77,7 +77,7 @@ class PdfForm extends Component{
         }})
     }
     changeTypeCertificat(e){
-        console.log(Number(e.target.value)===3)
+        //console.log(Number(e.target.value)===3)
         this.setState({typeCertificat:Number(e.target.value)});
     }
     previewPdf(event){
@@ -102,8 +102,8 @@ class PdfForm extends Component{
     }
     formPdf(){
         return(
-            <form className='pdf-form' onSubmit={this.previewPdf.bind(this)}>
-                <div className="input-group">
+            <form className='pdf-form row' onSubmit={this.previewPdf.bind(this)}>
+                <div className="input-group col-12">
                     <label className='labelStyle col-md-3'>Type de certificat: </label>
                     <select name="typeCertificat" id="typeCertificat" className="inputStyle col-md-9" onChange={this.changeTypeCertificat.bind(this)}>
                         <option value={1}>Certificat de constatations de violences</option>
@@ -112,21 +112,21 @@ class PdfForm extends Component{
                         <option value={4}>Certificat d'inaptitude</option>
                     </select>
                 </div>
-                <div className="input-group">
+                <div className="input-group col-12">
                     <label className='labelStyle col-md-3'>Nom: </label>
                     <input className='inputStyle col-md-3' name='nomSujet' value={this.state.nomSujet} onChange={this.handleChange.bind(this, 'nomSujet')} type='text'/>
                 
                     <label className='labelStyle col-md-3'>Prénom(s): </label>
                     <input className='inputStyle col-md-3' name='prenomSujet' value={this.state.prenomSujet} onChange={this.handleChange.bind(this, 'prenomSujet')} type='text'/>
                 </div>
-                <div className="input-group">
+                <div className="input-group col-12">
                     <label className='labelStyle col-md-3'>Date de naissance: </label>
                     <input className='inputStyle col-md-3' name='dateNaissance' value={this.state.dateNaissance} onChange={this.handleChange.bind(this, 'dateNaissance')} type='date'/>
                 
                     <label className='labelStyle col-md-3'>Lieu de naissance: </label>
                     <input className='inputStyle col-md-3' name='lieuNaissance' value={this.state.lieuNaissance} onChange={this.handleChange.bind(this, 'lieuNaissance')} type='text'/>
                 </div>
-                <div className="input-group">
+                <div className="input-group col-12">
                     <label className='labelStyle col-md-3'>Civilité: </label>
                     {/* <input className='inputStyle col-md-3' type='text'/> */}
                     <div className="col-md-3" onChange={this.handleChange.bind(this, 'civilite')}>
@@ -140,14 +140,14 @@ class PdfForm extends Component{
                     <label className='labelStyle col-md-3'>Adresse: </label>
                     <input className='inputStyle col-md-3' name='adresse' value={this.state.adresse} onChange={this.handleChange.bind(this, 'adresse')} type='text'/>
                 </div>
-                <div hidden={this.state.typeCertificat!==2} className="input-group">
+                <div hidden={this.state.typeCertificat!==2} className="input-group col-12">
                     <label className='labelStyle col-md-3'>Père: </label>
                     <input className='inputStyle col-md-3' name='pere' value={this.state.pere} onChange={this.handleChange.bind(this, 'pere')} type='text'/>
                 
                     <label className='labelStyle col-md-3'>Mère: </label>
                     <input className='inputStyle col-md-3' name='mere' value={this.state.mere} onChange={this.handleChange.bind(this, 'mere')} type='text'/>
                 </div>
-                <div hidden={this.state.typeCertificat!==1} className="input-group">
+                <div hidden={this.state.typeCertificat!==1} className="input-group col-12">
                     <label className='labelStyle col-md-3'>Type de violence: </label>
                     <select name="typeViolence" id="typeViolence" className="inputStyle col-md-3" onChange={this.handleChange.bind(this, 'typeViolence')}>
                         <option value="">Sélectionner un type</option>
@@ -165,19 +165,19 @@ class PdfForm extends Component{
                     <label className='labelStyle col-md-3'>Lieu de violence: </label>
                     <input className='inputStyle col-md-3' name='lieuViolence' value={this.state.lieuViolence} onChange={this.handleChange.bind(this, 'lieuViolence')} type='text'/>
                 </div>
-                <div hidden={this.state.typeCertificat!==1} className="input-group">
+                <div hidden={this.state.typeCertificat!==1} className="input-group col-12">
                     <label className='labelStyle col-md-3'>Description examen clinique: </label>
                     <textarea className='inputStyle col-md-9' rows="2" name='descriptionExamen' value={this.state.descriptionExamen} onChange={this.handleChange.bind(this, 'descriptionExamen')}/>
                 </div>
-                <div hidden={this.state.typeCertificat!==1} className="input-group">
+                <div hidden={this.state.typeCertificat!==1} className="input-group col-12">
                     <label className='labelStyle col-md-3'>Conduite à tenir: </label>
                     <textarea className='inputStyle col-md-9' rows='2' name='conduiteSujet' value={this.state.conduiteSujet} onChange={this.handleChange.bind(this, 'conduiteSujet')}/>
                 </div>
-                <div hidden={!(this.state.typeCertificat===3||this.state.typeCertificat===4)} className="input-group">
+                <div hidden={!(this.state.typeCertificat===3||this.state.typeCertificat===4)} className="input-group col-12">
                     <label className='labelStyle col-md-3'>Motif: </label>
                     <textarea className='inputStyle col-md-9' name='motif' value={this.state.motif} onChange={this.handleChange.bind(this, 'motif')}/>
                 </div>
-                <div hidden={this.state.typeCertificat!==2} className="input-group">
+                <div hidden={this.state.typeCertificat!==2} className="input-group col-12">
                     <label className='labelStyle col-md-3'>Cause du décès: </label>
                     <input className='inputStyle col-md-3' name='causeDeces' value={this.state.causeDeces} onChange={this.handleChange.bind(this, 'causeDeces')} type='text'/>
                 
@@ -190,7 +190,7 @@ class PdfForm extends Component{
                     <label className='labelStyle col-md-3'>Lieu du décès: </label>
                     <input className='inputStyle col-md-3' name='lieuDeces' value={this.state.lieuDeces} onChange={this.handleChange.bind(this, 'lieuDeces')} type='text'/>
                 </div>
-                <div className="input-group">
+                <div className="input-group col-12">
                     <label className='labelStyle col-md-3'>Date du document: </label>
                     <input className='inputStyle col-md-3' name='dateDocument' value={this.state.dateDocument} onChange={this.handleChange.bind(this, 'dateDocument')} type='date'/>
                 
@@ -200,12 +200,12 @@ class PdfForm extends Component{
                     <label className='labelStyle col-md-3'>Lieu du document: </label>
                     <input className='inputStyle col-md-3' name='lieuDocument' value={this.state.lieuDocument} onChange={this.handleChange.bind(this, 'lieuDocument')} type='text'/>
                 </div>
-                <div className='' style={{textAlign:'center',border:'1px solid #f0f0f0',borderRadius:'10px',padding:'10px'}}>
-                    <label className='col-md-7'>
-                        <input type='checkbox' checked={this.state.validation} onChange={this.handleChange.bind(this, 'validation')} name='validation' style={{color:'blue'}} className=''/>
+                <div className='col-md-12' style={{textAlign:'center',border:'1px solid #f0f0f0',borderRadius:'10px',padding:'10px'}}>
+                        <input id="validation" type='checkbox' checked={this.state.validation} onChange={this.handleChange.bind(this, 'validation')} name='validation' style={{color:'blue'}} className='col-md-1'/>
+                    <label className='col-md-5' htmlFor="validation">
                         Tous les champs sont bien vérifiés et valides
                     </label>
-                    <button type='submit' disabled={!this.state.validation} className='btn btn-info col-md-4'>Aperçu</button>
+                    <button type='submit' disabled={!this.state.validation} className='btn col-md-2'>Aperçu</button>
                 </div>
                 <div className='' style={{textAlign:'right'}}>
                     {/* <button type='submit' className='btn btn-info col-md-4'>Aperçu</button> */}
@@ -216,8 +216,8 @@ class PdfForm extends Component{
     render(){
         return(
             <div className="pdf-content">
-                <div className="container">
-                    <h1>E-Trames</h1>
+                {/* <div className="container"> */}
+                    {/* <h3>E-Trames</h3> */}
                     {this.state.etat===1?this.formPdf():this.showPdf()}
                     {/* <div className="row"> */}
                         
@@ -227,7 +227,7 @@ class PdfForm extends Component{
                             <Documents type={1} data={this.state.data}/>
                         </PDFViewer>
                     </div> */}
-                </div>                
+                {/* </div>                 */}
             </div>
         );
     }

@@ -1,7 +1,7 @@
 .logginAllMeddoc{
-	min-height: 50vh;
+	min-height: 55vh;
 	padding: 5%;
-	padding-bottom: 10%;
+	padding-bottom: 12%;
 	width: 100%;
 	position: relative;
 	margin: 0 auto;
@@ -251,4 +251,11 @@
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 	color: #1b789585;
+}
+@media (max-width:767px) {
+	.logginAllMeddoc{
+		min-height: 55vh;
+		padding: 1%;
+		padding-bottom: 29%;
+	}
 }

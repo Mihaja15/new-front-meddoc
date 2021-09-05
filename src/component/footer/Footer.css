@@ -17,6 +17,14 @@
 	margin: 0;
 	padding: 0;
 }
+.footer-content a{
+	text-decoration: none;
+	color: #fff;
+}
+.footer-content a:hover{
+	text-decoration: none;
+	color: #fff;
+}
 .footer_content_container_fluid_row_col_h5{
 	text-align: left;
     /* margin-left: 5%; */

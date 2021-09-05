@@ -33,17 +33,17 @@ class DetailMedecin extends Component{
 
     }
     componentDidMount(){
-        console.log(this.props);
+        //console.log(this.props);
         if(this.props.medecinData!==null){
             // const dateJour = new Date();
             fetchGet('/adresse/'+this.props.medecinData.user.idUser).then(adresse=>{
                 this.setState({adresseMed:adresse,lat:adresse.latitude,long:adresse.longitude},function(){
-                    console.log('adresse ',this.state.adresseMed);
+                    //console.log('adresse ',this.state.adresseMed);
                 });
             });
             fetchGet('/emploieTemps/by-medecin/'+this.props.medecinData.idMedecin+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                 this.setState({jour:edt},function(){
-                    console.log('EDT : ',this.state.jour);
+                    //console.log('EDT : ',this.state.jour);
                 });
             });
         }
@@ -60,7 +60,7 @@ class DetailMedecin extends Component{
         this.setState({dateFirst:jour}, function(){
             fetchGet('/emploieTemps/by-medecin/'+this.props.medecinData.idMedecin+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                 this.setState({jour:edt},function(){
-                    console.log('EDT : ',this.state.jour);
+                    //console.log('EDT : ',this.state.jour);
                 });
             });
         })
@@ -70,7 +70,7 @@ class DetailMedecin extends Component{
     }
     takeAppointment=(date,heure)=>{
         const dateNow = new Date();
-        console.log(dateNow.getTime()+' > '+date.getTime());
+        //console.log(dateNow.getTime()+' > '+date.getTime());
         if(dateNow.getTime() > date.getTime()){
             alert('La date de rendez-vous doit être ultérieurement!');
         }else{
@@ -97,7 +97,7 @@ class DetailMedecin extends Component{
                 idTypeMedecin : this.state.typeMedecin,
                 token : authUser.getToken()
             };
-            console.log('prendre rdv : ',data);
+            //console.log('prendre rdv : ',data);
             fetchPost('/rendez-vous/addRDV',data).then(result=>{
                 if(result.status === 200){
                     alert(''+result.message);
@@ -225,7 +225,7 @@ class DetailMedecin extends Component{
                                 <div className="col-md-5">
                                     <MapContainer center={[this.state.lat,this.state.long]} zoom={10} scrollWheelZoom={true}>
                                         <TileLayer
-                                        attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                                        attribution="&copy; <Link to=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
                                         <Marker position={[this.state.lat,this.state.long]}  icon={new L.Icon({
@@ -320,7 +320,7 @@ class DetailMedecin extends Component{
                                             <table>
                                                 <thead>
                                                     <tr>
-                                                        <th><a href='#0' onClick={()=>this.onClickPrevNext(-1)}><FontAwesomeIcon icon={faChevronLeft}/></a></th>
+                                                        <th><Link to='#0' onClick={()=>this.onClickPrevNext(-1)}><FontAwesomeIcon icon={faChevronLeft}/></a></th>
                                                         {/* {
                                                             this.props.medecinEmploiTemps!==null?this.props.medecinEmploiTemps.map((edt,i)=>{
                                                                 return(
@@ -331,7 +331,7 @@ class DetailMedecin extends Component{
                                                         <th>{this.state.jour!==null?this.dateShow(this.state.jour.date1):''}</th>
                                                         <th>{this.state.jour!==null?this.dateShow(this.state.jour.date2):''}</th>
                                                         <th>{this.state.jour!==null?this.dateShow(this.state.jour.date3):''}</th>
-                                                        <th><a href='#0' onClick={()=>this.onClickPrevNext(1)}><FontAwesomeIcon icon={faChevronRight}/></a></th>
+                                                        <th><Link to='#0' onClick={()=>this.onClickPrevNext(1)}><FontAwesomeIcon icon={faChevronRight}/></a></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

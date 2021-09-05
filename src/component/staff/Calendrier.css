@@ -1,10 +1,7 @@
 .calendrier-container{
     width: 100%;
-    /* height: auto; */
-    /* margin-left: 10vh; */
-    /* padding-left: 10vh;
-    padding-right: 10vh; */
-    /* padding-bottom: 5vh; */
+    display: flex;
+    justify-content: center;
 }
 .header-agenda{
     padding: 1vh;
@@ -19,17 +16,9 @@
     /* border: 5px solid #1b7895; */
 }
 .centre-content-agenda{
-    /* position: relative; */
-    /* display: inline-flex; */
     width: 100%;
-    /* justify-content: space-between; */
-    /* padding-top: 12px; */
     padding-bottom: 12px;
-    /* padding-top: 12px; */
     margin: auto;
-    /* background-color: #f1f1f1; */
-    /* padding-left: 15vh; */
-    /* margin: auto; */
 }
 .centre-agenda-left{
     /* width: 49.5%; */

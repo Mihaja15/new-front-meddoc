@@ -1,11 +1,16 @@
 .compte-container{
     width: 100%;
-    /* margin: 0 auto; */
-    /* height: auto; */
-    /* padding-left: 10vh;
-    padding-bottom: 5vh;
-    padding-top: 15vh; */
     padding: 0;
+}
+.compte-form form > div{
+    width: 100%;
+    display: block;
+    /* justify-content: flex-end; */
+    margin: 0 auto;
+    /* background-color: #39c3ef50; */
+    padding-top: 15px;
+    padding-bottom: 15px;
+    
 }
 span.compte-label{
     /* border-top-left-radius: 12px;

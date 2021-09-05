@@ -122,7 +122,7 @@ class Inscription extends Component{
         //     number = '';
         // }
         // this.setState({disableButton:true,phone:number},function(){
-        //     console.log(this.state.phone)
+        //     //console.log(this.state.phone)
         // });
         this.setState({disableButton:true});
         // let identiter = [];
@@ -186,7 +186,7 @@ class Inscription extends Component{
         //     this.setState({disableButton:false,error : {message : 'Erreur de connexion aux réseaux',activation: true}});
         // });
         fetchPostNotLogged('/users/register',user).then((response)=>{
-            console.log(response);
+            //console.log(response);
             if(response.statut === 200){
                 // if(response.role.toLowerCase()==="patient"){
                 //     userSession.userLogin(response.data.username,
@@ -243,7 +243,7 @@ class Inscription extends Component{
         }
     }
     provinceChange(event){
-        console.log(event.currentTarget.value);
+        //console.log(event.currentTarget.value);
         this.setState({provinceVal: event.currentTarget.value});
         if(event.currentTarget.value===''){
             this.setState({showF: false});
@@ -300,7 +300,7 @@ class Inscription extends Component{
             }
             //this.setState({erreurMessage : "",erreurEtat: false});
             fetchPostNotLogged('/users/validation-compte-patient',dataTmp).then(response=>{
-                console.log(response)
+                //console.log(response)
                 if(response.statut===200){
                     if(response.role.toLowerCase()==="patient"){
                         userSession.userLogin(response.data.username,
@@ -541,7 +541,7 @@ class Inscription extends Component{
                                                     <div className="form-group mt-3 container_inscription_dataInscription_div_row_col_checkbox">
                                                         <label className='col-md-12' htmlFor='cgu'>
                                                             <input type='checkbox' checked={this.state.validCgu} onChange={this.validChange} name='validation' style={{color:'blue'}} className='' id='cgu'/>
-                                                            &nbsp;&nbsp;J'accepte les <a href="/conditions-generales-d-utilisation-de-MEDDoC" style={{color:'#29b6f6'}}>conditions générales d'utilisation</a>
+                                                            &nbsp;&nbsp;J'accepte les <a href="/a-propos/conditions-generales-d-utilisation" rel="noopener noreferrer" target="_blank" style={{color:'#29b6f6'}}>conditions générales d'utilisation</a>
                                                         </label>
                                                     </div>
                                                 </Col>

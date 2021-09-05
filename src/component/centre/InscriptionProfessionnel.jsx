@@ -204,7 +204,7 @@ export default class InscriptionProfessionnel extends React.Component{
             tags:this.state.tags,
             ouvrages:this.state.ouvrages
         }
-        console.log(dataCentre);
+        //console.log(dataCentre);
         const data = new FormData(event.target);
         data.set('uuid',utile.generateUUID());
         this.state.selectedFiles.forEach(file=>{
@@ -228,13 +228,13 @@ export default class InscriptionProfessionnel extends React.Component{
                             this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
                         }
                     }).catch(error=>{
-                        console.log(error)
+                        //console.log(error)
                         this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
                     });
                 }else{
                 }
             }).catch(error=>{
-                console.log(error)
+                //console.log(error)
                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: 'Problème de serveur'});
             });
         }else{
@@ -246,7 +246,7 @@ export default class InscriptionProfessionnel extends React.Component{
                     this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
                 }
             }).catch(error=>{
-                console.log(error)
+                //console.log(error)
                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
             });
         }
@@ -299,7 +299,7 @@ export default class InscriptionProfessionnel extends React.Component{
         navigator.geolocation.getCurrentPosition((position) => {
             let lat = position.coords.latitude
             let lng = position.coords.longitude
-            console.log("getCurrentPosition Success " + lat + lng) // logs position correctly
+            //console.log("getCurrentPosition Success " + lat + lng) // logs position correctly
             this.setState({
                 latitude: lat,
                 longitude: lng
@@ -328,7 +328,7 @@ export default class InscriptionProfessionnel extends React.Component{
 			}
         });
         fetchGet('/professionnel/listSpecialite').then(data=>{
-            console.log(data);
+            //console.log(data);
 			if(data!=null){
 				this.setState({ listSpecialite: data });
 			}
@@ -409,7 +409,7 @@ export default class InscriptionProfessionnel extends React.Component{
                     data[indice].bottomStart=valeur;
             }
 			this.setState({emploiTemps: data},function(){
-                console.log(this.state.emploiTemps)
+                //console.log(this.state.emploiTemps)
             });
 		}else{
             const data= this.state.emploiTemps;
@@ -428,7 +428,7 @@ export default class InscriptionProfessionnel extends React.Component{
                 data[indice].bottomStop=valeur;
             }
 			this.setState({emploiTemps: data},function(){
-                console.log(this.state.emploiTemps)
+                //console.log(this.state.emploiTemps)
             });
         }
 	}
@@ -596,12 +596,12 @@ export default class InscriptionProfessionnel extends React.Component{
     }
     setPhotos=(value)=>{
         this.setState({files:utile.hasValue(value)?value:[]},function(){
-            console.log('files: '+this.state.files);
+            //console.log('files: '+this.state.files);
         });
     }
     setSelectedPhotos=(value)=>{
         this.setState({selectedFiles:utile.hasValue(value)?value:[]},function(){
-            console.log('selectedFiles: '+this.state.selectedFiles);
+            //console.log('selectedFiles: '+this.state.selectedFiles);
         });
     }
     //tags
@@ -886,7 +886,7 @@ export default class InscriptionProfessionnel extends React.Component{
                                         <MapContainer center={[this.state.latitude,this.state.longitude]} style={{zIndex:"-1"}} zoom={15} scrollWheelZoom={true}>
                                             <MyComponent dataCenter={this.setDataCenter} />
                                             <TileLayer
-                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                            attribution='&copy; <Link to="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                             />
                                             <Marker position={[this.state.latitude,this.state.longitude]}  icon={new L.Icon({

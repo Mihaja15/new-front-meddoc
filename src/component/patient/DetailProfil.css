@@ -1,6 +1,6 @@
 .detail-profil-content{
     width:100%;
-    min-height: 120vh;
+    /* min-height: 120vh; */
     font-family: 'Montserrat',sans-serif;
 }
 .detail-profil-left{
@@ -26,8 +26,11 @@
 .detail-profil-right{
     padding: 5px;
     width:100%;
-    /* min-height: 50vh; */
+    height: auto;
     /* background-color: brown; */
+}
+.detail-profil-right>div{
+    margin-bottom: 15vh;
 }
 .label-details-profil{
     height: 50px;
@@ -68,4 +71,8 @@ h1.name-age-patient{
     font-weight: 600;
     font-size: 20px;
     color: #2b3a3b;
+}
+li.active-show-menu{
+    background-color: #fff;
+    cursor: default;
 }

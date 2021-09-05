@@ -195,7 +195,7 @@ export default class Compte extends React.Component{
             centre: JSON.stringify(dataCentre),
             mdp: this.state.oldMdp
         }
-        console.log(dataCentre);
+        //console.log(dataCentre);
         fetchPostHeader('/professionnel/edition-centre',dataSend).then(result=>{
             if(result.etat === "0"){
                 alert(result.message);
@@ -203,7 +203,7 @@ export default class Compte extends React.Component{
             }else{
                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
             }
-            console.log(result);
+            //console.log(result);
         });
     }
     handleChange = (param, e) => {
@@ -221,7 +221,7 @@ export default class Compte extends React.Component{
             if(e!==null){
                 const lang = [];
                 const langs = [];
-                console.log(e)
+                //console.log(e)
                 for(let i=0;i<e.length;i++){
                     lang.push({
                         idLangue:e[i].value,
@@ -376,7 +376,7 @@ export default class Compte extends React.Component{
                     data[indice].bottomStart=valeur;
             }
 			this.setState({emploiTemps: data},function(){
-                console.log(this.state.emploiTemps)
+                //console.log(this.state.emploiTemps)
             });
 		}else{
             const data= this.state.emploiTemps;
@@ -395,7 +395,7 @@ export default class Compte extends React.Component{
                 data[indice].bottomStop=valeur;
             }
 			this.setState({emploiTemps: data},function(){
-                console.log(this.state.emploiTemps)
+                //console.log(this.state.emploiTemps)
             });
         }
 	}
@@ -538,7 +538,7 @@ export default class Compte extends React.Component{
     }
     componentDidMount(){
         fetchGetHandler('/professionnel/data').then(data=>{
-            console.log(data)
+            //console.log(data)
             if(utile.hasValue(data)){
                 this.setState({professionnelData:data})
                 const langues = [];
@@ -548,7 +548,7 @@ export default class Compte extends React.Component{
                         label:data.personne.langue[i].libelle
                     });
                 }
-                console.log(langues)
+                //console.log(langues)
                 this.setState({langues:langues});
                 const paiements = [];
                 for(let i=0;i<data.modePaiement.length;i++){
@@ -557,7 +557,7 @@ export default class Compte extends React.Component{
                         label:data.modePaiement[i].libelle
                     });
                 }
-                console.log(paiements)
+                //console.log(paiements)
                 this.setState({paiements:paiements});
                 // fetchGet('/adresse/find-province-by-id-district/'+data.personne.adresse[0].district.idDistrict).then(idProvince=>{
                 //     this.setState({province:idProvince});
@@ -583,7 +583,7 @@ export default class Compte extends React.Component{
                     }
                 });
                 fetchGet('/professionnel/listSpecialite').then(data=>{
-                    console.log(data);
+                    //console.log(data);
                     if(data!=null){
                         this.setState({ listSpecialite: data });
                     }
@@ -608,8 +608,8 @@ export default class Compte extends React.Component{
                         this.setState({ listPaiement: data });
                     }
                 });
-                // console.log("idProvince:  "+idProvince);
-                console.log(data)
+                // //console.log("idProvince:  "+idProvince);
+                //console.log(data)
                 const edt = data.emploiTemps;
                 const semaine = utile.getAllSemaine();
                 const dataEdt= [];
@@ -728,30 +728,30 @@ export default class Compte extends React.Component{
     render(){
         return(
             <div className="compte-container">
-                <div className="row">
-                    <div className="centre-banner-titre col-md-12 row">
+                {/* <div className="row"> */}
+                    <div className="centre-banner-titre col-12 row">
                         <h4 className="card-title col-md-6">Profil d'utilisateur</h4>
                         {this.state.update?
                         <a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUndoAlt}/> Annuler</a>
                         :<a className="card-title col-md-6" style={{textAlign:'right'}} href="#0" onClick={()=>this.setState({update:!this.state.update})}><FontAwesomeIcon icon={faUserEdit}/> Modifier</a>
                         }
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-12 compte-form">
                         <form className="row" onSubmit={this.modificationCompte.bind(this)}>
-                        <div className="col-md-7 col-sm-12">
-                                <div className="form-group row">
+                            <div className="col-md-7 col-sm-12">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Nom</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.nom} onChange={this.handleChange.bind(this,"nom")} placeholder="" />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Prénom(s)</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.prenoms} onChange={this.handleChange.bind(this,"prenoms")} placeholder="" />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Sexe</span>
                                         <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
@@ -761,7 +761,7 @@ export default class Compte extends React.Component{
                                         </select>
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Langue(s)</span>
                                         <Select onChange={this.handleChange.bind(this,"langue")} className="col-7" isClearable={true} isMulti placeholder="" isDisabled={!this.state.update} closeMenuOnSelect={false} value={this.state.langues} options={this.state.listLangue} />
@@ -776,25 +776,25 @@ export default class Compte extends React.Component{
                                         </select> */}
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Date de naissance</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="date" disabled={!this.state.update} value={this.state.dateNaissance} onChange={this.handleChange.bind(this,"dateNaissance")}  placeholder=""  />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Lieu de naissance</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.lieuNaissance} onChange={this.handleChange.bind(this,"lieuNaissance")}  placeholder=""  />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     {/* <div className="input-group"> */}
                                         <span className="form-control inscription-label col-12">Présentation</span>
                                         <textarea rows="4" className="inscription-input form-control" disabled={!this.state.update} value={this.state.presentation} onChange={this.handleChange.bind(this,"presentation")} placeholder="Texte de présentation qui apparaîtra sur votre profil (facultatif)"></textarea>
                                     {/* </div> */}
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Ordre</span>
                                         <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.typeOrdre} onChange={this.handleChange.bind(this,"typeOrdre")}  >
@@ -810,13 +810,13 @@ export default class Compte extends React.Component{
                                         </select>
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Numéro ordre</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="text" disabled={!this.state.update} value={this.state.numOrdre} onChange={this.handleChange.bind(this,"numOrdre")}  placeholder=""  />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Spécialité</span>
                                         <select className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.specialite} onChange={this.handleChange.bind(this,"specialite")}  >
@@ -832,25 +832,25 @@ export default class Compte extends React.Component{
                                         </select>
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Durée de consultation (minutes)</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7 " required={true} disabled={!this.state.update} value={this.state.duree} type="number" onChange={this.handleChange.bind(this,"duree")} placeholder="en minutes"/>
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Adresse</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} disabled={!this.state.update} value={this.state.adresse} type="text" onChange={this.handleChange.bind(this,"adresse")}  placeholder=""  />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">District</span>
                                         <Select onChange={this.handleChange.bind(this,"district")} className="col-7" isClearable={true} isDisabled={!this.state.update} value={this.state.districtValue} placeholder="District" options={this.state.listDistrict} />
                                     </div>
                                 </div>
-                                {/* <div className="form-group row">
+                                {/* <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Province</span>
                                         <select className="form-control inscription-input inscription-inputV12 col-7" required={true} onChange={this.handleChange.bind(this,"province")}  >
@@ -869,7 +869,7 @@ export default class Compte extends React.Component{
                                 {
                                     (this.state.listDistrict.length>0)
                                     ? (
-                                        <div className="form-group row">
+                                        <div className="form-group">
                                             <div className="input-group">
                                                 <span className="form-control inscription-label col-5">District</span>
                                                 <select className="form-control  inscription-input inscription-inputV12 col-7" required={true} onChange={this.handleChange.bind(this,"district")}>
@@ -886,13 +886,13 @@ export default class Compte extends React.Component{
                                         </div>
                                     ): (<div></div>)
                                 } */}
-                                <div className="form-group row">
+                                <div className="form-group">
                                     {/* <div className="input-group"> */}
                                         <span className="form-control inscription-label col-12">Information d'accès</span>
                                         <textarea rows="4" className="inscription-input form-control" disabled={!this.state.update} value={this.state.infoAcces} onChange={this.handleChange.bind(this,"infoAcces")} placeholder="Décrire les différentes informations pour faciliter votre localisation (facultatif)"></textarea>
                                     {/* </div> */}
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Moyen(s) de paiement</span>
                                         <Select onChange={this.handleChange.bind(this,"paiement")} className="col-7" isClearable={true} isMulti placeholder="" isDisabled={!this.state.update} closeMenuOnSelect={false} value={this.state.paiements} options={this.state.listPaiement} />
@@ -907,19 +907,19 @@ export default class Compte extends React.Component{
                                         </select> */}
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">E-mail</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" type="email" disabled={!this.state.update} value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}  placeholder=""  />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">N° téléphone</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" required={true} type="tel " disabled={!this.state.update} value={this.state.phone} onChange={this.handleChange.bind(this,"phone")} placeholder=""  />
                                     </div>
                                 </div>
-                                <div className="form-group row formgroupCssInscriptionMedecin">
+                                <div className="form-group formgroupCssInscriptionMedecin">
                                     <div className="input-group" data-tip data-for="registerTip">
                                         <span className="form-control inscription-label col-5">Mot de passe</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7" disabled={!this.state.update} value={this.state.mdp} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder=""/>
@@ -930,7 +930,7 @@ export default class Compte extends React.Component{
                                         <span className="col-12 progressBarSonOfChildLoggin"><ProgressBar variant={this.getColorPourcentage(this.state.percentageMdp)} now={this.state.percentageMdp} /></span>
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Confirmation</span>
                                         <input className="form-control inscription-input inscription-inputV12 col-7 " disabled={!this.state.update} value={this.state.confirmationMdp} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder=""/>
@@ -939,7 +939,7 @@ export default class Compte extends React.Component{
                                         <span className="inscription-label-success col-12">Mot de passe confirmé</span>
                                     </div>
                                 </div>
-                                {/* <div className="form-group row">
+                                {/* <div className="form-group">
                                     <div className="input-group">
                                         <span className="form-control inscription-label col-5">Photo</span>
                                         <div className="col-7 inscription-input inscription-inputV12">
@@ -952,13 +952,13 @@ export default class Compte extends React.Component{
                                 </div> */}
                             </div>
                             <div className="col-md-5">
-                                <div className="form-group col-md-12">
+                                <div className="col-12">
                                     <span className="form-control inscription-label-other col-12">Localisation</span>
                                     <div className="mapsLocalisationInscriptionMedecin">
                                         <MapContainer center={[this.state.latitude,this.state.longitude]} zoom={15} scrollWheelZoom={true}>
                                             <MyComponent dataCenter={this.setDataCenter} />
                                             <TileLayer
-                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                            attribution='&copy; <Link to="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                             />
                                             <Marker position={[this.state.latitude,this.state.longitude]}  icon={new L.Icon({
@@ -1024,7 +1024,7 @@ export default class Compte extends React.Component{
                                 </div>
                                 <div className="form-group col-md-12">
                                     <span className="form-control inscription-label-other col-md-12">Frais de consultation<a hidden={!this.state.update} href="#ajout-experience" className="add-button-contact" onClick={()=>this.addFrais()}>Ajouter</a></span>
-                                    <div className = "row col-md-12 contact-group">
+                                    <div className = "col-12 contact-group">
                                         {this.state.fraisConsultation.map((frais,j)=>{
                                             return (
                                             <div className="col-md-12 row each-line-contact" key={j}>
@@ -1033,7 +1033,7 @@ export default class Compte extends React.Component{
                                                         return <option key={i} disabled={!this.state.update} value={typeConsultation.idTypeConsultation}>{typeConsultation.libelle}</option>
                                                     })}
                                                 </select>
-                                                <input type="number" className="col-md-5" placeholder="Frais de consultation" disabled={!this.state.update} value={frais.frais} onChange={this.changeFraisValeur.bind(this,j)}/>
+                                                <input type="number" className="col-md-6" style={{textAlign:'right'}} placeholder="Frais de consultation" disabled={!this.state.update} value={frais.frais} onChange={this.changeFraisValeur.bind(this,j)}/>
                                                 <a hidden={!this.state.update} href="#ajout-contact" className="remove-button-contact col-md-1" onClick={()=>this.removeFrais(j)}><FontAwesomeIcon icon={faTrash}/></a>
                                             </div>)
                                         })}
@@ -1041,7 +1041,7 @@ export default class Compte extends React.Component{
                                 </div>
                                 <div className="form-group col-md-12">
                                     <span className="form-control inscription-label-other col-md-12">Autres contacts <a hidden={!this.state.update} href="#ajout-contact" className="add-button-contact" onClick={()=>this.addContact()}>Ajouter</a></span>
-                                    <div className = "row col-md-12 contact-group">
+                                    <div className = "col-12 contact-group">
                                         {this.state.listContact.map((contact,j)=>{
                                             return (
                                             <div className="col-md-12 row each-line-contact" key={j}>
@@ -1051,7 +1051,7 @@ export default class Compte extends React.Component{
                                                     })}
                                                 </select>
                                                 {/* <input type={contact.typeContact.idTypeContact===4||contact.typeContact.idTypeContact===5||contact.typeContact.idTypeContact===6||contact.typeContact.idTypeContact===7?"url":"text"} className="col-md-5" disabled={!this.state.update} value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}/> */}
-                                                <textarea rows={1} type={contact.typeContact.idTypeContact===4||contact.typeContact.idTypeContact===5||contact.typeContact.idTypeContact===6||contact.typeContact.idTypeContact===7?"url":"text"} className="col-md-5" disabled={!this.state.update} value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}></textarea>
+                                                <textarea rows={1} type={contact.typeContact.idTypeContact===4||contact.typeContact.idTypeContact===5||contact.typeContact.idTypeContact===6||contact.typeContact.idTypeContact===7?"url":"text"} className="col-md-6" disabled={!this.state.update} value={contact.valeurContact} onChange={this.changeContactText.bind(this,j)}></textarea>
                                                 <a hidden={!this.state.update} href="#ajout-contact" className="remove-button-contact col-md-1" onClick={()=>this.removeContact(j)}><FontAwesomeIcon icon={faTrash}/></a>
                                             </div>)
                                         })}
@@ -1097,7 +1097,7 @@ export default class Compte extends React.Component{
                             </div>
                         </form>
                     </div>
-                </div>
+                {/* </div> */}
             </div>
         );
     }

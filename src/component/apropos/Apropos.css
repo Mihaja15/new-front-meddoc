@@ -1,0 +1,78 @@
+.apropos-container{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f1f1f1;
+}
+.apropos-container>.container{
+    background-color: #fff;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+.apropos-left-menu{
+    position: static;
+    top:15vh;
+}
+.apropos-left-menu ul{
+    padding: 0;
+}
+.apropos-left-menu li{
+    display: block;
+    /* background-color: #39c3ef; */
+    border-radius: 12px;
+}
+.apropos-left-menu li a{
+    display: flex;
+    color: #1b7895;
+    min-height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    width: 100%;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+}
+.apropos-left-menu li a:hover{
+    color: #186d86;
+}
+.apropos-left-menu li a.active{
+    color: #fff;
+    background-color: #1b7895;
+    transition: ease-in-out 0.1s;
+}
+.apropos-content{
+    min-height: 100vh;
+    transition: ease-in 5s;
+}
+.sub-apropos-container{
+    transition: ease-in 5s;
+}
+.sub-apropos-container h1{
+    text-align: center;
+    font-size: 21px;
+    font-weight: 900;
+    color: #004369;
+}
+.sub-apropos-container h2{
+    font-size: 18px;
+    font-weight: 600;
+    color: #004369;
+}
+.sub-apropos-container h3{
+    font-size: 17px;
+    font-weight: 600;
+    color: #004369;
+}
+.sub-apropos-container p, .sub-apropos-container li{
+    font-size: 15px;
+    color: #477991;
+}
+.sub-apropos-container li{
+    list-style: disc;
+    line-height: 25px;
+}
+.sub-apropos-container a{   
+    color: #39c3ef;
+    text-decoration: underline;
+}

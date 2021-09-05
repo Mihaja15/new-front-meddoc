@@ -19,11 +19,11 @@ export default class EmploiTemps extends React.Component{
         }
     }
     componentDidMount(){
-        console.log(this.props);
+        //console.log(this.props);
         if(this.props.idProfessionnel!==null){
             fetchGet(this.props.link+'/'+this.props.idProfessionnel+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                 this.setState({jour:edt},function(){
-                    console.log('EDT : ',this.state.jour);
+                    //console.log('EDT : ',this.state.jour);
                 });
             });
         }
@@ -40,7 +40,7 @@ export default class EmploiTemps extends React.Component{
         this.setState({dateFirst:jour}, function(){
             fetchGet(this.props.link+'/'+this.props.idProfessionnel+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                 this.setState({jour:edt},function(){
-                    console.log('EDT : ',this.state.jour);
+                    //console.log('EDT : ',this.state.jour);
                 });
             });
         })
@@ -56,7 +56,7 @@ export default class EmploiTemps extends React.Component{
         //     return;
         // }
         // const dateNow = new Date();
-        // console.log(dateNow.getTime()+' > '+date.getTime());
+        // //console.log(dateNow.getTime()+' > '+date.getTime());
         // if(dateNow.getTime() > date.getTime()){
         //     alert('La date de rendez-vous doit être ultérieurement!');
         // }else{
@@ -80,7 +80,7 @@ export default class EmploiTemps extends React.Component{
                 motif : "Premier rendez-vous",
                 statut:100
             };
-            console.log('prendre rdv : ',data);
+            //console.log('prendre rdv : ',data);
             fetchPost('/covid/add-appointment',data).then(result=>{
                 if(result.status === 200){
                     alert(''+result.message);

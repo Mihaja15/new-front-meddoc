@@ -2,20 +2,38 @@
     margin-top: 50px;
     margin-bottom: 50px;
     width:100%;
+    display: block;
+    margin: 0 auto;
     /* text-align: center; */
     /* height: 500px; */
 }
 .pdf-form{
     margin-top: 50px;
     margin-bottom: 50px;
+    padding: 0;
     display: block;
+    margin: 0 auto;
+    padding-top: 25px;
+    /* padding-bottom: 25px; */
+    background-color: #1b7895;
+    color: #fff;
+    border-radius: 12px;
+}
+.pdf-form button{
+    background-color: #39c3ef;
+    color:#fff;
+}
+.pdf-form input[type='checkbox']{
+    background-color: #39c3ef;
+    color:#fff;
+    outline-color: aqua;
 }
 .input-group{
     margin-bottom: 5px;
 }
 .labelStyle{
     border-radius: 0px;
-    padding-left: 25px;
+    /* padding-left: 25px; */
     padding-top: 5px;
     height: 40px;
     background-color: transparent;
@@ -25,11 +43,14 @@
 }
 .inputStyle{
     border-radius: 0px;
-    padding-left: 25px;
+    /* padding-left: 25px; */
     /* padding-top: 5px; */
     height: 40px;
     background-color: #fff;
-    border: 1px solid #d4d4d4;
-    font-weight: 400;
+    /* border: 1px solid #d4d4d4; */
+    border: none;
+    color: #1b7895;
+    font-weight: 500;
     outline: none;
+    border-radius: 12px;
 }

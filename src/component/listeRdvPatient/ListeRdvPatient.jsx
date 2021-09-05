@@ -55,7 +55,7 @@ class ListeRdvPatient extends Component{
     }
     getDataRdvByData(data){
         fetchPost('/rendez-vous/listeRdv',data).then(dataTmp=>{
-            console.log('dataTmp dataTmp :',dataTmp);
+            //console.log('dataTmp dataTmp :',dataTmp);
             this.setState({ dataRdv: dataTmp ,page : (dataTmp.page+1),pageLength : 10,totalRecords : (dataTmp.totalLength)});
         });
     }
@@ -67,7 +67,7 @@ class ListeRdvPatient extends Component{
                 ordre : ''+ordres ,
                 etatRdv : 'pat'
             }
-            console.log('dataTmp fsdfqsd :',dataD);
+            //console.log('dataTmp fsdfqsd :',dataD);
             fetchPost('/rendez-vous/trierRdv',dataD).then(dataTmp=>{
                 this.setState({ dataRdv: dataTmp ,page : (dataTmp.page+1),pageLength : 10,totalRecords : (dataTmp.totalLength)});
             });
@@ -90,7 +90,7 @@ class ListeRdvPatient extends Component{
         )
     }
     validationRdv=(dataTmp,etat)=>{
-        console.log('dataTmp dataTmp : ',dataTmp);
+        //console.log('dataTmp dataTmp : ',dataTmp);
         if(etat === 1){ //validation
             this.setState({sizeModal : 'md',titleModal : 'Validation rendez-vous'})
         }else if(etat === 2){// annuler
@@ -186,7 +186,7 @@ class ListeRdvPatient extends Component{
         }
     }
     verificationValeur(valeur){
-        console.log('verification : ',valeur);
+        //console.log('verification : ',valeur);
         if(valeur !== null && valeur !== undefined && valeur !== ''){
             return true;
         }
@@ -217,10 +217,10 @@ class ListeRdvPatient extends Component{
                         motif : this.state.motifRdv
                     }
                     fetchPost('/rendez-vous/reporterRdv',newData).then(dataTmp=>{
-                        console.log('dataTmp :', dataTmp);
+                        //console.log('dataTmp :', dataTmp);
                         //this.setState({ dataRdv: dataTmp ,page : (dataTmp.page+1),pageLength : 10,totalRecords : (dataTmp.totalLength)});
                     });
-                    console.log('new Data :',newData);
+                    //console.log('new Data :',newData);
                 }else{
                     this.setState({activateErreurModal : true, erreurModal : "Il y a une erreur d'information" });
                 }
@@ -239,7 +239,7 @@ class ListeRdvPatient extends Component{
                 motif : this.state.motifRdv
             }
             fetchPost('/rendez-vous/annulationRdv',newData).then(dataTmp=>{
-                console.log('dataTmp :', dataTmp);
+                //console.log('dataTmp :', dataTmp);
                 this.getAll();
                 //this.setState({ dataRdv: dataTmp ,page : (dataTmp.page+1),pageLength : 10,totalRecords : (dataTmp.totalLength)});
             });
@@ -323,9 +323,9 @@ class ListeRdvPatient extends Component{
                 id : authUser.getToken(),
                 etatRdv : 'patient'
             };
-            console.log('data : ',data);
+            //console.log('data : ',data);
             fetchPost('/rendez-vous/findlisteRdv',data).then(dataTmp=>{
-                console.log('dataTmp :',dataTmp);
+                //console.log('dataTmp :',dataTmp);
                 this.setState({ dataRdv: dataTmp ,page : (dataTmp.page+1),pageLength : 10,totalRecords : (dataTmp.totalLength)});
             });
         }else{
@@ -342,8 +342,8 @@ class ListeRdvPatient extends Component{
         return valeur;
     }
     getFindEmploiDuTemps(emploieDuTemps,day){
-        console.log(' emploieDuTemps : ',emploieDuTemps);
-        console.log(' day : ',day);
+        //console.log(' emploieDuTemps : ',emploieDuTemps);
+        //console.log(' day : ',day);
         if(emploieDuTemps!==null && emploieDuTemps !==undefined){
             let size=emploieDuTemps.length;
             for(let i=0; i < size; i++){
@@ -377,7 +377,7 @@ class ListeRdvPatient extends Component{
         const emploi=this.getFindEmploiDuTemps(emploieDuTemps,ddate);const final =[];let dureeFinal= this.getDureeConsultation(duree);
         if(emploi!==null && emploi!==undefined){
             let topStart = emploi.timeStartTop; let topStop = emploi.timeStopTop; let bottomStart= emploi.timeStartBottom; let bottomStop = emploi.timeStopBottom;
-            console.log('topStart : '+topStart+', topStop :'+topStop+', bottomStart : '+bottomStart+', bottomStop: '+bottomStop);
+            //console.log('topStart : '+topStart+', topStop :'+topStop+', bottomStart : '+bottomStart+', bottomStop: '+bottomStop);
             if(topStart > 0 && topStop>0){
                 for (let i = topStart; i <= topStop; i++) {
                     for (let a = 0; a < 60; a=a+dureeFinal) {

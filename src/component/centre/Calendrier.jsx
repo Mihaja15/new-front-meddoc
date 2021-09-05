@@ -36,7 +36,7 @@ export default class Calendrier extends React.Component{
         return list;
     }
     changeDate=(params, e)=>{
-        console.log(params)
+        //console.log(params)
         var date = this.state.dateSelected;
         if(params==="jourSelected"){
             date.setDate(e.target.value);
@@ -135,7 +135,7 @@ export default class Calendrier extends React.Component{
             size: 10
         }
         fetchPost('/covid/rdv-centre',data).then(dataTmp=>{
-            console.log(dataTmp)
+            //console.log(dataTmp)
             this.setState({listRdv : dataTmp});
         });
     }
@@ -165,7 +165,7 @@ export default class Calendrier extends React.Component{
                 size: 10
             }
             fetchPost('/covid/rdv-centre',data).then(dataTmp=>{
-                console.log(dataTmp)
+                //console.log(dataTmp)
                 this.setState({listRdv : dataTmp});
             });
         });

@@ -21,7 +21,7 @@ class Vaccin extends Component{
     getListVaccin(){
         fetchGet('/vaccin/list').then((response) => {
             this.setState({vaccins : response});
-            console.log('resp : ',response);
+            //console.log('resp : ',response);
         })
     }
     setStateByNameState(name,valeur,etatChamps){
@@ -108,7 +108,7 @@ class Vaccin extends Component{
                     this.getListVaccin();
                     this.setState({erreur :{message : ""+response.message,etat: 3}});
                 }
-                console.log('resp : ',response);
+                //console.log('resp : ',response);
             })
         }
     }

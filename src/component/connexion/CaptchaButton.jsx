@@ -6,9 +6,9 @@ const CaptchaButton = ({setCaptchaToken, disableButton, hiddenButton}) => {
   
     // Create an event handler so you can call the verification on button click event or form submit
     const reCaptchaVerify = useCallback(async () => {
-        console.log(executeRecaptcha);
+        //console.log(executeRecaptcha);
         if (!executeRecaptcha) {
-            console.log('Execute recaptcha not yet available');
+            //console.log('Execute recaptcha not yet available');
             setCaptchaToken(null);
         }else{
             const token = await executeRecaptcha('connexion');

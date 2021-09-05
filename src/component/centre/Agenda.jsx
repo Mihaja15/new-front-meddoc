@@ -62,7 +62,7 @@ class Agenda extends Component{
     getAgenda(data){
         fetchPost('/covid/agenda-centre',data).then(dataTmp=>{
             this.setState({listeAgenda : dataTmp});
-            console.log(dataTmp);
+            //console.log(dataTmp);
         });
     }
     getAllMois(){
@@ -126,7 +126,7 @@ class Agenda extends Component{
     }
     createDataHtmlDivDateAgenda(valeurCss,date,nameMounth,text,dataListeRendezVous){
         return (
-            <a href="#voirAujourdHui" style={{textDecoration : "none"}} onClick={()=>this.clickTdTableVoirJour(dataListeRendezVous)}>
+            <Link to="#voirAujourdHui" style={{textDecoration : "none"}} onClick={()=>this.clickTdTableVoirJour(dataListeRendezVous)}>
                 <div className={"agendaV"+valeurCss}>
                     <div className={"agendaTitleOneV"+valeurCss}>
                         <h5 className={"agendaDateV"+valeurCss}><strong>{date}</strong></h5>
@@ -435,8 +435,8 @@ class Agenda extends Component{
             const data=dataFinale.infoRdvs;
             if(data !== undefined && data !== null){
                 if(data.length>0){
-                    console.log('datdatadtatadtdat :',data)
-                    console.log('datdatadtatadtdatV2 :',dataFinale)
+                    //console.log('datdatadtatadtdat :',data)
+                    //console.log('datdatadtatadtdatV2 :',dataFinale)
                     return (
                         <div className="row listcalendrierAgendaV2" id="voirAujourdHui">
                             <div className="col-md-12 listeAgendaJour">
@@ -532,7 +532,7 @@ class Agenda extends Component{
     }
     voirDetailRdv(dataRdv, showDetailRdv){
         if(dataRdv !== undefined && dataRdv !== null && showDetailRdv ===1){
-            console.log('showDetailRdv  : ',dataRdv);let sexe = 'masculin';
+            //console.log('showDetailRdv  : ',dataRdv);let sexe = 'masculin';
             if(dataRdv.sexe === 2){sexe = 'feminin'}
             return (
                 <div className="parentdetailRdvTmpAgenda">
@@ -566,7 +566,7 @@ class Agenda extends Component{
                 heure : this.state.dataRdv.infos.heureRdv
             }
             fetchPost('/rendez-vous/annulationRdv',newData).then(dataTmp=>{
-                console.log('dataTmp :', dataTmp);
+                //console.log('dataTmp :', dataTmp);
                 
                 alert(dataTmp);
             });
@@ -605,7 +605,7 @@ class Agenda extends Component{
         return ''+annee+'-'+mois+'-'+jour;
     }
     verificationValeur(valeur){
-        console.log('verification : ',valeur);
+        //console.log('verification : ',valeur);
         if(valeur !== null && valeur !== undefined && valeur !== ''){
             return true;
         }
@@ -646,7 +646,7 @@ class Agenda extends Component{
                         typeChangement : 1
                     }
                     fetchPost('/rendez-vous/reporterRdv',newData).then(dataTmp=>{
-                        console.log('dataTmp :', dataTmp);
+                        //console.log('dataTmp :', dataTmp);
                         alert('dataTmp : '+dataTmp.message);
                     });
                 }else{

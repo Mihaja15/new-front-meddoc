@@ -36,10 +36,10 @@ class UserProfil extends Component{
             if(this.state.etatShow===0){
                 const value = window.location.pathname.split('/');
                 this.setState({dataSearch:{text:value[3],district:value[4]}},function(){
-                    console.log(this.state.dataSearch);
+                    //console.log(this.state.dataSearch);
                 });
             }
-            console.log('token = '+userSession.get('token'))
+            //console.log('token = '+userSession.get('token'))
             fetchGet('/users/dataUser/'+userSession.get('token')).then(response=>{
                 this.setState({user : response.data});
             });
@@ -51,12 +51,12 @@ class UserProfil extends Component{
                 window.history.pushState("object or string", "Title", "/profil/"+link+'//0');
                 const value = window.location.pathname.split('/');
                 this.setState({dataSearch:{text:value[3],district:value[4]}},function(){
-                    console.log(this.state.dataSearch);
+                    //console.log(this.state.dataSearch);
                 });
             }else{
                 window.history.pushState("object or string", "Title", "/profil/"+link);
                 this.setState({dataSearch:null},function(){
-                    console.log(this.state.dataSearch);
+                    //console.log(this.state.dataSearch);
                 });
             } 
         });
@@ -144,8 +144,8 @@ class UserProfil extends Component{
                                 <li onClick={()=>this.linkInMenu('carnet-de-sante')} className={this.isActive(3)}><FontAwesomeIcon icon={faCalendarAlt}/> Suivi médical</li>
                                 <li onClick={()=>this.linkInMenu('proches')} className={this.isActive(5)}><FontAwesomeIcon icon={faFolderPlus}/> Mes proches</li>
                                 {/* <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li> */}
-                                <a href="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
-                                <a href="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
+                                <Link to="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
+                                <Link to="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a>
                                             
                             </ul>
                         </div>

@@ -8,6 +8,7 @@ import './MesPatients.css';
 
 import Pagination from "react-js-pagination";
 
+const dateNow = new Date();
 export default class MesPatients extends React.Component{
     constructor(props){
         super(props);
@@ -17,7 +18,10 @@ export default class MesPatients extends React.Component{
             clicked:0,
             page:1,
             size:5,
-            totalElement:0
+            totalElement:0,
+            moisSelected: dateNow.getMonth(),
+            anneeSelected: dateNow.getFullYear(),
+            duration:30
         }
     }
     componentDidMount(){
@@ -25,10 +29,15 @@ export default class MesPatients extends React.Component{
         // fetchGetHandler('/professionnel/get-rdv').then(data=>{
 		// 	if(data!=null){
 		// 		this.setState({ rdv: data.content });
-        //         console.log(data)
+        //         //console.log(data)
 		// 	}
         // });
-        var dateNow = new Date();
+        // var dateNow = new Date();
+        fetchGetHandler('/professionnel/duree').then(res=>{
+            if(res!=null){
+                this.setState({ duration: res });
+            }
+        });
         var params = '?';
         if(this.state.clicked===0){
             params += '&jour='+dateNow.getDate();
@@ -40,19 +49,19 @@ export default class MesPatients extends React.Component{
         fetchGetHandler('/professionnel/get-rdv'+params).then(data=>{
             if(data!=null){
                 this.setState({ rdv: data.content, page: (data.number+1), size:5, totalElement: data.totalElements });
-                console.log(data)
+                //console.log(data)
             }
         });
         fetchGetHandler('/professionnel/get-list-patient?limit=10').then(data=>{
 			if(data!=null){
 				this.setState({ patients: data });
-                console.log(data)
+                //console.log(data)
 			}
         });
     }
     changeTab=(value)=>{
         this.setState({clicked:value,page:1,size:5},function(){
-            var dateNow = new Date();
+            // var dateNow = new Date();
             var params = '?';
             if(this.state.clicked===0){
                 params += '&jour='+dateNow.getDate();
@@ -84,14 +93,14 @@ export default class MesPatients extends React.Component{
             fetchGetHandler('/professionnel/get-rdv'+params).then(data=>{
                 if(data!=null){
                     this.setState({ rdv: data.content, page: (data.number+1), size:5, totalElement: data.totalElements });
-                    console.log(data)
+                    //console.log(data)
                 }
             });
         });
     }
     handlePageChange=(pageNumber)=> {
         this.setState({page:pageNumber,size:5},function(){
-            var dateNow = new Date();
+            // var dateNow = new Date();
             var params = '?';
             if(this.state.clicked===0){
                 params += '&jour='+dateNow.getDate();
@@ -107,8 +116,8 @@ export default class MesPatients extends React.Component{
                 params += '&page='+(this.state.page-1);
                 params += '&max='+this.state.size;
             }else if(this.state.clicked===2){
-                params += '&mois='+dateNow.getMonth();
-                params += '&annee='+dateNow.getFullYear();
+                params += '&mois='+this.state.moisSelected;
+                params += '&annee='+this.state.anneeSelected;
                 params += '&page='+(this.state.page-1);
                 params += '&max='+this.state.size;
             }else if(this.state.clicked===3){
@@ -123,10 +132,86 @@ export default class MesPatients extends React.Component{
             fetchGetHandler('/professionnel/get-rdv'+params).then(data=>{
                 if(data!=null){
                     this.setState({ rdv: data.content, page: (data.number+1), size:5, totalElement: data.totalElements });
-                    console.log(data)
+                    //console.log(data)
                 }
             });
         });
+    }
+    getScroll(numberStart, numberStop){
+        var list = [];
+        // for(let i = numberStart; i <= numberStop; i++){
+        //     list.push(i);
+        // }
+        for(let i = numberStop; i >= numberStart; i--){
+            list.push(i);
+        }
+        return list;
+    }changeDate=(params, e)=>{
+        //console.log(params)
+        if(params==="moisSelected"){
+            // date.setMonth(e.target.value);
+            this.setState({ [params]: e.target.value},function(){
+                let param = '?';
+                param += '&mois='+this.state.moisSelected;
+                param += '&annee='+this.state.anneeSelected;
+                param += '&page='+(this.state.page-1);
+                param += '&max='+this.state.size;
+                //console.log(param)
+                fetchGetHandler('/professionnel/get-rdv'+param).then(data=>{
+                    if(data!=null){
+                        this.setState({ rdv: data.content, page: (data.number+1), size:5, totalElement: data.totalElements });
+                        //console.log(data)
+                    }
+                });
+            });
+        }
+        if(params==="anneeSelected"){
+            // date.setMonth(e.target.value);
+            this.setState({ [params]: e.target.value},function(){
+                let param = '?';
+                param += '&mois='+this.state.moisSelected;
+                param += '&annee='+this.state.anneeSelected;
+                param += '&page='+(this.state.page-1);
+                param += '&max='+this.state.size;
+                //console.log(param)
+                fetchGetHandler('/professionnel/get-rdv'+param).then(data=>{
+                    if(data!=null){
+                        this.setState({ rdv: data.content, page: (data.number+1), size:5, totalElement: data.totalElements });
+                        //console.log(data)
+                    }
+                });
+            });
+        }
+        if(params==="statut"){
+            if(e.target.value===''){
+                this.setState({ [params]: null},function(){
+                });    
+            }else
+                this.setState({ [params]: e.target.value},function(){
+                });
+        }
+    }
+    dayView(data){
+        let times = []; // time array
+        // var tt = 0; // start time
+        //loop to increment the time and push results in array
+        // for (var i=0;tt<24*60; i++) {
+        //     times[i] = utile.completChiffre(Math.floor(tt/60))+':'+utile.completChiffre(tt%60);
+        //     tt = tt + this.state.duration;
+        // }
+        for (var i=0;i<24; i++) {
+            // times[i] = utile.completChiffre(Math.floor(tt/60))+':'+utile.completChiffre(tt%60);
+            // times[i] = utile.completChiffre(i)+':00';
+            // tt = tt + this.state.duration;
+            times.push(
+                <div className='col-12 hour-line'>
+                    <div className='col-md-12 hour-place'>
+                        
+                    </div>
+                </div>
+            );
+        }
+        return times;
     }
     render(){
         return(
@@ -142,8 +227,35 @@ export default class MesPatients extends React.Component{
                             <li onClick={()=>this.changeTab(4)} className={this.state.clicked===4?'actif':''}>Déjà pris</li>
                         </ul>
                     </div>
+                    <div className={"col-md-12 menu-list-content"+(this.state.clicked!==2?'-none':'')}>
+                        {/* <div> */}
+                            <select name="moisSelected" id="month" value={this.state.moisSelected} onChange={this.changeDate.bind(this,"moisSelected")} className="select-date col-md-2">
+                                {
+                                    this.getScroll(0,11).map((month, i)=>{
+                                        return <option key={i} value={month}>{utile.getNamesMois(month)}</option>
+                                    })
+                                }
+                            </select>
+                            <select name="anneeSelected" id="year" value={this.state.anneeSelected} onChange={this.changeDate.bind(this,"anneeSelected")} className="select-date col-md-2">
+                                {
+                                    this.getScroll((dateNow.getFullYear()-20),(dateNow.getFullYear()+20)).map((year, i)=>{
+                                        return <option key={i} value={year}>{year}</option>
+                                    })
+                                }
+                            </select>
+                        {/* </div> */}
+                    </div>
                     <div className="col-md-12 body-list-content">
-                        <table className="col-md-12 row">
+                        <div className='row'>
+                            {this.dayView().map((heure,i)=>{
+                                return(
+                                    <div className='col-md-12' key={i}>
+                                        {heure}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        {/* <table className="col-md-12 row">
                             <thead className="col-md-12 row">
                                 <tr className="col-md-12 row">
                                     <th className="col-md-7">Patient</th>
@@ -207,7 +319,7 @@ export default class MesPatients extends React.Component{
                                     </td>
                                 </tr>
                             </tfoot>
-                        </table>
+                        </table> */}
                     </div>
                 </div>
             </div>

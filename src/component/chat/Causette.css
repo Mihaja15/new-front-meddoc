@@ -124,13 +124,17 @@
     /* background: linear-gradient(180deg, rgba(27,120,149,1) 20%, rgba(57,195,239,1) 100%); */
 
     padding-top: 1px;
-    padding-left: 17px;
-    padding-right: 17px;
+    /* padding-left: 17px; */
+    /* padding-right: 17px; */
     width: 100%;
     height: 605px;
     /* border:1px solid #dadada; */
     overflow-y: scroll;
     overflow-x: hidden;
+}
+.discussion-list ul{
+    padding: 0;
+    padding-left: 20px;
 }
 .discussion-list::-webkit-scrollbar {
     width: 5px;
@@ -149,8 +153,13 @@
     overflow: hidden;
 }
 .discussion-list li:hover{
-    border:1px solid #1f86a5;
+    /* border:1px solid #ffffff; */
+    background-color: #1b789510;
     cursor: pointer;
+}
+.selected-message{
+    color: aqua;
+    background-color: #1b789510;
 }
 .profile-place{
     /* position: relative; */

@@ -16,23 +16,6 @@ import africa from '../../assets/africa.png';
 import ofab from '../../assets/partenaire/ofab.png';
 import usaid from '../../assets/partenaire/shops-plus.png';
 import zafy_tody from '../../assets/partenaire/zafy_tody.png';
-//icon banner
-import iconWhite1 from '../../assets/banner/icon/icon-white-1.png';
-import iconBlue1 from '../../assets/banner/icon/icon-blue-1.png';
-import iconWhite2 from '../../assets/banner/icon/icon-white-2.png';
-import iconBlue2 from '../../assets/banner/icon/icon-blue-2.png';
-import iconWhite3 from '../../assets/banner/icon/icon-white-3.png';
-import iconBlue3 from '../../assets/banner/icon/icon-blue-3.png';
-import iconWhite4 from '../../assets/banner/icon/icon-white-4.png';
-import iconBlue4 from '../../assets/banner/icon/icon-blue-4.png';
-import iconWhite5 from '../../assets/banner/icon/icon-white-5.png';
-import iconBlue5 from '../../assets/banner/icon/icon-blue-5.png';
-import iconWhite6 from '../../assets/banner/icon/icon-white-6.png';
-import iconBlue6 from '../../assets/banner/icon/icon-blue-6.png';
-import iconWhite7 from '../../assets/banner/icon/icon-white-7.png';
-import iconBlue7 from '../../assets/banner/icon/icon-blue-7.png';
-import iconWhite8 from '../../assets/banner/icon/icon-white-8.png';
-import iconBlue8 from '../../assets/banner/icon/icon-blue-8.png';
 
 class Home extends React.Component{
     constructor(props){

@@ -36,14 +36,14 @@ export default class PatientProfil extends React.Component{
                 if(this.state.etatShow===0){
                     const value = window.location.pathname.split('/');
                     this.setState({dataSearch:{text:value[3],district:value[4]}},function(){
-                        console.log(this.state.dataSearch);
+                        //console.log(this.state.dataSearch);
                     });
                 }
-                console.log('token = '+userSession.get('token'))
+                //console.log('token = '+userSession.get('token'))
             });
         }
         fetchGetHandler('/users/dataUser/'+userSession.get('token')).then(response=>{
-            console.log(response)
+            //console.log(response)
             if(utile.hasValue(response))
                 this.setState({user : response.data});
         });
@@ -54,12 +54,12 @@ export default class PatientProfil extends React.Component{
                 window.history.pushState("object or string", "Title", "/profil-patient/"+link+'//0');
                 const value = window.location.pathname.split('/');
                 this.setState({dataSearch:{text:value[3],district:value[4]}},function(){
-                    console.log(this.state.dataSearch);
+                    //console.log(this.state.dataSearch);
                 });
             }else{
                 window.history.pushState("object or string", "Title", "/profil-patient/"+link);
                 this.setState({dataSearch:null},function(){
-                    console.log(this.state.dataSearch);
+                    //console.log(this.state.dataSearch);
                 });
             } 
         });
@@ -95,8 +95,8 @@ export default class PatientProfil extends React.Component{
                             <li onClick={()=>this.linkInMenu('proches')} className={this.isActive(5)}><FontAwesomeIcon icon={faUserFriends}/> Mes proches</li>
                             <li onClick={()=>this.linkInMenu('causette')}  className={this.isActive(4)}><FontAwesomeIcon icon={faCommentMedical} /> Causette</li>
                             {/* <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li> */}
-                            {/* <a href="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
-                            <a href="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a> */}
+                            {/* <Link to="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
+                            <Link to="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a> */}
                                         
                         </ul>
                     </div>
@@ -109,8 +109,8 @@ export default class PatientProfil extends React.Component{
                             <li onClick={()=>this.linkInMenu('proches')} className={this.isActive(5)}><FontAwesomeIcon icon={faUserFriends}/></li>
                             <li onClick={()=>this.linkInMenu('causette')}  className={this.isActive(4)}><FontAwesomeIcon icon={faCommentMedical} /></li>
                             {/* <li onClick={()=>this.linkInMenu('compte')} className={this.isActive(1)}><FontAwesomeIcon icon={faUserAlt} /> Gérer mon compte</li> */}
-                            {/* <a href="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
-                            <a href="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a> */}
+                            {/* <Link to="#assistance" onClick={()=>this.linkInMenu('assistance')} className={this.isActive(7)}><button className="btn btn-info form-control" style={{backgroundColor: "#39c3ef",borderColor: "#39c3ef"}}><FontAwesomeIcon icon={faHeadset} /> Assistance</button></a>
+                            <Link to="/" onClick={()=>{localStorage.clear(); window.location.replace("/connexion-centre")}}><button className="btn btn-danger form-control"><FontAwesomeIcon icon={faPowerOff}/> Déconnexion </button></a> */}
                                         
                         </ul>
                     </div>

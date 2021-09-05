@@ -1,5 +1,6 @@
 import React from 'react';
 import './Alert.css';
+import {Link} from 'react-router-dom';
 
 const Alert = ({ header, bodyMsg , error}) => {
     const [show, setShow] = React.useState(true);
@@ -20,7 +21,7 @@ const Alert = ({ header, bodyMsg , error}) => {
                     <p>{bodyMsg}</p>
                 </div>
                 <div className="alert-footer">
-                    <a href="#0" onClick={handleClick}>OK</a>
+                    <Link to="" onClick={handleClick}>OK</Link>
                 </div>
             </div>
         </div>

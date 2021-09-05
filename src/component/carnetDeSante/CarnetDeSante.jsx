@@ -108,7 +108,7 @@ class CarnetDeSante extends Component{
                                                 if(result.type==='application/pdf'){
                                                     return (
                                                         <div className="col-md-3 col-sm-6 col-xs-12 document-carnet-medicale-mere" key={a} >               
-                                                            {/* <div className="document-carnet-medicale-mere-img"> <a href={'http://localhost:3000/uploads/'+result.nomDocument} target="_blank"><img data-tip data-for='textTelechargementFichierv1' src={'/uploads/pdf.jpg'} alt={result.nomDocument}/></a> </div> */}
+                                                            {/* <div className="document-carnet-medicale-mere-img"> <Link to={'http://localhost:3000/uploads/'+result.nomDocument} target="_blank"><img data-tip data-for='textTelechargementFichierv1' src={'/uploads/pdf.jpg'} alt={result.nomDocument}/></a> </div> */}
                                                             <div className="document-carnet-medicale-mere-img"> <a href="#!" onClick={()=> window.open('/uploads/'+result.nomDocumen, "_blank")}><img data-tip data-for='textTelechargementFichierv1' src={'/uploads/pdf.jpg'} alt={result.nomDocument}/></a> </div>
                                                             <div className="document-carnet-medicale-mere-name">{this.getOriginalNameFichier(result.nomDocument)} <br/> {result.type} </div>
                                                             <ReactTooltip id='textTelechargementFichierv1' type='error'>
@@ -119,7 +119,7 @@ class CarnetDeSante extends Component{
                                                 }else{
                                                     return (
                                                         <div className="col-md-3 col-sm-6 col-xs-12 document-carnet-medicale-mere" key={a} >               
-                                                            {/* <div className="document-carnet-medicale-mere-img"><a href={'http://localhost:3000/uploads/'+result.nomDocument}  target="_blank" download={result.nomDocument}><img data-tip data-for='textTelechargementFichierv2' src={'/uploads/'+result.nomDocument} alt={result.nomDocument}/></a> </div> */}
+                                                            {/* <div className="document-carnet-medicale-mere-img"><Link to={'http://localhost:3000/uploads/'+result.nomDocument}  target="_blank" download={result.nomDocument}><img data-tip data-for='textTelechargementFichierv2' src={'/uploads/'+result.nomDocument} alt={result.nomDocument}/></a> </div> */}
                                                             <div className="document-carnet-medicale-mere-img"><a href="#!" onClick={()=> window.open('/uploads/'+result.nomDocumen, "_blank")}><img data-tip data-for='textTelechargementFichierv2' src={'/uploads/'+result.nomDocument} alt={result.nomDocument}/></a> </div>
                                                             <div className="document-carnet-medicale-mere-name">{this.getOriginalNameFichier(result.nomDocument)} <br/> {result.type} </div>
                                                             <ReactTooltip id='textTelechargementFichierv2' type='error'>
@@ -287,10 +287,10 @@ class CarnetDeSante extends Component{
         fetchGet('/users/dataUser/'+authUser.getToken()).then(data=>{
             
             if(data!==null){
-                console.log("Users : ",data);
+                //console.log("Users : ",data);
                 this.setState({user : data});
                 fetchGet('/covid/vaccinationByIdPatient/'+authUser.getToken()).then(dataTmp=>{
-                    console.log("vaccination : ",dataTmp);
+                    //console.log("vaccination : ",dataTmp);
                     this.setState({vaccination : dataTmp});
                 })
             }

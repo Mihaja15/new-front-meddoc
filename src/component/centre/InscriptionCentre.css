@@ -165,9 +165,9 @@ div span select{
     /* align-items: center; */
     /* justify-content: center; */
     text-align: center;
-    margin-left: -15px;
-    padding: 0;
-    padding-top: 5px;
+    /* margin-left: -15px; */
+    /* padding: 0; */
+    /* padding-top: 5px; */
 }
 .each-line-contact select{
     font-size: 12px;
@@ -176,6 +176,15 @@ div span select{
 .each-line-contact input{
     border: 0;
     border-bottom: 1px solid #dbdbdb;
+}
+.each-line-contact textarea{
+    border: 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+.each-line-contact a{
+    position: absolute;
+    top:0;
+    right: 0;
 }
 .each-line-experience{
     display: flex;

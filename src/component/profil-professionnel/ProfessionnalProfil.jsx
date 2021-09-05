@@ -46,35 +46,35 @@ class ProfessionnalProfil extends Component{
         const pathValue=window.location.pathname.split('/');
         if(pathValue.length===4){
             const url='/professionnel/'+decodeURI(pathValue[1]).replaceAll('_',' ')+'/'+decodeURI(pathValue[2]).replaceAll('_',' ')+'/'+decodeURI(pathValue[3]).replaceAll('_',' ');
-            console.log(url)
+            //console.log(url)
             fetchGet(url).then(data=>{
                 if(utile.hasValue(data)){
-                    console.log(data);
+                    //console.log(data);
                     this.setState({proData:data}, function(){
                         // const dateJour = new Date();
                         // fetchGet('/adresse/'+this.state.proData.idCentre).then(adresse=>{
                             if(this.state.proData.personne.adresse.length>0)
                                 this.setState({adresseCentre:this.state.proData.personne.adresse[0]},function(){
-                                    console.log('adresse ',this.state.adresseCentre);
+                                    //console.log('adresse ',this.state.adresseCentre);
                                 });
                         // });
                         fetchGet('/extra/contact/byId/'+this.state.proData.idUser).then(contact=>{
                             this.setState({listContact:contact},function(){
-                                console.log('list contact ',this.state.listContact);
+                                //console.log('list contact ',this.state.listContact);
                             });
                         });
                         fetchGet('/professionnel/emploi-temps/'+this.state.proData.idUser).then(edt=>{
                             if(edt!==null)
                                 this.setState({listEdt:edt},function(){
-                                    console.log('edt ',this.state.listEdt);
+                                    //console.log('edt ',this.state.listEdt);
                                 });
                         });
-                        // console.log(localStorage.getItem('idUser'));
+                        // //console.log(localStorage.getItem('idUser'));
                         // this.setState({idUser:localStorage.getItem('idUser')},function(){
                         if(userSession.isLogged()){
-                            // console.log(localStorage.getItem('idUser'));
+                            // //console.log(localStorage.getItem('idUser'));
                             fetchGetHandler('/users/proche/'+userSession.get('token')+'/'+0+'/'+0).then(data=>{
-                                console.log(data)
+                                //console.log(data)
                                 if(data!=null){
                                     this.setState({ listProche: data , beneficiaire: userSession.get('token'), idUser: userSession.get('token')});
                                 }else{
@@ -85,23 +85,23 @@ class ProfessionnalProfil extends Component{
                         // });
                         // fetchGet('/emploieTemps/by-medecin/'+this.state.proData.idMedecin+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                         //     this.setState({jour:edt},function(){
-                        //         console.log('EDT : ',this.state.jour);
+                        //         //console.log('EDT : ',this.state.jour);
                         //     });
                         // });
                         fetchGet('/professionnel/schedule/'+this.state.proData.idUser+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                             this.setState({jour:edt},function(){
-                                console.log('EDT : ',this.state.jour);
+                                //console.log('EDT : ',this.state.jour);
                             });
                         });
                         // fetchGet('/professionnel/listSpecialite').then(response=>{
                         //     this.setState({specialites:response},function(){
-                        //         console.log('EDT : ',this.state.specialites);
+                        //         //console.log('EDT : ',this.state.specialites);
                         //     });
                         // });
                     })
                 }
                 // this.setState({jour:edt},function(){
-                //     console.log('EDT : ',this.state.jour);
+                //     //console.log('EDT : ',this.state.jour);
                 // });
             });
         }
@@ -121,7 +121,7 @@ class ProfessionnalProfil extends Component{
         this.setState({dateFirst:jour}, function(){
             fetchGet('/professionnel/schedule/'+this.state.proData.idUser+'/'+this.state.dateFirst.getDay()+'/'+this.state.dateFirst.getFullYear()+'-'+(this.state.dateFirst.getMonth()+1)+'-'+this.state.dateFirst.getDate()).then(edt=>{
                 this.setState({jour:edt},function(){
-                    console.log('EDT : ',this.state.jour);
+                    //console.log('EDT : ',this.state.jour);
                 });
             });
         })
@@ -138,7 +138,7 @@ class ProfessionnalProfil extends Component{
     }
     takeAppointment=(date,heure)=>{
         const dateNow = new Date();
-        console.log(dateNow.getTime()+' > '+date.getTime());
+        //console.log(dateNow.getTime()+' > '+date.getTime());
         if(this.state.beneficiaire===null||this.state.beneficiaire===undefined||this.state.beneficiaire===""){
             alert('Vous devez vous connecter!');
             return;
@@ -191,10 +191,10 @@ class ProfessionnalProfil extends Component{
                 statut:100
             };
             if(this.state.idUser===this.state.beneficiaire) data.idPatient=null;
-            console.log('prendre rdv : ',data);
+            //console.log('prendre rdv : ',data);
             fetchPost('/professionnel/add-appointment',data).then(result=>{
                 // window.location.replace('/profil-patient/rendez-vous');
-                console.log(result)
+                //console.log(result)
                 if(result.statut === 200){
                     alert(''+result.message);
                     this.setState({etatErrorRdv : false, errorRdv : ''});
@@ -215,7 +215,7 @@ class ProfessionnalProfil extends Component{
                 <div className="confirmation-content" style={{display:this.state.showConfirmation?"block":"none"}}>
                     <div className="dialog-box">
                         <div className="confirmation-header" style={{backgroundColor:"#1b7895"}}>
-                            <h2>{'Confirmation de rendez-vous'}</h2>
+                            {'Confirmation de rendez-vous'}
                         </div>
                         <div className="confirmation-body">
                             <p>{'Voulez-vous confirmer votre rendez-vous avec '+(utile.hasValue(this.state.proData)?this.state.proData.personne.user.pseudo:'')+' le '+utile.formatDateText(new Date(this.state.dateRdv))+' à '+this.state.heureRdv}</p>
@@ -230,7 +230,7 @@ class ProfessionnalProfil extends Component{
                 {/* <div className="confirmation-content" style={{display:this.state.showConfirmation?"block":"none"}}>
                     <div className="dialog-box">
                         <div className="confirmation-header" style={{backgroundColor:"#1b7895"}}>
-                            <h2>{'Confirmation de rendez-vous'}</h2>
+                            {'Confirmation de rendez-vous'}
                         </div>
                         <div className="confirmation-body">
                             <p>{'Voulez-vous confirmer votre rendez-vous avec '+(utile.hasValue(this.state.proData)?this.state.proData.personne.user.pseudo:'')+' le '+utile.formatDateText(new Date(this.state.dateRdv))+' à '+this.state.heureRdv}</p>
@@ -256,13 +256,13 @@ class ProfessionnalProfil extends Component{
                         <div className="col-md-8 medecin-left-container">
                         <div className="col-md-12 presentation-info row">
                                 <div className="col-md-7">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faCoins}/></th> <th>Frais de consultation</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faCoins}/></th> <th>Frais de consultation</th>
                                     <table>
                                         <tbody>
                                         {
                                             utile.hasValue(this.state.proData)?this.state.proData.fraisConsultation.map((frais,i)=>{
                                                 return(
-                                                    <tr key={i}><th>{this.state.proData.specialite.libelle} {frais.typeConsultation.libelle}</th><td>{': Ar '+frais.frais}</td></tr>
+                                                    <tr key={i}><th>{this.state.proData.specialite.libelle} {frais.typeConsultation.libelle}</th><td>{': Ar '+utile.numStr(frais.frais)}</td></tr>
                                                 )
                                             }):''
                                         }
@@ -270,7 +270,7 @@ class ProfessionnalProfil extends Component{
                                     </table>
                                 </div>
                                 <div className="col-md-5">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faCreditCard}/></th> <th>Mode de paiement</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faCreditCard}/></th> <th>Mode de paiement</th>
                                     <ul>
                                         {
                                             utile.hasValue(this.state.proData)?this.state.proData.modePaiement.map((mode,i)=>{
@@ -284,11 +284,11 @@ class ProfessionnalProfil extends Component{
                             </div>
                             <div className="col-md-12 presentation-info row">
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faInfo}/></th> <th>Présentation générale</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faInfo}/></th> <th>Présentation générale</th>
                                     <p>{utile.hasValue(this.state.proData)?this.state.proData.informationMedecin:''}</p>
                                 </div>
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faLanguage}/></th> <th>Langues parlées</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faLanguage}/></th> <th>Langues parlées</th>
                                     <ul>
                                         {
                                             utile.hasValue(this.state.proData)?this.state.proData.personne.langue.map((lang,i)=>{
@@ -300,7 +300,7 @@ class ProfessionnalProfil extends Component{
                                     </ul>
                                 </div>
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faGraduationCap}/></th> <th>Diplômes</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faGraduationCap}/></th> <th>Diplômes</th>
                                     <table>
                                         <tbody>
                                             {
@@ -314,7 +314,7 @@ class ProfessionnalProfil extends Component{
                                     </table>
                                 </div>
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faLevelUpAlt}/></th> <th>Expériences</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faLevelUpAlt}/></th> <th>Expériences</th>
                                     <table>
                                         <tbody>
                                         {
@@ -330,13 +330,13 @@ class ProfessionnalProfil extends Component{
                             </div>
                             {/* <div className="col-md-12 presentation-info row">
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faInfo}/></th> <th>Présentation générale</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faInfo}/></th> <th>Présentation générale</th>
                                     <p>{utile.hasValue(this.state.proData)?this.state.proData.informationMedecin:''}</p>
                                 </div>
                             </div> */}
                             <div className="col-md-12 presentation-info row">
                                 <div className="col-md-7">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faCompass}/></th> <th className='subtitle-place'>Information d'accès</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faCompass}/></th> <th className='subtitle-place'>Information d'accès</th>
                                     <p>{this.state.adresseCentre!==null?this.state.adresseCentre.informationAdresse:''}</p>
                                     <p>District {this.state.adresseCentre!==null?this.state.adresseCentre.district.nomDistrict:''}</p>
                                     <p>{this.state.adresseCentre!==null?this.state.adresseCentre.informationAcces:''}</p>
@@ -364,7 +364,7 @@ class ProfessionnalProfil extends Component{
                             </div>
                             <div className="col-md-12 presentation-info row">
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faAddressCard}/></th> <th>Contacts</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faAddressCard}/></th> <th>Contacts</th>
                                     <table>
                                         <tbody>
                                         <tr style={{display:'flex',justifyContent:'center'}}>
@@ -393,7 +393,7 @@ class ProfessionnalProfil extends Component{
                                     </table>
                                 </div>
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faAddressCard}/></th> <th>Site web et réseaux sociaux</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faAddressCard}/></th> <th>Site web et réseaux sociaux</th>
                                     <table>
                                         <tbody>
                                         <tr>
@@ -437,7 +437,7 @@ class ProfessionnalProfil extends Component{
                                     </table>
                                 </div>
                                 <div className="col-md-12">
-                                    <h2><th className='icon-place'><FontAwesomeIcon icon={faBusinessTime}/></th> <th>Horaires</th></h2>
+                                    <th className='icon-place'><FontAwesomeIcon icon={faBusinessTime}/></th> <th>Horaires</th>
                                     <table>
                                         <thead>
                                             {

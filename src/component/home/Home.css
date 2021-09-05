@@ -167,6 +167,14 @@
         /* border-top-right-radius: 0px;
         border-bottom-right-radius: 0px; */
         border-radius: 10px;
+    }    
+    .home-text h1{
+        margin-bottom: 50px;
+        text-align: center;
+        font-family: 'MontSerrat',sans-serif;
+        font-weight: 700;
+        font-size: 5vh;
+        margin-top: 7%;
     }
 }
 .banner-top{
@@ -189,7 +197,7 @@
     justify-content: center;
     /* margin-top: -40vh; */
     width: 100%;
-    min-height: 110vh;
+    /* min-height: 100vh; */
     /* right: 5vh; */
     padding: 0;
     /* align-items: center; */

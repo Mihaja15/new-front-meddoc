@@ -131,7 +131,7 @@ class RechercheMedecin extends Component{
                                             {this.getUrlPhoto(dataTmp.medecinData.user.profilPicture)}
                                         </div>
                                         <div className="specialiteMedecinRechercheMedecin">{this.getSpecialite(dataTmp.medecinData.fraisConsultation)}</div>
-                                        <div className="nameMedecinRechercheMedecin"><a href='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}>{dataTmp.medecinData.user.nom+' '+dataTmp.medecinData.user.prenoms}</a></div>
+                                        <div className="nameMedecinRechercheMedecin"><Link to='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}>{dataTmp.medecinData.user.nom+' '+dataTmp.medecinData.user.prenoms}</a></div>
                                         <div className="adresseMedecinRechercheMedecin">{dataTmp.medecinData.user.adresse.addrValue}</div>
                                         <div className="buttonMedecinRechercheMedecin"><a className=" popup-with-move-anim a1" href="#0" onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}>Prendre rendez-vous</a></div>
                                     </div>
@@ -163,7 +163,7 @@ class RechercheMedecin extends Component{
                                                         {
                                                         dataTmp.emploiDuTemps.map((dataEmploi,i)=>{
                                                                 if(dataEmploi.timeStartTop>0 && dataEmploi.timeStopTop>0){
-                                                                    return <td key={i} className="thV2emploiDuTempsRechercheMedecin"><a href={'/prendre-rdv?'+dataTmp.medecinData.idMedecin+'&'+this.getDateTmp(''+dataEmploi.dateJour,true)+'&matin'}><div className="tdemploiDuTempsRechercheMedecin">{dataEmploi.timeStartTop}h à {dataEmploi.timeStopTop}h</div></a></td>
+                                                                    return <td key={i} className="thV2emploiDuTempsRechercheMedecin"><Link to={'/prendre-rdv?'+dataTmp.medecinData.idMedecin+'&'+this.getDateTmp(''+dataEmploi.dateJour,true)+'&matin'}><div className="tdemploiDuTempsRechercheMedecin">{dataEmploi.timeStartTop}h à {dataEmploi.timeStopTop}h</div></a></td>
                                                                 }else{
                                                                     return <td className="thV2emploiDuTempsRechercheMedecin" key={i}><div className="tdemploiDuTempsRechercheMedecin">indisponible</div></td>
                                                                 }
@@ -176,7 +176,7 @@ class RechercheMedecin extends Component{
                                                         {
                                                         dataTmp.emploiDuTemps.map((dataEmploi,i)=>{
                                                                 if(dataEmploi.timeStartBottom>0 && dataEmploi.timeStopBottom>0){
-                                                                    return <td key={i} className="thV2emploiDuTempsRechercheMedecin"><a href={'/prendre-rdv?'+dataTmp.medecinData.idMedecin+'&'+this.getDateTmp(''+dataEmploi.dateJour,true)+'&midi'}><div className="tdemploiDuTempsRechercheMedecin">{dataEmploi.timeStartBottom}h à {dataEmploi.timeStopBottom}h</div></a></td>
+                                                                    return <td key={i} className="thV2emploiDuTempsRechercheMedecin"><Link to={'/prendre-rdv?'+dataTmp.medecinData.idMedecin+'&'+this.getDateTmp(''+dataEmploi.dateJour,true)+'&midi'}><div className="tdemploiDuTempsRechercheMedecin">{dataEmploi.timeStartBottom}h à {dataEmploi.timeStopBottom}h</div></a></td>
                                                                 }else{
                                                                     return <td className="thV2emploiDuTempsRechercheMedecin" key={i}><div className="tdemploiDuTempsRechercheMedecin">indisponible</div></td>
                                                                 }
@@ -220,7 +220,7 @@ class RechercheMedecin extends Component{
             return (
                 <MapContainer center={this.state.position} zoom={10} scrollWheelZoom={true}>
                     <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    attribution='&copy; <Link to="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     {
@@ -265,30 +265,30 @@ class RechercheMedecin extends Component{
         }
     }// google map
     ValueSearsh=(e,type)=>{
-        console.log(e.target.value)
+        //console.log(e.target.value)
         this.setState({ [type]: e.target.value },function (){
             const date=new Date();
-            console.log('specialite:'+this.state.typeMedecin+' type consultation:'+this.state.typeConsultation+' disponibilite:'+this.state.semaine+' langue:'+this.state.langue)
+            //console.log('specialite:'+this.state.typeMedecin+' type consultation:'+this.state.typeConsultation+' disponibilite:'+this.state.semaine+' langue:'+this.state.langue)
             // const  urls='/medecin/searchMedecin/'+type+'/'+e.value+'/'+date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate();
             const  urls='/medecin/recherche-avancee-medecin/'+this.state.typeMedecin+'/'+this.state.typeConsultation+'/'+this.state.semaine+'/'+this.state.langue+'/'+this.state.province+'/'+this.state.text+'/'+date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate();
             fetchGet(urls+'/1').then(data=>{
                 if(data!==null && data!==undefined){
                     if(data.content !==null && data.content !==undefined){
                         this.setState({dataMedecin : data.content,url : urls,activePage : 1, totalPage : data.nbPage,nbElement : data.nbElement});
-                        console.log('rechercherNew : ', data);
+                        //console.log('rechercherNew : ', data);
                     }
                 }
             });
         })
         // const date=new Date();
-        // console.log('specialite:'+this.state.typeMedecin+' type consultation:'+this.state.typeConsultation+' disponibilite:'+this.state.semaine+' langue:'+this.state.langue)
+        // //console.log('specialite:'+this.state.typeMedecin+' type consultation:'+this.state.typeConsultation+' disponibilite:'+this.state.semaine+' langue:'+this.state.langue)
         // // const  urls='/medecin/searchMedecin/'+type+'/'+e.value+'/'+date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate();
         // const  urls='/medecin/recherche-avancee-medecin/'+type+'/'+e.value+'/'+date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate();
         // fetchGet(urls+'/1').then(data=>{
         //     if(data!==null && data!==undefined){
         //         if(data.content !==null && data.content !==undefined){
         //             this.setState({dataMedecin : data.content,url : urls,activePage : 1, totalPage : data.nbPage,nbElement : data.nbElement});
-        //             console.log('rechercherNew : ', data);
+        //             //console.log('rechercherNew : ', data);
         //         }
         //     }
         // });
@@ -302,11 +302,11 @@ class RechercheMedecin extends Component{
             if(data!==null && data!==undefined){
                 if(data.content !==null && data.content !==undefined){
                     this.setState({dataMedecin : data.content,url : this.state.url,activePage : pageNumber, totalPage : data.nbPage,nbElement : data.nbElement}, function(){
-                        console.log('count : ', this.state.dataMedecin.length);
+                        //console.log('count : ', this.state.dataMedecin.length);
                         if(this.state.dataMedecin.length > 0) this.setState({hiddenMap:false});
                         else this.setState({hiddenMap:true});
                     });
-                    console.log('rechercherNew : ', data);
+                    //console.log('rechercherNew : ', data);
                 }
                 if(data.content.length > 0) this.setState({hiddenMap:false});
                 else this.setState({hiddenMap:true});
@@ -325,7 +325,7 @@ class RechercheMedecin extends Component{
         // }else if (window.pageYOffset > 140 && window.pageYOffset < (scrollHeight-window.innerHeight-260)) {
         //     this.setState({ nav: 'fixed' , tops: '100px'});
         // }else{
-        //     console.log('ato')
+        //     //console.log('ato')
         //     this.setState({ nav: 'absolute' , tops:(scrollHeight-window.innerHeight-480)+'px'});
         // }
     }
@@ -353,7 +353,7 @@ class RechercheMedecin extends Component{
                         counts.push({indice : a,countNP : new Date()});
                     }
                     this.setState({dataMedecin : data.content,count : counts,url : urls,activePage : 1, totalPage : data.nbPage,nbElement : data.nbElement});
-                    console.log('rechercherNew : ', data);
+                    //console.log('rechercherNew : ', data);
                     if(dataTmp.length > 0){
                         this.setState({hiddenMap:false,position:[dataTmp[0].medecinData.user.adresse.latitude,dataTmp[0].medecinData.user.adresse.longitude]});
                     } else this.setState({hiddenMap:true});
@@ -378,13 +378,13 @@ class RechercheMedecin extends Component{
     componentDidMount() {
         window.addEventListener("scroll", this.handleScroll);
         // const values = window.location.pathname.split('/');
-        console.log(this.props.dataFind);
+        //console.log(this.props.dataFind);
         // if(values[2]!==null || values[3]!==null || values[2]!==undefined || values[3]!==undefined || values[2]!=='' || values[3]!==''){
         if(this.props.dataFind!==null){
             this.setState({text:decodeURI(this.props.dataFind.text.toString()),province:this.props.dataFind.province},function(){
                 this.searchTextAndProvince(this.state.text,this.state.province);
             })
-            console.log('rechercherNew : ', this.props.dataFind);
+            //console.log('rechercherNew : ', this.props.dataFind);
             // this.searchTextAndProvince(values[2],values[3]);
             // this.searchTextAndProvince(this.props.dataFind.text,this.props.dataFind.province);
         }else{
@@ -399,7 +399,7 @@ class RechercheMedecin extends Component{
                             counts.push({indice : a,countNP : new Date()});
                         }
                         this.setState({dataMedecin : data.content,count : counts,url : urls,activePage : 1, totalPage : data.nbPage,nbElement : data.nbElement});
-                        console.log('activePage : '+data.page +', totalPage : '+data.nbPage+' , nbElement : '+data.nbElement+'  , rechercherNew : ', data);
+                        //console.log('activePage : '+data.page +', totalPage : '+data.nbPage+' , nbElement : '+data.nbElement+'  , rechercherNew : ', data);
                     }
                 }
             });

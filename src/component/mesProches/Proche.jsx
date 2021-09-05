@@ -44,13 +44,13 @@ export default class Proche extends React.Component{
         }
     }
     componentDidMount(){
-        // console.log(this.state.listUser)
+        // //console.log(this.state.listUser)
         this.setState({showResult:false})
         this.setState({idUser:userSession.get('token')},function(){
             fetchGetHandler('/users/proche/'+this.state.idUser+'/'+this.state.page+'/'+this.state.size).then(data=>{
                 if(utile.hasValue(data)){
                     this.setState({ list: data , showResult:true});
-                    console.log(data)
+                    //console.log(data)
                 }else{
                     
                 }
@@ -72,7 +72,7 @@ export default class Proche extends React.Component{
             fetchGet('/users/proche/'+this.state.idUser+'/'+this.state.page+'/'+this.state.size).then(data=>{
                 if(data!=null){
                     this.setState({ list: data });
-                    console.log(data)
+                    //console.log(data)
                 }else{
                     
                 }
@@ -98,9 +98,9 @@ export default class Proche extends React.Component{
                 this.setState({province:idProvince});
                 fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(datas=>{
                     if(datas!=null){
-                        console.log(datas)
+                        //console.log(datas)
                         this.setState({ listDist: datas, district: data[indice].proche.adresse[0].district.idDistrict },function(){
-                            console.log(this.state.district);
+                            //console.log(this.state.district);
                         });
                     }
                 });
@@ -129,9 +129,9 @@ export default class Proche extends React.Component{
                 this.setState({province:idProvince});
                 fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(datas=>{
                     if(datas!=null){
-                        console.log(datas)
+                        //console.log(datas)
                         this.setState({ listDist: datas, district: data[indice].proche.adresse[0].district.idDistrict},function(){
-                            console.log(this.state.district);
+                            //console.log(this.state.district);
                         });
                     }
                 });

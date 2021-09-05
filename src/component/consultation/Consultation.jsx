@@ -168,7 +168,7 @@ export default class Consultation extends React.Component{
     }
     handleChangeSelectPrescription=(e)=>{
         this.setState({selectMedicament :e});   
-        console.log(e)
+        //console.log(e)
     }
     onclickSelectPrescription=()=>{
         let e =this.state.selectMedicament;
@@ -186,7 +186,7 @@ export default class Consultation extends React.Component{
                 medList.push({medicament:{idMedicament:e.value},valeur:this.state.dose,unite:this.state.unite,matin:this.state.matin, midi:this.state.midi, soir:this.state.soir});
                 this.setState({prescription : list,medicaments:medList});
             }
-            console.log(list);
+            //console.log(list);
         }
     }
     deleteprescription=(i)=>{
@@ -206,11 +206,11 @@ export default class Consultation extends React.Component{
     }
     componentDidMount(){   
         let url = window.location.pathname.split('/');
-        console.log(url.length === 6)
+        //console.log(url.length === 6)
         if(url.length === 6){
             let id = url[5];
             fetchGetHandler('/professionnel/idrdv/'+utile.decrypteId(id)).then(data=>{
-                console.log(data)
+                //console.log(data)
                 this.setState({rdv : data});
             });
             this.getSymptome();
@@ -227,7 +227,7 @@ export default class Consultation extends React.Component{
                         idSymptome:e[i].value
                     })
                 }
-                console.log(list);
+                //console.log(list);
                 this.setState({ [param]: list });
             }else
                 this.setState({ [param]: null });
@@ -239,7 +239,7 @@ export default class Consultation extends React.Component{
                         idMaladie:e[i].value
                     })
                 }
-                console.log(list);
+                //console.log(list);
                 this.setState({ [param]: list });
             }else
                 this.setState({ [param]: null });
@@ -261,14 +261,14 @@ export default class Consultation extends React.Component{
             prochainRdv:this.state.prochainRdv,
             repos:this.state.repos
         }
-        console.log(data)
+        //console.log(data)
         fetchPostHeader('/professionnel/add-consultation',data).then(data=>{
-            console.log(data)
+            //console.log(data)
             window.location.pathname='/professionnel/'+utile.valueToLink(userSession.getCookie('pseudo'))+'/agenda/'+utile.formatDateDash(new Date());
         });
     }
     render(){
-        // console.log('mlfmdp : ',this.state.rdv);
+        // //console.log('mlfmdp : ',this.state.rdv);
         return(
             <div className="principal_container_in_page_consultatio">
                 <div className="son_principal_container_in_page_consultatio" >

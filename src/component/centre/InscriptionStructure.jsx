@@ -143,27 +143,27 @@ export default class InscriptionStructure extends React.Component{
             fetchPost('/covid/ajout-centre',dataCentre).then(result=>{
                 if(result.statut === 200){
                     fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{
-                        console.log(mm);
+                        //console.log(mm);
                         this.setState({disableButton:false});
                         window.location.replace('/connexion-centre');
                     }).catch(error=>{
-                        console.log(error);
+                        //console.log(error);
                         this.setState({disableButton:false});
                     });
                 }else{
                     this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
                 }
             }).catch(error=>{
-                console.log(error)
+                //console.log(error)
                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
             });
         }
         // if(dataUser!==null && this.state.file!=null){
         //     dataUser.profilPicture=''+this.state.fileName;
-        //     console.log('dataUser : ',dataUser);
+        //     //console.log('dataUser : ',dataUser);
         //     fetchPost('/medecin/insertionMedecin',dataUser).then(resultatTmp=>{
         //         if(resultatTmp.status === 200){
-        //             fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{});console.log("resultatTmp.codeValidation : "+resultatTmp.codeValidation);
+        //             fetchPostV2('http://localhost:5000/photo',data).then((mm)=>{});//console.log("resultatTmp.codeValidation : "+resultatTmp.codeValidation);
         //             //fetch('http://localhost:5000/photo', {method: 'POST',body: data})//
         //             this.setState({fileName:''+date.getDate()+''+date.getMonth()+''+date.getFullYear()+''+this.state.fileName,erreurMessage : "",erreurEtat: false,codeValidation : resultatTmp.codeValidation,etatMenu : 2});
         //             localStorage.setItem('tel',''+this.state.telephone.valuesText);
@@ -200,7 +200,7 @@ export default class InscriptionStructure extends React.Component{
         navigator.geolocation.getCurrentPosition((position) => {
             let lat = position.coords.latitude
             let lng = position.coords.longitude
-            console.log("getCurrentPosition Success " + lat + lng) // logs position correctly
+            //console.log("getCurrentPosition Success " + lat + lng) // logs position correctly
             this.setState({
                 latitude: lat,
                 longitude: lng
@@ -279,7 +279,7 @@ export default class InscriptionStructure extends React.Component{
                     data[indice].bottomStart=valeur;
             }
 			this.setState({emploiTemps: data},function(){
-                console.log(this.state.emploiTemps)
+                //console.log(this.state.emploiTemps)
             });
 		}
 	}
@@ -455,7 +455,7 @@ export default class InscriptionStructure extends React.Component{
                                     <MapContainer center={[this.state.latitude,this.state.longitude]} zoom={15} scrollWheelZoom={true}>
                                         <MyComponent dataCenter={this.setDataCenter} />
                                         <TileLayer
-                                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                        attribution='&copy; <Link to="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
                                         <Marker position={[this.state.latitude,this.state.longitude]}  icon={new L.Icon({
@@ -474,7 +474,7 @@ export default class InscriptionStructure extends React.Component{
                                 </div>
                                 </div>
                                 <div className="form-group col-md-12">
-                                    <span className="form-control inscription-label-other col-md-12">Autres contacts <a href="#ajout-contact" className="add-button-contact" onClick={()=>this.addContact()}>Ajouter</a></span>
+                                    <span className="form-control inscription-label-other col-md-12">Autres contacts <Link to="#ajout-contact" className="add-button-contact" onClick={()=>this.addContact()}>Ajouter</a></span>
                                     <div className = "row col-md-12 contact-group">
                                         {this.state.listContact.map((contact,j)=>{
                                             return (
@@ -485,7 +485,7 @@ export default class InscriptionStructure extends React.Component{
                                                     })}
                                                 </select>
                                                 <input type="text" className="col-md-6" value={contact.contact} onChange={this.changeContactText.bind(this,j)}/>
-                                                <a href="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeContact(j)}>Supprimer</a>
+                                                <Link to="#ajout-contact" className="remove-button-contact col-md-2" onClick={()=>this.removeContact(j)}>Supprimer</a>
                                             </div>)
                                         })}
                                     </div>
@@ -518,7 +518,7 @@ export default class InscriptionStructure extends React.Component{
                             </div>
                             <div className="form-group col-md-12 row">
                                 <div hidden={!this.state.erreurEtat} className="textDePreventionInscriptionMedecin">{this.state.erreurMessage}</div>
-                                <div className="textDePreventionInscriptionMedecin" hidden={this.state.erroruser<=1}>{this.state.errorusersms} <a href="/login-meddoc" hidden={this.state.erroruser!==2}>sinon connectez vous on cliquant ici</a></div>
+                                <div className="textDePreventionInscriptionMedecin" hidden={this.state.erroruser<=1}>{this.state.errorusersms} <Link to="/login-meddoc" hidden={this.state.erroruser!==2}>sinon connectez vous on cliquant ici</a></div>
                                 <div className="boutonConnecterLogin row colDivSupplementaireInscriptionMedecin">
                                     <button className="bouton-solid-reg col-md-6 popup-with-move-anim a1" hidden={this.state.disableButton} id="sonboutonConnecter" type="submit">S'inscrire</button>
                                     <div hidden={!this.state.disableButton} className="login-loader"></div>

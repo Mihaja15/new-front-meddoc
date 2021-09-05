@@ -21,8 +21,8 @@ import React, { Component } from 'react';
 //                     <p>{bodyMsg}</p>
 //                 </div>
 //                 <div className="confirmation-footer">
-//                     <a href="#0" onClick={handleClick}>Annuler</a>
-//                     <a href="#0" onClick={handleClick}>Accepter</a>
+//                     <Link to="#0" onClick={handleClick}>Annuler</a>
+//                     <Link to="#0" onClick={handleClick}>Accepter</a>
 //                 </div>
 //             </div>
 //         </div>
@@ -54,8 +54,8 @@ class Confirmation extends Component {
                         <p>{this.props.body}</p>
                     </div>
                     <div className="confirmation-footer">
-                        <a href="#0" onClick={this.handleClick(false)}>Annuler</a>
-                        <a href="#0" onClick={this.handleClick(true)}>Accepter</a>
+                        <Link to="#0" onClick={this.handleClick(false)}>Annuler</a>
+                        <Link to="#0" onClick={this.handleClick(true)}>Accepter</a>
                     </div>
                 </div>
             </div>

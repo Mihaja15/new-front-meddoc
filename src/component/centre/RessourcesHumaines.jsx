@@ -31,18 +31,18 @@ export default class RessourcesHumaines extends React.Component{
         }
     }
     componentDidMount(){
-        // console.log(this.state.listUser)
+        // //console.log(this.state.listUser)
         // this.setState({listUser:})
         this.setState({idCentre:userSession.get('token')},function(){
             fetchGetHandler('/covid/personals/'+this.state.idCentre+'/'+this.state.viewType+'/'+this.state.page+'/'+this.state.size).then(data=>{
                 if(data!=null){
                     this.setState({ list: data.content });
-                    console.log(data)
+                    //console.log(data)
                 }else{
                     
                 }
             }).catch(error=>{
-                console.log(error)
+                //console.log(error)
                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
             });
             fetchGet('/covid/list-poste').then(data=>{
@@ -55,7 +55,7 @@ export default class RessourcesHumaines extends React.Component{
             fetchGet('/covid/personals/'+this.state.idCentre+'/'+event.target.value+'/'+this.state.page+'/'+this.state.size).then(data=>{
                 if(data!=null){
                     this.setState({ list: data.content });
-                    console.log(data)
+                    //console.log(data)
                 }else{
                     
                 }

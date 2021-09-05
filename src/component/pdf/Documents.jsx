@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 });
 
 function getTypeTrame(type, data){
-    console.log(data)
+    //console.log(data)
     if(type===1){
         return(
             <Document>
@@ -126,7 +126,7 @@ function getTypeTrame(type, data){
 
 // Create Document Component
 const Documents = ({type, data}) => {
-    // console.log(data)
+    // //console.log(data)
     return(
         getTypeTrame(type,data)
     );

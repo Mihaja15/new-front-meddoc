@@ -32,7 +32,8 @@ class Causette extends Component{
             listToInput:[],
             showListToInput:false,
             max:5,
-            showPlus:false
+            showPlus:false,
+            selected:-1
         }
     }
     connect = () => {
@@ -44,7 +45,7 @@ class Causette extends Component{
     deconnection () {
         if(stompClient){
             stompClient.disconnect = (callback, headers) => {
-                console.log("deconnecter stomp");
+                //console.log("deconnecter stomp");
             }
         }
     }
@@ -92,7 +93,7 @@ class Causette extends Component{
             // liste.push(discussion);
             // this.setState({listDiscussion:liste});
             // send public message
-            console.log( 'chatMessage : ' , discussion)
+            //console.log( 'chatMessage : ' , discussion)
             stompClient.send("/app/sendNewMessage", {}, JSON.stringify(discussion));
             this.setState({messageInput : ''});
             // write = false;
@@ -103,13 +104,13 @@ class Causette extends Component{
     }  
     onMessageReceived = (payload) => {
         const message = JSON.parse(payload.body);
-        console.log(message)
+        //console.log(message)
         const dataList = this.state.listMessage;
         if(message !==null && message!==undefined && this.state.dataUser !==null && this.state.dataUser!==undefined){
             if(''+message.userSender.idUser === ''+this.state.dataUser.idUser || ''+message.userReceiver.idUser === ''+this.state.dataUser.idUser){
-                console.log(dataList);
+                //console.log(dataList);
                 dataList.unshift(message);
-                console.log(dataList);
+                //console.log(dataList);
                 // dataList[this.state.listMessage.length] = message;
                 fetchGetHandler('/discussion/listDiscussionByUser/'+userSession.get('token')+'/ /'+this.state.max).then(data=>{
                     this.setState({listMessage : dataList,listDiscussion:data});
@@ -147,7 +148,7 @@ class Causette extends Component{
                     list.push(broad);
                 }
                 this.setState({listBroadcast : list});
-                console.log('broadCast : ',list);
+                //console.log('broadCast : ',list);
             }
         }
     }
@@ -200,17 +201,17 @@ class Causette extends Component{
         })
     }
     componentDidMount(){
-        console.log(userSession.get('token'));
+        //console.log(userSession.get('token'));
         // this.setState({})
 		fetchGetHandler('/users/dataUser/'+userSession.get('token')).then(data=>{
-            console.log('type-medecin/list : ',data);
+            //console.log('type-medecin/list : ',data);
             this.setState({ dataUser: data.data },function(){
 				fetchGetHandler('/discussion/listDiscussionByUser/'+userSession.get('token')+'/ /'+this.state.max).then(dataList=>{
 					this.setState({listDiscussion:dataList},function(){
 						// if(this.state.listDiscussion.length>0){
                         //     this.setState({userDiscussion:this.state.listDiscussion[0].user},function(){
                         //         fetchGetHandler('/discussion/listMessageByUser/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
-                        //             console.log(messages);
+                        //             //console.log(messages);
                         //             this.setState({listMessage:messages});
                         //         });
                         //     });
@@ -221,13 +222,14 @@ class Causette extends Component{
         });
         this.connect();
     }
-    onClickDiscussion=(userDiscuss)=>{
+    onClickDiscussion=(userDiscuss,select)=>{
+        this.setState({selected:select});
         this.setState({userDiscussion:userDiscuss,max:5,showToInput:false},function(){
             fetchGetHandler('/discussion/listMessageByUser/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
-                console.log(messages);
+                //console.log(messages);
                 fetchGetHandler('/discussion/nombreDeDiscussion/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser).then(nb=>{
-                    this.setState({nombreDeMessage : nb});
-                    this.setState({listMessage:messages});
+                    this.setState({nombreDeMessage : nb,listMessage:messages});
+                    
                 });
             });
         })
@@ -235,7 +237,7 @@ class Causette extends Component{
     onSelectUser=(userDiscuss)=>{
         this.setState({userDiscussion:userDiscuss,max:5,showToInput:false,listToInput:[]},function(){
             fetchGetHandler('/discussion/listMessageByUser/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser+'/'+this.state.max).then(messages=>{
-                console.log(messages);
+                //console.log(messages);
                 fetchGetHandler('/discussion/nombreDeDiscussion/'+userSession.get('token')+'/'+this.state.userDiscussion.idUser).then(nb=>{
                     this.setState({nombreDeMessage : nb});
                     this.setState({listMessage:messages});
@@ -264,7 +266,7 @@ class Causette extends Component{
                                         {
                                             this.state.listDiscussion!==null&&this.state.listDiscussion!==undefined?this.state.listDiscussion.map((discussion,i)=>{
                                                 return (
-                                                    <li key={i} onClick={()=>this.onClickDiscussion(discussion.user)} className="row">
+                                                    <li key={i} onClick={()=>this.onClickDiscussion(discussion.user,i)} className={"row "+(this.state.selected===i?' selected-message':'')}>
                                                         <div className='col-md-3 profile-place'>
                                                             {/* <img src={`/uploads/${discussion.user.profilPicture!==null?discussion.user.profilPicture:'profile.jpg'}`} alt='causette profile'/> */}
                                                             <span className="mini-initial-icon">{utile.hasValue(discussion.user)?utile.getInitial(discussion.user.pseudo):''}</span>

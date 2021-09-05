@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,11 +19,12 @@ export default class Footer extends React.Component{
                         <li className="footer_content_container_fluid_ul_li">
                             <h5 className="footer_content_container_fluid_row_col_h5 footer_content_container_fluid_row_col_h5_v3">À propos de MEDDoC</h5>
                             <ul className="footer_content_container_fluid_row_col_ul">
-                                <li>Qui sommes-nous ?</li>
-                                <li>Mentions légales et CGU</li>
-                                <li>Charte de confidentialité</li>
-                                <li>Presse</li>
-                                <li>Blog</li>
+                                <li><Link to="/a-propos/qui-sommes-nous">Qui sommes-nous ?</Link></li>
+                                <li><Link to="/a-propos/mentions-legales">Mentions légales</Link></li>
+                                <li><Link to="/a-propos/conditions-generales-d-utilisation">Conditions générales d'utilisation</Link></li>
+                                <li><Link to="/a-propos/chartes-de-confidentialite">Charte de confidentialité</Link></li>
+                                <li><Link to="/a-propos/presse">Presse</Link></li>
+                                <li><Link to="/blog">Blog</Link></li>
                             </ul>
                         </li>
                         <li  className="footer_content_container_fluid_ul_li">

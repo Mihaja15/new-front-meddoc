@@ -16,7 +16,7 @@ export default class ToDoList extends React.Component{
     componentDidMount(){
         fetchGetHandler('/extra/toDoList/get').then(data=>{
             if(utile.hasValue(data)){
-                console.log(data);
+                //console.log(data);
                 this.setState({ listToDo: data });
             }
         });
@@ -37,7 +37,7 @@ export default class ToDoList extends React.Component{
             }].concat(this.state.listToDo);
             fetchPostHeader('/extra/toDoList/save',data[0]).then(response=>{
                 if(utile.hasValue(response)){
-                    console.log(response);
+                    //console.log(response);
                     // const data= this.state.listToDo;
                     // data[indice].idToDoList= response.idToDoList;
                     this.setState({ listToDo: response });
@@ -54,7 +54,7 @@ export default class ToDoList extends React.Component{
                     var id = data[indice].idToDoList;
                     data.splice(indice, 1);
                     fetchGetHandler('/extra/toDoList/delete/'+id).then(data=>{
-                        console.log(data)
+                        //console.log(data)
                         if(utile.hasValue(data))
                             this.setState({listToDo: data});
                     });
@@ -71,7 +71,7 @@ export default class ToDoList extends React.Component{
         // alert(utile.hasValue(data[indice].saved))
         if(!data[indice].saved){
             fetchPostHeader('/extra/toDoList/saveAll',data).then(response=>{
-                console.log(response)
+                //console.log(response)
                 if(utile.hasValue(response))
                     this.setState({listToDo: response});
             });
@@ -84,7 +84,7 @@ export default class ToDoList extends React.Component{
         this.setState({listToDo: data});
         // fetchPostHeader('/extra/toDoList/save',data[indice]).then(response=>{
         //     if(utile.hasValue(response)){
-        //         console.log(response);
+        //         //console.log(response);
         //         this.setState({ listToDo: response });
         //     }
         // });
@@ -96,7 +96,7 @@ export default class ToDoList extends React.Component{
         this.setState({listToDo: data});
 		// fetchPostHeader('/extra/toDoList/save',data[indice]).then(response=>{
         //     if(utile.hasValue(response)){
-        //         console.log(response);
+        //         //console.log(response);
         //         this.setState({ listToDo: response });
         //     }
         // });
@@ -106,7 +106,7 @@ export default class ToDoList extends React.Component{
         data[indice].locked= !data[indice].locked;
 		fetchPostHeader('/extra/toDoList/save',data[indice]).then(response=>{
             if(utile.hasValue(response)){
-                console.log(response);
+                //console.log(response);
                 this.setState({ listToDo: response });
             }
         });

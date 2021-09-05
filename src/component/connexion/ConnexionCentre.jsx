@@ -33,7 +33,7 @@ export default class ConnexionCentre extends React.Component{
          if(this.state.login !== "" && this.state.mdp !== ""){
             const userAuth = {identification: this.state.login,mdp: this.state.mdp}
             fetchPostNotLogged('/users/login',userAuth).then(response=>{
-                console.log(response);
+                //console.log(response);
                 if(response.statut===200){
                     if(response.role.toLowerCase()==='professionnel santé'){
                         userSession.userLogin(response.data.username,
@@ -56,7 +56,7 @@ export default class ConnexionCentre extends React.Component{
                     this.setState({disableButton:false,error : {message : response.message,activation: true}});
                 }
             }).catch(error=>{
-                console.log(error)
+                //console.log(error)
                 this.setState({disableButton:false,error : {message : error.message,activation: true}});
             });
         }
@@ -67,7 +67,7 @@ export default class ConnexionCentre extends React.Component{
              this.setState({disableButton:true,error:{activation:false}});
              const userAuth = {identification: dataIdentification,mdp: dataMdp, captchaToken:value}
              fetchPostNotLogged('/users/login',userAuth).then(response=>{
-                console.log(response)
+                //console.log(response)
                 if(response.statut===200){
                     if(response.role.toLowerCase()==='professionnel santé'){
                         userSession.userLogin(response.data.username,
@@ -93,7 +93,7 @@ export default class ConnexionCentre extends React.Component{
                     this.setState({disableButton:false,error : {message : response.message,activation: true}});
                 }
             }).catch(error=>{
-                console.log(error)
+                //console.log(error)
                 this.setState({disableButton:false,error : {message : error,activation: true}});
             });
         }

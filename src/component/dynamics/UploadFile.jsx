@@ -29,7 +29,7 @@ export default class UploadFile extends React.Component{
                 mesFichiers.splice(i,1);
                 this.setState({mesFichiers : mesFichiers})
             }
-            console.log('deletion : ',resultat);
+            //console.log('deletion : ',resultat);
         })
     }
     enregistre=(event)=>{
@@ -40,14 +40,14 @@ export default class UploadFile extends React.Component{
         this.state.selecteFiles.forEach(file=>{
             data.append("filesUpload", file);
           });
-        console.log(this.state.selecteFiles);
+        //console.log(this.state.selecteFiles);
         fetchPostV2('http://localhost:5000/fichier',data).then(response=>{ 
             event.preventDefault()
-            console.log(response);
+            //console.log(response);
             if(utile.hasValue(response)){
-                console.log('ok')
+                //console.log('ok')
             }else{
-                console.log('not ok')
+                //console.log('not ok')
             }
             // if(res.status){
             //     if(utile.hasValue(this.props.setFiles))
@@ -55,7 +55,7 @@ export default class UploadFile extends React.Component{
             //     // this.props.isUploaded(true);
             // }
         }).catch(error=>{
-            console.log(error)
+            //console.log(error)
         });
       
     }
@@ -78,7 +78,7 @@ export default class UploadFile extends React.Component{
                 // const tmp=this.state.fichierTemporaire;
                 mesFichiers.push({base : reader.result,type : file.type, name : file.name});
                 this.setState({mesFichiers : mesFichiers,selecteFiles:selected,fichierTemporaire : {base : null,file:null,type : '', name :''}},function(){
-                    console.log(this.state.selecteFiles)
+                    //console.log(this.state.selecteFiles)
                     if(utile.hasValue(this.props.setFiles))
                         this.props.setFiles(this.state.mesFichiers);
                     if(utile.hasValue(this.props.setSelectedFiles))
@@ -93,7 +93,7 @@ export default class UploadFile extends React.Component{
         mesFichiers.splice(i,1);
         const selected = this.state.selecteFiles;
         selected.splice(i,1);
-        console.log(this.state.selecteFiles);
+        //console.log(this.state.selecteFiles);
         this.setState({mesFichiers : mesFichiers, selecteFiles:selected},function(){
             if(utile.hasValue(this.props.setFiles))
                 this.props.setFiles(this.state.mesFichiers);

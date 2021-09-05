@@ -4,7 +4,6 @@ import './App.css';
 import InscriptionProfessionnel from './component/centre/InscriptionProfessionnel';
 import Profil from './component/centre/Profil';
 import Actualites from './component/actualites/Actualites';
-import Conditionutilisation from './component/condition-utilisation/Conditionutilisation';
 import Connexion from './component/connexion/Connexion';
 import ConnexionCentre from './component/connexion/ConnexionCentre';
 import Footer from './component/footer/Footer';
@@ -28,6 +27,7 @@ import Consultation from './component/consultation/Consultation';
 // import UploadFile from './component/dynamics/UploadFile';
 // import Loader from './component/alert/Loader';
 import Error404 from './component/alert/Error404';
+import Apropos from './component/apropos/Apropos';
 
 class App extends React.Component {
   constructor(props){
@@ -42,10 +42,10 @@ class App extends React.Component {
         <header className="col-md-12">{header}</header>
         <main className="col-md-12">{content}</main>
         {footer!==null?<footer className="col-md-12">{footer}</footer>:''}
-          <a href="#0" onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
+          <span onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
             {/* <i className="lni-chevron-up"></i> */}
             <FontAwesomeIcon icon={faArrowUp}/>
-          </a>
+          </span>
       </div>
     );
   } 
@@ -56,10 +56,10 @@ class App extends React.Component {
           <nav className="col-md-2">{leftNav}</nav>
           <main className="col-md-10">{content}</main>
           {footer?<footer className="col-md-12">{footer}</footer>:null}
-          <a href="#0" onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
+          <span onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
             {/* <i className="lni-chevron-up"></i> */}
             <FontAwesomeIcon icon={faArrowUp}/>
-          </a>
+          </span>
       </div>
     );
   }  
@@ -70,16 +70,17 @@ class App extends React.Component {
           {header?<header className="col-md-12">{header}</header>:""}
           <main className="col-md-12">{content}</main>
           {footer?<footer className="col-md-12">{footer}</footer>:null}
-          <a href="#0" onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
+          <span onClick={this.scrollToTop} style={{ display:this.state.nav?"block":"none", transition:"all 1s"}} className="back-to-top">
             {/* <i className="lni-chevron-up"></i> */}
             <FontAwesomeIcon icon={faArrowUp}/>
-          </a>
+          </span>
         {/* </div> */}
       </div>
     );
   }
   componentDidMount(){
     window.addEventListener("scroll", this.handleScroll);
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
   }
   componentWillUnmount() {
       window.removeEventListener('scroll', this.handleScroll);
@@ -116,7 +117,7 @@ class App extends React.Component {
             <Route exact path="/connexion" render={() => {return  this.contentShow(<Connexion cookies={this.props.cookies}/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/suivi-medical" render={() => { return this.contentShowV2(<SuiviMedicals/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShowV2(<Actualites/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
-            <Route exact path="/conditions-generales-d-utilisation-de-MEDDoC" render={() => { return this.contentShowV2(<Conditionutilisation/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
+            <Route exact path="/a-propos/:onglet" render={() => {return  this.contentShow(<Apropos/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/mot-de-passe-oublie" render={() => { return this.contentShowV2(<MotDePasse/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route path="/mes-vaccins" render={() => {return  this.contentShowWithLeft(<Vaccin/>,<Header cookies={this.props.cookies}/>,<LeftMenu/>,<Footer/>);}}/>
             <Route path="/recherche" render={() => {return  this.contentShow(<div style={{marginTop:'15vh'}}><Centre dataFind={this.setProps()}/></div>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>

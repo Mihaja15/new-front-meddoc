@@ -7,18 +7,24 @@
     /* position: fixed; */
     /* top: 0; */
     /* bottom:0; */
+    /* padding: 0; */
     position:fixed;
     display: flex;
     justify-content: center;
     overflow-y:scroll;
     overflow-x:hidden;
     padding-bottom: 20vh;
+    margin: 0 auto;
     z-index: 999;
+}
+.to-do-list-container>div{
+    display: flex;
+    justify-content: center;
 }
 a.close-to-do-list{
     position: absolute;
     top: 15px;
-    right: 150px;
+    right: 75px;
     color: #ffd0d0;
     text-decoration: none;
     font-weight: 700;
@@ -28,7 +34,7 @@ a.close-to-do-list{
 a.add-to-do-list{
     position: absolute;
     top: 15px;
-    left: 50px;
+    left: 75px;
     color: #ffd0d0;
     text-decoration: none;
     font-weight: 700;

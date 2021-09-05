@@ -43,7 +43,7 @@ class ListeRdv extends Component{
         fetchPost('/professionnel/rdv-patient',data).then(data=>{
             if(utile.hasValue(data.content)){
                 var userName = [];
-                console.log('dataTmp dataTmp :',data);
+                //console.log('dataTmp dataTmp :',data);
                 for(let i=0; i <data.content.length; i++){
                     if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
                         userName.push({
@@ -52,7 +52,7 @@ class ListeRdv extends Component{
                         })
                     }
                 }
-                console.log(userName)
+                //console.log(userName)
                 // this.setState({ list: data.content ,page : data.number, listUserName: userName});
                 this.setState({ showResult:true, list: data.content ,page : (data.number+1),nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
             }
@@ -74,7 +74,7 @@ class ListeRdv extends Component{
                 fetchPost('/professionnel/rdv-patient',data).then(data=>{
                     if(utile.hasValue(data.content)){
                         var userName = [];
-                        console.log('dataTmp dataTmp :',data);
+                        //console.log('dataTmp dataTmp :',data);
                         for(let i=0; i <data.content.length; i++){
                             if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
                                 userName.push({
@@ -83,7 +83,7 @@ class ListeRdv extends Component{
                                 })
                             }
                         }
-                        console.log(userName)
+                        //console.log(userName)
                         this.setState({ showResult:true, list: data.content ,page : (data.number+1), nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
                     }
                     

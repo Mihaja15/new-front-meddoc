@@ -63,7 +63,7 @@ class ProfilPatient  extends React.Component{
                 this.setState({district : {valuesText : '',etat : 0, dataEdit:false}});
             }
             this.setState({ province : { valuesText : valeur , etat : etatChamps ,dataEdit : dataEdits} });
-            console.log('valeur quatier = '+valeur);
+            //console.log('valeur quatier = '+valeur);
 			if(valeur !== null && valeur!== '' && utile.parseStringToInt(valeur)>0){
 				fetchGet('/adresse/find-district-by-id-province/'+valeur).then(data=>{
 					if(data!=null){
@@ -314,9 +314,9 @@ class ProfilPatient  extends React.Component{
             contact: this.state.listContact,
             language: this.state.dataUser.langue
         }
-        console.log('user : ',dataUser);
+        //console.log('user : ',dataUser);
         if(dataUser!==null && dataUser!==undefined){
-            console.log('dataUser dataUser :: ',dataUser);
+            //console.log('dataUser dataUser :: ',dataUser);
             fetchPost('/users/updateUser',dataUser).then(resultatTmp=>{
                 if(resultatTmp.status===200){
                     this.setState({ error : {text : ''+resultatTmp.message,etat : 1} });
@@ -329,7 +329,7 @@ class ProfilPatient  extends React.Component{
     }
     componentDidMount() {
         if(this.props.dataUser!==null && this.props.dataUser!==undefined){
-            console.log(this.props.dataUser)
+            //console.log(this.props.dataUser)
             this.setState({
                 nom : {valuesText : ''+this.props.dataUser.nom,etat : 0, dataEdit:false},
                 prenoms : {valuesText : ''+this.props.dataUser.prenoms,etat : 0, dataEdit:false},
@@ -345,7 +345,7 @@ class ProfilPatient  extends React.Component{
                 listContact : this.props.dataUser.contact,
                 dataUser : this.props.dataUser
             });
-            console.log("this.props.dataUser.fokotany ", this.props.dataUser.adresse[0].district.idDistrict);
+            //console.log("this.props.dataUser.fokotany ", this.props.dataUser.adresse[0].district.idDistrict);
             fetchGet('/adresse/find-province-by-id-district/'+this.props.dataUser.adresse[0].district.idDistrict).then(idProvince=>{ 
                 fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(data=>{
                     if(data!=null){
@@ -357,7 +357,7 @@ class ProfilPatient  extends React.Component{
         fetchGet('/adresse/province/all').then(data=>{
 			if(data!=null){
                 this.setState({ listProvince: data });
-                console.log('listProvince : ',data)
+                //console.log('listProvince : ',data)
             }
         });
         fetchGet('/covid/list-categorie').then(data=>{
@@ -367,7 +367,7 @@ class ProfilPatient  extends React.Component{
                     newData.push({value : data[i].idCategorie , label : data[i].libelle});
                 }
                 this.setState({ listCategorie: newData });
-                console.log('listInstitution : ',newData);
+                //console.log('listInstitution : ',newData);
             }
         });
         fetchGet('/covid/list-institution').then(data=>{
@@ -377,7 +377,7 @@ class ProfilPatient  extends React.Component{
                     newData.push({value : data[i].idInstitution , label : data[i].libelle});
                 }
                 this.setState({ listInstitution: newData });
-                console.log('listCategorie : ',newData);
+                //console.log('listCategorie : ',newData);
             }
         });
         fetchGet('/covid/list-type-maladie').then(data=>{
@@ -387,7 +387,7 @@ class ProfilPatient  extends React.Component{
                     newData.push({value : data[i].idTypeMaladie , label : data[i].nomTypeMaladie});
                 }
                 this.setState({ listTypeMaladie: newData });
-                console.log('listTypeMaladie : ',newData);
+                //console.log('listTypeMaladie : ',newData);
             }
         });
     }
@@ -498,7 +498,7 @@ class ProfilPatient  extends React.Component{
                         <div className="col-md-8 profil-left-content">
                             {this.getMenuShow(this.state.menuShow)}
                             <div className="alert alert-info" hidden={!(this.state.error.etat===2)}>{this.state.error.text}</div>
-                            <div hidden={!(this.state.error.etat===1)} className="textSuccesModificationProfilMedecin">{this.state.error.text} <a href="/profil/compte" className="atextSuccesModificationProfilMedecin">Actualiser la page</a></div>
+                            <div hidden={!(this.state.error.etat===1)} className="textSuccesModificationProfilMedecin">{this.state.error.text} <Link to="/profil/compte" className="atextSuccesModificationProfilMedecin">Actualiser la page</a></div>
                             <div hidden={!this.state.showButtonModif} className="boutonModifierProfil"><button className="form-control" type="submit" onClick={()=>this.updateDataUser()}>Enregistrer</button></div>
                         </div>
                     </div>

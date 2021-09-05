@@ -69,7 +69,7 @@ class Connexion extends Component{
         this.setState({showValidation : true})
     }
     componentDidMount(){
-        console.log(this.props.cookies);
+        //console.log(this.props.cookies);
     }
     loginConnexion = () => {
         const dataIdentification = this.state.identification;const dataMdp = this.state.mdp;
@@ -77,7 +77,7 @@ class Connexion extends Component{
             this.setState({disableButton:true,error:{activation:false}});
             const userAuth = {identification: dataIdentification.valuesText,mdp: dataMdp.valuesText}
             fetchPostNotLogged('/users/login',userAuth).then(response=>{
-                console.log(response)
+                //console.log(response)
                 if(response.statut===200){
                     if(response.role.toLowerCase()==="patient"){
                         userSession.userLogin(response.data.username,
@@ -147,7 +147,7 @@ class Connexion extends Component{
             this.setState({disableButton:true,error:{activation:false}});
             const userAuth = {identification: dataIdentification.valuesText,mdp: dataMdp.valuesText, captchaToken:value}
             fetchPostNotLogged('/users/login',userAuth).then(response=>{
-                console.log(response)
+                //console.log(response)
                 if(response.statut===200){
                     if(response.role.toLowerCase()==="patient"){
                         userSession.userLogin(response.data.username,
@@ -157,7 +157,8 @@ class Connexion extends Component{
                             response.data.idMeddoc);
                         window.location.pathname = "/profil-patient";
                     }else{
-                        throw new Error("Erreur de connexion");
+                        // throw new Error("Erreur de connexion");
+                        this.setState({disableButton:false,error : {message : 'Vous n\'êtes pas autorisés à connecter à ce lien',activation: true}});
                     }
                 }else if(response.statut===201){
                     this.setState({toShow : 2, disableButton:false});
@@ -175,7 +176,7 @@ class Connexion extends Component{
     //     const { executeRecaptcha } = IWithGoogleReCaptchaProps.googleReCaptchaProps;
     
     //     if (!executeRecaptcha) {
-    //       console.log('Recaptcha has not been loaded');
+    //       //console.log('Recaptcha has not been loaded');
     
     //       return;
     //     }

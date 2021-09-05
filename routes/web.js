@@ -22,8 +22,8 @@ router.use(express.urlencoded(
 router.use(express.json());
 // Upload Image
 router.post("/photo", upload.single('photo'), (req, res, next) => {
-    console.log(req.body.file);
-    console.log(res);
+    //console.log(req.body.file);
+    //console.log(res);
     return res.json({
         image: req.file.path
     });
@@ -35,11 +35,11 @@ router.post('/deleteFichier', async function (request, response) {
         for(let i=0;i<request.body.files.length;i++)
           fs.unlinkSync('./public/assets/upload/'+request.body.files[i]);
         response.status(200).json({'status': true, 'message': 'suppresion fichier avec succés'});
-        console.log('suppresion fichier avec succés')
+        //console.log('suppresion fichier avec succés')
       }
       //file removed
     } catch(err) {
-      console.log(err)
+      //console.log(err)
       response.status(500).json({'status': false, 'message': ''+err, 'code': ''});
     }
 })
@@ -49,14 +49,14 @@ router.post('/download', async function(req, res){
       if(req.body.name!== undefined){
         var file = __dirname + '/public/uploads/'+req.body.name;
         res.download(''+file, function(error){
-            console.log("Error : ", error);
+            //console.log("Error : ", error);
             res.status(500).json({'status': false, 'message': ''+error, 'code': ''});
         });
         res.status(200).json({'status': true, 'message': 'suppresion fichier avec succés'});
       }
       //file removed
     } catch(err) {
-      console.log(err);
+      //console.log(err);
       res.status(500).json({'status': false, 'message': ''+err, 'code': ''});
     }
 
@@ -83,7 +83,7 @@ router.post('/fichier', async function (request, response) {
   try {
     uploadV2.any('filesUpload')(request, response, function(err) {
       if(err) {
-        console.log(err);
+        //console.log(err);
         response.status(500).json({'status':false,'message': 'Il y a une erreur', 'code': ''});
         return;
       }
@@ -98,12 +98,12 @@ router.post('/fichier', async function (request, response) {
           indice++;
         }
       }
-      console.log(data);
+      //console.log(data);
       response.status(200).json({'status':true,'message': 'Upload fichier avec succès', 'code': nameFinal});
       return;
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     response.status(500).json({'status':false,'message': 'Il y a une erreur', 'code': ''});
     return;
   }

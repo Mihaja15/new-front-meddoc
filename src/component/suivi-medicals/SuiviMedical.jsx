@@ -420,23 +420,23 @@ class SuiviMedical extends Component{
                 mesFichiers.splice(i,1);
                 this.setState({mesFichiers : mesFichiers})
             }
-            console.log('deletion : ',resultat);
+            //console.log('deletion : ',resultat);
         })
     }
     enregistre(event){
         event.preventDefault();
         const data = new FormData(event.target);
         data.append('last-name','tous_sur_malandy');
-        console.log(" event : ",event.target);
+        //console.log(" event : ",event.target);
         fetchPostV2('http://localhost:5000/fichier',data).then((res)=>{ 
             if(res.status){
                 const mesFichiers = this.state.mesFichiers;const tmp=this.state.fichierTemporaire;
                 mesFichiers.push({base : tmp.base,code : ''+res.code,type : tmp.type, name : tmp.name});
                 this.setState({mesFichiers : mesFichiers,fichierTemporaire : {base : null,file:null,type : '', name :''}});
             }
-            console.log('res : ',res)
+            //console.log('res : ',res)
         },error=>{
-            console.log('error : ',error);
+            //console.log('error : ',error);
         });
       
     }
@@ -708,7 +708,7 @@ class SuiviMedical extends Component{
     getDecalageProchainVaccin(idCentre,interaction){
         let date = new Date();let jour = date.getDay();
         fetchGet('/covid/prochainRDVPatientPourUnVaccin/'+idCentre+'/'+jour+'/'+date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear()+'/'+interaction).then((data) => {
-            console.log('le zavatra : ',data);
+            //console.log('le zavatra : ',data);
             this.setState({prochainRdv : data,deuxemevaccination : {value: ''+data.date,etat : 2}});
         })
     }
@@ -721,7 +721,7 @@ class SuiviMedical extends Component{
                 }
             }
         }
-        console.log('indice : ',indice);
+        //console.log('indice : ',indice);
         this.setState({mesMaladie : indice,typemaladie : tmp});
     }
     verifChamp(valeur){
@@ -767,7 +767,7 @@ class SuiviMedical extends Component{
                 document: this.getDocumentFichier()
             }
             let dataSend={};
-            console.log('nbr_inj : '+utile.parseStringToInt(''+this.state.nbr_inj)+' > '+inj)
+            //console.log('nbr_inj : '+utile.parseStringToInt(''+this.state.nbr_inj)+' > '+inj)
             if(utile.parseStringToInt(''+this.state.nbr_inj)>inj){
                 dataSend={
                     vaccination:data,
@@ -786,7 +786,7 @@ class SuiviMedical extends Component{
                     vaccination:data
                 }
             }
-            console.log('final : ',dataSend);
+            //console.log('final : ',dataSend);
             fetchPost('/covid/vaccinationSuiviMedical',dataSend).then(dataTmp=>{
                 if(dataTmp.status===200){
                     this.setState({ erreur : 3,smsErreur : ''+dataTmp.message});
@@ -805,7 +805,7 @@ class SuiviMedical extends Component{
                 for(let i=0; i < size; i++){
                     dataTmp.push({ value: ''+data[i].idProvince, label: ''+data[i].nomProvince });
                 }
-                console.log('province : ',data);
+                //console.log('province : ',data);
                 this.setState({ listProvince: data ,listProvinceSelect : dataTmp});
             }
         });
@@ -816,7 +816,7 @@ class SuiviMedical extends Component{
                 for(let i=0; i < size; i++){
                     dataTmp.push({ value: ''+data[i].idMaladie, label: ''+data[i].nomMaladie });
                 }
-                console.log('province : ',data);
+                //console.log('province : ',data);
                 maladie = dataTmp;
                 this.setState({ listProvince: data});
             }
@@ -828,23 +828,24 @@ class SuiviMedical extends Component{
                     dataTmp.push({ value: ''+data[i].idVaccin, label: ''+data[i].designation });
                 }
                 vaccin = dataTmp;
-                console.log('vaccin : ',data);
+                //console.log('vaccin : ',data);
             this.setState({vaccins : data});
         })
         if(this.props.idVaccinateur!==undefined)
         fetchGet('/covid/userCentre/'+this.props.idVaccinateur).then((data) => {
-            console.log('centremlm  : ', data);
+            //console.log('centremlm  : ', data);
             if(data !== null && data !== undefined){
                 const tmpAdr = data.centreRel.adresse;
-                console.log('ttt :',tmpAdr)
+                //console.log('ttt :',tmpAdr)
                 this.setState({userCentre : data,centrevaccin : {value: ''+data.centreRel.nomCentre,etat : 0},vaccinateur: {value: ''+data.userRel.nom+' '+data.userRel.prenoms,etat : 0},lieu : {value: ''+tmpAdr[0].district.nomDistrict,etat : 0}})
             }
         })
         if(this.props.idUser!==undefined)
         fetchGet('/users/userByIdPatient/'+this.props.idUser).then((data) => {
-            console.log('centreu  : ', data);
+            //console.log('centreu  : ', data);
             if(data !== null && data !== undefined){
-                console.log('patient  :',data)   ; let numero='';let email='';
+                //console.log('patient  :',data)   ; 
+                let numero='';let email='';
                 let contact = data.contact;let size = contact.length;
                 for(let i=0; i < size; i++){
                     if(contact[i].typeContact.idTypeContact===2){email = contact[i].contact}
@@ -870,7 +871,7 @@ class SuiviMedical extends Component{
                 });
                 this.getDataDefaultMaladie(data.maladies);
                 fetchGet('/contactUrgence/listByIdUser/'+data.idUser).then((data) => {
-                    console.log('contactUrgence : ',data);
+                    //console.log('contactUrgence : ',data);
                     this.setState({contactUrgence : data})
                 })
             }

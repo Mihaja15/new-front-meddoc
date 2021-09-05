@@ -29,14 +29,14 @@ class Assistance extends Component{
         }
         fetchPost('/email/send', mailParams
         ).then((result) => {
-            console.log(result.text);
+            //console.log(result.text);
             this.setState({
                 sent:true,
                 headerAlert:'Message d\'information',
                 bodyAlert:'Votre adresse adress email a été ajouté avec succès'
             });
         }, (error) => {
-            console.log(error.message)
+            //console.log(error.message)
             this.setState({
                 sent:true,
                 headerAlert:'Message d\'erreur',
@@ -57,14 +57,14 @@ class Assistance extends Component{
         }
         fetchPost('/email/send', mailParams
         ).then((result)=>{
-            console.log('erreur : ',result.message);
+            //console.log('erreur : ',result.message);
             this.setState({
                 sent:true,
                 headerAlert:'Message d\'information',
                 bodyAlert:'Votre message a été envoyé avec succès'
             });
         }, (error)=>{
-            console.log(error);
+            //console.log(error);
             this.setState({
                 sent:true,
                 headerAlert:'Message d\'erreur',
@@ -95,7 +95,7 @@ class Assistance extends Component{
     }
     goToContactUs(){
         let rect = document.getElementById('contactForm').getBoundingClientRect();
-        console.log(rect);
+        //console.log(rect);
         window.scrollTo({top: rect.top+rect.y, left:0, behavior: 'smooth' });
     }
     showAlert=()=>{

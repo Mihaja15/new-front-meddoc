@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { fetchPost } from '../../services/global.service';
 import ReactTooltip from 'react-tooltip';
 import { ProgressBar} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 class MotDePasse extends Component{
     constructor(props){
@@ -35,7 +36,7 @@ class MotDePasse extends Component{
 	}
     setValue(names,event){
 		const valeur = event.target.value;
-        //console.log('mmm : ',verificationMotDePasseEnPourcentage(valeur))
+        ////console.log('mmm : ',verificationMotDePasseEnPourcentage(valeur))
 		if(valeur !== '' && valeur != null){
             this.setStateByNameState(names,valeur,2);
             if(names === 'mdp'){this.setState({percentageMdp :verificationMotDePasseEnPourcentage(valeur)})}
@@ -51,7 +52,7 @@ class MotDePasse extends Component{
         }
     }
     verificationIdentiteUser=()=>{
-        console.log('this.state.identification :',this.state.identification.valuesText)
+        //console.log('this.state.identification :',this.state.identification.valuesText)
         if(this.state.identification.etat === 2){
             fetchPost('/users/verifIdentifient',{identification: ''+this.state.identification.valuesText}).then(dataTmp=>{
                 if(dataTmp.status===200){
@@ -59,7 +60,7 @@ class MotDePasse extends Component{
                 }else{
                     this.setState({erreur : 'Votre identifiant est introuvable',etatErreur : 2});
                 }
-                console.log('valiny :',dataTmp)
+                //console.log('valiny :',dataTmp)
             })
         }else{
             this.setState({erreur : 'Verifiez votre information car il y a une erreur',etatErreur : 2});
@@ -104,7 +105,7 @@ class MotDePasse extends Component{
         if(this.state.mdp.etat===2 && this.state.confirmer.etat ===2 && this.state.code.etat===2){
             if(this.state.mdp.valuesText=== this.state.confirmer.valuesText){
                 if(''+this.state.code.valuesText===''+this.state.codeBase){
-                    console.log('nouveau mot de passe : ',this.state.mdp.valuesText);
+                    //console.log('nouveau mot de passe : ',this.state.mdp.valuesText);
                     const data = {
                         idUser : this.state.idUser,
                         mdp : this.state.mdp.valuesText
@@ -115,7 +116,7 @@ class MotDePasse extends Component{
                         }else{
                             this.setState({erreur : 'Votre identifiant est introuvable',etatErreur : 2,change : true});
                         }
-                        // console.log('valiny :',dataTmp)
+                        // //console.log('valiny :',dataTmp)
                     })
                 }else{
                     this.setState({erreur : 'Votre code de validation ne correspond pas',etatErreur : 2});
@@ -165,7 +166,7 @@ class MotDePasse extends Component{
                     </div>
                 </div>
                 {this.getDataHtmlErreur(this.state.erreur,this.state.etatErreur,this.state.change)}
-                <p hidden={!this.state.change}>Votre mot de passe a été modifier. Vous pouvez vous connectez <a href="/connexion">ici</a></p>
+                <p hidden={!this.state.change}>Votre mot de passe a été modifier. Vous pouvez vous connectez <Link to="/connexion">ici</Link></p>
 
                 <div className="boutonConnecterLogin">
                     <button className="mot_de_passe_input_identifient_bouton_reinitialiser" onClick={()=>this.setMdpUser()}>Reinitialiser</button>

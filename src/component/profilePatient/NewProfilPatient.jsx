@@ -47,7 +47,7 @@ class NewProfilPatient extends Component{
                 this.setState({fokontany : {valuesText : '',etat : 0, dataEdit:false}});
             }
             this.setState({ province : { valuesText : valeur , etat : etatChamps ,dataEdit : dataEdits} });
-            console.log('valeur quatier = '+valeur);
+            //console.log('valeur quatier = '+valeur);
 			if(valeur !== null && valeur!== '' && utile.parseStringToInt(valeur)>0){
 				fetchGet('/adresse/quartiers/'+valeur).then(data=>{
 					if(data!=null){
@@ -271,9 +271,9 @@ class NewProfilPatient extends Component{
             contact: this.state.listContact,
             language: this.state.dataUser.langue
         }
-        console.log('user : ',dataUser);
+        //console.log('user : ',dataUser);
         if(dataUser!==null && dataUser!==undefined){
-            console.log('dataUser dataUser :: ',dataUser);
+            //console.log('dataUser dataUser :: ',dataUser);
             fetchPost('/users/updateUser',dataUser).then(resultatTmp=>{
                 if(resultatTmp.status===200){
                     this.setState({ error : {text : ''+resultatTmp.message,etat : 1} });
@@ -298,7 +298,7 @@ class NewProfilPatient extends Component{
                 listContact : this.props.dataUser.contact,
                 dataUser : this.props.dataUser
             });
-            console.log("this.props.dataUser.fokotany ", this.props.dataUser.fokontany);
+            //console.log("this.props.dataUser.fokotany ", this.props.dataUser.fokontany);
             fetchGet('/adresse/quartiers/'+this.props.dataUser.province.idProvince).then(data=>{
                 if(data!=null){
                     this.setState({ listFonkotany: data });
@@ -308,7 +308,7 @@ class NewProfilPatient extends Component{
         fetchGet('/adresse/province/all').then(data=>{
 			if(data!=null){
                 this.setState({ listProvince: data });
-                console.log('listProvince : ',data)
+                //console.log('listProvince : ',data)
             }
         });
     }
@@ -351,7 +351,7 @@ class NewProfilPatient extends Component{
                             </div>
                         </form>
                         <div className="alert alert-info" hidden={!(this.state.error.etat===2)}>{this.state.error.text}</div>
-                        <div hidden={!(this.state.error.etat===1)} className="textSuccesModificationProfilMedecin">{this.state.error.text} <a href="/patient/profil-patient" className="atextSuccesModificationProfilMedecin">Actualiser la page</a></div>
+                        <div hidden={!(this.state.error.etat===1)} className="textSuccesModificationProfilMedecin">{this.state.error.text} <Link to="/patient/profil-patient" className="atextSuccesModificationProfilMedecin">Actualiser la page</a></div>
                         <div hidden={!this.state.showButtonModif} className="boutonModifierProfil"><button className="form-control" type="submit" onClick={()=>this.updateDataUser()}>Enregistrer</button></div>
                     </div>
                 

@@ -58,8 +58,8 @@ export default class RechercheMedecin extends React.Component{
                                             {/* <span className="initial-centre-icon">{this.getInitial(data.nomCentre)}</span> */}
                                         </div>
                                         <p className="">{data.adresse.addrValue}</p>
-                                        <a href='#0' onClick={()=>this.setState({centreDetail:data,stateShow:2})}>{data.nomCentre}</a>
-                                        {/* <a href='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}></a> */}
+                                        <Link to='#0' onClick={()=>this.setState({centreDetail:data,stateShow:2})}>{data.nomCentre}</a>
+                                        {/* <Link to='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}></a> */}
                                         {/* <div className="adresseMedecinRechercheMedecin">{data.medecinData.user.adresse.addrValue}</div> */}
                                         {/* <div className="buttonMedecinRechercheMedecin"><a className=" popup-with-move-anim a1" href="#0" onClick={()=>this.setState({medecinDetail:data.medecinData,stateShow:2,medecinEdt:data.emploiDuTemps})}>Prendre rendez-vous</a></div> */}
                                     </div>
@@ -98,7 +98,7 @@ export default class RechercheMedecin extends React.Component{
             return (
                 <MapContainer center={this.state.position} zoom={10} scrollWheelZoom={true}>
                     <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    attribution='&copy; <Link to="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     {
@@ -155,7 +155,7 @@ export default class RechercheMedecin extends React.Component{
                 if(data.content !==null && data.content !==undefined){
                     const dataTmp=data.content;
                     this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                    console.log('rechercherNew : ', data);
+                    //console.log('rechercherNew : ', data);
                     if(dataTmp.length > 0){
                         this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                     } else this.setState({hiddenMap:true});
@@ -182,7 +182,7 @@ export default class RechercheMedecin extends React.Component{
             // }
             this.setState({listDistrict: data});
         });
-        console.log(this.props.dataFind)
+        //console.log(this.props.dataFind)
         if(this.props.dataFind!==null){
             if(this.props.dataFind.text==="" && this.props.dataFind.district==="0"){
                 const  urls='/professionnel/recherche/0/----/'+this.state.page+'/'+this.state.size;
@@ -191,7 +191,7 @@ export default class RechercheMedecin extends React.Component{
                         if(data.content !==null && data.content !==undefined){
                             const dataTmp=data.content;
                             this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                            console.log('rechercherNew : ', data);
+                            //console.log('rechercherNew : ', data);
                             if(dataTmp.length > 0){
                                 this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                             } else this.setState({hiddenMap:true});
@@ -207,7 +207,7 @@ export default class RechercheMedecin extends React.Component{
                             if(data.content !==null && data.content !==undefined){
                                 const dataTmp=data.content;
                                 this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                                console.log('rechercherNew : ', data);
+                                //console.log('rechercherNew : ', data);
                                 if(dataTmp.length > 0){
                                     this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                                 } else this.setState({hiddenMap:true});
@@ -216,7 +216,7 @@ export default class RechercheMedecin extends React.Component{
                     });
                 })
             }
-            console.log('rechercherNew : ', this.props.dataFind);
+            //console.log('rechercherNew : ', this.props.dataFind);
         }else{
             const urls='/professionnel/recherche/0/----/'+this.state.page+'/'+this.state.size;
             fetchGet(urls).then(data=>{
@@ -224,7 +224,7 @@ export default class RechercheMedecin extends React.Component{
                     if(data.content !==null && data.content !==undefined){
                         const dataTmp=data.content;
                         this.setState({listCentre : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                        console.log('rechercherNew : ', data);
+                        //console.log('rechercherNew : ', data);
                         if(dataTmp.length > 0){
                             this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                         } else this.setState({hiddenMap:true});
@@ -256,11 +256,11 @@ export default class RechercheMedecin extends React.Component{
             if(data!==null && data!==undefined){
                 if(data.content !==null && data.content !==undefined){
                     this.setState({listCentre : data.content,activePage : pageNumber, totalPage : data.nbPage,nbElement : data.nbElement}, function(){
-                        console.log('count : ', this.state.listCentre.length);
+                        //console.log('count : ', this.state.listCentre.length);
                         if(this.state.listCentre.length > 0) this.setState({hiddenMap:false});
                         else this.setState({hiddenMap:true});
                     });
-                    console.log('rechercherNew : ', data);
+                    //console.log('rechercherNew : ', data);
                 }
                 if(data.content.length > 0) this.setState({hiddenMap:false});
                 else this.setState({hiddenMap:true});

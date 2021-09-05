@@ -4,6 +4,7 @@ import { fetchGetHandler } from '../../services/global.service';
 import './ProfilStaff.css';
 import SuiviMedical from '../suivi-medicals/SuiviMedical';
 import { utile } from '../../services/utile';
+import {Link} from 'react-router-dom';
 
 export default class ProfilStaff extends React.Component{
     constructor(props){
@@ -18,7 +19,7 @@ export default class ProfilStaff extends React.Component{
         fetchGetHandler('/professionnel/data').then(data=>{
             if(data!=null){
                 this.setState({ centreUser: data});
-                console.log(data)
+                //console.log(data)
             }else{
                 
             }
@@ -67,7 +68,7 @@ export default class ProfilStaff extends React.Component{
                             {
                                 this.state.show==="1"?
                                 <div className="col-md-12">{this.showComponentAgenda(this.state.centreUser)}</div>
-                                :this.state.show==="vaccination"?(this.state.idUser!==null&&this.state.idUser!==undefined&&this.state.centreUser.idUserRel!==null&&this.state.centreUser.idUserRel!==undefined)?<div className="vaccination-content col-md-12 row"><a href="/profil-staff/1" className="col-md-12">Liste des rendez-vous</a><div className="col-md-12"><SuiviMedical idUser={this.state.idUser} idVaccinateur={this.state.centreUser.idUserRel}/></div></div>:""
+                                :this.state.show==="vaccination"?(this.state.idUser!==null&&this.state.idUser!==undefined&&this.state.centreUser.idUserRel!==null&&this.state.centreUser.idUserRel!==undefined)?<div className="vaccination-content col-md-12 row"><Link to="/profil-staff/1" className="col-md-12">Liste des rendez-vous</Link><div className="col-md-12"><SuiviMedical idUser={this.state.idUser} idVaccinateur={this.state.centreUser.idUserRel}/></div></div>:""
                                 :<div className="col-md-12"></div>
                             }
                             </div>

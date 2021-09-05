@@ -337,7 +337,7 @@ li.nav-menu-link:hover{
     color: #fff;
     font-size: 15px;
     /* font-weight: 700; */
-    /* cursor: pointer; */
+    cursor: pointer;
     border-bottom: 2px solid #fff;
     transition: all 0.5;
     /* z-index: 900; */

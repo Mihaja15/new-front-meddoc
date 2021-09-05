@@ -12,21 +12,21 @@ function getData(url){
 }
 
 export function fetchGet(url){
-    console.log('url : '+urlConf()+url);
+    //console.log('url : '+urlConf()+url);
     // return fetch(urlConf()+url, { headers: authHeader() }).then(response=>response.json()).then(data=>{
     //     return data;
     // }).catch(error=>{
-    //     console.log('global service '+error)
+    //     //console.log('global service '+error)
     // });
     return fetch(urlConf()+url).then(response=>handleResponse(response));
 }
 export function fetchGetHandler(url){
-    console.log('url : '+urlConf()+url);
+    //console.log('url : '+urlConf()+url);
     return fetch(urlConf()+url, { headers: authHeader() }).then(response=>handleResponse(response));
 }
 
 function postData(url, dataSend){
-    console.log(dataSend);
+    //console.log(dataSend);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -77,7 +77,7 @@ export function fetchPostV2(url, dataSend){
     //     return data;
     // });
     return fetch(url, requestOptions).then(response=>response.json()).then(data=>{
-        console.log(data);
+        //console.log(data);
         return data;
     });
 }
@@ -110,7 +110,7 @@ function handleResponse(response) {
             // alert(response.status);
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                console.log(response);
+                //console.log(response);
                 const role = userSession.get('role');
                 userSession.userLogout();
                 if(role==='Patient')
@@ -123,7 +123,7 @@ function handleResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-        console.log(data);
+        //console.log(data);
         return data;
     });
 }

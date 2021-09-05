@@ -58,7 +58,7 @@ export default class DetailProfil extends React.Component{
     }
     componentDidMount(){
         if(this.props.dataUser!==null && this.props.dataUser!==undefined){
-            console.log(this.props.dataUser);
+            //console.log(this.props.dataUser);
             // const contact = this.props.dataUser.contact;
             // const ids = this.props.dataUser.identifiant;
             // var mailValue = "";
@@ -95,7 +95,7 @@ export default class DetailProfil extends React.Component{
                 dataUser : this.props.dataUser,
                 age: utile.calculateAge(this.props.dataUser.dateNaissance)
             });
-            console.log("this.props.dataUser.fokotany ", this.props.dataUser.adresse.district.idDistrict);
+            //console.log("this.props.dataUser.fokotany ", this.props.dataUser.adresse.district.idDistrict);
             fetchGet('/adresse/find-province-by-id-district/'+this.props.dataUser.adresse.district.idDistrict).then(idProvince=>{ 
                 fetchGet('/adresse/find-district-by-id-province/'+idProvince).then(data=>{
                     if(data!=null){
@@ -106,7 +106,7 @@ export default class DetailProfil extends React.Component{
             fetchGet('/adresse/province/all').then(data=>{
                 if(data!=null){
                     this.setState({ listProvince: data });
-                    console.log('listProvince : ',data)
+                    //console.log('listProvince : ',data)
                 }
             });
             fetchGet('/type-contact/list').then(data=>{

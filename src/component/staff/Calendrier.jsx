@@ -18,7 +18,7 @@ export default class Calendrier extends React.Component{
             idEntite:null,
             typeEntite:null,
             statut:null,
-            dateSelected: new Date(),
+            dateSelected: dateNow,
             jourSelected: dateNow.getDate(),
             moisSelected: dateNow.getMonth(),
             anneeSelected: dateNow.getFullYear(),
@@ -48,7 +48,7 @@ export default class Calendrier extends React.Component{
         return list;
     }
     changeDate=(params, e)=>{
-        console.log(params)
+        //console.log(params)
         var date = this.state.dateSelected;
         if(params==="jourSelected"){
             date.setDate(e.target.value);
@@ -101,7 +101,7 @@ export default class Calendrier extends React.Component{
         }
         fetchPost('/professionnel/rdv-centre',data).then(data=>{
             var userName = [];
-            console.log('dataTmp dataTmp :',data);
+            //console.log('dataTmp dataTmp :',data);
             for(let i=0; i <data.content.length; i++){
                 if(!userName.find(element => element.value === data.content[i].personnePatient.nom+" "+data.content[i].personnePatient.prenoms)){
                     userName.push({
@@ -110,7 +110,7 @@ export default class Calendrier extends React.Component{
                     })
                 }
             }
-            console.log(userName)
+            //console.log(userName)
             // this.setState({ list: data.content ,page : data.number, listUserName: userName});
             this.setState({ listRdv: data ,page : (data.number+1),nbPage : data.totalPages, totalElement: data.totalElements, listUserName: userName});
         });
@@ -127,9 +127,9 @@ export default class Calendrier extends React.Component{
             page: (this.state.page-1),
             size: this.state.size
         }
-        console.log('post data ',data)
+        //console.log('post data ',data)
         fetchPostHeader('/professionnel/rdv-centre',data).then(dataTmp=>{
-            console.log('getRdv',dataTmp)
+            //console.log('getRdv',dataTmp)
             var userName = [];
             if(dataTmp.content){
                 for(let i=0; i <dataTmp.content.length; i++){
@@ -140,7 +140,7 @@ export default class Calendrier extends React.Component{
                         })
                     }
                 }
-                console.log('dataTmp dataTmp :',userName);
+                //console.log('dataTmp dataTmp :',userName);
                 this.setState({listRdv : dataTmp, listUserName: userName,page : (dataTmp.number+1), nbPage : dataTmp.totalPages, totalElement: dataTmp.totalElements});
             }
         });
@@ -154,7 +154,7 @@ export default class Calendrier extends React.Component{
             annee : this.state.anneeSelected
         }
         fetchPostHeader('/professionnel/agenda-centre',data).then(dataTmp=>{
-            console.log(dataTmp);
+            //console.log(dataTmp);
             this.setState({calendrier : dataTmp});
         });
     }
@@ -201,14 +201,14 @@ export default class Calendrier extends React.Component{
     rejeterRdv=(id)=>{
         if(window.confirm('Voulez vous vraiment le rejeter')){
             fetchGet('/professionnel/rejeter-rdv/'+id).then(data=>{
-                console.log('rejeter : ', data);
+                //console.log('rejeter : ', data);
                 this.selectDate(this.state.dateSelected);
                 this.setState({activeSms : true,sms: data.message});
             });
         }
     }
     componentDidMount(){
-        console.log(this.props.id+"  "+this.props.type);
+        //console.log(this.props.id+"  "+this.props.type);
         if(userSession.isLogged()){
             this.setState({idEntite:this.props.id,typeEntite:this.props.type},function(){
                 this.getAgenda();
@@ -223,7 +223,7 @@ export default class Calendrier extends React.Component{
             <div className="calendrier-container">
                 {/* <div className="container"> */}
                     <div className="row">
-                        <div className="header-agenda col-md-12 row">
+                        <div className="header-agenda col-12 row">
                             <label className="col-md-2">Date : </label>
                             <select name="jourSelected" id="day" value={this.state.jourSelected} onChange={this.changeDate.bind(this,'jourSelected')} className="select-date col-md-1">
                                 {
@@ -254,7 +254,7 @@ export default class Calendrier extends React.Component{
                             </select>
                         </div>
                         {/* <div className="centre-content-agenda- col-md-12 row"> */}
-                            <div className="centre-content-agenda col-md-12 row">
+                            <div className="centre-content-agenda col-12">
                                 <div className="centre-agenda-left">
                                     <h5 className="col-md-12">Calendrier</h5>
                                     <table className="tableau-calendrier col-md-12">
@@ -315,7 +315,7 @@ export default class Calendrier extends React.Component{
                                         </thead>
                                         <tbody>
                                             {this.state.listRdv.content!==undefined?this.state.listRdv.content.map((rdv, i)=>{
-                                                console.log(rdv);
+                                                //console.log(rdv);
                                                 return(
                                                     rdv.statut!==null?
                                                     rdv.statut.idStatut===101?

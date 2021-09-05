@@ -1,8 +1,10 @@
 .mes-patients-container{
     width: 100%;
-    display: block;
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
     position: relative;
+    /* background-color: #ff6c0a; */
 }
 .mes-patients-container table{
     display: block;
@@ -16,7 +18,9 @@
     display: block;
     margin: 0 auto;
     text-align: center;
-    margin-bottom: 5vh;
+    color: #c5305f;
+    /* margin-bottom: 1vh; */
+    padding: 5px;
 }
 .mes-patients-container tr{
     display: block;
@@ -89,6 +93,25 @@
     padding: 0;
     margin-bottom: 0;
     background-color: #2b3a3b;
+}.menu-list-content-none{
+    display: none;
+}
+.menu-list-content{
+    position: relative;
+    width: 100%;
+    min-height: 4vh;
+    padding: 0;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+    background-color: #2b3a3b;
+    display: flex;
+    justify-content: center;
+}
+.menu-list-content select{
+    outline: none;
+    background-color: #2b3a3b;
+    color: #fff;
+    border-bottom-color: #f0f0f0;
 }
 .body-list-content{
     width:100%;
@@ -97,6 +120,15 @@
     margin: 0 auto;
     padding-bottom: 2%;
     background-color: #2b3a3b;
+}
+.body-list-content tbody{
+    min-height: 35vh;
+    /* width:100%;
+    position: relative;
+    display: block;
+    margin: 0 auto; */
+    /* padding-bottom: 2%; */
+    /* background-color: #2b3a3b; */
 }
 ul.header-tab{
     display: flex;

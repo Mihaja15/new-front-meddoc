@@ -1,4 +1,5 @@
 #root-container{
+  position: relative;
   width: 100%;
   left:0;
   padding: 0;
@@ -11,6 +12,7 @@
   font-family: 'Montserrat', sans-serif;
 }
 #root-container header{
+  position: relative;
   width: 100%;
   padding: 0;
   /* position: fixed; */
@@ -33,11 +35,13 @@
   /* position: fixed; */
 }
 #root-container main{
+  position: relative;
   width: 100%;
   height: fit-content;
   padding: 0;
   z-index: 0;
   top: 15vh;
+  margin-bottom: 15vh;
   /* padding-bottom: 10vh; */
   /* left: 15vh; */
   /* right: 0; */
@@ -51,6 +55,7 @@
   /* position: fixed; */
 }
 #root-container footer{
+  position: relative;
   width: 100%;
   padding: 0;
 }
@@ -95,7 +100,7 @@ body::-webkit-scrollbar-thumb {
 li{
   list-style: none;
 }
-a.back-to-top {
+span.back-to-top {
   display: none;
   position: fixed;
   bottom: 18px;
@@ -107,35 +112,35 @@ a.back-to-top {
   cursor: pointer;
   text-align: center;
   border-radius: 4px;
-  background-color: #c5305f;
+  background-color: #39c3ef;
   /* background: #5533ff;
   background: linear-gradient(95deg, #5533ff 40%, #25ddf5 100%); */
-  box-shadow: 0px 0px 9px 3px rgba(96, 94, 94, 0.74);
+  box-shadow: 0px 0px 5px 2px rgba(96, 94, 94, 0.5);
   z-index: 999; 
   border-radius: 100%;
 }
-a.back-to-top:hover{
+span.back-to-top:hover{
   text-decoration: none;
-  background-color: #c5305fa9;
+  background-color: #1b7895;
 }
 
 .back-to-top i {
   color: #fff;
   font-size: 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out; 
+  -webkit-transition: all 0.1 ease-in-out;
+  -moz-transition: all 0.1 ease-in-out;
+  -o-transition: all 0.1 ease-in-out;
+  transition: all 0.1 ease-in-out; 
   font-weight: bolder;
   font-size: 25px;
 }
 .back-to-top svg {
   color: #fff;
   font-size: 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out; 
+  -webkit-transition: all 0.1 ease-in-out;
+  -moz-transition: all 0.1 ease-in-out;
+  -o-transition: all 0.1 ease-in-out;
+  transition: all 0.1 ease-in-out; 
   font-weight: bolder;
   font-size: 25px;
 }

@@ -74,7 +74,7 @@ export default class Dashboard extends React.Component{
     }
     onMouseLeave = () => this.setState({crosshairValues: []});
     onNearestX = (value, {index}) =>{
-        // console.log(this.state.dataChart[index])
+        // //console.log(this.state.dataChart[index])
         this.setState({ crosshairValues: this.state.dataChart});
     } 
     _forgetValue = () => {
@@ -87,7 +87,7 @@ export default class Dashboard extends React.Component{
         this.setState({hintValue:value});
     };
     handleChange = (param, e) => {
-        console.log(e.target.value);
+        //console.log(e.target.value);
         this.setState({ [param]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
     }
     render(){

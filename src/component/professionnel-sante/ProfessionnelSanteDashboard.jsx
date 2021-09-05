@@ -30,10 +30,10 @@ export default class ProfessionnelSanteDashboard extends React.Component{
                 // if(this.state.show===0){
                 //     const value = window.location.pathname.split('/');
                 //     this.setState({dataSearch:{text:value[3],district:value[4]}},function(){
-                //         console.log(this.state.dataSearch);
+                //         //console.log(this.state.dataSearch);
                 //     });
                 // }
-                // console.log('token = '+userSession.get('token'))
+                // //console.log('token = '+userSession.get('token'))
             });
         }
         // const view = window.location.pathname.split('/')[2];
@@ -44,7 +44,7 @@ export default class ProfessionnelSanteDashboard extends React.Component{
     }
     linkInMenu=(link)=>{
         this.setState({show:indexLink.indexOf(link)},function(){
-            console.log(userSession.get('pseudo'))
+            //console.log(userSession.get('pseudo'))
            window.history.pushState("object or string", "Title", "/professionnel/"+(utile.hasValue(userSession.get('pseudo'))?userSession.get('pseudo'):"profil")+"/"+link+'/'+utile.formatDateDash(new Date()));
         //    window.location.pathname="/professionnel/"+(utile.hasValue(userSession.get('pseudo'))?userSession.get('pseudo'):"profil")+"/"+link+'/'+utile.formatDateDash(new Date());
         });
@@ -52,8 +52,10 @@ export default class ProfessionnelSanteDashboard extends React.Component{
     render(){
         return(
             <div className="profil-centre-container">
+                <div className="row">
                 <div className="profil-centre-left-menu" style={{width:this.state.showMenu?'16.5%':'4.5%'}}>
-                    <div className="col-12 button-click-menu"><span onClick={()=>this.setState({showMenu:!this.state.showMenu})}><FontAwesomeIcon icon={this.state.showMenu?faCompress:faExpand}/> {this.state.showMenu?'Tableau de bord':''}</span></div>
+                {/* <div className={"profil-centre-left-menu"}> */}
+                    <div className="col-12 button-click-menu"><span onClick={()=>this.setState({showMenu:!this.state.showMenu})}><FontAwesomeIcon icon={this.state.showMenu?faCompress:faExpand}/>&nbsp;{this.state.showMenu?'Menu Pro':''}</span></div>
                     <ul className="col-md-12">
                         <li onClick={()=> this.linkInMenu('dashboard')} className={this.state.show===0?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faChartPie}/>{this.state.showMenu?<>&nbsp;&nbsp;Tableau de bord</>:''}</li>
                         <li onClick={()=> this.linkInMenu('patients')} className={this.state.show===6?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faHospitalUser}/>{this.state.showMenu?<>&nbsp;Mes patients</>:''}</li>
@@ -76,8 +78,9 @@ export default class ProfessionnelSanteDashboard extends React.Component{
                             <li onClick={()=>this.setState({show:3})} className={this.state.show===3?"setting col-md-12 active-setting":"setting col-md-12"}><FontAwesomeIcon icon={faCogs}/>&nbsp; Paramètres</li>
                         </ul> */}
                     {/* </div> */}
-                    <div className={this.state.showMenu?"profil-centre-content col-md-10":"profil-centre-content col-md-12"}>
-                        <div className="container">
+                    {/* <div className={"profil-centre-content "+(this.state.showMenu?"col-md-10":"col-md-12")}> */}
+                    <div className={"profil-centre-content"} style={{width:this.state.showMenu?'82.5%':'94.5%'}}>
+                        <div className="col-12">
                             {/* <div className="row"> */}
                             {
                                 this.state.show===1?
@@ -98,10 +101,13 @@ export default class ProfessionnelSanteDashboard extends React.Component{
                             {/* </div> */}
                         </div>
                     </div>
-                    <div className={this.state.showMenu?"profil-centre-fixed row col-md-10":"profil-centre-fixed row col-md-11"} style={{display:!this.state.showToDoList?"block":"none"}} >
-                        <ToDoList show={this.state.showToDoList} optionShow={this.openAndCloseTodoList}/>
+                    <div className={this.state.showMenu?"profil-centre-fixed":"profil-centre-fixed"} style={{display:!this.state.showToDoList?"block":"none"}} >
+                        {/* <div className="col-12"> */}
+                            <ToDoList show={this.state.showToDoList} optionShow={this.openAndCloseTodoList}/>
+                        {/* </div> */}
                     </div>
                 {/* </div> */}
+                </div>
             </div>
         );
     }

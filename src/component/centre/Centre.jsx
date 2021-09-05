@@ -13,10 +13,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { fetchGet } from '../../services/global.service';
 import EmploiTemps from './EmploiTemps';
-import DetailCentre from './DetailCentre';
 import Select from 'react-select';
 import Loader from '../alert/Loader';
 import { utile } from '../../services/utile';
+import {Link} from 'react-router-dom';
 
 export default class Centre extends React.Component{
     constructor(props){
@@ -37,6 +37,7 @@ export default class Centre extends React.Component{
             idUser:null,
             dateHeure:null,
             showResult:false
+
         }
     }    
     getUrlPhoto(photo){
@@ -48,7 +49,7 @@ export default class Centre extends React.Component{
         return <img src={"/assets/upload/profile-centre.jpg"} alt="image_profile" className="photo-centre-search"/>
     }
     getDataHtmlResultatRecherche(listResultSearch){
-        // console.log(listResultSearch)
+        // //console.log(listResultSearch)
         if(listResultSearch.length>0){
             return (
                 <>
@@ -62,9 +63,9 @@ export default class Centre extends React.Component{
                                             {/* <span className="initial-centre-icon">{this.getInitial(data.nomCentre)}</span> */}
                                         </div>
                                         <p className="">{data.adresse.informationAdresse}</p>
-                                        {/* <a href='#0' onClick={()=>this.setState({professionnelDetail:data,stateShow:2})}>{data.pseudo}</a> */}
-                                        <a href={`/${utile.valueToLink(data.adresse.district.nomDistrict.toLowerCase())+'/'+utile.valueToLink(data.specialite.toLowerCase())+'/'+utile.valueToLink(data.pseudo.toLowerCase())}`}>{data.pseudo}</a>
-                                        {/* <a href='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}></a> */}
+                                        {/* <Link to='#0' onClick={()=>this.setState({professionnelDetail:data,stateShow:2})}>{data.pseudo}</a> */}
+                                        <Link to={`/${utile.valueToLink(data.adresse.district.nomDistrict.toLowerCase())+'/'+utile.valueToLink(data.specialite.toLowerCase())+'/'+utile.valueToLink(data.pseudo.toLowerCase())}`}>{data.pseudo}</Link>
+                                        {/* <Link to='#0' onClick={()=>this.setState({medecinDetail:dataTmp.medecinData,stateShow:2,medecinEdt:dataTmp.emploiDuTemps})}></a> */}
                                         {/* <div className="adresseMedecinRechercheMedecin">{data.medecinData.user.adresse.addrValue}</div> */}
                                         {/* <div className="buttonMedecinRechercheMedecin"><a className=" popup-with-move-anim a1" href="#0" onClick={()=>this.setState({medecinDetail:data.medecinData,stateShow:2,medecinEdt:data.emploiDuTemps})}>Prendre rendez-vous</a></div> */}
                                     </div>
@@ -103,7 +104,7 @@ export default class Centre extends React.Component{
             return (
                 <MapContainer center={this.state.position} zoom={10} scrollWheelZoom={true}>
                     <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    attribution='&copy; <Link to="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     {
@@ -161,7 +162,7 @@ export default class Centre extends React.Component{
                 if(data.content !==null && data.content !==undefined){
                     const dataTmp=data.content;
                     this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                    console.log('rechercherNew : ', data);
+                    //console.log('rechercherNew : ', data);
                     if(dataTmp.length > 0){
                         this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                     } else this.setState({hiddenMap:true});
@@ -189,17 +190,17 @@ export default class Centre extends React.Component{
             // }
             this.setState({listDistrict: data});
         });
-        console.log(this.props.dataFind)
+        //console.log(this.props.dataFind)
         if(this.props.dataFind!==null){
             if(this.props.dataFind.text==="" && this.props.dataFind.district==="0"){
                 const  urls='/professionnel/recherche/0/----/'+this.state.page+'/'+this.state.size;
                 fetchGet(urls).then(data=>{
-                    console.log(data)
+                    //console.log(data)
                     if(data!==null && data!==undefined){
                         if(data.content !==null && data.content !==undefined){
                             const dataTmp=data.content;
                             this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                            console.log('rechercherNew : ', data);
+                            //console.log('rechercherNew : ', data);
                             if(dataTmp.length > 0){
                                 this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                             } else this.setState({hiddenMap:true});
@@ -212,12 +213,12 @@ export default class Centre extends React.Component{
                     const text = this.state.text===""?"----":this.state.text;
                     const  urls='/professionnel/recherche/'+this.state.district+'/'+text+'/'+this.state.page+'/'+this.state.size;
                     fetchGet(urls).then(data=>{
-                        console.log(data)
+                        //console.log(data)
                         if(data!==null && data!==undefined){
                             if(data.content !==null && data.content !==undefined){
                                 const dataTmp=data.content;
                                 this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                                console.log('rechercherNew : ', data);
+                                //console.log('rechercherNew : ', data);
                                 if(dataTmp.length > 0){
                                     this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                                 } else this.setState({hiddenMap:true});
@@ -227,7 +228,7 @@ export default class Centre extends React.Component{
                     });
                 })
             }
-            console.log('rechercherNew : ', this.props.dataFind);
+            //console.log('rechercherNew : ', this.props.dataFind);
         }else{
             const urls='/professionnel/recherche/0/----/'+this.state.page+'/'+this.state.size;
             fetchGet(urls).then(data=>{
@@ -235,7 +236,7 @@ export default class Centre extends React.Component{
                     if(data.content !==null && data.content !==undefined){
                         const dataTmp=data.content;
                         this.setState({listResultSearch : data.content,page : data.page, totalPage : data.nbPage, nbElement : data.nbElement});
-                        console.log('rechercherNew : ', data);
+                        //console.log('rechercherNew : ', data);
                         if(dataTmp.length > 0){
                             this.setState({hiddenMap:false,position:[dataTmp[0].adresse.latitude,dataTmp[0].adresse.longitude]});
                         } else this.setState({hiddenMap:true});
@@ -268,15 +269,15 @@ export default class Centre extends React.Component{
         const text = this.state.text===""?"----":this.state.text;
         const  urls='/professionnel/recherche/'+this.state.district+'/'+text+'/'+(pageNumber-1)+'/'+this.state.size;
         fetchGet(urls+'/'+pageNumber).then(data=>{
-            console.log(data)
+            //console.log(data)
             if(data!==null && data!==undefined){
                 if(data.content !==null && data.content !==undefined){
                     this.setState({listResultSearch : data.content,activePage : pageNumber, totalPage : data.nbPage,nbElement : data.nbElement}, function(){
-                        console.log('count : ', this.state.listResultSearch.length);
+                        //console.log('count : ', this.state.listResultSearch.length);
                         if(this.state.listResultSearch.length > 0) this.setState({hiddenMap:false});
                         else this.setState({hiddenMap:true});
                     });
-                    console.log('rechercherNew : ', data);
+                    //console.log('rechercherNew : ', data);
                 }
                 if(data.content.length > 0) this.setState({hiddenMap:false});
                 else this.setState({hiddenMap:true});
@@ -314,7 +315,7 @@ export default class Centre extends React.Component{
         }
         return(
             <div className="search-centre-container">
-                {this.state.stateShow===1?(
+                {/* {this.state.stateShow===1?( */}
                 <>
                     <div className={this.props.show?"divRecherchePrincipaleRechercheMedecinProfil":"divRecherchePrincipaleRechercheMedecin"}>
                         <div className="divSearchBar row">
@@ -346,8 +347,8 @@ export default class Centre extends React.Component{
                             </div>
                             </>}
                     </div>
-                </>):(this.state.professionnelDetail!==null?<DetailCentre setStateShow={this.changeStateShow} professionnelData={this.state.professionnelDetail}/>:'')
-                }
+                </>
+                {/* // ):(this.state.professionnelDetail!==null?<DetailCentre setStateShow={this.changeStateShow} professionnelData={this.state.professionnelDetail}/>:'')} */}
             </div>
         )
     }
