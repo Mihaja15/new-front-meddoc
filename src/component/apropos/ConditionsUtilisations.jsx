@@ -15,7 +15,7 @@ class ConditionsUtilisations extends React.Component{
             <div className="sub-apropos-container">
                 <h1>Conditions générales d'utilisation</h1>
                 <h2>1 - MENTIONS LÉGALES</h2>
-                <p>Les Services proposés par MEDDoC sont accessibles à l’adresse URL : <a href="https://www.meddoc.com" rel="noopener noreferrer" target="_blank">www.meddoc.com</a></p>
+                <p>Les Services proposés par MEDDoC sont accessibles à l’adresse URL : <a href="https://www.meddoc.mg" rel="noopener noreferrer" target="_blank">www.meddoc.mg</a></p>
                 
                 <p>Editeur : MEDDoC, SARLU au capital de 1.000.000 MGA, immatriculée au Registre du Commerce et des Sociétés sous le numéro 2020B00629, dont le siège social est situé à KENTIA DOMICILIATION - Immeuble Jacaranda Ambatonakanga</p>
                 

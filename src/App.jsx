@@ -120,7 +120,7 @@ class App extends React.Component {
             <Route exact path="/a-propos/:onglet" render={() => {return  this.contentShow(<Apropos/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/mot-de-passe-oublie" render={() => { return this.contentShowV2(<MotDePasse/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route path="/mes-vaccins" render={() => {return  this.contentShowWithLeft(<Vaccin/>,<Header cookies={this.props.cookies}/>,<LeftMenu/>,<Footer/>);}}/>
-            <Route path="/recherche" render={() => {return  this.contentShow(<div style={{marginTop:'15vh'}}><Centre dataFind={this.setProps()}/></div>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route path="/recherche" render={() => {return  this.contentShow(<div ><Centre dataFind={this.setProps()}/></div>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             {/* <Route path="/profil" render={() => {return  this.contentShow(<UserProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/> */}
             <Route path="/profil-patient" render={() => {return  this.contentShow(<PatientProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             {/* <Route path="/profil-centre" render={() => {return  this.contentShowWithLeft(<Profil/>,<Header cookies={this.props.cookies}/>,<LeftMenu type={0}/>,null);}}/> */}

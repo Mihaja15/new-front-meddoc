@@ -16,6 +16,8 @@ import africa from '../../assets/africa.png';
 import ofab from '../../assets/partenaire/ofab.png';
 import usaid from '../../assets/partenaire/shops-plus.png';
 import zafy_tody from '../../assets/partenaire/zafy_tody.png';
+import Select from 'react-select';
+import {Link} from 'react-router-dom';
 
 class Home extends React.Component{
     constructor(props){
@@ -28,7 +30,10 @@ class Home extends React.Component{
     }
     handleChange = (param, e) => {
         // this.setState({ [param]: e.target.value });
+        console.log(e);
+        // console.log(param);
         if(param==="selectFind"){
+            console.log(e);
             if(e!==null)
                 this.setState({[param]:e.value});
             else
@@ -42,6 +47,49 @@ class Home extends React.Component{
         });
     }
     render(){
+        const styles = {
+            placeholder: base => ({
+                ...base,
+                color:"#1b7895"
+            }),
+            container: base => ({
+                ...base,
+                width: "100%",
+                height:"100%",
+                color:"#1b7895",
+            }),
+            control: base => ({
+                ...base,
+                color:"#1b7895",
+                height: 60,
+                minHeight: 60,
+                fontSize: 16,
+                borderRadius: 0,
+                width: "100%",
+                textAlign: "left",
+                cursor: "pointer",
+                height:"100%",
+                boxShadow: 'none'
+            }),
+            dropdownIndicator: base => ({
+                ...base,
+                display: "none"
+            }),
+            indicatorSeparator: base => ({
+                ...base,
+                display: "none"
+            }),
+            valueContainer: base => ({
+                ...base,
+                padding: 0,
+                paddingLeft: 2,
+                color:"#1b7895",
+            }),
+            singleValue: base => ({
+              ...base,
+              color: '#1b7895'
+            })
+          }
         return(
             <div className="container-fluid home-container">
                 <div className="row col-md-12 banner-top">
@@ -51,8 +99,18 @@ class Home extends React.Component{
                                 <h1>Prenez rendez-vous <br/>avec <b>un médecin</b> proche de chez vous!</h1>
                                 <ul className="home_container_search_bar_ul col-md-12 row">
                                     <li className="home_container_search_bar_ul_li_v1 col-md-6 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v1_input" value={this.state.textFind} placeholder="Spécialité, médecin, établissement ..." onChange={this.handleChange.bind(this,"textFind")}/></li>
-                                    <li className="home_container_search_bar_ul_li_v2 col-md-4 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v2_input" value={this.state.textFind} placeholder="Où ?" onChange={this.handleChange.bind(this,"textFind")}/></li>
-                                    <li className="home_container_search_bar_ul_li_v3 col-md-2 col-sm-12"><button type="submit" className="home_container_search_bar_ul_li_v3_button"><FontAwesomeIcon icon={faSearch} onClick={()=>{window.location.pathname='/recherche-centre/'+this.state.textFind+'/0'}}/></button></li>
+                                    {/* <li className="home_container_search_bar_ul_li_v2 col-md-4 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v2_input" value={this.state.textFind} placeholder="Où ?" onChange={this.handleChange.bind(this,"textFind")}/></li> */}
+                                    <li className="home_container_search_bar_ul_li_v2 col-md-4 col-sm-12">
+                                        <Select 
+                                            // className='home_container_search_bar_ul_li_v2_input'
+                                            onChange={this.handleChange.bind(this,"selectFind")}
+                                            styles={styles}
+                                            isClearable={true}
+                                            placeholder="Où"
+                                            options={this.state.listDistrict} />
+                                        {/* <SelectInput onChange={this.handleChange} className="home_container_search_bar_ul_li_v2_input" name={'selectFind'} value={this.state.selectFind} options={this.state.listDistrict}/> */}
+                                    </li>
+                                    <li className="home_container_search_bar_ul_li_v3 col-md-2 col-sm-12"><Link type="submit" to={`/recherche/${this.state.textFind}/${this.state.selectFind}`} className="home_container_search_bar_ul_li_v3_button"><FontAwesomeIcon icon={faSearch}/></Link></li>
                                 </ul>
                             </div>
                             <div className="icons-banner">
@@ -68,7 +126,7 @@ class Home extends React.Component{
                         </div>
                         <div className="custom-shape-divider-bottom-1629768645">
                             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
                             </svg>
                         </div>
                     </div>

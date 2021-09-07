@@ -67,13 +67,13 @@
 }
 
 .divRecherchePrincipaleRechercheMedecin{
-    background-color: #1b7895;
+    /* background-color: #1b7895; */
     position: sticky;
     position: -webkit-sticky;
     top:0px;
     display: block;
     z-index:100;
-    box-shadow: 0px 0px 2px 2px #477991;
+    /* box-shadow: 0px 0px 2px 2px #477991; */
 }
 .divRecherchePrincipaleRechercheMedecinProfil{
     background-color: #fff;
