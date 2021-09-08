@@ -12,7 +12,7 @@ class MentionsLegales extends React.Component{
     render(){
         return (
             <div className="sub-apropos-container">
-                <h1>MENTIONS LÉGALES</h1>
+                <h1>Mentions légales</h1>
                 
                 <p>Les Services proposés par MEDDoC sont accessibles à l’adresse URL : <a href="https://www.meddoc.mg" rel="noopener noreferrer" target="_blank">www.meddoc.mg</a></p>
  

@@ -6,7 +6,10 @@ import './Apropos.css';
 import QuiSommesNous from './QuiSommesNous';
 import history from '../../history';
 import MentionsLegales from './MentionsLegales';
-const link = ['qui-sommes-nous','presse','mentions-legales','conditions-generales-d-utilisation'];
+import InformationConsentement from './InformationConsentement';
+import InformationsCookies from './InformationsCookies';
+import Lexique from './Lexique';
+const link = ['qui-sommes-nous','presse','mentions-legales','conditions-generales-d-utilisation','notice-information-et-consentement','informations-cookies','lexique'];
 class Apropos extends React.Component{
     constructor(props){
         super();
@@ -23,6 +26,12 @@ class Apropos extends React.Component{
                 ?<MentionsLegales/>
                 :show===3
                 ?<ConditionsUtilisations/>
+                :show===4
+                ?<InformationConsentement/>
+                :show===5
+                ?<InformationsCookies/>
+                :show===6
+                ?<Lexique/>
                 :<Error404/>
     }
     isActive=(value)=>{
@@ -30,12 +39,6 @@ class Apropos extends React.Component{
         // const show = link.indexOf(window.location.pathname.split('/')[2]);
         return show===value?'active':'';
     }
-    componentWillMount() {
-        this.unlisten = history.listen((location, action) => {
-        //   alert(location.pathname);
-        //   history.push(location)
-        });
-      }
     render(){
         return (
             <div className="apropos-container">
@@ -48,6 +51,8 @@ class Apropos extends React.Component{
                                 <li><Link to="/a-propos/presse" className={this.isActive(1)}>Presse</Link></li>
                                 <li><Link to="/a-propos/mentions-legales" className={this.isActive(2)}>Mentions légales</Link></li>
                                 <li><Link to="/a-propos/conditions-generales-d-utilisation" className={this.isActive(3)}>Conditions générales d'utilisation</Link></li>
+                                <li><Link to="/a-propos/notice-information-et-consentement" className={this.isActive(4)}>Notice d’information et de consentement</Link></li>
+                                <li><Link to="/a-propos/informations-cookies" className={this.isActive(5)}>Informations sur les cookies</Link></li>
                             </ul>
                         </div>
                         <div className="apropos-content col-md-9">

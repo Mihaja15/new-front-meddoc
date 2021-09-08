@@ -55,9 +55,10 @@
     color: #004369;
 }
 .sub-apropos-container h2{
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
     color: #004369;
+    text-transform: uppercase;
 }
 .sub-apropos-container h3{
     font-size: 17px;
@@ -66,7 +67,11 @@
 }
 .sub-apropos-container p, .sub-apropos-container li{
     font-size: 15px;
-    color: #477991;
+    color: #376074;
+}
+.sub-apropos-container p>b{
+    font-size: 15px;
+    color: #21536a;
 }
 .sub-apropos-container li{
     list-style: disc;

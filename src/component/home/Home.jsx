@@ -10,8 +10,8 @@ import im3 from '../../assets/img/im3.png';
 import im4 from '../../assets/img/im4.png';
 import '../../assets/fonts/Font.css';
 import { fetchGet } from '../../services/global.service';
-import imgrdv from '../../assets/background/imgrdv.jpg';
-import pharmatie from '../../assets/background/pharmatie.jpg';
+import imgrdv from '../../assets/background/imgrdv.png';
+import pharmatie from '../../assets/background/pharmatie.png';
 import africa from '../../assets/africa.png';
 import ofab from '../../assets/partenaire/ofab.png';
 import usaid from '../../assets/partenaire/shops-plus.png';
@@ -68,7 +68,6 @@ class Home extends React.Component{
                 width: "100%",
                 textAlign: "left",
                 cursor: "pointer",
-                height:"100%",
                 boxShadow: 'none'
             }),
             dropdownIndicator: base => ({
@@ -98,7 +97,7 @@ class Home extends React.Component{
                             <div className="search-bar">
                                 <h1>Prenez rendez-vous <br/>avec <b>un médecin</b> proche de chez vous!</h1>
                                 <ul className="home_container_search_bar_ul col-md-12 row">
-                                    <li className="home_container_search_bar_ul_li_v1 col-md-6 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v1_input" value={this.state.textFind} placeholder="Spécialité, médecin, établissement ..." onChange={this.handleChange.bind(this,"textFind")}/></li>
+                                    <li className="home_container_search_bar_ul_li_v1 col-md-6 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v1_input" value={this.state.textFind} placeholder="Spécialité, médecin, établissement . . ." onChange={this.handleChange.bind(this,"textFind")}/></li>
                                     {/* <li className="home_container_search_bar_ul_li_v2 col-md-4 col-sm-12"><input type="text" className="home_container_search_bar_ul_li_v2_input" value={this.state.textFind} placeholder="Où ?" onChange={this.handleChange.bind(this,"textFind")}/></li> */}
                                     <li className="home_container_search_bar_ul_li_v2 col-md-4 col-sm-12">
                                         <Select 
@@ -106,7 +105,7 @@ class Home extends React.Component{
                                             onChange={this.handleChange.bind(this,"selectFind")}
                                             styles={styles}
                                             isClearable={true}
-                                            placeholder="Où"
+                                            placeholder="Où? (District)"
                                             options={this.state.listDistrict} />
                                         {/* <SelectInput onChange={this.handleChange} className="home_container_search_bar_ul_li_v2_input" name={'selectFind'} value={this.state.selectFind} options={this.state.listDistrict}/> */}
                                     </li>
