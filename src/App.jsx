@@ -29,6 +29,7 @@ import Consultation from './component/consultation/Consultation';
 import Error404 from './component/alert/Error404';
 import Apropos from './component/apropos/Apropos';
 import InscriptionPro from './component/professionnel-sante/InscriptionPro';
+import Pharmacie from './component/pharmacie/Pharmacie';
 
 class App extends React.Component {
   constructor(props){
@@ -132,6 +133,7 @@ class App extends React.Component {
             <Route path="/profil-staff" render={() => {return  this.contentShow(<ProfilStaff/>,<Header cookies={this.props.cookies}/>);}}/>
             <Route exact path="/:lieu/:specialite/:professionnel" render={() => {return  this.contentShow(<ProfessionnalProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/consultation/patient/:specialite/:userConsultation/:aaa" render={() => {return  this.contentShow(<Consultation/>,<Header cookies={this.props.cookies}/>);}}/>
+            <Route exact path="/pharmacie" render={() => {return  this.contentShow(<Pharmacie/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="*" render={() => {return  this.contentShow(<Error404/>,<Header cookies={this.props.cookies}/>,<Footer/>);}} />
           </Switch>
         </Router>

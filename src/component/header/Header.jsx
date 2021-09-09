@@ -220,7 +220,7 @@ class Header extends React.Component{
                                     <li className="nav-menu-link" id="drop-down-menu-link">Vous êtes <FontAwesomeIcon icon={faCaretDown}/>
                                         <ul id="drop-down-menu-sublink">
                                             <li>Un professionnel de santé?</li>
-                                            <li>Une pharmacie?</li>
+                                            <li><Link to="/pharmacie">Une pharmacie?</Link></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -248,7 +248,7 @@ class Header extends React.Component{
                                         <li>Prise de rendez-vous en ligne</li>
                                         <li>Pharmaclic</li>
                                         <li>Un professionnel de santé?</li>
-                                        <li>Une pharmacie?</li>
+                                        <li><Link to="/pharmacie">Une pharmacie?</Link></li>
                                         <li><Link to="/inscription">Inscription</Link></li>
                                         <li><Link to="/connexion">Connexion</Link></li>
                                     </>:<>
