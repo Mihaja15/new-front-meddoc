@@ -1,0 +1,23 @@
+
+.container-pharmacie {
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 20px 50px 20px 50px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: justify;
+}
+
+
+.container-pharmacie ul li {
+    list-style-type: disc;
+}
+
+.container-pharmacie ol li {
+    list-style-type: decimal;
+}
+
+.container-pharmacie .container-boutique {
+    text-align: center;
+}
