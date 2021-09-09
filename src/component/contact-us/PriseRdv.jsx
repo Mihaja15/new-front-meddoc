@@ -10,7 +10,10 @@ export default class PriseRdv extends React.Component{
     render(){
         return(
             <div className="inscription-professionnel-container">
-                
+                <ul>
+                    <li >PRATICIEN</li>
+                    <li>CENTRES ET ÉTABLISSEMENTS</li>
+                </ul>
             </div>
         );
     }
