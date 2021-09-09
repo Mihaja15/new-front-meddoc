@@ -112,7 +112,7 @@ export default class UploadFile extends React.Component{
     }
     render(){
         return(
-            <div className="upload-file-container">
+            <div className="upload-file-container col-12">
                 <form method='POST' onSubmit={this.enregistre.bind(this)} className='row'>
                     <div className="file-content col-md-12">
                         <div className="col-12 row">
@@ -120,13 +120,13 @@ export default class UploadFile extends React.Component{
                                 return(
                                 <div className="col-3 single-file" key={i}>
                                     <span className='delete-file' onClick={()=>this.deleteFile(i)}><FontAwesomeIcon icon={faTimes}/></span>
-                                    <img src={data.base} className="preview-upload" alt={data.name}/>
+                                    <img src={data.base} className="preview-upload col-12" alt={data.name}/>
                                 </div>)
                             })}
-                            <div className="col-3">
+                            <div className="col-3" style={{display:this.state.selecteFiles.length<this.state.maxFile?'flex':'none'}}>
                                 <div className="upload-file-box">
-                                    <input type="file" name="files" id="files-upload" multiple data-multiple-caption="{count} files selected" onChange={(e) => this.changeInputFile(e)} accept="application/pdf,image/png,image/jpeg" className="input-file-upload"  />
-                                    <label htmlFor="files-upload" className='label-file-upload' data-tip data-for='textTelechargementFichier'><FontAwesomeIcon icon={this.state.typeUpload==='images'?faFileImage:faFileImport}/></label>
+                                    <input type="file" name="files" id="files-upload" multiple data-multiple-caption="{count} files selected" onChange={(e) => this.changeInputFile(e)} accept="application/pdf,image/png,image/jpeg" className="input-file-upload col-12"  />
+                                    <label htmlFor="files-upload" className='label-file-upload col-12' data-tip data-for='textTelechargementFichier'><FontAwesomeIcon icon={this.state.typeUpload==='images'?faFileImage:faFileImport}/></label>
                                 </div>
                                 <ReactTooltip id='textTelechargementFichier'>
                                     <span>Importer des {this.state.typeUpload} ici</span>

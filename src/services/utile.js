@@ -135,6 +135,7 @@ function createSemaineEmploieDuTemps() {
 function formatDate(date){
     if(date===null||date===undefined||date==="null")
         return "";
+    date = new Date(date);
     return autocompleteZero(date.getDate(),2)+'/'+autocompleteZero(date.getMonth()+1,2)+'/'+date.getFullYear();
 }
 function formatDateDash(date){

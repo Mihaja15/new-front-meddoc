@@ -1,0 +1,209 @@
+.inscription-professionnel-container{
+    padding: 20px;
+}
+.stepper-view{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+}
+.stepper-view li{
+    height: 25px;
+    display: flex;
+    background-color: #39c3ef;
+    border-radius: 12px;
+    padding: 0;
+}
+.stepper-view li.actif, .stepper-view li.encours{
+    background-color: #1b7895;
+}
+.stepper-view li b{
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    border-radius: 100%;
+    color: #1b7895;
+    border: 1px solid #1b7895;
+    background-color: #fff;
+    cursor: not-allowed;
+}
+.stepper-view li i{
+    color: #fff;
+    font-style: normal;
+}
+.stepper-view li.actif b{
+    color: #fff;
+    border: 1px solid #82a64e;
+    background-color: #82a64e;
+    cursor: pointer;
+}
+.stepper-view li.encours b{
+    color: #fff;
+    border: 1px solid #9a031e;
+    background-color: #9a031e;
+    cursor: default;
+}
+.user-pro-content{
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 0 4px 0.1px #979aad;
+    border-radius: 12px;
+}
+.user-pro-content h2{
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: #1b7895;
+    margin-bottom: 25px;
+}
+.user-pro-content .input-group{
+    /* background-color: #39c3ef;
+    border: 2px solid #39c3ef; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border-radius: 12px; */
+    /* overflow: hidden; */
+}
+.user-pro-content .input-group>label, .user-pro-content .form-group>label{
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #979aad;
+    height: 25px;
+}
+.user-pro-content .input-group input, .user-pro-content .input-group select, .user-pro-content .input-group textarea{
+    color: #979aad;
+    outline: none;
+    border-radius: 12px;
+}
+.user-pro-content .input-group div.phone{
+    width: 100%;
+    display: flex;
+    color: #979aad;
+    border-radius: 0;
+}
+.user-pro-content .input-group div.phone input{
+    color: #979aad;
+    outline: none;
+    border: none;
+    height: max-content;
+    border-radius: 0;
+}
+.user-pro-content .input-group div.phone b{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #979aad;
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+}
+.user-pro-content .input-group div.experience{
+    width: 100%;
+    /* display: flex; */
+    color: #979aad;
+    border-radius: 0;
+    height: max-content;
+}
+.user-pro-content .input-group div.experience input, .user-pro-content .input-group div.experience select, .user-pro-content .input-group div.experience textarea{
+    color: #979aad;
+    outline: none;
+    border: none;
+    height: max-content;
+    border-radius: 0;
+    border-bottom: 1px solid #979aad;
+    margin-bottom: 5px;
+}
+.user-pro-content .input-group div.experience input::placeholder{
+    color: #979aad;
+    text-align: center;
+}
+.user-pro-content .input-group ul{
+    display: flex;
+    justify-content: flex-end;
+}
+.user-pro-content .input-group li{
+    display: flex;
+    justify-content: flex-end;
+    list-style-type: square;
+    border: 1px solid #16637b;
+    border-radius: 5px;
+}
+/* .user-pro-content .input-group ul.list-experience{
+    background-color: brown;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+} */
+.user-pro-content .input-group ul.list-experience li{
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+}
+.user-pro-content .input-group a{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: #1b7895;
+}
+.user-pro-content .input-group a.delete{
+    text-align: center;
+    color: #9a031e;
+}
+.user-pro-content .input-group a.add:hover{
+    transform: scale(1.01);
+    transition: ease-in 0.2s;
+}
+.user-pro-content .form-group>.boutons{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 5px;
+}
+.user-pro-content .form-group>.boutons>a, .user-pro-content .form-group>.boutons>button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    height: 30px;
+    min-width: 20%;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.user-pro-content .form-group>.boutons>.cancel{
+    box-shadow: 0 0 2px 0.5px #979aad;
+    color: rgb(92, 92, 92);
+}
+.user-pro-content .form-group>.boutons>.next{
+    background-color: #1b7895;
+    color: #fff;
+}
+.user-pro-content .form-group>.boutons>.finish{
+    background-color: #82a64e;
+    color: #fff;
+}
+.user-pro-content .form-group>.boutons>.cancel:hover{
+    box-shadow: 0 0 2px 1px #979aad;
+}
+.user-pro-content .form-group>.boutons>.next:hover{
+    background-color: #16637b;
+}
+.user-pro-content .form-group>.boutons>.finish:hover{
+    background-color: rgb(93, 121, 55);
+}
+@media  only screen and (max-width:767px)  {
+    .stepper-view li i{
+        /* background-color: #1b7895; */
+        font-style: normal;
+        display: none;
+        content: '';
+    }
+    .user-pro-content .input-group input, .user-pro-content .input-group select, .user-pro-content .input-group textarea, .user-pro-content .input-group div.phone{
+        border-radius: 0;
+    }
+}

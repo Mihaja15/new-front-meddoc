@@ -4,8 +4,8 @@
 }
 .preview-upload{
     object-fit: scale-down;
-    width: 150px;
-    height: 150px;
+    width: 50px;
+    height: 50px;
     border-radius: 50px;
 }
 .file-content{
@@ -20,10 +20,10 @@
 }
 .upload-file-box{
     position: relative;
-    width: 150px;
+    /* width: 50px; */
     text-align: center;
     margin: 0 auto;
-    height: 150px;
+    height: max-content;
     border-radius: 50px;
 }
 .upload-file-box label.label-file-upload {
@@ -39,6 +39,7 @@
     cursor: pointer;
     color: #1b7895;
     font-size: 50px;
+    z-index: 800;
     /* padding: 10px 0; */
     text-transform:uppercase;
     border-radius: 50px;
@@ -48,7 +49,7 @@
     position: absolute;
     z-index: 1;
     width: 100%;
-    height: 50px;
+    height: fit-content;
     top: 0;
     left: 0;
     opacity: 0;

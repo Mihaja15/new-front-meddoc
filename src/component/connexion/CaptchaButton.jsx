@@ -19,9 +19,9 @@ const CaptchaButton = ({setCaptchaToken, disableButton, hiddenButton}) => {
     }, [executeRecaptcha,setCaptchaToken]);
   
     // You can use useEffect to trigger the verification as soon as the component being loaded
-    useEffect(() => {
-        reCaptchaVerify();
-    }, [reCaptchaVerify]);
+    // useEffect(() => {
+    //     reCaptchaVerify();
+    // }, [reCaptchaVerify]);
     if(disableButton)
         return <a className="bouton-solid-reg popup-with-move-anim a1" style={{textAlign:"center"}} hidden={hiddenButton} id="sonboutonConnecter" href="#invalide">Se connecter</a>;
     else

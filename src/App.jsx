@@ -28,6 +28,7 @@ import Consultation from './component/consultation/Consultation';
 // import Loader from './component/alert/Loader';
 import Error404 from './component/alert/Error404';
 import Apropos from './component/apropos/Apropos';
+import InscriptionPro from './component/professionnel-sante/InscriptionPro';
 
 class App extends React.Component {
   constructor(props){
@@ -112,6 +113,7 @@ class App extends React.Component {
             <Route exact path="/404" render={() => { return this.contentShow(<Error404/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             {/* <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<Footer/>); }}/> */}
             <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/inscription-professionnel" render={() => {return  this.contentShow(<InscriptionPro/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/inscription-professionnel-sante" render={() => {return  this.contentShow(<InscriptionProfessionnel/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/connexion-professionnel-sante" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/connexion" render={() => {return  this.contentShow(<Connexion cookies={this.props.cookies}/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
