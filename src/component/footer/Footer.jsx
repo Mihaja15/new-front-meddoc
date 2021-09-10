@@ -37,8 +37,8 @@ export default class Footer extends React.Component{
                         <li className="footer_content_container_fluid_ul_li">
                             <h5 className="footer_content_container_fluid_row_col_h5 footer_content_container_fluid_row_col_h5_v3">Vous êtes ?</h5>
                             <ul className="footer_content_container_fluid_row_col_ul">
-                                <li>Un professionnel de santé ?</li>
-                                <li>Une pharmacie ?</li>
+                                <li><Link to="/prise-rdv">Un professionnel de santé ?</Link></li>
+                                <li><Link to="/pharmacie">Une pharmacie ?</Link></li>
                             </ul>
                         </li>
                         <li className="footer_content_container_fluid_ul_li">
