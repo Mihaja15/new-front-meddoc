@@ -363,7 +363,10 @@ export default class InscriptionPro extends React.Component{
 			}
         });
     }
-    checkData=()=>{
+    checkData=(value)=>{
+        if(value===1){
+            
+        }
         this.setState({step:this.state.step<5?(this.state.step+1):5},function(){
             this.setState({validStep:this.state.step});
         });
