@@ -292,6 +292,14 @@ li.nav-menu-link:hover{
     background-color: #fff;
     color: #1b7895;
 }
+#drop-down-menu-sublink a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#drop-down-menu-sublink li:hover a{
+    color: #1b7895;
+}
 .home-menu{
     right: 160px !important;
     display: inline-flex;

@@ -80,6 +80,11 @@
     outline: none;
     border-radius: 12px;
 }
+.user-pro-content .input-group input:focus, .user-pro-content .input-group select:focus, .user-pro-content .input-group textarea:focus{
+    box-shadow: none;
+    outline: none;
+    /* border: 0.5px solid #1b789525; */
+}
 .user-pro-content .input-group div.phone{
     width: 100%;
     display: flex;
@@ -125,12 +130,23 @@
 .user-pro-content .input-group ul{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    padding: 5px;
+    border-radius: 5px;
+    /* border: 0.1px solid #16637b; */
+    background-color: #119da4;
+    transition: ease-in 0.5s;
 }
 .user-pro-content .input-group li{
+    transition: ease-in 0.5s;
     display: flex;
     justify-content: flex-end;
     list-style-type: square;
-    border: 1px solid #16637b;
+    /* border: 0.1px solid #119da4; */
+    background-color: #fff;
+    margin-top: 2.5px;
+    margin-bottom: 2.5px;
     border-radius: 5px;
 }
 /* .user-pro-content .input-group ul.list-experience{

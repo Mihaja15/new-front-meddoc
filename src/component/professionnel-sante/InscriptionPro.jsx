@@ -12,6 +12,7 @@ import L from 'leaflet';
 import redIcon from '../../assets/icon/marker-icon-2x-red.png';
 import { utile } from '../../services/utile';
 import UploadFile from '../dynamics/UploadFile';
+import Toaster from '../alert/Toaster';
 const styles = {
     container: base => ({
         ...base,
@@ -111,6 +112,14 @@ export default class InscriptionPro extends React.Component{
             erreurMessage:'',
             erreurEtat:false,
             emploiTemps:utile.createSemaineEmploieDuTemps(),
+            presentation:'',
+            facebook:'',
+            twitter:'',
+            linkedin:'',
+            siteweb:'',
+            homePrice:'',
+            officePrice:'',
+
         }
     }
     setDataCenter=(lats,lngs)=>{
@@ -363,15 +372,6 @@ export default class InscriptionPro extends React.Component{
 			}
         });
     }
-    checkData=(value)=>{
-        if(value===1){
-            
-        }
-        this.setState({step:this.state.step<5?(this.state.step+1):5},function(){
-            this.setState({validStep:this.state.step});
-        });
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
-    }
     setPhotos=(value)=>{
         this.setState({files:utile.hasValue(value)?value:[]});
     }
@@ -386,19 +386,19 @@ export default class InscriptionPro extends React.Component{
                         <div className="form-group">
                             <div className="input-group">
                                 <label className="col-md-4">Nom</label>
-                                <input className="form-control col-md-8" required={this.state.step===1} type="text" value={this.state.nom} onChange={this.handleChange.bind(this,"nom")} placeholder="" />
+                                <input className="form-control col-md-8" name="nom" id="nom" required={false} type="text" value={this.state.nom} onChange={this.handleChange.bind(this,"nom")} placeholder="" />
                             </div>
                         </div>
                         <div className="form-group">
                             <div className="input-group">
                                 <label className="col-md-4">Prénom(s)</label>
-                                <input className="form-control col-md-8" required={this.state.step===1} type="text" value={this.state.prenoms} onChange={this.handleChange.bind(this,"prenoms")} placeholder="" />
+                                <input className="form-control col-md-8" name="prenoms" id="prenoms" required={false} type="text" value={this.state.prenoms} onChange={this.handleChange.bind(this,"prenoms")} placeholder="" />
                             </div>
                         </div>
                         <div className="form-group">
                             <div className="input-group">
                                 <label className="col-md-4">Sexe</label>
-                                <select className="form-control col-md-8" required={this.state.step===1} value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
+                                <select className="form-control col-md-8" required={false} name="sexe" id="sexe"  value={this.state.sexe} onChange={this.handleChange.bind(this,"sexe")}  >
                                     <option value=''>Sélectionner</option>
                                     <option value={1}>Homme</option>
                                     <option value={2}>Femme</option>
@@ -443,7 +443,7 @@ export default class InscriptionPro extends React.Component{
                         <div className="form-group">
                             <div className="input-group">
                                 <label className="col-md-4">Ordre</label>
-                                <select className="form-control col-md-8" required={this.state.step===1} value={this.state.typeOrdre} onChange={this.handleChange.bind(this,"typeOrdre")}  >
+                                <select className="form-control col-md-8" name="typeOrdre" id="typeOrdre" required={false} value={this.state.typeOrdre} onChange={this.handleChange.bind(this,"typeOrdre")}  >
                                     <option value=''></option>
                                     { this.state.listTypeOrdre.map((ordre,i) => {
                                             return(
@@ -459,13 +459,13 @@ export default class InscriptionPro extends React.Component{
                         <div className="form-group">
                             <div className="input-group">
                                 <label className="col-md-4">Numéro ordre</label>
-                                <input className="form-control col-md-8" required={this.state.step===1} type="text" value={this.state.numOrdre} onChange={this.handleChange.bind(this,"numOrdre")}  placeholder=""  />
+                                <input className="form-control col-md-8" name="numOrdre" id="numOrdre" required={false} type="text" value={this.state.numOrdre} onChange={this.handleChange.bind(this,"numOrdre")}  placeholder=""  />
                             </div>
                         </div>
                         <div className="form-group">
                             <div className="input-group">
                                 <label className="col-md-4">Spécialité</label>
-                                <select className="form-control col-md-8" required={this.state.step===1} value={this.state.specialite} onChange={this.handleChange.bind(this,"specialite")}  >
+                                <select className="form-control col-md-8" name="specialite" id="specialite" required={false} value={this.state.specialite} onChange={this.handleChange.bind(this,"specialite")}  >
                                     <option value=''></option>
                                     {this.state.listSpecialite.map((spec,i) => {
                                             return(
@@ -482,7 +482,7 @@ export default class InscriptionPro extends React.Component{
                             <div className="input-group">
                                 <label className="col-md-4">N° téléphone</label>
                                 <div className="form-control phone col-md-7 col-sm-10 col-10">
-                                    <input className={this.state.numero===''?"col-12":"col-11"} min="0" type="number" value={this.state.numero} onChange={this.handleChange.bind(this,"numero")}  placeholder=""/>
+                                    <input className={this.state.numero===''?"col-12":"col-11"} name="numero" id="numero" min="0" type="number" value={this.state.numero} onChange={this.handleChange.bind(this,"numero")}  placeholder=""/>
                                     <b className="col-1" style={{display:this.state.numero===''?'none':''}} onClick={()=>this.setState({numero:''})}>&times;</b>
                                 </div>
                                 <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addContact(0)}><FontAwesomeIcon icon={faPlus}/></a>
@@ -508,27 +508,27 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Présentation</label>
-                            <textarea rows="4" className="col-md-8 form-control" value={this.state.presentation} required={this.state.step===2} onChange={this.handleChange.bind(this,"presentation")} placeholder="Texte de présentation qui apparaîtra sur votre profil (facultatif)"></textarea>
+                            <textarea rows="4" className="col-md-8 form-control" name="presentation" id="presentation" value={this.state.presentation} required={false} onChange={this.handleChange.bind(this,"presentation")} placeholder="Texte de présentation qui apparaîtra sur votre profil (facultatif)"></textarea>
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Expérience(s)</label>
                             <div className="form-control experience col-md-7 col-sm-10 col-10">
-                                <select className="col-md-6" value={this.state.debutExperience} onChange={this.handleChange.bind(this,'debutExperience')}>
+                                <select className="col-md-6" name="debutExperience" id="debutExperience" value={this.state.debutExperience} onChange={this.handleChange.bind(this,'debutExperience')}>
                                     <option>Début (année)</option>
                                     {utile.createTableauNumberSelect(1920,utile.getYearFromActual()).map((year,i)=>{
                                         return <option key={i} value={year.value}>{year.label}</option>
                                     })}
                                 </select>
-                                <select className="col-md-6" value={this.state.finExperience} onChange={this.handleChange.bind(this,'finExperience')}>
+                                <select className="col-md-6" name="finExperience" id="finExperience" value={this.state.finExperience} onChange={this.handleChange.bind(this,'finExperience')}>
                                     <option>Fin (année)</option>
                                     {utile.createTableauNumberSelect(this.state.debutExperience!==''?this.state.debutExperience:1920,utile.getYearFromActual()).map((year,i)=>{
                                         return <option key={i} value={year.value}>{year.label}</option>
                                     })}
                                 </select>
-                                <input className="col-md-12" type="text" value={this.state.entiteExperience} onChange={this.handleChange.bind(this,"entiteExperience")}  placeholder="Entité / Institut de travail"/>
-                                <textarea rows="2" className="col-md-12" value={this.state.descriptionExperience} onChange={this.handleChange.bind(this,"descriptionExperience")} placeholder="Description du poste occupé (facultatif)"></textarea>
+                                <input className="col-md-12" name="entiteExperience" id="entiteExperience"  type="text" value={this.state.entiteExperience} onChange={this.handleChange.bind(this,"entiteExperience")}  placeholder="Entité / Institut de travail"/>
+                                <textarea rows="2" className="col-md-12" name="descriptionExperience" id="descriptionExperience" value={this.state.descriptionExperience} onChange={this.handleChange.bind(this,"descriptionExperience")} placeholder="Description du poste occupé (facultatif)"></textarea>
                             </div>
                             <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addExperience()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
@@ -551,14 +551,14 @@ export default class InscriptionPro extends React.Component{
                         <div className="input-group">
                             <label className="col-md-4">Diplôme(s)</label>
                             <div className="form-control experience col-md-7 col-sm-10 col-10">
-                                <select className="col-md-6" value={this.state.anneeDiplome} onChange={this.handleChange.bind(this,'anneeDiplome')}>
+                                <select className="col-md-6" name="anneeDiplome" id="anneeDiplome" value={this.state.anneeDiplome} onChange={this.handleChange.bind(this,'anneeDiplome')}>
                                     <option>Obtention (année)</option>
                                     {utile.createTableauNumberSelect(1920,utile.getYearFromActual()).map((year,i)=>{
                                         return <option key={i} value={year.value}>{year.label}</option>
                                     })}
                                 </select>
-                                <input className="col-md-6" type="text" value={this.state.libelleDiplome} onChange={this.handleChange.bind(this,"libelleDiplome")}  placeholder="Diplôme obtenu"/>
-                                <textarea rows="2" className="col-md-12" value={this.state.descriptionDiplome} onChange={this.handleChange.bind(this,"descriptionDiplome")} placeholder="Description du diplôme (facultatif)"></textarea>
+                                <input className="col-md-6" type="text" name="libelleDiplome" id="libelleDiplome" value={this.state.libelleDiplome} onChange={this.handleChange.bind(this,"libelleDiplome")}  placeholder="Diplôme obtenu"/>
+                                <textarea rows="2" className="col-md-12" name="descriptionDiplome" id="descriptionDiplome" value={this.state.descriptionDiplome} onChange={this.handleChange.bind(this,"descriptionDiplome")} placeholder="Description du diplôme (facultatif)"></textarea>
                             </div>
                             <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addDiplome()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
@@ -581,7 +581,7 @@ export default class InscriptionPro extends React.Component{
                         <div className="input-group">
                             <label className="col-md-4">Langue(s)</label>
                             <Select 
-                                onChange={this.handleChange.bind(this,"langue")} options={this.state.listLangue}
+                                onChange={this.handleChange.bind(this,"langue")} name="langue" id="langue" options={this.state.listLangue}
                                 className="col-md-8" styles={styles} isClearable={true} isMulti placeholder="Langue(s) parlée(s)" closeMenuOnSelect={false} />
                         </div>
                     </div>
@@ -590,17 +590,17 @@ export default class InscriptionPro extends React.Component{
                             <label className="col-md-4">Site(s) web dédié(s) à votre activité</label>
                             <div className="form-control experience col-md-8">
                                 <svg fill="#b2d1db" className="col-2" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 32" width="30" height="30"><path d="M 19.253906 2 C 15.311906 2 13 4.0821719 13 8.8261719 L 13 13 L 8 13 L 8 18 L 13 18 L 13 30 L 18 30 L 18 18 L 22 18 L 23 13 L 18 13 L 18 9.671875 C 18 7.884875 18.582766 7 20.259766 7 L 23 7 L 23 2.2050781 C 22.526 2.1410781 21.144906 2 19.253906 2 z"/></svg>
-                                <input className="col-10" type="url" value={this.state.facebook} pattern="https://.*" onChange={this.handleChange.bind(this,"facebook")}  placeholder="Lien facebook (https)" />
+                                <input className="col-10" type="url" name="facebook" id="facebook" value={this.state.facebook} pattern="https://.*" onChange={this.handleChange.bind(this,"facebook")}  placeholder="Lien facebook (https)" />
 
-                                <svg xmlns="http://www.w3.org/2000/svg"  className="col-2" fill="#b2d1db" width="30" height="30" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="col-2" fill="#b2d1db" width="30" height="30" viewBox="0 0 24 24">
                                     <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
                                 </svg>
-                                <input className="col-10" type="url" value={this.state.twitter} pattern="https://.*" onChange={this.handleChange.bind(this,"twitter")}  placeholder="Lien twitter (https)" />
+                                <input className="col-10" type="url" name="twitter" id="twitter" value={this.state.twitter} pattern="https://.*" onChange={this.handleChange.bind(this,"twitter")}  placeholder="Lien twitter (https)" />
                                 
                                 <svg  className="col-2" xmlns="http://www.w3.org/2000/svg" fill="#b2d1db" width="30" height="30" viewBox="0 0 24 24">
                                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                                 </svg>
-                                <input className="col-10" type="url" value={this.state.linkedin} pattern="https://.*" onChange={this.handleChange.bind(this,"linkedin")}  placeholder="Lien LinkedIn (https)" />
+                                <input className="col-10" type="url" name="linkedin" id="linkedin" value={this.state.linkedin} pattern="https://.*" onChange={this.handleChange.bind(this,"linkedin")}  placeholder="Lien LinkedIn (https)" />
                                 
                                 <svg className="col-2" xmlns="http://www.w3.org/2000/svg" id="_x31__x2C_5" enableBackground="new 0 0 24 24" fill="#b2d1db" height="30" viewBox="0 0 24 24" width="30">
                                     <path d="m21.25 23h-18.5c-1.517 0-2.75-1.233-2.75-2.75v-16.5c0-1.517 1.233-2.75 2.75-2.75h18.5c1.517 0 2.75 1.233 2.75 2.75v16.5c0 1.517-1.233 2.75-2.75 2.75zm-18.5-20.5c-.689 0-1.25.561-1.25 1.25v16.5c0 .689.561 1.25 1.25 1.25h18.5c.689 0 1.25-.561 1.25-1.25v-16.5c0-.689-.561-1.25-1.25-1.25z"/>
@@ -608,7 +608,7 @@ export default class InscriptionPro extends React.Component{
                                     <path d="m11.742 16.399c-.804 0-1.605-.311-2.217-.925l-3.107-3.126c-.591-.585-.918-1.373-.918-2.214s.327-1.629.922-2.219c1.145-1.17 3.238-1.185 4.422.003l.534.535c.292.293.292.768-.001 1.061-.293.292-.769.292-1.061-.002l-.534-.535c-.613-.616-1.7-.613-2.296-.005-.316.314-.486.724-.486 1.162s.17.848.479 1.154l3.109 3.129c.596.596 1.535.646 2.184.11.32-.262.794-.216 1.056.104.263.32.216.792-.104 1.056-.581.477-1.283.712-1.982.712z"/>
                                     <path d="m15.368 20c-.839 0-1.626-.328-2.215-.926l-.512-.514c-.292-.293-.292-.769.002-1.061s.768-.292 1.061.002l.515.517c.615.623 1.688.62 2.298.003.313-.312.483-.722.483-1.16s-.17-.848-.479-1.154l-3.109-3.129c-.306-.306-.717-.476-1.155-.476-.269 0-.666.063-1.026.362-.32.265-.792.22-1.056-.099s-.221-.791.098-1.056c1.185-.982 3.098-.895 4.202.209l3.107 3.127c.591.586.918 1.374.918 2.215s-.327 1.629-.922 2.219c-.583.593-1.37.921-2.21.921z"/>
                                 </svg>
-                                <input className="col-10" type="url" value={this.state.siteweb} pattern="https://.*" onChange={this.handleChange.bind(this,"siteweb")}  placeholder="Lien de votre site web (https)" />
+                                <input className="col-10" type="url" name="siteweb" id="siteweb" value={this.state.siteweb} pattern="https://.*" onChange={this.handleChange.bind(this,"siteweb")}  placeholder="Lien de votre site web (https)" />
                             </div>
                         </div>
                     </div>
@@ -616,9 +616,9 @@ export default class InscriptionPro extends React.Component{
                         <div className="input-group">
                             <label className="col-md-4">Travaux et publications</label>
                             <div className="form-control experience col-md-7 col-sm-10 col-10">
-                                <input className="col-md-6" type="date" value={this.state.dateOuvrage} onChange={this.handleChange.bind(this,"dateOuvrage")}  placeholder="Date de publication"/>
-                                <input className="col-md-6" type="text" value={this.state.titreOuvrage} onChange={this.handleChange.bind(this,"titreOuvrage")}  placeholder="Titre de votre ouvrage"/>
-                                <input className="col-md-12" type="url" pattern="https://.*" value={this.state.lienOuvrage} onChange={this.handleChange.bind(this,"lienOuvrage")}  placeholder="Lien vers votre publication (https)"/>
+                                <input className="col-md-6" type="date" name="dateOuvrage" id="dateOuvrage" value={this.state.dateOuvrage} onChange={this.handleChange.bind(this,"dateOuvrage")}  placeholder="Date de publication"/>
+                                <input className="col-md-6" type="text" name="titreOuvrage" id="titreOuvrage" value={this.state.titreOuvrage} onChange={this.handleChange.bind(this,"titreOuvrage")}  placeholder="Titre de votre ouvrage"/>
+                                <input className="col-md-12" type="url" name="lienOuvrage" id="lienOuvrage" pattern="https://.*" value={this.state.lienOuvrage} onChange={this.handleChange.bind(this,"lienOuvrage")}  placeholder="Lien vers votre publication (https)"/>
                             </div>
                             <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addOuvrage()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
@@ -641,7 +641,7 @@ export default class InscriptionPro extends React.Component{
                         <div className="input-group">
                             <label className="col-md-4">Les mots clés (expertises, actes et symptômes)</label>
                             <div className="form-control phone col-md-7 col-sm-10 col-10">
-                                <input className="col-md-12" type="text" value={this.state.tag} onChange={this.handleChange.bind(this,"tag")}  placeholder="Mots clés/tags"/>
+                                <input className="col-md-12" type="text" name="tag" id="tag" value={this.state.tag} onChange={this.handleChange.bind(this,"tag")}  placeholder="Mots clés/tags"/>
                             </div>
                             <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addTag()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
@@ -662,7 +662,7 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Moyen(s) de paiement accepté(s)</label>
-                            <Select onChange={this.handleChange.bind(this,"paiement")} options={this.state.listPaiement} 
+                            <Select onChange={this.handleChange.bind(this,"paiement")} name="paiement" id="paiement" options={this.state.listPaiement} 
                             className="col-md-8" styles={styles} isClearable={true} isMulti placeholder="Paiement accepté" closeMenuOnSelect={false} />
                         </div>
                     </div>
@@ -678,7 +678,7 @@ export default class InscriptionPro extends React.Component{
                                         </g>
                                     </g>
                                 </svg>
-                                <input className="col-10" type="number" min="0" value={this.state.homePrice} onChange={this.handleChange.bind(this,"homePrice")}  placeholder="Prix de consultation à domicile en Ariary" />
+                                <input className="col-10" type="number" name="homePrice" id="homePrice" min="0" value={this.state.homePrice} onChange={this.handleChange.bind(this,"homePrice")}  placeholder="Prix de consultation à domicile en Ariary" />
 
                                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" width="30" height="30" fill="#b2d1db" className="col-2">
                                     <g>
@@ -686,7 +686,7 @@ export default class InscriptionPro extends React.Component{
                                         <path d="m210.929 196.98v48.271h-48.274c-8.284 0-15 6.716-15 15v59.866c0 8.284 6.716 15 15 15h48.274v48.27c0 8.284 6.716 15 15 15h59.866c8.284 0 15-6.716 15-15v-48.27h48.266c8.284 0 15-6.716 15-15v-59.866c0-8.284-6.716-15-15-15h-48.266v-48.271c0-8.284-6.716-15-15-15h-59.866c-8.284 0-15 6.716-15 15zm30 63.271v-48.271h29.866v48.271c0 8.284 6.716 15 15 15h48.266v29.866h-48.266c-8.284 0-15 6.716-15 15v48.27h-29.866v-48.27c0-8.284-6.716-15-15-15h-48.274v-29.866h48.274c8.284 0 15-6.716 15-15z"/>
                                     </g>
                                 </svg>
-                                <input className="col-10" type="number" min="0" value={this.state.officePrice} onChange={this.handleChange.bind(this,"officePrice")} placeholder="Prix de consultation au cabinet en Ariary" />
+                                <input className="col-10" type="number" name="officePrice" id="officePrice" min="0" value={this.state.officePrice} onChange={this.handleChange.bind(this,"officePrice")} placeholder="Prix de consultation au cabinet en Ariary" />
                             </div>
                         </div>
                     </div>
@@ -705,26 +705,26 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Adresse</label>
-                            <input className="form-control col-md-8" required={true} type="text" onChange={this.handleChange.bind(this,"adresse")}  placeholder=""  />
+                            <input className="form-control col-md-8" name="adresse" id="adresse" value={this.state.adresse} required={false} type="text" onChange={this.handleChange.bind(this,"adresse")}  placeholder=""  />
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">District</label>
                             <Select 
-                            onChange={this.handleChange.bind(this,"district")} placeholder="District de votre adresse" options={this.state.dataDistrict}
+                            onChange={this.handleChange.bind(this,"district")} name="district" id="district" placeholder="District de votre adresse" options={this.state.dataDistrict}
                             className="col-md-8" styles={styles} isClearable={true} isMulti closeMenuOnSelect={false} />
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Information d'accès</label>
-                            <textarea rows="4" className="form-control col-md-8" value={this.state.infoAcces} onChange={this.handleChange.bind(this,"infoAcces")} placeholder="Décrire les différentes informations pour faciliter votre localisation (facultatif)"></textarea>
+                            <textarea rows="4" className="form-control col-md-8" name="infoAcces" id="infoAcces" value={this.state.infoAcces} onChange={this.handleChange.bind(this,"infoAcces")} placeholder="Décrire les différentes informations pour faciliter votre localisation (facultatif)"></textarea>
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="input-group">
-                            <label className="col-md-12">Géolocalisation: latitude={this.state.latitude}&nbsp;longitude={this.state.longitude}</label>
+                            <label className="col-md-12">Géolocalisation: latitude({this.state.latitude})&nbsp;longitude({this.state.longitude})</label>
                             <div className="mapsLocalisationInscriptionMedecin col-md-12">
                                 <MapContainer center={[this.state.latitude,this.state.longitude]} style={{zIndex:"-1"}} zoom={15} scrollWheelZoom={true}>
                                     <MyComponent dataCenter={this.setDataCenter} />
@@ -756,14 +756,8 @@ export default class InscriptionPro extends React.Component{
                     <h2 className="col-12">Emploi du temps</h2>
                     <div className="form-group">
                         <div className="input-group">
-                            <label className="col-md-4">Présentation</label>
-                            <textarea rows="4" className="col-md-8 form-control" value={this.state.presentation} onChange={this.handleChange.bind(this,"presentation")} placeholder="Texte de présentation qui apparaîtra sur votre profil (facultatif)"></textarea>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="input-group">
                             <label className="col-md-4">Durée de consultation (minutes)</label>
-                            <input className="col-md-8 form-control" required={true} value={this.state.duree} type="number" onChange={this.handleChange.bind(this,"duree")} placeholder="en minutes"/>
+                            <input className="col-md-8 form-control" required={false} name="duree" id="duree" min="1" value={this.state.duree} type="number" onChange={this.handleChange.bind(this,"duree")} placeholder="en minutes"/>
                         </div>
                     </div>
                     <div className="form-group">
@@ -805,20 +799,20 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">E-mail</label>
-                            <input className="form-control col-md-8" type="email" value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}  placeholder=""  />
+                            <input className="form-control col-md-8" name="mail" id="mail" type="email" value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}  placeholder=""  />
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">N° téléphone</label>
-                            <input className="form-control col-md-8" required={true} type="tel " value={this.state.phone} onChange={this.handleChange.bind(this,"phone")} placeholder=""  />
+                            <input className="form-control col-md-8" name="phone" id="phone" required={false} type="tel " value={this.state.phone} onChange={this.handleChange.bind(this,"phone")} placeholder=""  />
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="input-group" data-tip data-for="registerTip">
                             <ReactTooltip id="registerTip" place="top" effect="solid">Votre mot de passe doit comporter un chiffre, une majuscule, une minuscule, un caractère spéciale(#,*,%,!...) et au moins 8 caractères </ReactTooltip>
                             <label className="col-md-4">Mot de passe</label>
-                            <input className="form-control col-md-8" required={true} value={this.state.mdp} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder="Nouveau mot de passe"/>
+                            <input className="form-control col-md-8" name="mdp" id="mdp" required={false} value={this.state.mdp} type="password" onChange={this.handleChange.bind(this,"mdp")}  placeholder="Nouveau mot de passe"/>
                             
                         </div>
                         <div className="input-group" data-tip data-for="registerTip">
@@ -828,7 +822,7 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Confirmation</label>
-                            <input className="form-control col-md-8" required={true} value={this.state.confirmationMdp} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder="Confirmation de mot de passe"/>
+                            <input className="form-control col-md-8" name="confirmationMdp" id="confirmationMdp" required={false} value={this.state.confirmationMdp} type="password" onChange={this.handleChange.bind(this,"confirmationMdp")} placeholder="Confirmation de mot de passe"/>
                         </div>
                     </div>
                     <div className="form-group" hidden={!this.getVerificationMdp()}>
@@ -839,6 +833,76 @@ export default class InscriptionPro extends React.Component{
                 </div>
             )
         }
+    }
+    inputBlankChecker=(id,message)=>{
+        const field = document.getElementById(id);
+        console.log(field)
+        field.focus();
+        field.style.boxShadow="0 0 2px 0.1px #b8627d";
+        field.setCustomValidity(message);
+        field.reportValidity();
+    }
+    resetInput=(id)=>{
+        const field = document.getElementById(id);
+        field.style.boxShadow="none";
+    }
+    checkData=(value)=>{
+        if(value===6){
+            if(this.state.nom==='') {
+                this.inputBlankChecker('nom', 'Nom: champ obligatoire!');
+                return;
+            } else this.resetInput('nom');
+            if(this.state.sexe==='') {
+                this.inputBlankChecker('sexe', 'Sexe: champ obligatoire!');
+                return;
+            }else this.resetInput('sexe');
+            // if(this.state.civilite==='') {
+            //     this.inputBlankChecker('civilite', 'Civilité: champ obligatoire!');
+            //     return;
+            // }else this.resetInput('civilite');
+            if(this.state.typeOrdre==='') {
+                this.inputBlankChecker('typeOrdre', 'Ordre: champ obligatoire!');
+                return;
+            }else this.resetInput('typeOrdre');
+            if(this.state.numOrdre==='') {
+                this.inputBlankChecker('numOrdre', 'Numéro ordre: champ obligatoire!');
+                return;
+            }else this.resetInput('numOrdre');
+            if(this.state.specialite==='') {
+                this.inputBlankChecker('specialite', 'Spécialité: champ obligatoire!');
+                return;
+            }else this.resetInput('specialite');
+        }else if(value===2){
+            if(this.state.presentation==='') {
+                this.inputBlankChecker('presentation', 'Pésentation: champ obligatoire!');
+                return;
+            } else this.resetInput('presentation');
+            if(this.state.langue==='') {
+                this.inputBlankChecker('langue', 'Langue: champ obligatoire!');
+                return;
+            }else this.resetInput('langue');
+            // if(this.state.civilite==='') {
+            //     this.inputBlankChecker('civilite', 'Civilité: champ obligatoire!');
+            //     return;
+            // }else this.resetInput('civilite');
+            if(this.state.typeOrdre==='') {
+                this.inputBlankChecker('typeOrdre', 'Ordre: champ obligatoire!');
+                return;
+            }else this.resetInput('typeOrdre');
+            if(this.state.numOrdre==='') {
+                this.inputBlankChecker('numOrdre', 'Numéro ordre: champ obligatoire!');
+                return;
+            }else this.resetInput('numOrdre');
+            if(this.state.specialite==='') {
+                this.inputBlankChecker('specialite', 'Spécialité: champ obligatoire!');
+                return;
+            }else this.resetInput('specialite');
+        }
+        this.setState({step:value<5?(value+1):5, validStep:value<this.state.validStep?this.state.validStep:value});
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
+    }
+    changeShow=(value)=>{
+        this.setState({erreurEtat:value});
     }
     render(){
         return(
@@ -861,12 +925,13 @@ export default class InscriptionPro extends React.Component{
                                     <div className="input-group boutons">
                                         <span className="col-md-2">Etape {this.state.step}/5</span>
                                         <a onClick={()=>{this.setState({step: this.state.step>1?(this.state.step-1):1}); window.scrollTo({top: 0, left: 0, behavior: 'smooth' });}} className="col-sm-5 col-md-2 btn cancel" disabled={this.state.step===1}><FontAwesomeIcon icon={faCaretLeft}/>&nbsp; Précédant</a>
-                                        <a onClick={()=>this.checkData()} className="col-sm-5 col-md-2 btn next" hidden={this.state.step===5}>Suivant &nbsp;<FontAwesomeIcon icon={faCaretRight}/></a>
+                                        <a onClick={()=>this.checkData(this.state.step)} className="col-sm-5 col-md-2 btn next" hidden={this.state.step===5}>Suivant &nbsp;<FontAwesomeIcon icon={faCaretRight}/></a>
                                         <button type="submit" className="col-sm-5 col-md-2 btn finish" hidden={this.state.step!==5}>Terminer &nbsp;<FontAwesomeIcon icon={faCheck}/></button>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        {this.state.erreurEtat?<Toaster type={'error'} bodyMsg={this.state.erreurMessage} isShow={this.state.erreurEtat} toggleShow={this.changeShow}/>:''}
                     </div>
                 </div>
             </div>
