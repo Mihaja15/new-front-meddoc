@@ -34,7 +34,7 @@ class Pharmacie extends Component{
                     <div class="container-boutique">
                         <a href="#" class="btn btn-success btn-lg">Ouvrir une boutique</a>
                     </div>
-                    <Link href="/contacter">Nous contacter</Link>
+                    <Link to="/nous-contacter">Nous contacter</Link>
                </div>
            </div>
         )

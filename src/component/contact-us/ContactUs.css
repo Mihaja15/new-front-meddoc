@@ -1,0 +1,18 @@
+.contact-us-container{
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+}
+.contact-us-container>.container>.row>h4{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #785e7d;
+    font-size: 20px;
+    font-weight: 600;
+}
+.contact-us-container>.container>.row{
+    border-radius: 12px;
+    box-shadow: 0 0 2px 0.1px #979aad;
+    padding: 25px;
+    color: #4a4f52;
+}

@@ -30,6 +30,8 @@ import Error404 from './component/alert/Error404';
 import Apropos from './component/apropos/Apropos';
 import InscriptionPro from './component/professionnel-sante/InscriptionPro';
 import Pharmacie from './component/pharmacie/Pharmacie';
+import ContactUs from './component/contact-us/ContactUs';
+import ComingSoon from './component/alert/ComingSoon';
 
 class App extends React.Component {
   constructor(props){
@@ -121,6 +123,7 @@ class App extends React.Component {
             <Route exact path="/suivi-medical" render={() => { return this.contentShowV2(<SuiviMedicals/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShowV2(<Actualites/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route exact path="/a-propos/:onglet" render={() => {return  this.contentShow(<Apropos/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/nous-contacter" render={() => {return  this.contentShow(<ContactUs/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/mot-de-passe-oublie" render={() => { return this.contentShowV2(<MotDePasse/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             <Route path="/mes-vaccins" render={() => {return  this.contentShowWithLeft(<Vaccin/>,<Header cookies={this.props.cookies}/>,<LeftMenu/>,<Footer/>);}}/>
             <Route path="/recherche" render={() => {return  this.contentShow(<div ><Centre dataFind={this.setProps()}/></div>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
@@ -134,6 +137,7 @@ class App extends React.Component {
             <Route exact path="/:lieu/:specialite/:professionnel" render={() => {return  this.contentShow(<ProfessionnalProfil/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/consultation/patient/:specialite/:userConsultation/:aaa" render={() => {return  this.contentShow(<Consultation/>,<Header cookies={this.props.cookies}/>);}}/>
             <Route exact path="/pharmacie" render={() => {return  this.contentShow(<Pharmacie/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/professionnel-de-sante" render={() => {return  this.contentShow(<ComingSoon/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="*" render={() => {return  this.contentShow(<Error404/>,<Header cookies={this.props.cookies}/>,<Footer/>);}} />
           </Switch>
         </Router>

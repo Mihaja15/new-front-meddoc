@@ -51,6 +51,7 @@ export default class InscriptionPro extends React.Component{
         this.state={
             step:1,
             validStep:1,
+            fraisConsultation:[],
             //files
             files:[],
             selectedFiles:[],
@@ -117,16 +118,21 @@ export default class InscriptionPro extends React.Component{
             twitter:'',
             linkedin:'',
             siteweb:'',
-            homePrice:'',
-            officePrice:'',
+            homePrice:0,
+            officePrice:0,
+            priceHome:false,
+            priceOffice:false,
 
         }
+        this.langue=React.createRef();
+        this.district=React.createRef();
+        this.paiement=React.createRef();
     }
     setDataCenter=(lats,lngs)=>{
         this.setState({latitude : lats,longitude : lngs});
 	}
     handleChange = (param, e) => {
-        // console.log(e.value)
+        console.log(e)
         if(param==="mdp"){
             this.setState({percentageMdp:verificationMotDePasseEnPourcentage(e.target.value)});
         }
@@ -135,8 +141,40 @@ export default class InscriptionPro extends React.Component{
             else if(e.target.value==='2')this.setState({civilite:'Mme'})
             else this.setState({civilite:''})
         }
+        if(param==='numero'){
+            if(this.state.listContact.find(c=>c.valeurContact===e.target.value)!==undefined){
+                e.target.style.boxShadow="0 0 2px 0.1px #b8627d";
+                e.target.setCustomValidity('Numéro déjà ajouté');
+                e.target.reportValidity();
+            }else{
+                e.target.style.boxShadow='none';
+            }
+            if(e.target.value.toString().includes('e')||e.target.value.toString().length!==10){
+                e.target.style.boxShadow="0 0 2px 0.1px #b8627d";
+                e.target.setCustomValidity('Numéro invalide');
+                e.target.reportValidity();
+            }else{
+                e.target.style.boxShadow='none';
+            }
+        }
+        if(param==='facebook'||param==='twitter'||param==='linkedin'||param==='siteweb'){
+            if(!utile.isValidSecuredLink(e.target.value)){
+                e.target.style.boxShadow="0 0 2px 0.1px #b8627d";
+                e.target.setCustomValidity('Lien invalide');
+                e.target.reportValidity();
+            }else{
+                e.target.style.boxShadow='none';
+            }
+            if(this.state.listContact.find(c=>c.valeurContact===e.target.value)!==undefined){
+                e.target.style.boxShadow="0 0 2px 0.1px #b8627d";
+                e.target.setCustomValidity('Lien déjà ajouté');
+                e.target.reportValidity();
+            }else{
+                e.target.style.boxShadow='none';
+            }
+        }
         if(e.target!==undefined)
-            this.setState({[param]:e.target.value})
+            this.setState({[param]:e.target.type==='checkbox'?e.target.checked:e.target.value})
         else if(e.value!==undefined)
             this.setState({[param]:e.vale})
         else
@@ -159,17 +197,21 @@ export default class InscriptionPro extends React.Component{
         return false;
     }
     //contact
-    addContact=(idTypeContact)=>{
-        if(this.state.numero!==''){
+    addContact=(idTypeContact,value)=>{
+        if(this.state[value]!==''){
             const data = this.state.listContact;
-            data.push({
-                typeContact:{
-                    idTypeContact:idTypeContact
-                },
-                valeurContact:this.state.numero
-            });
-            this.setState({listContact: data, numero:''});
+            if(data.find(c => c.valeurContact===this.state[value])===undefined && (!this.state.numero.toString().includes('e')&&this.state.numero.toString().length===10)){
+                data.push({
+                    typeContact:{
+                        idTypeContact:idTypeContact
+                    },
+                    valeurContact:this.state[value]
+                });
+                this.setState({listContact: data});
+                if(value==='numero') this.setState({[value]:''});
+            }
         }
+        console.log(this.state[value]);
     }
     removeContact=(indice)=>{
         const data = this.state.listContact;
@@ -232,19 +274,18 @@ export default class InscriptionPro extends React.Component{
     addTag=()=>{
         if(this.state.tag!==''){
             const data = this.state.tags;
-            data.push({
-                motCle:this.state.tag
-            });
-            this.setState({tags: data, tag:''});
+            if(data.find(c => c.motCle===this.state.tag)===undefined){
+                data.push({
+                    motCle:this.state.tag
+                });
+                this.setState({tags: data, tag:''});
+            }
         }
     }
     removeTag=(indice)=>{
         const data = this.state.tags;
         data.splice(indice, 1);
         this.setState({tags: data});
-    }
-    changeShow=(value)=>{
-        this.setState({erreurEtat:value});
     }
     generaterTabSelect = (min,max) =>{
 		const valeur = [];
@@ -485,7 +526,7 @@ export default class InscriptionPro extends React.Component{
                                     <input className={this.state.numero===''?"col-12":"col-11"} name="numero" id="numero" min="0" type="number" value={this.state.numero} onChange={this.handleChange.bind(this,"numero")}  placeholder=""/>
                                     <b className="col-1" style={{display:this.state.numero===''?'none':''}} onClick={()=>this.setState({numero:''})}>&times;</b>
                                 </div>
-                                <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addContact(0)}><FontAwesomeIcon icon={faPlus}/></a>
+                                <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addContact(1,'numero')}><FontAwesomeIcon icon={faPlus}/></a>
                             </div>
                         </div>
                         <div className="form-group" style={{display:this.state.listContact.length===0?'none':''}}>
@@ -581,7 +622,7 @@ export default class InscriptionPro extends React.Component{
                         <div className="input-group">
                             <label className="col-md-4">Langue(s)</label>
                             <Select 
-                                onChange={this.handleChange.bind(this,"langue")} name="langue" id="langue" options={this.state.listLangue}
+                                onChange={this.handleChange.bind(this,"langue")} ref={this.langue} name="langue" id="langue" options={this.state.listLangue}
                                 className="col-md-8" styles={styles} isClearable={true} isMulti placeholder="Langue(s) parlée(s)" closeMenuOnSelect={false} />
                         </div>
                     </div>
@@ -662,14 +703,16 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Moyen(s) de paiement accepté(s)</label>
-                            <Select onChange={this.handleChange.bind(this,"paiement")} name="paiement" id="paiement" options={this.state.listPaiement} 
-                            className="col-md-8" styles={styles} isClearable={true} isMulti placeholder="Paiement accepté" closeMenuOnSelect={false} />
+                            <Select 
+                            onChange={this.handleChange.bind(this,"paiement")} name="paiement" id="paiement" options={this.state.listPaiement} 
+                            ref={this.paiement} className="col-md-8" styles={styles} isClearable={true} isMulti placeholder="Paiement accepté" closeMenuOnSelect={false} />
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">Type de consultation</label>
                             <div className="form-control experience col-md-8">
+                                <input type="checkbox" className="col-1" id="priceHome" name="priceHome" onChange={this.handleChange.bind(this,"priceHome")} checked={this.state.priceHome}/>
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="30" height="30" fill="#b2d1db" className="col-2" viewBox="0 0 460.298 460.297" enableBackground="new 0 0 460.298 460.297;" xmlSpace="preserve">
                                     <g>
                                         <g>
@@ -678,15 +721,16 @@ export default class InscriptionPro extends React.Component{
                                         </g>
                                     </g>
                                 </svg>
-                                <input className="col-10" type="number" name="homePrice" id="homePrice" min="0" value={this.state.homePrice} onChange={this.handleChange.bind(this,"homePrice")}  placeholder="Prix de consultation à domicile en Ariary" />
+                                <input className="col-9" disabled={!this.state.priceHome} type="number" name="homePrice" id="homePrice" min="0" value={this.state.homePrice} onChange={this.handleChange.bind(this,"homePrice")}  placeholder="Prix de consultation à domicile en Ariary" />
 
+                                <input type="checkbox" className="col-1" id="priceOffice" name="priceOffice" onChange={this.handleChange.bind(this,"priceOffice")} checked={this.state.priceOffice}/>
                                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" width="30" height="30" fill="#b2d1db" className="col-2">
                                     <g>
                                         <path d="m507.514 249.429-217.665-213.93c-18.665-18.347-49.034-18.346-67.698-.001l-217.665 213.931c-5.909 5.808-5.991 15.305-.184 21.213 5.807 5.907 15.304 5.991 21.212.184l16.939-16.649v170.797c0 35.999 29.288 65.287 65.287 65.287h296.52c35.999 0 65.287-29.288 65.287-65.287v-170.797l16.939 16.649c2.921 2.87 6.718 4.302 10.513 4.302 3.882 0 7.763-1.498 10.699-4.485 5.807-5.909 5.725-15.406-.184-21.214zm-67.968 175.545c0 19.457-15.83 35.287-35.287 35.287h-296.519c-19.457 0-35.287-15.83-35.287-35.287v-200.282l170.727-167.798c1.767-1.737 3.812-3.04 5.995-3.909 6.003-2.388 13.053-1.493 18.27 2.687.474.38.933.787 1.375 1.222l170.727 167.797v200.283z"/>
                                         <path d="m210.929 196.98v48.271h-48.274c-8.284 0-15 6.716-15 15v59.866c0 8.284 6.716 15 15 15h48.274v48.27c0 8.284 6.716 15 15 15h59.866c8.284 0 15-6.716 15-15v-48.27h48.266c8.284 0 15-6.716 15-15v-59.866c0-8.284-6.716-15-15-15h-48.266v-48.271c0-8.284-6.716-15-15-15h-59.866c-8.284 0-15 6.716-15 15zm30 63.271v-48.271h29.866v48.271c0 8.284 6.716 15 15 15h48.266v29.866h-48.266c-8.284 0-15 6.716-15 15v48.27h-29.866v-48.27c0-8.284-6.716-15-15-15h-48.274v-29.866h48.274c8.284 0 15-6.716 15-15z"/>
                                     </g>
                                 </svg>
-                                <input className="col-10" type="number" name="officePrice" id="officePrice" min="0" value={this.state.officePrice} onChange={this.handleChange.bind(this,"officePrice")} placeholder="Prix de consultation au cabinet en Ariary" />
+                                <input className="col-9" disabled={!this.state.priceOffice} type="number" name="officePrice" id="officePrice" min="0" value={this.state.officePrice} onChange={this.handleChange.bind(this,"officePrice")} placeholder="Prix de consultation au cabinet en Ariary" />
                             </div>
                         </div>
                     </div>
@@ -712,7 +756,7 @@ export default class InscriptionPro extends React.Component{
                         <div className="input-group">
                             <label className="col-md-4">District</label>
                             <Select 
-                            onChange={this.handleChange.bind(this,"district")} name="district" id="district" placeholder="District de votre adresse" options={this.state.dataDistrict}
+                            ref={this.district} onChange={this.handleChange.bind(this,"district")} name="district" id="district" placeholder="District de votre adresse" options={this.state.dataDistrict}
                             className="col-md-8" styles={styles} isClearable={true} isMulti closeMenuOnSelect={false} />
                         </div>
                     </div>
@@ -872,33 +916,55 @@ export default class InscriptionPro extends React.Component{
                 this.inputBlankChecker('specialite', 'Spécialité: champ obligatoire!');
                 return;
             }else this.resetInput('specialite');
-        }else if(value===2){
+        }else if(value===7){
             if(this.state.presentation==='') {
                 this.inputBlankChecker('presentation', 'Pésentation: champ obligatoire!');
                 return;
             } else this.resetInput('presentation');
-            if(this.state.langue==='') {
-                this.inputBlankChecker('langue', 'Langue: champ obligatoire!');
+            if(this.state.langue.length===0) {
+                this.langue.current.focus();
+                this.langue.current.select.inputRef.setCustomValidity('Langue: champ obligatoire!');
+                this.langue.current.select.inputRef.reportValidity();
                 return;
-            }else this.resetInput('langue');
-            // if(this.state.civilite==='') {
-            //     this.inputBlankChecker('civilite', 'Civilité: champ obligatoire!');
-            //     return;
-            // }else this.resetInput('civilite');
-            if(this.state.typeOrdre==='') {
-                this.inputBlankChecker('typeOrdre', 'Ordre: champ obligatoire!');
+            }
+            if(this.state.facebook!==''){
+                this.addContact(5, 'facebook');
+            }
+            if(this.state.twitter!==''){
+                this.addContact(6,'twitter');
+            }
+            if(this.state.linkedin!==''){
+                this.addContact(4,'linkedin');
+            }
+            if(this.state.siteweb!==''){
+                this.addContact(7,'siteweb');
+            }
+            if(this.state.paiement.length===0) {
+                this.paiement.current.focus();
+                this.paiement.current.select.inputRef.setCustomValidity('Mode de paiement: champ obligatoire!');
+                this.paiement.current.select.inputRef.reportValidity();
                 return;
-            }else this.resetInput('typeOrdre');
-            if(this.state.numOrdre==='') {
-                this.inputBlankChecker('numOrdre', 'Numéro ordre: champ obligatoire!');
-                return;
-            }else this.resetInput('numOrdre');
-            if(this.state.specialite==='') {
-                this.inputBlankChecker('specialite', 'Spécialité: champ obligatoire!');
-                return;
-            }else this.resetInput('specialite');
+            }
+            if(this.state.priceHome){
+                const data = this.state.fraisConsultation;
+                data.push({
+                    idTypeConsultation:1,
+                    dateDebut: new Date(),
+                    frais:this.state.homePrice
+                });
+                this.setState({fraisConsultation:data});
+            }
+            if(this.state.priceOffice){
+                const data = this.state.fraisConsultation;
+                data.push({
+                    idTypeConsultation:2,
+                    dateDebut: new Date(),
+                    frais:this.state.officePrice
+                });
+                this.setState({fraisConsultation:data});
+            }
         }
-        this.setState({step:value<5?(value+1):5, validStep:value<this.state.validStep?this.state.validStep:value});
+        this.setState({step:value<5?(value+1):5, validStep:value<this.state.validStep?this.state.validStep:(value+1)});
         window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
     }
     changeShow=(value)=>{

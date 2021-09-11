@@ -3,13 +3,53 @@ import './Footer.css';
 import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { fetchPostNotLogged } from '../../services/global.service';
+import Toaster from '../alert/Toaster';
 
 export default class Footer extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            copyright: new Date()
+            copyright: new Date(),
+            email:'',
+            erreurMessage:'',
+            disableButton:false,
+            erreurEtat:false,
+            typeError:'success'
         }
+    }
+    handleChange = (param, e) => {
+        this.setState({ [param]: e.target.value })
+    }
+    changeShow=(value)=>{
+        this.setState({erreurEtat:value});
+    }
+    sendMailToUs=()=>{
+        this.setState({disableButton:true});
+        if(this.state.email===''){
+            this.setState({typeError:'error', erreurEtat:true, erreurMessage:'Adresse e-mail: champ obligatoire!', disableButton:false});
+            return;
+        }else{
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            if(!pattern.test(this.state.email)){
+                this.setState({typeError:'error', erreurEtat:true, erreurMessage:'Adresse e-mail invalide!', disableButton:false});
+                return;
+            }
+        }
+        let mailParams = {
+            email: this.state.email,
+            body: 'Cet adresse email a souscrit à MEDDoC: ',
+            subject: 'Souscription Meddoc',
+        }
+        fetchPostNotLogged('/email/send', mailParams
+        ).then((result)=>{
+            console.log(result.message);
+            this.setState({typeError:'success', erreurEtat:true, erreurMessage:'Votre message a été envoyé avec succès.', disableButton:false});
+            window.location.reload();
+        }, (error)=>{
+            console.log(error);
+            this.setState({typeError:'error', erreurEtat:true, erreurMessage:'Une erreur s\'est produite!', disableButton:false});
+        });
     }
     render(){
         return(
@@ -22,7 +62,7 @@ export default class Footer extends React.Component{
                                 <li><Link to="/a-propos/qui-sommes-nous">Qui sommes-nous ?</Link></li>
                                 <li><Link to="/a-propos/mentions-legales">Mentions légales</Link></li>
                                 <li><Link to="/a-propos/conditions-generales-d-utilisation">Conditions générales d'utilisation</Link></li>
-                                <li><Link to="/a-propos/chartes-de-confidentialite">Charte de confidentialité</Link></li>
+                                {/* <li><Link to="/a-propos/chartes-de-confidentialite">Charte de confidentialité</Link></li> */}
                                 <li><Link to="/a-propos/presse">Presse</Link></li>
                                 <li><Link to="/blog">Blog</Link></li>
                             </ul>
@@ -37,7 +77,7 @@ export default class Footer extends React.Component{
                         <li className="footer_content_container_fluid_ul_li">
                             <h5 className="footer_content_container_fluid_row_col_h5 footer_content_container_fluid_row_col_h5_v3">Vous êtes ?</h5>
                             <ul className="footer_content_container_fluid_row_col_ul">
-                                <li><Link to="/prise-rdv">Un professionnel de santé ?</Link></li>
+                                <li><Link to="/professionnel-de-sante">Un professionnel de santé ?</Link></li>
                                 <li><Link to="/pharmacie">Une pharmacie ?</Link></li>
                             </ul>
                         </li>
@@ -65,12 +105,13 @@ export default class Footer extends React.Component{
                                 </li>
                             </ul>
                             <h5 className="footer_content_container_fluid_row_col_h5 footer_content_container_fluid_row_col_h5_v2">Nous contacter</h5>
-                            <div className="footer_content_container_fluid_row_col_ul_v2_div_v2"><FontAwesomeIcon className="footer_content_container_fluid_row_col_ul_v2_li_FontAwesomeIcon" icon={faEnvelope}/></div>
+                            <div className="footer_content_container_fluid_row_col_ul_v2_div_v2"><Link to="/nous-contacter"><FontAwesomeIcon className="footer_content_container_fluid_row_col_ul_v2_li_FontAwesomeIcon" icon={faEnvelope}/></Link></div>
                         </li>
                         <li className="footer_content_container_fluid_ul_li">
                             <h5 className="footer_content_container_fluid_row_col_h5 footer_content_container_fluid_row_col_h5_v3 footer_content_container_fluid_row_col_h5_v4">Newsletter</h5>
-                            <div className="footer_content_container_fluid_row_col_h5_v3_divinput"><input type="text" className="footer_content_container_fluid_row_col_h5_v3_input" placeholder="Votre adresse email" /></div>
-                            <div className="footer_content_container_fluid_row_col_h5_v3_divtext">Je m'inscris !</div>
+                            <div className="footer_content_container_fluid_row_col_h5_v3_divinput"><input type="text" value={this.state.email} onChange={this.handleChange.bind(this,'email')} className="footer_content_container_fluid_row_col_h5_v3_input"  placeholder="Votre adresse email" /></div>
+                            <div className="footer_content_container_fluid_row_col_h5_v3_divtext"><Link onClick={()=>this.sendMailToUs()}>Je m'inscris !</Link></div>
+                            {this.state.erreurEtat?<Toaster type={this.state.typeError} bodyMsg={this.state.erreurMessage} isShow={this.state.erreurEtat} toggleShow={this.changeShow}/>:''}
                         </li>
                     </ul>
                     <div className="footer_content_container_fluid_bas_footer footer-copyright col-md-12 text-center py-3">Copyright  ©  {this.state.copyright.getFullYear()} <span className="copyrightFooter"><b>MEDDoC</b></span></div>

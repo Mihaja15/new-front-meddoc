@@ -98,13 +98,13 @@ class QuiSommesNous extends React.Component{
                         </div>
                     </div>
                     <div className="col-md-12 row fifth-paraph">
-                        <div className="col-md-8 qsn-text-content">
+                        <div className="col-md-12 qsn-text-content">
                             <h2>Nous contacter</h2>
                             <ContactUs/>
                         </div>
-                        <div className="col-md-4 qsn-img-content">
+                        {/* <div className="col-md-4 qsn-img-content">
                             <img src={contact} alt="Notre équipe dévouée"/>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
