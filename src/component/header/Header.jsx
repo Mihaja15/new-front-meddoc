@@ -189,7 +189,7 @@ class Header extends React.Component{
                 <div className="row">
                     <div className="col-md-4 col-sm-4 col-xs-4 col-4 logo-place">
                         <div className="col-md-12">
-                            <Link to="/" className="col-md-8"><img src={logo} alt="logo meddoc"/></Link>
+                            <Link to="/" className="col-md-8"><img src={logo} alt="small logo meddoc"/></Link>
                             {/* <div className="col-md-12"></div> */}
                         </div>
                     </div>
