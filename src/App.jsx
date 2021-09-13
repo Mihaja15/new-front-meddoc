@@ -33,12 +33,14 @@ import Pharmacie from './component/pharmacie/Pharmacie';
 import ContactUs from './component/contact-us/ContactUs';
 import ComingSoon from './component/alert/ComingSoon';
 import ReactGA from 'react-ga';
-ReactGA.initialize('G-7XR3QBWWJZ');
-ReactGA.pageview(window.location.pathname+ window.location.search);
-ReactGA.event({
-  category: 'User',
-  action: 'Page visite'
+ReactGA.initialize('G-QZNV5QR0Q8',{
+  debug: true,
+  titleCase: false,
+  gaOptions: {
+    userId: 123
+  }
 });
+ReactGA.pageview(window.location.pathname);
 
 class App extends React.Component {
   constructor(props){
@@ -92,12 +94,15 @@ class App extends React.Component {
   componentDidMount(){
     window.addEventListener("scroll", this.handleScroll);
     window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
-    ReactGA.initialize('G-7XR3QBWWJZ');
-    ReactGA.pageview(window.location.pathname+ window.location.search);
-    ReactGA.event({
-      category: 'User',
-      action: 'Page visite'
+    console.log(ReactGA)
+    ReactGA.initialize('G-QZNV5QR0Q8',{
+      debug: true,
+      titleCase: false,
+      gaOptions: {
+        userId: 123
+      }
     });
+    ReactGA.pageview(window.location.pathname);
   }
   componentWillUnmount() {
       window.removeEventListener('scroll', this.handleScroll);
