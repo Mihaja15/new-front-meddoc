@@ -92,6 +92,12 @@ class App extends React.Component {
   componentDidMount(){
     window.addEventListener("scroll", this.handleScroll);
     window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
+    ReactGA.initialize('G-7XR3QBWWJZ');
+    ReactGA.pageview(window.location.pathname+ window.location.search);
+    ReactGA.event({
+      category: 'User',
+      action: 'Page visite'
+    });
   }
   componentWillUnmount() {
       window.removeEventListener('scroll', this.handleScroll);
