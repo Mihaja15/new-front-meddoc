@@ -33,7 +33,7 @@ import Pharmacie from './component/pharmacie/Pharmacie';
 import ContactUs from './component/contact-us/ContactUs';
 import ComingSoon from './component/alert/ComingSoon';
 import ReactGA from 'react-ga';
-ReactGA.initialize('G-QZNV5QR0Q8');
+ReactGA.initialize('G-7XR3QBWWJZ');
 ReactGA.pageview(window.location.pathname+ window.location.search);
 ReactGA.event({
   category: 'User',
