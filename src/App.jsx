@@ -32,6 +32,13 @@ import InscriptionPro from './component/professionnel-sante/InscriptionPro';
 import Pharmacie from './component/pharmacie/Pharmacie';
 import ContactUs from './component/contact-us/ContactUs';
 import ComingSoon from './component/alert/ComingSoon';
+import ReactGA from 'react-ga';
+ReactGA.initialize('G-QZNV5QR0Q8');
+ReactGA.pageview(window.location.pathname+ window.location.search);
+ReactGA.event({
+  category: 'User',
+  action: 'Page visite'
+});
 
 class App extends React.Component {
   constructor(props){

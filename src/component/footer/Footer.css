@@ -43,7 +43,8 @@
     font-size: 15px;
 }
 .footer_content_container_fluid_row_col_ul li:hover{
-	font-weight: 500;
+	font-weight: 400;
+	transition: ease-in-out 0.1s;
 }
 .footer_content_container_fluid_row_col_ul_v2{
 	margin: 0;
@@ -61,10 +62,17 @@
 	display: flex;
 	justify-content: center;
 }
+.footer_content_container_fluid_row_col_ul_v2_li:hover{
+	
+	transform: rotate(360);
+	transition: all 1s;
+}
 .footer_content_container_fluid_row_col_ul_v2_li_svg:hover{
-	width: 32px;
-	height: 32px;
+	/* width: 32px;
+	height: 32px; */
 	fill: white;
+	transform: rotate(360);
+	transition: ease-in-out 1s;
 }
 .footer_content_container_fluid_row_col_h5_v2{
 	margin-top: 11%;
@@ -74,8 +82,10 @@
     color: #b2d1db;
 }
 .footer_content_container_fluid_row_col_ul_v2_li_FontAwesomeIcon:hover{
-	font-size: 32px;
+	/* font-size: 32px; */
     color: white;
+	transform: rotate(360);
+	transition: ease-in-out 1s;
 }
 .footer_content_container_fluid_row_col_ul_v2_div_v2{
 	text-align: center;
