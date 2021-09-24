@@ -1,12 +1,11 @@
-import { faCalendarDay, faCheckCircle, faExclamationCircle, faExclamationTriangle, faStethoscope } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactTooltip from 'react-tooltip';
+// import { faCalendarDay, faCheckCircle, faExclamationCircle, faExclamationTriangle, faStethoscope } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import ReactTooltip from 'react-tooltip';
 import React from 'react';
 import { fetchGetHandler } from '../../services/global.service';
 import { utile } from '../../services/utile';
 import './MesPatients.css';
-
-import Pagination from "react-js-pagination";
+// import Pagination from "react-js-pagination";
 
 const dateNow = new Date();
 export default class MesPatients extends React.Component{

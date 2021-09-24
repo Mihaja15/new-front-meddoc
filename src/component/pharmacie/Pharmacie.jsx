@@ -32,7 +32,7 @@ class Pharmacie extends Component{
                     </ul>
 
                     <div class="container-boutique">
-                        <a href="#" class="btn btn-success btn-lg">Ouvrir une boutique</a>
+                        <a href="#open" class="btn btn-success btn-lg">Ouvrir une boutique</a>
                     </div>
                     <Link to="/nous-contacter">Nous contacter</Link>
                </div>

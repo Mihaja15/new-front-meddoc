@@ -65,7 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border-radius: 12px; */
+    border-radius: 0px;
     /* overflow: hidden; */
 }
 .user-pro-content .input-group>label, .user-pro-content .form-group>label{
@@ -78,7 +78,7 @@
 .user-pro-content .input-group input, .user-pro-content .input-group select, .user-pro-content .input-group textarea{
     color: #979aad;
     outline: none;
-    border-radius: 12px;
+    border-radius: 0px;
 }
 .user-pro-content .input-group input:focus, .user-pro-content .input-group select:focus, .user-pro-content .input-group textarea:focus{
     box-shadow: none;

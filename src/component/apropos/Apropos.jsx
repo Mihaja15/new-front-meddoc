@@ -4,7 +4,6 @@ import Error404 from '../alert/Error404';
 import ConditionsUtilisations from './ConditionsUtilisations';
 import './Apropos.css';
 import QuiSommesNous from './QuiSommesNous';
-import history from '../../history';
 import MentionsLegales from './MentionsLegales';
 import InformationConsentement from './InformationConsentement';
 import InformationsCookies from './InformationsCookies';

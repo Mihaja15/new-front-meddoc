@@ -33,6 +33,7 @@ import Pharmacie from './component/pharmacie/Pharmacie';
 import ContactUs from './component/contact-us/ContactUs';
 import ComingSoon from './component/alert/ComingSoon';
 import ReactGA from 'react-ga';
+import { PropTypes } from "prop-types";
 ReactGA.initialize('G-QZNV5QR0Q8',{
   debug: true,
   titleCase: false,
@@ -43,10 +44,27 @@ ReactGA.initialize('G-QZNV5QR0Q8',{
 ReactGA.pageview(window.location.pathname);
 
 class App extends React.Component {
+  static propTypes = {
+    location: PropTypes.object.isRequired
+  }
   constructor(props){
     super(props);
     this.state={
       nav:false
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      console.log(this.props.location)
+      console.log(ReactGA)
+      ReactGA.initialize('G-QZNV5QR0Q8',{
+        debug: true,
+        titleCase: false,
+        gaOptions: {
+          userId: 123
+        }
+      });
+      ReactGA.pageview(window.location.pathname);
     }
   }
   contentShow(content,header,footer){
@@ -94,15 +112,6 @@ class App extends React.Component {
   componentDidMount(){
     window.addEventListener("scroll", this.handleScroll);
     window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
-    console.log(ReactGA)
-    ReactGA.initialize('G-QZNV5QR0Q8',{
-      debug: true,
-      titleCase: false,
-      gaOptions: {
-        userId: 123
-      }
-    });
-    ReactGA.pageview(window.location.pathname);
   }
   componentWillUnmount() {
       window.removeEventListener('scroll', this.handleScroll);
@@ -134,7 +143,12 @@ class App extends React.Component {
             <Route exact path="/404" render={() => { return this.contentShow(<Error404/>,<Header cookies={this.props.cookies}/>,<Footer/>); }}/>
             {/* <Route exact path="/tout-savoir-sur-la-campagne-de-vaccination-contre-la-Covid-19-a-Madagascar/actualites" render={() => { return this.contentShow(<Actualites/>,<Header/>,<LeftMenu/>,<Footer/>); }}/> */}
             <Route exact path="/inscription" render={() => {return  this.contentShow(<Inscription/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
-            <Route exact path="/inscription-professionnel" render={() => {return  this.contentShow(<InscriptionPro/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
+            <Route exact path="/inscription-professionnel" render={() => {return  this.contentShow(
+              // <GoogleReCaptchaProvider className="g-recaptcha" reCaptchaKey="6LclRt8bAAAAAFWdHWX7Tu1q8C00ptadzT4yeG45">
+              //   <InscriptionPros/>  
+              // </GoogleReCaptchaProvider>
+              <InscriptionPro/> 
+              ,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/inscription-professionnel-sante" render={() => {return  this.contentShow(<InscriptionProfessionnel/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/connexion-professionnel-sante" render={() => {return  this.contentShow(<ConnexionCentre/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>
             <Route exact path="/connexion" render={() => {return  this.contentShow(<Connexion cookies={this.props.cookies}/>,<Header cookies={this.props.cookies}/>,<Footer/>);}}/>

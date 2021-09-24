@@ -5,14 +5,17 @@ import ReactTooltip from 'react-tooltip';
 import './InscriptionPro.css';
 import verificationMotDePasseEnPourcentage from '../../services/motDePasse.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft, faCaretRight, faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { fetchGet } from '../../services/global.service';
+import { faCaretLeft, faCaretRight, /*faCheck,*/ faPlus } from '@fortawesome/free-solid-svg-icons';
+import { fetchGet, fetchPostNotLogged, fetchPostV2, fetchPostV3 } from '../../services/global.service';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import redIcon from '../../assets/icon/marker-icon-2x-red.png';
 import { utile } from '../../services/utile';
 import UploadFile from '../dynamics/UploadFile';
 import Toaster from '../alert/Toaster';
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
+import ButtonCaptcha from './ButtonCaptcha';
+  
 const styles = {
     container: base => ({
         ...base,
@@ -49,8 +52,8 @@ export default class InscriptionPro extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            step:1,
-            validStep:1,
+            step:5,
+            validStep:5,
             fraisConsultation:[],
             //files
             files:[],
@@ -63,6 +66,9 @@ export default class InscriptionPro extends React.Component{
             langue:[],
             //adresse
             dataDistrict:[],
+            infoAcces:'',
+            adresse:'',
+            district:'',
             latitude:0,
             longitude:0,
             //specialite
@@ -99,13 +105,10 @@ export default class InscriptionPro extends React.Component{
             prenoms:'',
             sexe:'',
             civilite:'',
-            infoAcces:'',
-            adresse:'',
             phone:'',
             mail:'',
             file:null,
             mdp:'',
-            district:'',
             duree:0,
             percentageMdp:0,
             confirmationMdp:'',
@@ -122,17 +125,21 @@ export default class InscriptionPro extends React.Component{
             officePrice:0,
             priceHome:false,
             priceOffice:false,
+            locationChange:false,
+            token:null,
+            finished:false
 
         }
         this.langue=React.createRef();
         this.district=React.createRef();
         this.paiement=React.createRef();
+        this.saveForm=React.createRef();
     }
     setDataCenter=(lats,lngs)=>{
-        this.setState({latitude : lats,longitude : lngs});
+        this.setState({latitude : lats,longitude : lngs, locationChange:true});
 	}
     handleChange = (param, e) => {
-        console.log(e)
+        // console.log(e)
         if(param==="mdp"){
             this.setState({percentageMdp:verificationMotDePasseEnPourcentage(e.target.value)});
         }
@@ -173,12 +180,15 @@ export default class InscriptionPro extends React.Component{
                 e.target.style.boxShadow='none';
             }
         }
-        if(e.target!==undefined)
+        if(utile.hasValue(e)){
+            if(utile.hasValue(e.target))
             this.setState({[param]:e.target.type==='checkbox'?e.target.checked:e.target.value})
-        else if(e.value!==undefined)
-            this.setState({[param]:e.vale})
-        else
-            this.setState({[param]:e})        
+            else if(utile.hasValue(e.value))
+                this.setState({[param]:e.value})
+            else
+                this.setState({[param]:e})        
+        } else
+            this.setState({[param]:''})        
 
     }
     getColorPourcentage(pourcentage){
@@ -191,10 +201,7 @@ export default class InscriptionPro extends React.Component{
         }
     }
     getVerificationMdp(){
-        if(this.state.mdp === this.state.confirmationMdp && this.state.percentageMdp === 100){
-            return true;
-        }
-        return false;
+        return this.state.mdp === this.state.confirmationMdp && this.state.percentageMdp === 100;
     }
     //contact
     addContact=(idTypeContact,value)=>{
@@ -211,7 +218,7 @@ export default class InscriptionPro extends React.Component{
                 if(value==='numero') this.setState({[value]:''});
             }
         }
-        console.log(this.state[value]);
+        // console.log(this.state[value]);
     }
     removeContact=(indice)=>{
         const data = this.state.listContact;
@@ -526,7 +533,7 @@ export default class InscriptionPro extends React.Component{
                                     <input className={this.state.numero===''?"col-12":"col-11"} name="numero" id="numero" min="0" type="number" value={this.state.numero} onChange={this.handleChange.bind(this,"numero")}  placeholder=""/>
                                     <b className="col-1" style={{display:this.state.numero===''?'none':''}} onClick={()=>this.setState({numero:''})}>&times;</b>
                                 </div>
-                                <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addContact(1,'numero')}><FontAwesomeIcon icon={faPlus}/></a>
+                                <a href="#add-contact" className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addContact(1,'numero')}><FontAwesomeIcon icon={faPlus}/></a>
                             </div>
                         </div>
                         <div className="form-group" style={{display:this.state.listContact.length===0?'none':''}}>
@@ -535,7 +542,7 @@ export default class InscriptionPro extends React.Component{
                                     return (
                                     <li className="col-md-12" key={j}>
                                         <span className="col-6 col-sm-6 col-md-6">{contact.valeurContact}</span>
-                                        <a className="col-6 col-sm-6 col-md-2 delete" onClick={()=>this.removeContact(j)}>Supprimer</a>
+                                        <a href="#delete-contact" className="col-6 col-sm-6 col-md-2 delete" onClick={()=>this.removeContact(j)}>Supprimer</a>
                                     </li>)
                                 })}</ul>
                             </div>
@@ -571,7 +578,7 @@ export default class InscriptionPro extends React.Component{
                                 <input className="col-md-12" name="entiteExperience" id="entiteExperience"  type="text" value={this.state.entiteExperience} onChange={this.handleChange.bind(this,"entiteExperience")}  placeholder="Entité / Institut de travail"/>
                                 <textarea rows="2" className="col-md-12" name="descriptionExperience" id="descriptionExperience" value={this.state.descriptionExperience} onChange={this.handleChange.bind(this,"descriptionExperience")} placeholder="Description du poste occupé (facultatif)"></textarea>
                             </div>
-                            <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addExperience()}><FontAwesomeIcon icon={faPlus}/></a>
+                            <a href="#add-experience" className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addExperience()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
                     </div>
                     <div className="form-group" style={{display:this.state.experiences.length===0?'none':''}}>
@@ -583,7 +590,7 @@ export default class InscriptionPro extends React.Component{
                                         <span className="col-12">{exp.anneeDebut+(utile.hasValue(exp.anneeFin)?'-'+exp.anneeFin:'')+' : '+exp.nomEntite}</span>
                                         <span className="col-12">{exp.description}</span>
                                     </div>
-                                    <a className="col-2 delete" onClick={()=>this.removeExperience(j)}>Supprimer</a>
+                                    <a href="#delete-experience" className="col-2 delete" onClick={()=>this.removeExperience(j)}>Supprimer</a>
                                 </li>)
                             })}</ul>
                         </div>
@@ -601,7 +608,7 @@ export default class InscriptionPro extends React.Component{
                                 <input className="col-md-6" type="text" name="libelleDiplome" id="libelleDiplome" value={this.state.libelleDiplome} onChange={this.handleChange.bind(this,"libelleDiplome")}  placeholder="Diplôme obtenu"/>
                                 <textarea rows="2" className="col-md-12" name="descriptionDiplome" id="descriptionDiplome" value={this.state.descriptionDiplome} onChange={this.handleChange.bind(this,"descriptionDiplome")} placeholder="Description du diplôme (facultatif)"></textarea>
                             </div>
-                            <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addDiplome()}><FontAwesomeIcon icon={faPlus}/></a>
+                            <a href="#add-diploma" className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addDiplome()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
                     </div>
                     <div className="form-group" style={{display:this.state.diplomes.length===0?'none':''}}>
@@ -613,7 +620,7 @@ export default class InscriptionPro extends React.Component{
                                         <span className="col-12">{diplome.anneeObtention+' : '+diplome.libelleDiplome}</span>
                                         <span className="col-12">{diplome.description}</span>
                                     </div>
-                                    <a className="col-2 delete" onClick={()=>this.removeDiplome(j)}>Supprimer</a>
+                                    <a href="#delete-diploma" className="col-2 delete" onClick={()=>this.removeDiplome(j)}>Supprimer</a>
                                 </li>)
                             })}</ul>
                         </div>
@@ -661,7 +668,7 @@ export default class InscriptionPro extends React.Component{
                                 <input className="col-md-6" type="text" name="titreOuvrage" id="titreOuvrage" value={this.state.titreOuvrage} onChange={this.handleChange.bind(this,"titreOuvrage")}  placeholder="Titre de votre ouvrage"/>
                                 <input className="col-md-12" type="url" name="lienOuvrage" id="lienOuvrage" pattern="https://.*" value={this.state.lienOuvrage} onChange={this.handleChange.bind(this,"lienOuvrage")}  placeholder="Lien vers votre publication (https)"/>
                             </div>
-                            <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addOuvrage()}><FontAwesomeIcon icon={faPlus}/></a>
+                            <a  href="#add-ouvrage"className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addOuvrage()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
                     </div>
                     <div className="form-group" style={{display:this.state.ouvrages.length===0?'none':''}}>
@@ -673,7 +680,7 @@ export default class InscriptionPro extends React.Component{
                                         <span className="col-lg-6 col-md-12">{utile.formatDate(ouvrage.datePublication)+' : '+ouvrage.titre}</span>
                                         <a className="col-lg-6 col-md-12" href={ouvrage.lien} rel="noopener noreferrer" target="_blank">{ouvrage.lien}</a>
                                     </div>
-                                    <a className="col-2 delete" onClick={()=>this.removeOuvrage(j)}>Supprimer</a>
+                                    <a href="#delete-ouvrage" className="col-2 delete" onClick={()=>this.removeOuvrage(j)}>Supprimer</a>
                                 </li>)
                             })}</ul>
                         </div>
@@ -684,7 +691,7 @@ export default class InscriptionPro extends React.Component{
                             <div className="form-control phone col-md-7 col-sm-10 col-10">
                                 <input className="col-md-12" type="text" name="tag" id="tag" value={this.state.tag} onChange={this.handleChange.bind(this,"tag")}  placeholder="Mots clés/tags"/>
                             </div>
-                            <a className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addTag()}><FontAwesomeIcon icon={faPlus}/></a>
+                            <a href="#add-tag" className="col-md-1 col-sm-2 col-xs-2 col-2 add" onClick={()=>this.addTag()}><FontAwesomeIcon icon={faPlus}/></a>
                         </div>
                     </div>
                     <div className="form-group" style={{display:this.state.tags.length===0?'none':''}}>
@@ -695,7 +702,7 @@ export default class InscriptionPro extends React.Component{
                                     <div className="col-10">
                                         <span className="col-lg-6 col-md-12">{tag.motCle}</span>
                                     </div>
-                                    <a className="col-2 delete" onClick={()=>this.removeTag(j)}>&times;</a>
+                                    <a href="#delete-tag" className="col-2 delete" onClick={()=>this.removeTag(j)}>&times;</a>
                                 </li>)
                             })}</ul>
                         </div>
@@ -721,7 +728,8 @@ export default class InscriptionPro extends React.Component{
                                         </g>
                                     </g>
                                 </svg>
-                                <input className="col-9" disabled={!this.state.priceHome} type="number" name="homePrice" id="homePrice" min="0" value={this.state.homePrice} onChange={this.handleChange.bind(this,"homePrice")}  placeholder="Prix de consultation à domicile en Ariary" />
+                                <label className="col-5">à domicile (Ar)</label>
+                                <input className="col-4" disabled={!this.state.priceHome} type="number" name="homePrice" id="homePrice" min="0" value={this.state.homePrice} onChange={this.handleChange.bind(this,"homePrice")}  placeholder="Prix de consultation à domicile en Ariary" />
 
                                 <input type="checkbox" className="col-1" id="priceOffice" name="priceOffice" onChange={this.handleChange.bind(this,"priceOffice")} checked={this.state.priceOffice}/>
                                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" width="30" height="30" fill="#b2d1db" className="col-2">
@@ -730,7 +738,8 @@ export default class InscriptionPro extends React.Component{
                                         <path d="m210.929 196.98v48.271h-48.274c-8.284 0-15 6.716-15 15v59.866c0 8.284 6.716 15 15 15h48.274v48.27c0 8.284 6.716 15 15 15h59.866c8.284 0 15-6.716 15-15v-48.27h48.266c8.284 0 15-6.716 15-15v-59.866c0-8.284-6.716-15-15-15h-48.266v-48.271c0-8.284-6.716-15-15-15h-59.866c-8.284 0-15 6.716-15 15zm30 63.271v-48.271h29.866v48.271c0 8.284 6.716 15 15 15h48.266v29.866h-48.266c-8.284 0-15 6.716-15 15v48.27h-29.866v-48.27c0-8.284-6.716-15-15-15h-48.274v-29.866h48.274c8.284 0 15-6.716 15-15z"/>
                                     </g>
                                 </svg>
-                                <input className="col-9" disabled={!this.state.priceOffice} type="number" name="officePrice" id="officePrice" min="0" value={this.state.officePrice} onChange={this.handleChange.bind(this,"officePrice")} placeholder="Prix de consultation au cabinet en Ariary" />
+                                <label className="col-5">au cabinet (Ar)</label>
+                                <input className="col-4" disabled={!this.state.priceOffice} type="number" name="officePrice" id="officePrice" min="0" value={this.state.officePrice} onChange={this.handleChange.bind(this,"officePrice")} placeholder="Prix de consultation au cabinet en Ariary" />
                             </div>
                         </div>
                     </div>
@@ -757,7 +766,7 @@ export default class InscriptionPro extends React.Component{
                             <label className="col-md-4">District</label>
                             <Select 
                             ref={this.district} onChange={this.handleChange.bind(this,"district")} name="district" id="district" placeholder="District de votre adresse" options={this.state.dataDistrict}
-                            className="col-md-8" styles={styles} isClearable={true} isMulti closeMenuOnSelect={false} />
+                            className="col-md-8" styles={styles} isClearable={true} closeMenuOnSelect={true} />
                         </div>
                     </div>
                     <div className="form-group">
@@ -769,7 +778,7 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-12">Géolocalisation: latitude({this.state.latitude})&nbsp;longitude({this.state.longitude})</label>
-                            <div className="mapsLocalisationInscriptionMedecin col-md-12">
+                            <div id="location" className="mapsLocalisationInscriptionMedecin col-md-12">
                                 <MapContainer center={[this.state.latitude,this.state.longitude]} style={{zIndex:"-1"}} zoom={15} scrollWheelZoom={true}>
                                     <MyComponent dataCenter={this.setDataCenter} />
                                     <TileLayer
@@ -790,6 +799,7 @@ export default class InscriptionPro extends React.Component{
                                     </Marker>
                                 </MapContainer>
                             </div>
+                            <span className="col-md-12" id="locationError"></span>
                         </div>
                     </div>
                 </div>
@@ -832,6 +842,7 @@ export default class InscriptionPro extends React.Component{
                                 })
                             }
                             </div>
+                            <span className="col-md-12" id="emploiTempsError"></span>
                         </div>
                     </div>
                 </div>
@@ -843,7 +854,7 @@ export default class InscriptionPro extends React.Component{
                     <div className="form-group">
                         <div className="input-group">
                             <label className="col-md-4">E-mail</label>
-                            <input className="form-control col-md-8" name="mail" id="mail" type="email" value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}  placeholder=""  />
+                            <input className="form-control col-md-8" name="e-mail" id="e-mail" type="email" value={this.state.mail} onChange={this.handleChange.bind(this,"mail")}  placeholder=""  />
                         </div>
                     </div>
                     <div className="form-group">
@@ -880,7 +891,7 @@ export default class InscriptionPro extends React.Component{
     }
     inputBlankChecker=(id,message)=>{
         const field = document.getElementById(id);
-        console.log(field)
+        // console.log(field)
         field.focus();
         field.style.boxShadow="0 0 2px 0.1px #b8627d";
         field.setCustomValidity(message);
@@ -889,9 +900,13 @@ export default class InscriptionPro extends React.Component{
     resetInput=(id)=>{
         const field = document.getElementById(id);
         field.style.boxShadow="none";
+        field.setCustomValidity("");
+        // console.log(field);
+        // field.set
     }
     checkData=(value)=>{
-        if(value===6){
+        console.log(this.state.step+"="+value)
+        if(value===1){
             if(this.state.nom==='') {
                 this.inputBlankChecker('nom', 'Nom: champ obligatoire!');
                 return;
@@ -916,9 +931,9 @@ export default class InscriptionPro extends React.Component{
                 this.inputBlankChecker('specialite', 'Spécialité: champ obligatoire!');
                 return;
             }else this.resetInput('specialite');
-        }else if(value===7){
+        }else if(value===2){
             if(this.state.presentation==='') {
-                this.inputBlankChecker('presentation', 'Pésentation: champ obligatoire!');
+                this.inputBlankChecker('presentation', 'Présentation: champ obligatoire!');
                 return;
             } else this.resetInput('presentation');
             if(this.state.langue.length===0) {
@@ -963,6 +978,78 @@ export default class InscriptionPro extends React.Component{
                 });
                 this.setState({fraisConsultation:data});
             }
+        }else if(value===3){
+            if(this.state.adresse==='') {
+                this.inputBlankChecker('adresse', 'Adresse: champ obligatoire!');
+                return;
+            } else this.resetInput('adresse');
+            if(this.state.district==='') {
+                this.district.current.focus();
+                this.district.current.select.inputRef.setCustomValidity('District: champ obligatoire!');
+                this.district.current.select.inputRef.reportValidity();
+                return;
+            }
+            if(this.state.infoAcces==='') {
+                this.inputBlankChecker('infoAcces', 'Information d\'accès: champ obligatoire!');
+                return;
+            } else this.resetInput('infoAcces');
+            if(!this.state.locationChange){
+                // this.inputBlankChecker('location','Précisez votre emplacement!');
+                const field = document.getElementById('locationError');
+                field.focus();
+                field.textContent="Précisez votre emplacement";
+                field.style.color="#b8627d";
+                field.style.display="flex";
+                return;
+            }else{
+                const field = document.getElementById('locationError');
+                field.style.display="none";
+            }
+        }else if(value===4){
+            if(this.state.duree===''||this.state.duree===0) {
+                this.inputBlankChecker('duree', 'Durée de consultation: champ obligatoire!');
+                return;
+            } else this.resetInput('duree');
+            if(this.state.emploiTemps.findIndex(c=>c.activation)===-1){
+                const field = document.getElementById('emploiTempsError');
+                field.focus();
+                field.textContent="Veuillez remplir votre emploi du temps";
+                field.style.color="#b8627d";
+                field.style.display="flex";
+                return;
+            }else{
+                const field = document.getElementById('emploiTempsError');
+                field.style.display="none";
+            }
+        }else if(value===5){
+            this.setState({finished:false});
+            console.log(this.state.mail);
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            
+            if(this.state.mail==='') {
+                this.inputBlankChecker('e-mail', 'E-mail: champ obligatoire!');
+                return;
+            }else if(!pattern.test(this.state.mail)) {
+                this.inputBlankChecker('e-mail', 'E-mail: format incorrect!');
+                return;
+            } else this.resetInput('e-mail');
+            if(this.state.phone==='') {
+                this.inputBlankChecker('phone', 'Téléphone: champ obligatoire!');
+                return;
+            } else this.resetInput('phone');
+            if(this.state.mdp==='') {
+                this.inputBlankChecker('mdp', 'Mot de passe: champ obligatoire!');
+                return;
+            }else if(this.state.percentageMdp<50){
+                this.inputBlankChecker('mdp', 'Mot de passe: entrez un mot de passe fort');
+                return;
+            }else this.resetInput('mdp');
+            if(!this.getVerificationMdp()) {
+                this.inputBlankChecker('confirmationMdp', 'Mot de passe et confirmation incohérents!');
+                return;
+            } else this.resetInput('confirmationMdp');
+            this.setState({finished:true});
+            console.log("ok")
         }
         this.setState({step:value<5?(value+1):5, validStep:value<this.state.validStep?this.state.validStep:(value+1)});
         window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
@@ -970,12 +1057,248 @@ export default class InscriptionPro extends React.Component{
     changeShow=(value)=>{
         this.setState({erreurEtat:value});
     }
+    getEmploiDuTemps(){
+		const data= this.state.emploiTemps;
+		const newData = [];
+        var top1 = null;
+        var top2 = null;
+        var bot1 = null;
+        var bot2 = null;
+		for (let i = 0; i < data.length; i++) {
+			top1 = null;
+            top2 = null;
+            bot1 = null;
+            bot2 = null;
+			if(data[i].activation){
+                if((data[i].topStart!==-1&&data[i].topStart!==null) && (data[i].topStop!==-1&&data[i].topStop!==null)){
+                    top1=utile.autocompleteZero(data[i].topStart,2)+":00:00";
+                    top2=utile.autocompleteZero(data[i].topStop,2)+":00:00";
+                }else if((data[i].topStart!==-1&&data[i].topStart!==null) && (data[i].topStop===-1||data[i].topStop===null)){
+                    top1=utile.autocompleteZero(data[i].topStart,2)+":00:00";
+                    top2=utile.autocompleteZero(data[i].topStart,2)+":00:00";
+                }
+                if((data[i].bottomStart!==-1&&data[i].bottomStart!==null) && (data[i].bottomStop!==-1&&data[i].bottomStop!==null)){
+                    bot1=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
+                    bot2=utile.autocompleteZero(data[i].bottomStop,2)+":00:00";
+                }else if((data[i].bottomStart!==-1&&data[i].bottomStart!==null) && (data[i].bottomStop===-1||data[i].bottomStop===null)){
+                    bot1=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
+                    bot2=utile.autocompleteZero(data[i].bottomStart,2)+":00:00";
+                }
+                if(top1!==null || bot1!==null){
+                    newData.push({
+                        idUser:this.state.idUser,
+                        timeStartBottom: bot1,
+                        timeStopBottom: bot2,
+                        jour: data[i].jour,
+                        timeStartTop: top1,
+                        timeStopTop: top2,
+                    });
+                }
+			}
+		}
+		return newData;
+	}
+    saveProfessionnal=(e)=>{
+        e.preventDefault();
+        // this.checkData(this.state.step);
+        // console.log("token:",this.state.token)
+        // if(!(this.state.finished&&this.state.token!==null))
+        //     return;
+        // // const token = await useGoogleReCaptcha();
+        // this.setState({disableButton:true});
+        // const dataCentre = {
+        //     personne:{
+        //         nom:this.state.nom,
+        //         prenoms:this.state.prenoms,
+        //         sexe:this.state.sexe,
+        //         langue:this.state.langue,
+        //         dateNaissance:this.state.dateNaissance,
+        //         lieuNaissance:this.state.lieuNaissance,
+        //         contact:this.state.listContact,
+        //         photos:[],
+        //         adresse:[{
+        //             informationAdresse:this.state.adresse,
+        //             informationAcces:this.state.infoAcces,
+        //             latitude:this.state.latitude,
+        //             longitude:this.state.longitude,
+        //             district:{
+        //                 idDistrict:this.state.district
+        //             }
+        //         }],
+        //         user:{
+        //             phone:this.state.phone,
+        //             email:this.state.mail,
+        //             password:this.state.mdp,
+        //             typeUser:{
+        //                 idTypeUser:2
+        //             },
+        //             statut:{
+        //                 idStatut:0
+        //             }
+        //         }
+        //     },
+        //     informationMedecin:this.state.presentation,
+        //     emploiTemps:this.getEmploiDuTemps(),
+        //     dureeConsultation:this.state.duree,
+        //     numeroOrdre:this.state.numOrdre,
+        //     typeOrdre:{
+        //         idTypeOrdre:this.state.typeOrdre
+        //     },
+        //     specialite:{
+        //         idSpecialite:this.state.specialite
+        //     },
+        //     modePaiement:this.state.paiement,
+        //     fraisConsultation:this.state.fraisConsultation,
+        //     diplomes:this.state.diplomes,
+        //     experiences:this.state.experiences,
+        //     tags:this.state.tags,
+        //     ouvrages:this.state.ouvrages
+        // }
+        // console.log(dataCentre);
+        // const data = new FormData(e.target);
+        // data.set('uuid',utile.generateUUID());
+        // this.state.selectedFiles.forEach(file=>{
+        //     data.append("filesUpload", file);
+        // });
+        // if(this.state.selectedFiles.length>0){
+        //     fetchPostV2('http://localhost:5000/fichier',data).then(res=>{
+        //         if(res.status){
+        //             for(let i=0; i <res.code.length;i++){
+        //                 dataCentre.personne.photos.push({
+        //                     photo:res.code[i]
+        //                 })
+        //             }
+        //             fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
+        //                 if(result.statut === 200){
+        //                     this.setState({disableButton:false});
+        //                     window.location.replace('/connexion-professionnel-sante');
+        //                 }else{
+        //                     const datas = {files:res.code};
+        //                     fetchPostV3('http://localhost:5000/deleteFichier',datas);
+        //                     this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
+        //                 }
+        //             }).catch(error=>{
+        //                 //console.log(error)
+        //                 this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
+        //             });
+        //         }else{
+        //         }
+        //     }).catch(error=>{
+        //         //console.log(error)
+        //         this.setState({disableButton:false, erreurEtat: true, erreurMessage: 'Problème de serveur'});
+        //     });
+        // }else{
+        //     fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
+        //         if(result.statut === 200){
+        //             this.setState({disableButton:false});
+        //             window.location.replace('/connexion-professionnel-sante');
+        //         }else{
+        //             this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
+        //         }
+        //     }).catch(error=>{
+        //         //console.log(error)
+        //         this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
+        //     });
+        // }
+    }
+    setToken=(value)=>{
+        this.setState({token:value});
+        this.checkData(this.state.step);
+        this.setState({disableButton:true});
+        if(!(this.state.finished&&this.state.token!==null)){
+            this.setState({disableButton:false});
+            return;
+        }
+        const dataCentre = {
+            personne:{
+                nom:this.state.nom,
+                prenoms:this.state.prenoms,
+                sexe:this.state.sexe,
+                langue:this.state.langue,
+                contact:this.state.listContact,
+                photos:[],
+                adresse:[{
+                    informationAdresse:this.state.adresse,
+                    informationAcces:this.state.infoAcces,
+                    latitude:this.state.latitude,
+                    longitude:this.state.longitude,
+                    district:{ idDistrict:this.state.district }
+                }],
+                user:{
+                    phone:this.state.phone,
+                    email:this.state.mail,
+                    password:this.state.mdp,
+                    typeUser:{ idTypeUser:2 },
+                    statut:{ idStatut:0 }
+                }
+            },
+            informationMedecin:this.state.presentation,
+            emploiTemps:this.getEmploiDuTemps(),
+            dureeConsultation:this.state.duree,
+            numeroOrdre:this.state.numOrdre,
+            typeOrdre:{ idTypeOrdre:this.state.typeOrdre },
+            specialite:{ idSpecialite:this.state.specialite },
+            modePaiement:this.state.paiement,
+            fraisConsultation:this.state.fraisConsultation,
+            diplomes:this.state.diplomes,
+            experiences:this.state.experiences,
+            tags:this.state.tags,
+            ouvrages:this.state.ouvrages
+        }
+        console.log(dataCentre);
+        const data = new FormData(this.saveForm.current);
+        data.set('uuid',utile.generateUUID());
+        this.state.selectedFiles.forEach(file=>{
+            data.append("filesUpload", file);
+        });
+        if(this.state.selectedFiles.length>0){
+            fetchPostV2('http://localhost:5000/fichier',data).then(res=>{
+                console.log(res)
+                if(res.status){
+                    for(let i=0; i <res.code.length;i++){
+                        dataCentre.personne.photos.push({
+                            photo:res.code[i]
+                        })
+                    }
+                    fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
+                        console.log(result)
+                        if(result.statut === 200){
+                            this.setState({disableButton:false});
+                            window.location.replace('/connexion-professionnel-sante');
+                        }else{
+                            const datas = {files:res.code};
+                            fetchPostV3('http://localhost:5000/deleteFichier',datas);
+                            this.setState({disableButton:false, erreurEtat: true, erreurMessage: result.message});
+                        }
+                    }).catch(error=>{
+                        this.setState({disableButton:false, erreurEtat: true, erreurMessage: error.message});
+                    });
+                }else{
+                }
+            }).catch(error=>{
+                this.setState({disableButton:false, erreurEtat: true, erreurMessage: 'Problème de serveur'});
+            });
+        }else{
+            fetchPostNotLogged('/professionnel/register',dataCentre).then(result=>{
+                console.log("without file ",result)
+                if(result.statut === 200){
+                    this.setState({disableButton:false});
+                    window.location.replace('/connexion-professionnel-sante');
+                }else{
+                    this.setState({disableButton:false, erreurEtat: true, erreurMessage: result});
+                }
+            }).catch(error=>{
+                console.log("without file error",error)
+                this.setState({disableButton:false, erreurEtat: true, erreurMessage: error});
+            });
+        }
+    }
     render(){
         return(
             <div className="inscription-professionnel-container">
                 <div className="container">
                     <div className="row">
-                        <form className="user-pro-content col-12">
+                        <form ref={this.saveForm} className="user-pro-content col-12" method="POST" onSubmit={this.saveProfessionnal.bind(this)}>
                             <div className="col-12">
                                 <ul className="stepper-view">
                                     <li className={this.state.validStep>1?'actif':this.state.validStep===1?'encours':'not'}><b onClick={()=>{if(this.state.validStep>=1)this.setState({step:1})}}>1</b><i>&nbsp;Titulaire&nbsp;</i></li>
@@ -989,10 +1312,14 @@ export default class InscriptionPro extends React.Component{
                             <div className="col-md-12">
                                 <div className="form-group">
                                     <div className="input-group boutons">
-                                        <span className="col-md-2">Etape {this.state.step}/5</span>
-                                        <a onClick={()=>{this.setState({step: this.state.step>1?(this.state.step-1):1}); window.scrollTo({top: 0, left: 0, behavior: 'smooth' });}} className="col-sm-5 col-md-2 btn cancel" disabled={this.state.step===1}><FontAwesomeIcon icon={faCaretLeft}/>&nbsp; Précédant</a>
-                                        <a onClick={()=>this.checkData(this.state.step)} className="col-sm-5 col-md-2 btn next" hidden={this.state.step===5}>Suivant &nbsp;<FontAwesomeIcon icon={faCaretRight}/></a>
-                                        <button type="submit" className="col-sm-5 col-md-2 btn finish" hidden={this.state.step!==5}>Terminer &nbsp;<FontAwesomeIcon icon={faCheck}/></button>
+                                        <span hidden={this.state.disableButton} className="col-md-2">Etape {this.state.step}/5</span>
+                                        <a href="#previous" hidden={this.state.disableButton} onClick={()=>{this.setState({step: this.state.step>1?(this.state.step-1):1}); window.scrollTo({top: 0, left: 0, behavior: 'smooth' });}} className="col-sm-5 col-md-2 btn cancel" disabled={this.state.step===1}><FontAwesomeIcon icon={faCaretLeft}/>&nbsp; Précédant</a>
+                                        <a href="#next" onClick={()=>this.checkData(this.state.step)} className="col-sm-5 col-md-2 btn next" hidden={this.state.step===5}>Suivant &nbsp;<FontAwesomeIcon icon={faCaretRight}/></a>
+                                        {/* <button onClick={()=>this.checkData(this.state.step)} type="submit" className="col-sm-5 col-md-2 btn finish" hidden={this.state.step!==5||this.state.disableButton}>Terminer &nbsp;<FontAwesomeIcon icon={faCheck}/></button> */}
+                                        <GoogleReCaptchaProvider className="g-recaptcha" reCaptchaKey="6LclRt8bAAAAAFWdHWX7Tu1q8C00ptadzT4yeG45">
+                                            <ButtonCaptcha setCaptchaToken={this.setToken} classButton="col-sm-5 col-md-2 btn finish" hiddenButton={this.state.step!==5||this.state.disableButton} disableButton={!this.state.disableButton}/>
+                                        </GoogleReCaptchaProvider>
+                                        <div hidden={!this.state.disableButton} className="login-loader"></div>
                                     </div>
                                 </div>
                             </div>

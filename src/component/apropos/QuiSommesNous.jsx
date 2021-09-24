@@ -4,7 +4,7 @@ import meddoc from '../../assets/logo/MEDDOC.png';
 import conviction from '../../assets/img/convictions.png';
 import team from '../../assets/img/teams.png';
 import value from '../../assets/img/values.png';
-import contact from '../../assets/img/contacts.png';
+// import contact from '../../assets/img/contacts.png';
 import ContactUs from '../contact-us/ContactUs';
 
 class QuiSommesNous extends React.Component{

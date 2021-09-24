@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback} from 'react';
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3';
 
 const CaptchaButton = ({setCaptchaToken, disableButton, hiddenButton}) => {

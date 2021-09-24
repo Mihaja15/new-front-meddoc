@@ -1,6 +1,6 @@
 import React from 'react';
 import './ContactUs.css';
-import { fetchPost, fetchPostNotLogged } from '../../services/global.service';
+import { fetchPostNotLogged } from '../../services/global.service';
 import Toaster from '../alert/Toaster';
 
 export default class ContactUs extends React.Component{

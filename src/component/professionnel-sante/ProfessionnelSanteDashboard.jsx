@@ -53,23 +53,23 @@ export default class ProfessionnelSanteDashboard extends React.Component{
         return(
             <div className="profil-centre-container">
                 <div className="row">
-                <div className="profil-centre-left-menu" style={{width:this.state.showMenu?'16.5%':'4.5%'}}>
-                {/* <div className={"profil-centre-left-menu"}> */}
-                    <div className="col-12 button-click-menu"><span onClick={()=>this.setState({showMenu:!this.state.showMenu})}><FontAwesomeIcon icon={this.state.showMenu?faCompress:faExpand}/>&nbsp;{this.state.showMenu?'Menu Pro':''}</span></div>
-                    <ul className="col-md-12">
-                        <li onClick={()=> this.linkInMenu('dashboard')} className={this.state.show===0?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faChartPie}/>{this.state.showMenu?<>&nbsp;&nbsp;Tableau de bord</>:''}</li>
-                        <li onClick={()=> this.linkInMenu('patients')} className={this.state.show===6?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faHospitalUser}/>{this.state.showMenu?<>&nbsp;Mes patients</>:''}</li>
-                        <li onClick={()=> this.linkInMenu('agenda')} className={this.state.show===1?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faCalendarAlt}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;Agenda</>:''}</li>
-                        <li onClick={()=> this.linkInMenu('compte')} className={this.state.show===2?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserEdit}/>{this.state.showMenu?<>&nbsp;&nbsp;Compte</>:''}</li>
-                        <li onClick={()=> this.linkInMenu('causette')} className={this.state.show===3?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faCommentMedical}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;Causette</>:''}</li>
-                        <li onClick={()=> this.linkInMenu('e-trames')} className={this.state.show===4?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faFileSignature}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;E-trames</>:''}</li>
-                        {/* <li onClick={()=> this.setState({show:"4"})} className={this.state.show==="4"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserPlus}/>&nbsp; Ressources humaines</li>
-                        <li onClick={()=> this.setState({show:"5"})} className={this.state.show==="5"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faBoxes}/>&nbsp;&nbsp; Gestion de stock</li> */}
-                        <li onClick={()=> this.openAndCloseTodoList()} className={"col-md-12"}><FontAwesomeIcon icon={faThList}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;&nbsp;To do List</>:''}</li>
-                        <li onClick={()=> this.linkInMenu('assistance')} className={this.state.show===5?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faInfo}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Besoin d'aide?</>:''}</li>
-                    </ul>
-                </div>
-                {/* <div className="row"> */}
+					<div className="profil-centre-left-menu" style={{width:this.state.showMenu?'16.5%':'4.5%'}}>
+					{/* <div className={"profil-centre-left-menu"}> */}
+						<div className="col-12 button-click-menu"><span onClick={()=>this.setState({showMenu:!this.state.showMenu})}><FontAwesomeIcon icon={this.state.showMenu?faCompress:faExpand}/>&nbsp;{this.state.showMenu?'Menu Pro':''}</span></div>
+						<ul className="col-md-12">
+							<li onClick={()=> this.linkInMenu('dashboard')} className={this.state.show===0?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faChartPie}/>{this.state.showMenu?<>&nbsp;&nbsp;Tableau de bord</>:''}</li>
+							<li onClick={()=> this.linkInMenu('patients')} className={this.state.show===6?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faHospitalUser}/>{this.state.showMenu?<>&nbsp;Mes patients</>:''}</li>
+							<li onClick={()=> this.linkInMenu('agenda')} className={this.state.show===1?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faCalendarAlt}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;Agenda</>:''}</li>
+							<li onClick={()=> this.linkInMenu('compte')} className={this.state.show===2?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserEdit}/>{this.state.showMenu?<>&nbsp;&nbsp;Compte</>:''}</li>
+							<li onClick={()=> this.linkInMenu('causette')} className={this.state.show===3?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faCommentMedical}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;Causette</>:''}</li>
+							<li onClick={()=> this.linkInMenu('e-trames')} className={this.state.show===4?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faFileSignature}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;E-trames</>:''}</li>
+							{/* <li onClick={()=> this.setState({show:"4"})} className={this.state.show==="4"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faUserPlus}/>&nbsp; Ressources humaines</li>
+							<li onClick={()=> this.setState({show:"5"})} className={this.state.show==="5"?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faBoxes}/>&nbsp;&nbsp; Gestion de stock</li> */}
+							<li onClick={()=> this.openAndCloseTodoList()} className={"col-md-12"}><FontAwesomeIcon icon={faThList}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;&nbsp;To do List</>:''}</li>
+							<li onClick={()=> this.linkInMenu('assistance')} className={this.state.show===5?"active-menu col-md-12":"col-md-12"}><FontAwesomeIcon icon={faInfo}/>{this.state.showMenu?<>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Besoin d'aide?</>:''}</li>
+						</ul>
+					</div>
+					{/* <div className="row"> */}
                     
                     {/* <div className="profil-header col-md-12 row"> */}
                         {/* <ul className="profil-header col-md-2">

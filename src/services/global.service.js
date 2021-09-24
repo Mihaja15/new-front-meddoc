@@ -104,8 +104,10 @@ export function fetchPostIndependent(url, dataSend){
 }
 
 function handleResponse(response) {
+    console.log(response);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
+        console.log(data);
         if (!response.ok) {
             // alert(response.status);
             if (response.status === 401) {
@@ -120,7 +122,7 @@ function handleResponse(response) {
                 // else
                 //     window.location.replace('/');
             }
-            const error = (data && data.message) || response.statusText;
+            const error = (data && data.error) || response.statusText;
             return Promise.reject(error);
         }
         //console.log(data);
