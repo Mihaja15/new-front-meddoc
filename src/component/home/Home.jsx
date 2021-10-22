@@ -201,7 +201,7 @@ class Home extends React.Component{
                                 bébé, enfants et maternité, soins du corps, bouche et dents, matériel médical,
                                 cheveux, santé, sexualité....
                             </p>
-                            <a className="" href="/inscription-patient">Découvrez nos produits</a>
+                            <a className="" href="https://www.pharmaclic.mg" rel="noopener noreferrer" target="_blank">Découvrez nos produits</a>
                         </div>
                     </div>
                 </div>

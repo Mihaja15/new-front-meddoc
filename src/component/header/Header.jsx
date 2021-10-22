@@ -214,7 +214,7 @@ class Header extends React.Component{
                                     <li className="nav-menu-link sign-in-link" id="drop-down-menu-link">Nos services <FontAwesomeIcon icon={faCaretDown}/>
                                         <ul id="drop-down-menu-sublink">
                                             <li>Prise de rendez-vous en ligne</li>
-                                            <li>Pharmaclic</li>
+                                            <li><a href="https://www.pharmaclic.mg" rel="noopener noreferrer" target="_blank">Pharmaclic</a></li>
                                         </ul>
                                     </li>
                                     <li className="nav-menu-link" id="drop-down-menu-link">Vous êtes <FontAwesomeIcon icon={faCaretDown}/>
