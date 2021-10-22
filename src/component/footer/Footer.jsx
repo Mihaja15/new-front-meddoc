@@ -71,7 +71,7 @@ export default class Footer extends React.Component{
                             <h5 className="footer_content_container_fluid_row_col_h5 footer_content_container_fluid_row_col_h5_v3">Nos services</h5>
                             <ul className="footer_content_container_fluid_row_col_ul">
                                 <li>Prise de rendez-vous en ligne</li>
-                                <li>Pharmaclic</li>
+                                <li><a className="" href="https://www.pharmaclic.mg" rel="noopener noreferrer" target="_blank">Pharmaclic</a></li>
                             </ul>
                         </li>
                         <li className="footer_content_container_fluid_ul_li">
