@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MEDDoC",
+  "name": "MEDDoC: Prenez un rendez-vous avec un professionnel de santé le plus tôt et le plus près de chez vous!",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +18,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "description":"Trouvez un professionnel de santé le plus tôt et le près de chez vous! Simple, rapide, gratuit et sécurisé. Rechercher un médecin, une spécialité, un centre d'analyse, un centre d'imagerie, un établissement de santé à Madagascar.",
+  "lang":"fr",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#1b7895",
   "background_color": "#ffffff"
 }
