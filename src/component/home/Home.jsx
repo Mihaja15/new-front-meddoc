@@ -195,11 +195,10 @@ class Home extends React.Component{
                             <img className="" src={pharmatie} alt="pharmaclic illustration"/>
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-12 service-section-text">
-                            <h2 className="">PHARMACLIC, la parapharmacie en ligne</h2>
+                            <h2 className="">PHARMACLIC, vos soins à portée de main</h2>
                             <p className="">
-                                Découvrez tous les produits de paraharmacie, au meilleur prix dans les pharmacies à proximité dans toutes les catégories: soins du visage,
-                                bébé, enfants et maternité, soins du corps, bouche et dents, matériel médical,
-                                cheveux, santé, sexualité....
+                                Pharmaclic vous aide à trouver vos produits de santé et de bien-être dans les pharmacies ou boutiques partout à Madagascar:
+								soins du visage, bébé enfants et maternité, soins du corps, bouche et dents, matériel médical, cheveux, santé, sexualité et intimité.
                             </p>
                             <a className="" href="https://www.pharmaclic.mg" rel="noopener noreferrer" target="_blank">Découvrez nos produits</a>
                         </div>
